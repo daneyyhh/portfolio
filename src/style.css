@@ -334,10 +334,12 @@ body.cursor-down .cursor {
 }
 
 .gp-hero-top {
-    display: grid;
-    grid-template-columns: 1.7fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: flex;
+    /* Changed from grid to flex for full "both sides" spread */
+    justify-content: space-between;
+    /* Push content to far edges */
+    align-items: flex-start;
+    width: 100%;
 }
 
 .gp-title {
