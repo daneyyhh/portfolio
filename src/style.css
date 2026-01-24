@@ -13,6 +13,13 @@
     --border: rgba(255, 255, 255, 0.12);
 }
 
+html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 /* ... (skipping unchanged parts) ... */
 
 /* --- Loader --- */
@@ -237,6 +244,7 @@ body.cursor-ready .cursor-dot {
     border-radius: 4px;
     /* Slight rounding but mostly square */
     transform: translate3d(-999px, -999px, 0);
+    will-change: transform;
     margin-left: -16px;
     margin-top: -16px;
     transition: border-color 220ms var(--easing), transform 220ms var(--easing), width 220ms var(--easing), height 220ms var(--easing), margin 220ms var(--easing);
@@ -249,6 +257,7 @@ body.cursor-ready .cursor-dot {
     border-radius: 0;
     /* Square dot */
     transform: translate3d(-999px, -999px, 0);
+    will-change: transform;
     margin-left: -3px;
     margin-top: -3px;
     transition: transform 120ms var(--easing), opacity 120ms var(--easing);
@@ -534,19 +543,23 @@ body.cursor-down .cursor {
 
 /* Base Case Style */
 /* Base Case Style */
+/* Base Case Style */
 .gp-case {
     position: relative;
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    /* Background moved to ::before for blur */
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    border-bottom: none;
     padding: 0;
     overflow: hidden;
 }
 
-/* Background Image with Blur & Enhance */
+/* Background Image with Blur */
 .gp-case::before {
     content: '';
     position: absolute;
@@ -557,15 +570,15 @@ body.cursor-down .cursor {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(4px) brightness(0.8) contrast(1.1) saturate(1.1);
-    /* Blur + Enhance */
-    transform: scale(1.05);
-    /* Prevent blur edges */
+    filter: blur(8px) brightness(0.6);
+    /* Stronger blur for background feel */
+    transform: scale(1.1);
+    /* Prevent blurred edges */
     z-index: 1;
     pointer-events: none;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-    /* Integrating overlay here */
 }
+
+/* New: Grain Overlay (Optional, to match FINKEE feel if desired, but keeping simple for now) */
 
 /* Project Images via Pseudo-element */
 .gp-case-1::before {
@@ -584,98 +597,107 @@ body.cursor-down .cursor {
     background-image: url('/images/illuminati-cover-v2.jpg');
 }
 
-/* Top Marquee */
+/* Top Marquee - Absolute at Top */
 .gp-case-head {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    padding: 1.5rem 0;
+    background: transparent;
+    /* Clean look */
+    backdrop-filter: none;
     z-index: 10;
+    pointer-events: none;
+    /* Let clicks pass through */
 }
 
 /* Centered Big Title */
 .gp-case-big-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    /* Not absolute anymore, flow in flex */
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 700;
-    text-transform: uppercase;
+    font-weight: 400;
+    font-size: clamp(4rem, 15vw, 12rem);
+    /* Massive text like FINKEE */
+    line-height: 0.9;
     color: #fff;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-    pointer-events: none;
-    z-index: 5;
+    text-transform: uppercase;
     text-align: center;
-    width: 100%;
-    letter-spacing: -0.02em;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    /* Stylish blend */
+    opacity: 0.9;
+    margin: 0;
+    top: auto;
+    left: auto;
+    transform: none;
 }
 
 /* Bottom Controls */
 .gp-case-body {
+    padding: 2rem 5%;
+    display: flex;
+    flex-direction: row;
+    /* Horizontal layout for tags/actions */
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    gap: 1rem;
+}
+
+/* Hit Area (The Link) - Covers Whole Screen */
+.gp-case-hit {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem;
-    z-index: 10;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    height: 100%;
+    z-index: 6;
+    /* Above title */
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-.gp-case-tags {
-    margin-bottom: 0.5rem;
-}
-
-.gp-case-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-.gp-case-hit {
-    display: contents;
+    justify-content: flex-end;
+    /* Push controls to bottom */
     text-decoration: none;
-    color: inherit;
 }
 
-.gp-case-head {
-    padding: 1.2rem 1.2rem 0;
-    grid-column: 1 / -1;
-}
-
-.gp-case-title {
-    border-radius: 12px;
-}
-
+/* Body / Bottom Controls */
 .gp-case-body {
-    padding: 1.2rem;
+    padding: 2rem 5%;
     display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+    flex-direction: row;
+    /* Horizontal layout for tags/actions */
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    gap: 1rem;
 }
 
+/* Tags */
 .gp-case-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.8rem;
+    max-width: 60%;
 }
 
 .gp-case-tags span {
-    border: 1px solid var(--border);
-    background: rgba(0, 0, 0, 0.25);
-    padding: 0.35rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    color: #fff;
+    backdrop-filter: blur(4px);
 }
 
+/* Actions */
 .gp-case-actions {
     display: flex;
-    gap: 0.7rem;
+    gap: 0.8rem;
 }
 
 .gp-chip {
