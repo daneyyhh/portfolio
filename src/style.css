@@ -333,6 +333,15 @@ body.cursor-down .cursor {
     align-items: center;
 }
 
+/* Specific Container Override for Hero to hit edges */
+.gp-hero .container {
+    max-width: 100%;
+    /* Remove 1600px limits */
+    padding: 0 2.5rem;
+    /* "Near margin" - moderate safe zone */
+    width: 100%;
+}
+
 .gp-hero-top {
     display: flex;
     /* Changed from grid to flex for full "both sides" spread */
