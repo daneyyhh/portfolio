@@ -502,7 +502,8 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 18s linear infinite;
+    animation: marquee 50s linear infinite;
+    /* Slowed down from 18s */
 }
 
 .marquee:hover .marquee-track {
