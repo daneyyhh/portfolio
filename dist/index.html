@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <script type="module" crossorigin src="/assets/index-hAi1jeim.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DG9t1ANp.css">
+  <script type="module" crossorigin src="/assets/index-SFQ_zT6s.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Cp4y2Cqu.css">
 </head>
 
 <body class="loading-active">
@@ -21,9 +21,11 @@
     <div class="loader">
         <div class="loader-wrapper">
             <div class="counter">0%</div>
-            <div class="loader-text">INITIALIZING SYSTEM...</div>
         </div>
     </div>
+
+    <!-- Canvas for Cursor Trail -->
+    <canvas id="cursor-canvas"></canvas>
 
     <!-- Custom Cursor -->
     <div class="cursor" aria-hidden="true"></div>
@@ -33,13 +35,12 @@
     <div class="site-wrapper">
         <header class="header">
             <div class="container nav-container">
-                <a href="#" class="logo">REUBEN<span class="dot">_</span></a>
+                <a href="#" class="logo">REUBEN<span class="dot">_</span>
+                </a>
                 <nav>
                     <ul class="nav-links">
-                        <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
                         <li><a href="#about" class="nav-item" data-nav-link>About Us</a></li>
-                        <li><button class="nav-item nav-cta" data-open-contact type="button"
-                                data-cursor-label="Contact">D.O.T</button></li>
+                        <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
                         <li><button class="nav-item nav-cta" data-open-contact type="button"
                                 data-cursor-label="Contact">Talk</button></li>
                     </ul>
@@ -53,14 +54,13 @@
                 <div class="container">
                     <div class="gp-hero-top">
                         <div class="gp-hero-name">
-                            <div class="gp-kicker">Projects • About • D.O.T • Talk</div>
                             <h1 class="gp-title">
                                 <span class="reveal-line">Reuben</span>
                                 <span class="reveal-line">Binu George</span>
                             </h1>
                             <div class="gp-subtitle">
-                                <span class="reveal-line">Design &</span>
-                                <span class="reveal-line">Engineering</span>
+                                <span class="reveal-line">Gaming Enthusiast |</span>
+                                <span class="reveal-line">Tech Explorer</span>
                             </div>
                         </div>
 
@@ -93,131 +93,10 @@
                     </div>
 
                     <div class="gp-hero-bottom">
-                        <div class="gp-stat-row">
-                            <div class="gp-stat"><span class="gp-stat-x">x</span><span class="gp-stat-n">1</span></div>
-                            <div class="gp-stat"><span class="gp-stat-x">x</span><span class="gp-stat-n">7</span></div>
-                            <div class="gp-stat"><span class="gp-stat-x">x</span><span class="gp-stat-n">22</span></div>
+                        <div class="scroll-down-indicator">
+                            <span class="scroll-text">SCROLL DOWN</span>
+                            <div class="scroll-arrow">↓</div>
                         </div>
-                        <div class="gp-hero-ctas">
-                            <button class="gp-pill gp-pill-ghost" data-open-showreel type="button">Play
-                                Showreel</button>
-                            <button class="gp-pill" data-open-contact type="button">Hire me today</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Cases -->
-            <section id="cases" class="gp-cases">
-                <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">Cases (3) • Archive (0)</div>
-                        </div>
-                    </div>
-
-                    <div class="gp-case-list">
-                        <article class="gp-case" data-case>
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
-                                <div class="gp-case-head">
-                                    <div class="gp-case-title marquee" aria-hidden="true">
-                                        <div class="marquee-track">
-                                            <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                                Resources •</span><span>FiveM Resources •</span>
-                                            <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                                Resources •</span><span>FiveM Resources •</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>LUA</span><span>SQL</span><span>UI</span><span>Optimized Networking</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip" data-cursor-label="View">View</span>
-                                        <span class="gp-chip" data-cursor-label="Listen">Listen</span>
-                                    </div>
-                                </div>
-                                <div class="gp-case-media">
-                                    <div class="gp-case-card-title">FIVEM RESOURCES</div>
-                                </div>
-                            </a>
-                            <button class="gp-case-toggle" type="button" data-case-toggle
-                                data-cursor-label="Details">Details</button>
-                            <div class="gp-case-details" data-case-details>
-                                <div class="gp-mini">Overview</div>
-                                <p>High-performance roleplay framework with custom sync logic and optimized networked
-                                    events.</p>
-                            </div>
-                        </article>
-
-                        <article class="gp-case" data-case>
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
-                                <div class="gp-case-head">
-                                    <div class="gp-case-title marquee" aria-hidden="true">
-                                        <div class="marquee-track">
-                                            <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                                •</span><span>Astro Bot •</span>
-                                            <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                                •</span><span>Astro Bot •</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Python</span><span>Discord.py</span><span>Automation</span><span>Community</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip" data-cursor-label="View">View</span>
-                                        <span class="gp-chip" data-cursor-label="Listen">Listen</span>
-                                    </div>
-                                </div>
-                                <div class="gp-case-media">
-                                    <div class="gp-case-card-title">ASTRO BOT</div>
-                                </div>
-                            </a>
-                            <button class="gp-case-toggle" type="button" data-case-toggle
-                                data-cursor-label="Details">Details</button>
-                            <div class="gp-case-details" data-case-details>
-                                <div class="gp-mini">Overview</div>
-                                <p>Advanced Discord automation bot for community management and server integration.</p>
-                            </div>
-                        </article>
-
-                        <article class="gp-case" data-case>
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
-                                <div class="gp-case-head">
-                                    <div class="gp-case-title marquee" aria-hidden="true">
-                                        <div class="marquee-track">
-                                            <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                                •</span><span>3D Physics •</span>
-                                            <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                                •</span><span>3D Physics •</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Unity</span><span>C#</span><span>HLSL</span><span>Realtime
-                                            Simulation</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip" data-cursor-label="View">View</span>
-                                        <span class="gp-chip" data-cursor-label="Listen">Listen</span>
-                                    </div>
-                                </div>
-                                <div class="gp-case-media">
-                                    <div class="gp-case-card-title">3D PHYSICS</div>
-                                </div>
-                            </a>
-                            <button class="gp-case-toggle" type="button" data-case-toggle
-                                data-cursor-label="Details">Details</button>
-                            <div class="gp-case-details" data-case-details>
-                                <div class="gp-mini">Overview</div>
-                                <p>Real-time physics simulation showcasing custom shader work and rigid body dynamics.
-                                </p>
-                            </div>
-                        </article>
                     </div>
                 </div>
             </section>
@@ -227,13 +106,16 @@
                 <div class="container">
                     <div class="gp-about-grid">
                         <div class="gp-about-left">
-                            <div class="gp-mini">What I do</div>
-                            <h2 class="gp-h2">I bring the unexpected to brand & digital experiences</h2>
+                            <div class="gp-mini">Who I Am</div>
+                            <h2 class="gp-h2">Passionate Developer & Creative Coder</h2>
                         </div>
                         <div class="gp-about-right">
                             <p class="gp-lead">
-                                I design and engineer systems with high polish: smooth motion, strong typography, and
-                                performance-first builds.
+                                I'm a passionate developer with a love for web development, gaming, and creative coding.
+                                I enjoy building immersive experiences through FiveM scripting, crafting elegant web
+                                solutions, and exploring innovative technologies. Whether it's developing server-side
+                                scripts, creating engaging web interfaces, or working on academic projects, I'm always
+                                eager to learn and push the boundaries of what's possible.
                             </p>
                             <div class="gp-skill-grid">
                                 <div class="gp-skill-col">
@@ -256,6 +138,107 @@
                 </div>
             </section>
 
+            <!-- Cases -->
+            <section id="cases" class="gp-cases">
+                <div class="container">
+                    <div class="gp-cases-top">
+                        <div class="gp-cases-meta">
+                            <div class="gp-mini">Cases (3) • Archive (0)</div>
+                        </div>
+                    </div>
+
+                    <div class="gp-case-list">
+                        <!-- Project 1 -->
+                        <article class="gp-case gp-case-1" data-case>
+                            <!-- Top Marquee -->
+                            <div class="gp-case-head">
+                                <div class="gp-case-title marquee" aria-hidden="true">
+                                    <div class="marquee-track">
+                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
+                                            Resources •</span><span>FiveM Resources •</span>
+                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
+                                            Resources •</span><span>FiveM Resources •</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Centered Big Title -->
+                            <h2 class="gp-case-big-title">FIVEM RESOURCES</h2>
+
+                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
+                                <!-- Body for Bottom Controls -->
+                                <div class="gp-case-body">
+                                    <div class="gp-case-tags">
+                                        <span>LUA</span><span>SQL</span><span>UI</span><span>Optimized Networking</span>
+                                    </div>
+                                    <div class="gp-case-actions">
+                                        <span class="gp-chip">View Project</span>
+                                        <span class="gp-chip">Details</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+
+                        <!-- Project 2 -->
+                        <article class="gp-case gp-case-2" data-case>
+                            <div class="gp-case-head">
+                                <div class="gp-case-title marquee" aria-hidden="true">
+                                    <div class="marquee-track">
+                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
+                                            •</span><span>Astro Bot •</span>
+                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
+                                            •</span><span>Astro Bot •</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="gp-case-big-title">ASTRO BOT</h2>
+
+                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
+                                <div class="gp-case-body">
+                                    <div class="gp-case-tags">
+                                        <span>Python</span><span>Discord.py</span><span>Automation</span><span>Community</span>
+                                    </div>
+                                    <div class="gp-case-actions">
+                                        <span class="gp-chip">View Project</span>
+                                        <span class="gp-chip">Details</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+
+                        <!-- Project 3 -->
+                        <article class="gp-case gp-case-3" data-case>
+                            <div class="gp-case-head">
+                                <div class="gp-case-title marquee" aria-hidden="true">
+                                    <div class="marquee-track">
+                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
+                                            •</span><span>3D Physics •</span>
+                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
+                                            •</span><span>3D Physics •</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="gp-case-big-title">3D PHYSICS</h2>
+
+                            <a class="gp-case-hit" href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">
+                                <div class="gp-case-body">
+                                    <div class="gp-case-tags">
+                                        <span>Unity</span><span>C#</span><span>HLSL</span><span>Realtime
+                                            Simulation</span>
+                                    </div>
+                                    <div class="gp-case-actions">
+                                        <span class="gp-chip">View Project</span>
+                                        <span class="gp-chip">Details</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
             <!-- Footer -->
             <footer class="gp-footer">
                 <div class="gp-footer-marquee marquee" aria-hidden="true">
@@ -269,8 +252,7 @@
                 <div class="container gp-footer-inner">
                     <div class="gp-footer-top">
                         <div class="gp-audio">
-                            <button class="gp-pill gp-pill-ghost" data-audio-toggle type="button"
-                                data-cursor-label="Unmute">Unmute</button>
+                            <!-- Unmute removed as requested -->
                         </div>
                         <button class="gp-pill" data-open-contact type="button" data-cursor-label="Say Hi">Say
                             Hi</button>
@@ -279,7 +261,7 @@
                         <div class="gp-mini">Copyright 2026 • All rights reserved</div>
                         <div class="gp-footer-links">
                             <a href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">Github</a>
-                            <a href="#" rel="noreferrer">LinkedIn</a>
+                            <!-- LinkedIn removed as requested -->
                         </div>
                     </div>
                 </div>

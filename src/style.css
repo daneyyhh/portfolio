@@ -580,6 +580,10 @@ body.cursor-down .cursor {
     background-image: url('/images/project3.jpg');
 }
 
+.gp-article-1::before {
+    background-image: url('/images/project1.jpg');
+}
+
 /* Top Marquee */
 .gp-case-head {
     width: 100%;
