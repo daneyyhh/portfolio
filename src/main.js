@@ -504,6 +504,41 @@ function initCursorTrail() {
 // --- Text Scramble Effect ---
 
 
+// --- Hero Animations ---
+function initHero() {
+    // 1. Name & Subtitle Reveal (Left Side)
+    const lines = document.querySelectorAll('.gp-title .reveal-line, .gp-subtitle .reveal-line');
+    if (lines.length) {
+        gsap.fromTo(lines,
+            { y: "100%", opacity: 0 },
+            {
+                y: "0%",
+                opacity: 1,
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power3.out",
+                delay: 0.2
+            }
+        );
+    }
+
+    // 2. Side Content Reveal (Right Side)
+    const sideBlocks = document.querySelectorAll('.gp-side-block');
+    if (sideBlocks.length) {
+        gsap.fromTo(sideBlocks,
+            { x: 30, opacity: 0 },
+            {
+                x: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power2.out",
+                delay: 0.8 // Start after name reveals
+            }
+        );
+    }
+}
+
 // Start Everything
 window.addEventListener('load', () => {
     initCursor();
@@ -516,6 +551,7 @@ window.addEventListener('load', () => {
     initNavigation();
     initCaseToggles();
     startLoader();
+    initHero(); // New hero animation
     setTimeout(initScrollAnimations, 1000);
 });
 
