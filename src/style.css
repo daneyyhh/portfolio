@@ -582,7 +582,7 @@ body.cursor-down .cursor {
 
 /* Project Images via Pseudo-element */
 .gp-case-1::before {
-    background-image: url('/images/project1.jpg');
+    background-image: url('/images/finkee-cover.png');
 }
 
 .gp-case-2::before {
@@ -594,7 +594,7 @@ body.cursor-down .cursor {
 }
 
 .gp-article-1::before {
-    background-image: url('/images/illuminati-cover-v2.jpg');
+    background-image: url('/images/myths-cover.png');
 }
 
 /* Top Marquee - Absolute at Top */
