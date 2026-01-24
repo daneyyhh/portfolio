@@ -612,24 +612,27 @@ body.cursor-down .cursor {
     /* Restoring difference mode for visibility */
 }
 
-/* Marquee Text - Clean, Big, No Background (User Requested 2.2rem) */
+/* Marquee Text - MASSIVE CLEAN (User Requested 5rem) */
 .marquee-track span {
     font-family: var(--font-heading);
-    /* Revert to heading font for impact */
     font-weight: 400;
-    font-size: 2.2rem;
-    /* Exact size requested */
+    font-size: 5rem;
+    /* Massive size requested */
     text-transform: uppercase;
     color: #fff;
 
-    /* Clean Style: No Borders, No Background */
-    background: transparent;
-    border: none;
+    /* Force Clean Style */
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
     padding: 0;
-    margin-right: 2.5rem;
-    /* Wider gap for larger text */
+    margin-right: 4rem;
+    /* Wide gap for massive text */
     border-radius: 0;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
+    /* Tighter tracking for big text */
     backdrop-filter: none;
 }
 
