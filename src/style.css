@@ -612,20 +612,26 @@ body.cursor-down .cursor {
     /* Restoring difference mode for visibility */
 }
 
-/* Marquee Text - Clean, Big, No Background */
+/* Marquee Text - FINKEE Tag Style */
 .marquee-track span {
-    font-family: var(--font-heading);
+    font-family: 'Space Mono', monospace;
+    /* Tech look */
     font-weight: 400;
-    font-size: 1.8rem;
-    /* "Lil big" */
+    font-size: 0.8rem;
+    /* Small, precise tech size */
     text-transform: uppercase;
     color: #fff;
+
+    /* FINKEE Tag Look: Bordered, Transparent, Techy */
     background: transparent;
-    border: none;
-    padding: 0;
-    margin-right: 2rem;
+    /* No fill */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Thin tech border */
+    padding: 0.2rem 0.6rem;
+    margin-right: 0.8rem;
     border-radius: 0;
-    letter-spacing: 0.1em;
+    /* Sharp corners */
+    letter-spacing: 0.05em;
     backdrop-filter: none;
 }
 
