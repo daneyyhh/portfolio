@@ -581,7 +581,7 @@ body.cursor-down .cursor {
 }
 
 .gp-article-1::before {
-    background-image: url('/images/project1.jpg');
+    background-image: url('/images/article1.jpg');
 }
 
 /* Top Marquee */
