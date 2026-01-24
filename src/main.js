@@ -463,18 +463,22 @@ function initCursorTrail() {
     });
 
     function createTrailParticle() {
-        // Create fewer particles (reduced from 3 to 1 per event)
-        for (let i = 0; i < 1; i++) {
-            particles.push({
-                x: mouseX,
-                y: mouseY,
-                vx: (Math.random() - 0.5) * 2, // Random X velocity
-                vy: (Math.random() - 0.5) * 2, // Random Y velocity
-                size: Math.random() * 8 + 4,
-                life: 1,
-                decay: Math.random() * 0.03 + 0.01 // Slower decay for smoother feel
-            });
-        }
+        // Strict limit: Max 6 particles visible at once
+        if (particles.length >= 6) return;
+
+        // Throttle: Only create if we have room (checking length above is enough, but spacing helps)
+        // adding a small random skip for natural feel
+        if (Math.random() > 0.5) return;
+
+        particles.push({
+            x: mouseX,
+            y: mouseY,
+            vx: (Math.random() - 0.5) * 0.5, // Slower speed (reduced from 2)
+            vy: (Math.random() - 0.5) * 0.5, // Slower speed
+            size: Math.random() * 12 + 8,    // Bigger size (8-20px range)
+            life: 1,
+            decay: Math.random() * 0.02 + 0.01 // Slow decay
+        });
     }
 
     function animateTrail() {
@@ -539,8 +543,30 @@ function initHero() {
     }
 }
 
+// --- Smooth Scroll (Lenis) ---
+function initSmoothScroll() {
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+}
+
 // Start Everything
 window.addEventListener('load', () => {
+    initSmoothScroll(); // Start Lenis
     initCursor();
     initCursorTrail(); // New trail
 
