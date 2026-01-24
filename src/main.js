@@ -463,8 +463,8 @@ function initCursorTrail() {
     });
 
     function createTrailParticle() {
-        // Create multiple particles for "spread"
-        for (let i = 0; i < 3; i++) {
+        // Create fewer particles (reduced from 3 to 1 per event)
+        for (let i = 0; i < 1; i++) {
             particles.push({
                 x: mouseX,
                 y: mouseY,
