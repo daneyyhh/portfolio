@@ -612,6 +612,23 @@ body.cursor-down .cursor {
     /* Restoring difference mode for visibility */
 }
 
+/* Marquee Text - Clean, Big, No Background */
+.marquee-track span {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1.8rem;
+    /* "Lil big" */
+    text-transform: uppercase;
+    color: #fff;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 2rem;
+    border-radius: 0;
+    letter-spacing: 0.1em;
+    backdrop-filter: none;
+}
+
 /* Centered Big Title */
 .gp-case-big-title {
     position: relative;
