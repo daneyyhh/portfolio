@@ -601,15 +601,27 @@ body.cursor-down .cursor {
 .gp-case-head {
     position: absolute;
     top: 2rem;
-    /* Clean spacing from top edge */
     left: 0;
     width: 100%;
     padding: 0;
-    background: transparent;
+
+    /* Force Transparent Container */
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
     z-index: 10;
     pointer-events: none;
-    mix-blend-mode: difference;
-    /* Restoring difference mode for visibility */
+    /* Removed mix-blend-mode to avoid artifacts */
+}
+
+/* Ensure inner marquee wrapper is also clean */
+.marquee,
+.marquee-track {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* Marquee Text - MASSIVE CLEAN (User Requested 5rem) */
