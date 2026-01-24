@@ -608,7 +608,8 @@ body.cursor-down .cursor {
     background: transparent;
     z-index: 10;
     pointer-events: none;
-    /* Removed mix-blend-mode to allow specific color/border visibility */
+    mix-blend-mode: difference;
+    /* Restoring difference mode for visibility */
 }
 
 /* Centered Big Title */
