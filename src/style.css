@@ -585,6 +585,7 @@ body.cursor-down .cursor {
 }
 
 /* Background Image with Blur */
+/* Background Image - Clean Full Screen */
 .gp-case::before {
     content: '';
     position: absolute;
@@ -595,10 +596,11 @@ body.cursor-down .cursor {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(8px) brightness(0.6);
-    /* Stronger blur for background feel */
-    transform: scale(1.1);
-    /* Prevent blurred edges */
+    /* Removed blur filter per user request ("fit full screen" implies visibility) */
+    filter: brightness(0.7);
+    /* Just slight dim for text contrast, no blur */
+    transform: none;
+    /* Removed scale */
     z-index: 1;
     pointer-events: none;
 }
