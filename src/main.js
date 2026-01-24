@@ -463,21 +463,20 @@ function initCursorTrail() {
     });
 
     function createTrailParticle() {
-        // Strict limit: Max 6 particles visible at once
-        if (particles.length >= 6) return;
+        // Strict limit: Max 3 particles visible at once (Very sparse)
+        if (particles.length >= 3) return;
 
-        // Throttle: Only create if we have room (checking length above is enough, but spacing helps)
-        // adding a small random skip for natural feel
-        if (Math.random() > 0.5) return;
+        // Throttle: Only create 10% of the time (Very rare)
+        if (Math.random() > 0.1) return;
 
         particles.push({
             x: mouseX,
             y: mouseY,
-            vx: (Math.random() - 0.5) * 0.5, // Slower speed (reduced from 2)
-            vy: (Math.random() - 0.5) * 0.5, // Slower speed
-            size: Math.random() * 12 + 8,    // Bigger size (8-20px range)
+            vx: (Math.random() - 0.5) * 0.2, // Ultra slow speed (crawl)
+            vy: (Math.random() - 0.5) * 0.2,
+            size: Math.random() * 12 + 8,    // Big size
             life: 1,
-            decay: Math.random() * 0.02 + 0.01 // Slow decay
+            decay: Math.random() * 0.01 + 0.005 // Very slow decay
         });
     }
 
@@ -487,11 +486,11 @@ function initCursorTrail() {
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
 
-            // update position for smoothness
+            // update position
             p.x += p.vx;
             p.y += p.vy;
 
-            ctx.fillStyle = `rgba(255, 0, 0, ${p.life * 0.5})`; // Red trail
+            ctx.fillStyle = `rgba(255, 0, 0, ${p.life * 0.4})`; // Lower opacity
             ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
             p.life -= p.decay;
 
@@ -546,7 +545,7 @@ function initHero() {
 // --- Smooth Scroll (Lenis) ---
 function initSmoothScroll() {
     const lenis = new Lenis({
-        duration: 1.2,
+        duration: 2.0, // Increased to 2.0 for very smooth/buttery feel
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         gestureDirection: 'vertical',

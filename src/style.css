@@ -596,9 +596,12 @@ body.cursor-down .cursor {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* Removed blur filter per user request ("fit full screen" implies visibility) */
-    filter: brightness(0.7);
-    /* Just slight dim for text contrast, no blur */
+
+    /* Strong Blur & Dim per user request */
+    filter: blur(12px) brightness(0.6);
+    transform: scale(1.1);
+    /* Scale up to prevent blurred edges */
+    z-index: 1;
     transform: none;
     /* Removed scale */
     z-index: 1;
