@@ -582,7 +582,7 @@ body.cursor-down .cursor {
 
 /* Project Images via Pseudo-element */
 .gp-case-1::before {
-    background-image: url('/images/finkee-cover.png');
+    background-image: url('/images/project1.jpg');
 }
 
 .gp-case-2::before {
@@ -594,22 +594,22 @@ body.cursor-down .cursor {
 }
 
 .gp-article-1::before {
-    background-image: url('/images/myths-cover.png');
+    background-image: url('/images/illuminati-cover-v2.jpg');
 }
 
 /* Top Marquee - Absolute at Top */
 .gp-case-head {
     position: absolute;
-    top: 0;
+    top: 2rem;
+    /* Clean spacing from top edge */
     left: 0;
     width: 100%;
-    padding: 1.5rem 0;
+    padding: 0;
     background: transparent;
-    /* Clean look */
-    backdrop-filter: none;
     z-index: 10;
     pointer-events: none;
-    /* Let clicks pass through */
+    mix-blend-mode: difference;
+    /* Ensures visibility on light/dark bg */
 }
 
 /* Centered Big Title */
