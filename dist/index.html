@@ -12,19 +12,50 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Lenis for Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
-  <script type="module" crossorigin src="/assets/index-DHKG9dGE.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-5371hK7X.css">
+
+  <script type="module" crossorigin src="/assets/index-Cn8i5gp2.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CX3NmEs5.css">
 </head>
 
 <body class="loading-active">
 
     <!-- Loading Screen -->
+    <!-- Loader -->
     <div class="loader">
-        <div class="loader-content">
-            <p class="loader-text">loading</p>
-            <div class="load"></div>
+        <div class="loader-inner-wrapper"> <!-- Added wrapper for centering -->
+            <div class="ldr-container">
+                <div class="carousel">
+                    <div class="love"></div>
+                    <div class="love"></div>
+                    <div class="love"></div>
+                    <div class="love"></div>
+                    <div class="love"></div>
+                    <div class="love"></div>
+                    <div class="love"></div>
+                </div>
+            </div>
+            <div class="ldr-container">
+                <div class="carousel">
+                    <div class="death"></div>
+                    <div class="death"></div>
+                    <div class="death"></div>
+                    <div class="death"></div>
+                    <div class="death"></div>
+                    <div class="death"></div>
+                    <div class="death"></div>
+                </div>
+            </div>
+            <div class="ldr-container">
+                <div class="carousel">
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                    <div class="robots"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -46,6 +77,7 @@
                         <li><a href="#about" class="nav-item" data-nav-link>About Us</a></li>
                         <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
                         <li><a href="#articles" class="nav-item" data-nav-link>Articles</a></li>
+                        <li><a href="#ui" class="nav-item" data-nav-link>UI</a></li>
                         <li><button class="nav-item nav-cta" data-open-contact type="button"
                                 data-cursor-label="Contact">Talk</button></li>
                     </ul>
@@ -240,12 +272,12 @@
                 </div>
             </section>
 
-            <!-- Articles -->
+            <!-- Articles Section -->
             <section id="articles" class="gp-cases">
                 <div class="container">
                     <div class="gp-cases-top">
                         <div class="gp-cases-meta">
-                            <div class="gp-mini">Articles (1)</div>
+                            <div class="gp-mini">Articles</div>
                         </div>
                     </div>
 
@@ -256,19 +288,18 @@
                                 <div class="gp-case-title marquee" aria-hidden="true">
                                     <div class="marquee-track">
                                         <span>History & Myths •</span><span>History & Myths •</span><span>History &
-                                            Myths
-                                            •</span><span>History & Myths •</span>
+                                            Myths •</span><span>History & Myths •</span>
                                         <span>History & Myths •</span><span>History & Myths •</span><span>History &
-                                            Myths
-                                            •</span><span>History & Myths •</span>
+                                            Myths •</span><span>History & Myths •</span>
                                     </div>
                                 </div>
                             </div>
 
                             <h2 class="gp-case-big-title">THE ILLUMINATI</h2>
 
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/illuminati-article" target="_blank"
-                                rel="noreferrer">
+                            <a class="gp-case-hit"
+                                href="https://medium.com/@reuben_rapose/the-history-of-conspiracy-theories-and-how-they-shape-our-world-today-0274154fa16b"
+                                target="_blank" rel="noreferrer">
                                 <div class="gp-case-body">
                                     <div class="gp-case-tags">
                                         <span>History</span><span>Myths</span><span>Conspiracy</span><span>Analysis</span>
@@ -284,42 +315,138 @@
                 </div>
             </section>
 
-            <!-- UI Elements -->
-            <section id="ui" class="gp-cases">
+            <!-- UI Section (Gallery4 Template) -->
+            <section id="ui" class="gallery4-section">
                 <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">UI Elements</div>
+                    <div class="gallery4-header">
+                        <div class="gallery4-title-group">
+                            <h2 class="gallery4-title">UI Projects</h2>
+                            <p class="gallery4-desc">Explore a collection of interface designs and interactive
+                                components crafted with modern web technologies.</p>
+                        </div>
+                        <div class="gallery4-nav">
+                            <button id="gallery-prev" class="gallery4-btn" aria-label="Previous slide">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-arrow-left">
+                                    <path d="m12 19-7-7 7-7" />
+                                    <path d="M19 12H5" />
+                                </svg>
+                            </button>
+                            <button id="gallery-next" class="gallery4-btn" aria-label="Next slide">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-arrow-right">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="gp-case">
-                        <div class="gp-case-head">
-                            <div class="gp-case-title marquee" aria-hidden="true">
-                                <div class="marquee-track">
-                                    <span>Microphone •</span><span>Microphone •</span><span>Microphone
-                                        •</span><span>Microphone •</span>
-                                    <span>Microphone •</span><span>Microphone •</span><span>Microphone
-                                        •</span><span>Microphone •</span>
-                                </div>
+                    <div class="gallery4-carousel">
+                        <div class="gallery4-track" id="gallery-track">
+                            <!-- Item 1 -->
+                            <div class="gallery4-item">
+                                <a href="#" class="gallery4-card">
+                                    <div class="gallery4-image-wrapper">
+                                        <img src="https://images.unsplash.com/photo-1551250928-243dc937c49d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                                            alt="Project 1" class="gallery4-img">
+                                        <div class="gallery4-overlay"></div>
+                                        <div class="gallery4-content">
+                                            <h3 class="gallery4-card-title">Modern Dashboard</h3>
+                                            <p class="gallery4-card-desc">A clean, component-based dashboard interface
+                                                designed for scalability.</p>
+                                            <div class="gallery4-readmore">
+                                                View Project <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="ml-2">
+                                                    <path d="M5 12h14" />
+                                                    <path d="m12 5 7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="gallery4-item">
+                                <a href="#" class="gallery4-card">
+                                    <div class="gallery4-image-wrapper">
+                                        <img src="https://images.unsplash.com/photo-1551250928-e4a05afaed1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                                            alt="Project 2" class="gallery4-img">
+                                        <div class="gallery4-overlay"></div>
+                                        <div class="gallery4-content">
+                                            <h3 class="gallery4-card-title">E-Commerce UI</h3>
+                                            <p class="gallery4-card-desc">Utility-first design approach ensuring
+                                                consistency across the platform.</p>
+                                            <div class="gallery4-readmore">
+                                                View Project <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="ml-2">
+                                                    <path d="M5 12h14" />
+                                                    <path d="m12 5 7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="gallery4-item">
+                                <a href="#" class="gallery4-card">
+                                    <div class="gallery4-image-wrapper">
+                                        <img src="https://images.unsplash.com/photo-1536735561749-fc87494598cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                                            alt="Project 3" class="gallery4-img">
+                                        <div class="gallery4-overlay"></div>
+                                        <div class="gallery4-content">
+                                            <h3 class="gallery4-card-title">Mobile App Interface</h3>
+                                            <p class="gallery4-card-desc">Interactive prototypes focusing on
+                                                gesture-based navigation.</p>
+                                            <div class="gallery4-readmore">
+                                                View Project <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="ml-2">
+                                                    <path d="M5 12h14" />
+                                                    <path d="m12 5 7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Item 4 -->
+                            <div class="gallery4-item">
+                                <a href="#" class="gallery4-card">
+                                    <div class="gallery4-image-wrapper">
+                                        <img src="https://images.unsplash.com/photo-1548324215-9133768e4094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                                            alt="Project 4" class="gallery4-img">
+                                        <div class="gallery4-overlay"></div>
+                                        <div class="gallery4-content">
+                                            <h3 class="gallery4-card-title">Design System</h3>
+                                            <p class="gallery4-card-desc">A comprehensive design language built for
+                                                reusable components.</p>
+                                            <div class="gallery4-readmore">
+                                                View Project <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="ml-2">
+                                                    <path d="M5 12h14" />
+                                                    <path d="m12 5 7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
+                    </div>
 
-                        <label class="mic-container">
-                            <input type="checkbox">
-                            <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"
-                                class="microphone-slash">
-                                <path
-                                    d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z">
-                                </path>
-                            </svg>
-                            <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"
-                                class="microphone">
-                                <path
-                                    d="M192 0C139 0 96 43 96 96V256c0 53 43 96 96 96s96-43 96-96V96c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24C16 333.2 144.3 438.3 184 445.6V480H120c-13.3 0-24 10.7-24 24s10.7 24 24 24h144c13.3 0 24-10.7 24-24s-10.7-24-24-24H200V445.6c96-60 168-164.7 168-229.6c0-13.3-10.7-24-24-24s-24 10.7-24 24c0 83.9-68.1 152-152 152S64 299.9 64 216z">
-                                </path>
-                            </svg>
-                        </label>
+                    <div class="gallery4-dots" id="gallery-dots">
+                        <!-- Dots injected via JS -->
                     </div>
                 </div>
             </section>
@@ -404,9 +531,7 @@
         </div>
     </div>
 
-    <!-- GSAP Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Main JS (GSAP Imported) -->
 </body>
 
 </html>
