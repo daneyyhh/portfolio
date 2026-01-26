@@ -1485,9 +1485,15 @@ body.cursor-down .cursor {
 }
 
 /* ------ Animation ------ */
-50% {
-    transform: rotate(-10deg) scale(1.2);
-}
+@keyframes keyframes-fill {
+    0% {
+        transform: rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotate(-10deg) scale(1.2);
+    }
 }
 
 /* --- UI Section: Glass Cards --- */
