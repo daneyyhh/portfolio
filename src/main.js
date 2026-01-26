@@ -20,7 +20,8 @@ window.addEventListener('load', () => {
     initMagnetic();
     initNavigation();
     initCaseToggles();
-    startLoader();
+    // Loader removed per request
+    // startLoader(); 
     initHero(); // New hero animation
     initGallery4(); // Gallery4 Carousel
 
