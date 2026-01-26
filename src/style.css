@@ -49,63 +49,130 @@ html {
     padding: 0;
 }
 
-.loader-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Center items */
-    text-align: center;
-}
-
-/* Pixel Icon (Hourglass representation) */
-.pixel-hourglass {
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    /* A simplified pixel hourglass shape using box-shadow */
-    box-shadow:
-        4px 0 #FFF, 8px 0 #FFF, 12px 0 #FFF, 16px 0 #FFF, 20px 0 #FFF, 24px 0 #FFF,
-        4px 28px #FFF, 8px 28px #FFF, 12px 28px #FFF, 16px 28px #FFF, 20px 28px #FFF, 24px 28px #FFF,
-        8px 4px #FFF, 20px 4px #FFF,
-        12px 8px #FFF, 16px 8px #FFF,
-        14px 12px #FFF,
-        12px 16px #FFF, 16px 16px #FFF,
-        8px 20px #FFF, 20px 20px #FFF,
-        4px 24px #FFF, 24px 24px #FFF;
-
-    margin-bottom: 2rem;
-    opacity: 1;
-    animation: rotate-icon 2s steps(8) infinite;
-    /* Steps for pixelated rotation feel */
-}
-
-@keyframes rotate-icon {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(180deg);
-    }
-
-    /* Hourglass flips */
-}
-
-.counter {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    /* Minecraft font usually doesn't need bold */
-    font-size: 2rem;
-    /* Smaller, more minimal like reference */
-    line-height: 1;
-    color: #FFF;
-    text-shadow: none;
-    /* Reference is clean */
+/* --- New Loader --- */
+.loader-content {
+    width: 80px;
+    height: 50px;
+    position: relative;
+    /* Replaces the user's .loader */
 }
 
 .loader-text {
-    display: none;
-    /* Reference only has number often */
+    position: absolute;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    color: #C8B6FF;
+    animation: text_713 3.5s ease both infinite;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    display: block;
+    /* Ensure it is visible */
+    font-family: var(--font-heading);
+    /* match site font if desired, or keep default */
+}
+
+.load {
+    background-color: #9A79FF;
+    border-radius: 50px;
+    display: block;
+    height: 16px;
+    width: 16px;
+    bottom: 0;
+    position: absolute;
+    transform: translateX(64px);
+    animation: loading_713 3.5s ease both infinite;
+}
+
+.load::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #D1C2FF;
+    border-radius: inherit;
+    animation: loading2_713 3.5s ease both infinite;
+}
+
+@keyframes text_713 {
+    0% {
+        letter-spacing: 1px;
+        transform: translateX(0px);
+    }
+
+    40% {
+        letter-spacing: 2px;
+        transform: translateX(26px);
+    }
+
+    80% {
+        letter-spacing: 1px;
+        transform: translateX(32px);
+    }
+
+    90% {
+        letter-spacing: 2px;
+        transform: translateX(0px);
+    }
+
+    100% {
+        letter-spacing: 1px;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes loading_713 {
+    0% {
+        width: 16px;
+        transform: translateX(0px);
+    }
+
+    40% {
+        width: 100%;
+        transform: translateX(0px);
+    }
+
+    80% {
+        width: 16px;
+        transform: translateX(64px);
+    }
+
+    90% {
+        width: 100%;
+        transform: translateX(0px);
+    }
+
+    100% {
+        width: 16px;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes loading2_713 {
+    0% {
+        transform: translateX(0px);
+        width: 16px;
+    }
+
+    40% {
+        transform: translateX(0%);
+        width: 80%;
+    }
+
+    80% {
+        width: 100%;
+        transform: translateX(0px);
+    }
+
+    90% {
+        width: 80%;
+        transform: translateX(15px);
+    }
+
+    100% {
+        transform: translateX(0px);
+        width: 16px;
+    }
 }
 
 * {
@@ -136,21 +203,7 @@ body {
     align-items: center;
 }
 
-.loader-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* Loader */
-.counter {
-    font-family: var(--font-heading);
-    font-size: clamp(6rem, 15vw, 12rem);
-    /* Massive size */
-    color: #fff;
-    font-weight: 400;
-}
+/* Cleaned up old loader wrappers */
 
 /* ... existing nav ... */
 

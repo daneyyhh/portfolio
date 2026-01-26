@@ -240,12 +240,9 @@ function initMagnetic() {
 
 // --- Loading Sequence ---
 function startLoader() {
-    const counter = document.querySelector('.counter');
-    const loaderText = document.querySelector('.loader-text');
+    const loaderContent = document.querySelector('.loader-content'); // Renamed from .loader in user css to avoid conflict
     const loader = document.querySelector('.loader');
     const site = document.querySelector('.site-wrapper');
-
-    let count = 0;
 
     // Ensure main content is not interactable/visible until loader completes
     if (site) {
@@ -253,24 +250,15 @@ function startLoader() {
         site.style.pointerEvents = 'none';
     }
 
-    const interval = setInterval(() => {
-        count += Math.floor(Math.random() * 5) + 2;
-        if (count > 100) count = 100;
-
-        counter.innerText = `${count}%`;
-
-        if (count === 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-                animateOut();
-            }, 400); // Slight pause at 100%
-        }
-    }, 40);
+    // Wait for one full animation cycle (3.5s)
+    setTimeout(() => {
+        animateOut();
+    }, 3500);
 
     function animateOut() {
         const tl = gsap.timeline();
 
-        tl.to([counter, loaderText], {
+        tl.to(loaderContent, {
             y: -50,
             opacity: 0,
             duration: 0.8,
