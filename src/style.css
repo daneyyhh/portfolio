@@ -1429,3 +1429,69 @@ body.cursor-down .cursor {
         grid-template-columns: 1fr;
     }
 }
+
+/* --- UI Section: Microphone --- */
+.mic-container {
+    --color: #a5a5b0;
+    --size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
+    margin: 0 auto;
+    /* Center in parent */
+}
+
+.mic-container .microphone-slash {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    width: 1em;
+    height: 1em;
+    fill: inherit;
+}
+
+.mic-container .microphone {
+    position: absolute;
+    display: none;
+    animation: keyframes-fill .5s;
+    width: 0.8em;
+    /* Adjusted for visual balance */
+    height: 1em;
+    fill: inherit;
+}
+
+/* ------ On check event ------ */
+.mic-container input:checked~.microphone-slash {
+    display: none;
+}
+
+.mic-container input:checked~.microphone {
+    display: block;
+    fill: #FFF;
+    /* White when active for effect */
+}
+
+/* ------ Hide the default checkbox ------ */
+.mic-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+    0% {
+        transform: rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotate(-10deg) scale(1.2);
+    }
+}
