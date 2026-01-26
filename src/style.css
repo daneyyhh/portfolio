@@ -1514,17 +1514,3 @@ body.cursor-down .cursor {
     background-color: #fff;
     font-weight: 600;
 }
-
-/* --- Layout: Two Column Grid --- */
-.two-col-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .two-col-grid {
-        grid-template-columns: 1fr;
-    }
-}
