@@ -1430,125 +1430,87 @@ body.cursor-down .cursor {
     }
 }
 
-/* --- UI Section: Microphone --- */
-.mic-container {
-    --color: #a5a5b0;
-    --size: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    font-size: var(--size);
-    user-select: none;
-    fill: var(--color);
+/* --- UI Section: Browser Card & Switcher --- */
+.browser-card {
+    width: 340px;
+    /* Slight increase to fit switcher comfortably */
+    height: 254px;
     margin: 0 auto;
-    /* Center in parent */
+    background-color: #011522;
+    border-radius: 8px;
+    z-index: 1;
+    display: flex;
+    /* Added layout control */
+    flex-direction: column;
 }
 
-.mic-container .microphone-slash {
-    position: absolute;
-    animation: keyframes-fill .5s;
-    width: 1em;
-    height: 1em;
-    fill: inherit;
+.tools {
+    display: flex;
+    align-items: center;
+    padding: 9px;
 }
 
-.mic-container .microphone {
-    position: absolute;
-    display: none;
-    animation: keyframes-fill .5s;
-    width: 0.8em;
-    /* Adjusted for visual balance */
-    height: 1em;
-    fill: inherit;
+.circle {
+    padding: 0 4px;
 }
 
-/* ------ On check event ------ */
-.mic-container input:checked~.microphone-slash {
-    display: none;
+.box {
+    display: inline-block;
+    align-items: center;
+    width: 10px;
+    height: 10px;
+    padding: 1px;
+    border-radius: 50%;
 }
 
-.mic-container input:checked~.microphone {
-    display: block;
-    fill: #FFF;
-    /* White when active for effect */
+.red {
+    background-color: #ff605c;
 }
 
-/* ------ Hide the default checkbox ------ */
-.mic-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+.yellow {
+    background-color: #ffbd44;
 }
 
-/* ------ Animation ------ */
-@keyframes keyframes-fill {
-    0% {
-        transform: rotate(0deg) scale(0);
-        opacity: 0;
-    }
-
-    50% {
-        transform: rotate(-10deg) scale(1.2);
-    }
+.green {
+    background-color: #00ca4e;
 }
 
-/* --- UI Section: Glass Cards --- */
-.glass-container {
+/* Switcher */
+.radio-inputs {
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* Full width of parent */
-    padding: 6rem 0;
-    /* Add space */
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
 }
 
-.glass-container .glass {
-    position: relative;
-    width: 180px;
-    height: 200px;
-    background: linear-gradient(#fff2, transparent);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
+.radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.radio-inputs .radio input {
+    display: none;
+}
+
+.radio-inputs .radio .name {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.5s;
-    border-radius: 10px;
-    margin: 0 -45px;
-    backdrop-filter: blur(10px);
-    transform: rotate(calc(var(--r) * 1deg));
     cursor: pointer;
-}
-
-.glass-container:hover .glass {
-    transform: rotate(0deg);
-    margin: 0 10px;
-}
-
-.glass-container .glass::before {
-    content: attr(data-text);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    display: flex;
-    justify-content: center;
     align-items: center;
-    color: #fff;
-    font-family: var(--font-heading);
-    letter-spacing: 0.1em;
-    font-size: 1.2rem;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
 }
 
-.glass-container .glass svg {
-    font-size: 4em;
-    /* Increased size */
-    fill: #fff;
+.radio-inputs .radio input:checked+.name {
+    background-color: #fff;
+    font-weight: 600;
 }
