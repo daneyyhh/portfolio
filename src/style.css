@@ -50,6 +50,7 @@ html {
 }
 
 /* --- Love/Death/Robots Loader --- */
+/* --- Love/Death/Robots Loader --- */
 .loader {
     display: flex;
     position: fixed;
@@ -84,7 +85,8 @@ html {
 
 /* Reusing provided CSS but adapting slightly for full screen centering */
 
-.container {
+.ldr-container {
+    /* Renamed from .container */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -103,21 +105,21 @@ html {
     animation-delay: 2s;
 }
 
-.loader .container:nth-child(3) {
+.loader .ldr-container:nth-child(3) {
     justify-content: flex-start;
     justify-items: flex-start;
     animation: scroll-up 4s infinite ease-in-out;
     animation-delay: 3s;
 }
 
-.loader .container:nth-child(2) {
+.loader .ldr-container:nth-child(2) {
     justify-content: flex-end;
     justify-items: flex-end;
     animation: scroll-down 4s infinite ease-in-out;
     animation-delay: 3s;
 }
 
-.loader .container:nth-child(1) {
+.loader .ldr-container:nth-child(1) {
     justify-content: flex-end;
     justify-items: flex-end;
     animation: scroll-down 3s infinite ease-in-out;
@@ -125,7 +127,8 @@ html {
 }
 
 .love {
-    background: red;
+    background: #fff;
+    /* White */
     display: flex;
     width: 30px;
     height: 30px;
@@ -145,7 +148,8 @@ html {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: red;
+    background: #fff;
+    /* White */
 }
 
 .love::before {
@@ -171,7 +175,8 @@ html {
     content: '';
     height: 63px;
     position: absolute;
-    border-left: 12px solid red;
+    border-left: 12px solid #fff;
+    /* White */
     transform: rotate(45deg);
     border-radius: 8px;
     top: -4px;
@@ -181,7 +186,8 @@ html {
     content: '';
     height: 60px;
     position: absolute;
-    border-left: 12px solid red;
+    border-left: 12px solid #fff;
+    /* White */
     transform: rotate(-45deg);
 }
 
@@ -194,7 +200,8 @@ html {
     width: 100%;
     height: 55px;
     justify-content: space-between;
-    background-color: #ff0000;
+    background-color: #fff;
+    /* White Body */
     border-radius: 0 8px 8px;
     padding: 8px;
     animation-delay: 5s;
@@ -206,7 +213,8 @@ html {
     height: 12px;
     top: 0;
     left: 0;
-    background-color: #ffffff;
+    background-color: #000;
+    /* Black dots */
     border-radius: 50%;
     animation-delay: 2s;
     animation: blink 0.5s 2 forwards;
@@ -218,7 +226,8 @@ html {
     height: 12px;
     top: 0;
     left: 0;
-    background-color: #ffffff;
+    background-color: #000;
+    /* Black dots */
     border-radius: 50%;
     animation-delay: 2s;
     animation: blink 0.5s 2 forwards;
