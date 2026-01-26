@@ -344,16 +344,7 @@ body {
     }
 }
 
-body.loading-active {
-    overflow: hidden;
-    height: 100vh;
-}
-
-body.loading-active .site-wrapper {
-    opacity: 0;
-    pointer-events: none;
-}
-
+/* body.loading-active removed to prevent stuck loader */
 body.modal-open {
     overflow: hidden;
 }
