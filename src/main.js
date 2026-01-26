@@ -240,7 +240,7 @@ function initMagnetic() {
 
 // --- Loading Sequence ---
 function startLoader() {
-    const loaderContent = document.querySelector('.loader-content'); // Renamed from .loader in user css to avoid conflict
+    const loaderContent = document.querySelector('.loader-inner-wrapper'); // Updated selector for new loader structure
     const loader = document.querySelector('.loader');
     const site = document.querySelector('.site-wrapper');
 
