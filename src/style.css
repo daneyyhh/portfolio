@@ -1437,7 +1437,7 @@ body.cursor-down .cursor {
     /* Slight increase to fit switcher comfortably */
     height: 254px;
     /* margin: 0 auto; REMOVED */
-    background-color: #011522;
+    background-color: transparent;
     border-radius: 8px;
     z-index: 1;
     display: flex;
