@@ -533,9 +533,18 @@
     <!-- Failsafe: Remove loader if JS fails -->
     <script>
         setTimeout(() => {
-            if (document.body.classList.contains('loading-active')) {
+            const loader = document.querySelector('.loader');
+            if (document.body.classList.contains('loading-active') || (loader && getComputedStyle(loader).display !== 'none')) {
                 console.warn('Loader timed out, forcing removal.');
                 document.body.classList.remove('loading-active');
+
+                // Force hide the loader element
+                if (loader) {
+                    loader.style.display = 'none';
+                    loader.style.pointerEvents = 'none';
+                    loader.style.zIndex = '-9999';
+                }
+
                 // Also show content just in case
                 const site = document.querySelector('.site-wrapper');
                 if (site) {
@@ -543,7 +552,7 @@
                     site.style.pointerEvents = 'auto';
                 }
             }
-        }, 5000); 
+        }, 4000); 
     </script>
     <!-- Main JS (GSAP Imported) -->
     <script type="module" src="/src/main.js"></script>
