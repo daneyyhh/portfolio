@@ -13,51 +13,11 @@
         rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-  <script type="module" crossorigin src="/assets/index-C5YBwsfO.js"></script>
+  <script type="module" crossorigin src="/assets/index-a_gLYlQm.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-BNty0FIo.css">
 </head>
 
-<body class="loading-active">
-
-    <!-- Loading Screen -->
-    <!-- Loader -->
-    <div class="loader">
-        <div class="loader-inner-wrapper"> <!-- Added wrapper for centering -->
-            <div class="ldr-container">
-                <div class="carousel">
-                    <div class="love"></div>
-                    <div class="love"></div>
-                    <div class="love"></div>
-                    <div class="love"></div>
-                    <div class="love"></div>
-                    <div class="love"></div>
-                    <div class="love"></div>
-                </div>
-            </div>
-            <div class="ldr-container">
-                <div class="carousel">
-                    <div class="death"></div>
-                    <div class="death"></div>
-                    <div class="death"></div>
-                    <div class="death"></div>
-                    <div class="death"></div>
-                    <div class="death"></div>
-                    <div class="death"></div>
-                </div>
-            </div>
-            <div class="ldr-container">
-                <div class="carousel">
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                    <div class="robots"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body>
 
     <!-- Canvas for Cursor Trail -->
     <canvas id="cursor-canvas"></canvas>
@@ -67,7 +27,7 @@
     <div class="cursor-dot" aria-hidden="true"></div>
 
     <!-- Main Site -->
-    <div class="site-wrapper">
+    <div class="site-wrapper" style="opacity: 1; pointer-events: auto;">
         <header class="header">
             <div class="container nav-container">
                 <a href="#" class="logo">REUBEN<span class="dot">_</span>
@@ -531,21 +491,6 @@
         </div>
     </div>
 
-    <!-- Failsafe: Remove loader if JS fails -->
-    <script>
-        setTimeout(() => {
-            if (document.body.classList.contains('loading-active')) {
-                console.warn('Loader timed out, forcing removal.');
-                document.body.classList.remove('loading-active');
-                // Also show content just in case
-                const site = document.querySelector('.site-wrapper');
-                if (site) {
-                    site.style.opacity = '1';
-                    site.style.pointerEvents = 'auto';
-                }
-            }
-        }, 5000); 
-    </script>
     <!-- Main JS (GSAP Imported) -->
 </body>
 
