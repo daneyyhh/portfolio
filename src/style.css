@@ -1913,20 +1913,32 @@ body.cursor-down .cursor {
 }
 
 .gallery4-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    aspect-ratio: 16/9;
-    background: #111;
+    height: 320px;
+    /* Fixed height for consistency */
+    background: #0e0e0e;
+    /* Dark background */
+    border: 1px solid rgba(255, 255, 255, 0.05);
     color: white;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
+    padding: 1.5rem;
+}
+
+.gallery4-card:hover {
+    background: #141414;
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
 }
 
 @media (max-width: 768px) {
     .gallery4-card {
-        aspect-ratio: 4/5;
+        height: 280px;
     }
 }
 
@@ -1955,42 +1967,44 @@ body.cursor-down .cursor {
 }
 
 .gallery4-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1.5rem;
+    /* Reset absolute positioning for text-only card */
+    position: relative;
+    padding: 0;
     z-index: 2;
-    transform: translateY(0);
-    transition: transform 0.3s;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .gallery4-card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
 }
 
 .gallery4-card-desc {
-    color: #ccc;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #a1a1aa;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: auto;
+    /* Push readmore to bottom */
 }
 
 .gallery4-readmore {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     font-weight: 500;
-    opacity: 0.8;
+    margin-top: 1.5rem;
+    color: var(--color-mint, #bc13fe);
+    /* Accent color */
 }
 
 .gallery4-card:hover .gallery4-readmore {
-    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .gallery4-dots {
