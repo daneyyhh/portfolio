@@ -54,7 +54,9 @@ html {
     width: 80px;
     height: 50px;
     position: relative;
-    /* Replaces the user's .loader */
+    transform: scale(2.5);
+    /* Made bigger */
+    transform-origin: center;
 }
 
 .loader-text {
@@ -62,18 +64,18 @@ html {
     top: 0;
     padding: 0;
     margin: 0;
-    color: #C8B6FF;
+    color: #FFF;
+    /* White */
     animation: text_713 3.5s ease both infinite;
     font-size: 0.8rem;
     letter-spacing: 1px;
     display: block;
-    /* Ensure it is visible */
     font-family: var(--font-heading);
-    /* match site font if desired, or keep default */
 }
 
 .load {
-    background-color: #9A79FF;
+    background-color: #FFF;
+    /* White */
     border-radius: 50px;
     display: block;
     height: 16px;
@@ -89,7 +91,8 @@ html {
     content: "";
     width: 100%;
     height: 100%;
-    background-color: #D1C2FF;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Semi-transparent white for contrast */
     border-radius: inherit;
     animation: loading2_713 3.5s ease both infinite;
 }
