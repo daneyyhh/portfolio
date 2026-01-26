@@ -49,132 +49,236 @@ html {
     padding: 0;
 }
 
-/* --- New Loader --- */
-.loader-content {
-    width: 80px;
-    height: 50px;
-    position: relative;
-    transform: scale(2.5);
-    /* Made bigger */
-    transform-origin: center;
-}
-
-.loader-text {
-    position: absolute;
+/* --- Love/Death/Robots Loader --- */
+.loader {
+    display: flex;
+    position: fixed;
+    /* Fixed position to cover screen */
     top: 0;
-    padding: 0;
-    margin: 0;
-    color: #FFF;
-    /* White */
-    animation: text_713 3.5s ease both infinite;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    display: block;
-    font-family: var(--font-heading);
-}
-
-.load {
-    background-color: #FFF;
-    /* White */
-    border-radius: 50px;
-    display: block;
-    height: 16px;
-    width: 16px;
+    left: 0;
+    right: 0;
     bottom: 0;
-    position: absolute;
-    transform: translateX(64px);
-    animation: loading_713 3.5s ease both infinite;
+    justify-content: center;
+    /* centering fix */
+    align-items: center;
+    gap: 1rem;
+    /* height: 55px;  Removed fixed height on container, let it center */
+    width: 100vw;
+    height: 100vh;
+    z-index: 10002;
+    background-color: #000;
+    overflow: hidden;
 }
 
-.load::before {
-    position: absolute;
-    content: "";
+.loader-inner-wrapper {
+    /* wrapper to hold the 3 columns centered */
+    display: flex;
+    gap: 1rem;
+    height: 55px;
+    width: 200px;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Reusing provided CSS but adapting slightly for full screen centering */
+
+.container {
     width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    /* Semi-transparent white for contrast */
-    border-radius: inherit;
-    animation: loading2_713 3.5s ease both infinite;
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    position: relative;
+    align-items: center;
 }
 
-@keyframes text_713 {
+.carousel {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    transform-origin: center;
+    animation-delay: 2s;
+}
+
+.loader .container:nth-child(3) {
+    justify-content: flex-start;
+    justify-items: flex-start;
+    animation: scroll-up 4s infinite ease-in-out;
+    animation-delay: 3s;
+}
+
+.loader .container:nth-child(2) {
+    justify-content: flex-end;
+    justify-items: flex-end;
+    animation: scroll-down 4s infinite ease-in-out;
+    animation-delay: 3s;
+}
+
+.loader .container:nth-child(1) {
+    justify-content: flex-end;
+    justify-items: flex-end;
+    animation: scroll-down 3s infinite ease-in-out;
+    animation-delay: 3s;
+}
+
+.love {
+    background: red;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    left: 8px;
+    margin: 0.8rem 4px;
+    transform: rotate(45deg);
+    animation-delay: 2s;
+}
+
+.love::before,
+.love::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: red;
+}
+
+.love::before {
+    left: -16px;
+}
+
+.love::after {
+    top: -16px;
+}
+
+.death {
+    display: flex;
+    width: 100%;
+    height: 55px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    animation: rotation 3s infinite ease-in-out;
+    animation-delay: 1s;
+}
+
+.death:after {
+    content: '';
+    height: 63px;
+    position: absolute;
+    border-left: 12px solid red;
+    transform: rotate(45deg);
+    border-radius: 8px;
+    top: -4px;
+}
+
+.death:before {
+    content: '';
+    height: 60px;
+    position: absolute;
+    border-left: 12px solid red;
+    transform: rotate(-45deg);
+}
+
+.loader:hover {
+    animation: none;
+}
+
+.robots {
+    display: flex;
+    width: 100%;
+    height: 55px;
+    justify-content: space-between;
+    background-color: #ff0000;
+    border-radius: 0 8px 8px;
+    padding: 8px;
+    animation-delay: 5s;
+}
+
+.robots::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation-delay: 2s;
+    animation: blink 0.5s 2 forwards;
+}
+
+.robots::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation-delay: 2s;
+    animation: blink 0.5s 2 forwards;
+}
+
+@keyframes scroll-up {
     0% {
-        letter-spacing: 1px;
-        transform: translateX(0px);
+        transform: translateY(0);
+        filter: blur(0);
     }
 
-    40% {
-        letter-spacing: 2px;
-        transform: translateX(26px);
+    30% {
+        transform: translateY(-150%);
+        filter: blur(10px);
     }
 
-    80% {
-        letter-spacing: 1px;
-        transform: translateX(32px);
+    60% {
+        transform: translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes scroll-down {
+    0% {
+        transform: translateY(0);
+        filter: blur(0);
     }
 
-    90% {
-        letter-spacing: 2px;
-        transform: translateX(0px);
+    30% {
+        transform: translateY(150%);
+        filter: blur(10px);
+    }
+
+    60% {
+        transform: translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes rotation {
+
+    20%,
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes blink-robot {
+
+    /* Renamed to avoid collision */
+    0% {
+        height: 0;
+    }
+
+    20% {
+        height: 12px;
     }
 
     100% {
-        letter-spacing: 1px;
-        transform: translateX(0px);
-    }
-}
-
-@keyframes loading_713 {
-    0% {
-        width: 16px;
-        transform: translateX(0px);
-    }
-
-    40% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    80% {
-        width: 16px;
-        transform: translateX(64px);
-    }
-
-    90% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    100% {
-        width: 16px;
-        transform: translateX(0px);
-    }
-}
-
-@keyframes loading2_713 {
-    0% {
-        transform: translateX(0px);
-        width: 16px;
-    }
-
-    40% {
-        transform: translateX(0%);
-        width: 80%;
-    }
-
-    80% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    90% {
-        width: 80%;
-        transform: translateX(15px);
-    }
-
-    100% {
-        transform: translateX(0px);
-        width: 16px;
+        height: 12px;
     }
 }
 
