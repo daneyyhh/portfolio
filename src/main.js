@@ -25,9 +25,17 @@ window.addEventListener('load', () => {
     initGallery4(); // Gallery4 Carousel
 
     // 3D Immersion
-    init3DBackground();
+    try {
+        init3DBackground();
+    } catch (e) {
+        console.warn("3D Background failed:", e);
+    }
     setTimeout(() => {
-        initTiltEffect();
+        try {
+            initTiltEffect();
+        } catch (e) {
+            console.warn("Tilt effect failed:", e);
+        }
     }, 500);
 
     setTimeout(initScrollAnimations, 1000);

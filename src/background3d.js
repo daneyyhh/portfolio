@@ -44,13 +44,27 @@ export function init3DBackground() {
     starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
     // Simple white sprite for stars
-    const sprite = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png');
+    // Generate a simple circle texture programmatically
+    const getStarTexture = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 32, 32);
+        const texture = new THREE.CanvasTexture(canvas);
+        return texture;
+    };
+
     const starMaterial = new THREE.PointsMaterial({
         color: 0xaaaaaa,
         size: 0.7,
-        map: sprite,
+        map: getStarTexture(),
         transparent: true,
-        alphaTest: 0.5
+        alphaTest: 0.1
     });
 
     stars = new THREE.Points(starGeo, starMaterial);

@@ -530,6 +530,21 @@
         </div>
     </div>
 
+    <!-- Failsafe: Remove loader if JS fails -->
+    <script>
+        setTimeout(() => {
+            if (document.body.classList.contains('loading-active')) {
+                console.warn('Loader timed out, forcing removal.');
+                document.body.classList.remove('loading-active');
+                // Also show content just in case
+                const site = document.querySelector('.site-wrapper');
+                if (site) {
+                    site.style.opacity = '1';
+                    site.style.pointerEvents = 'auto';
+                }
+            }
+        }, 5000); 
+    </script>
     <!-- Main JS (GSAP Imported) -->
     <script type="module" src="/src/main.js"></script>
 </body>
