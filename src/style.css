@@ -1304,7 +1304,8 @@ body.cursor-down .cursor {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    padding-top: 5rem;
+    padding-top: 18vh;
+    /* Increased from 5rem to clear the floating navbar */
 }
 
 .hero-text-wrapper {
