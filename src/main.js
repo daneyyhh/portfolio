@@ -4,7 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { init3DBackground } from './background3d';
 import { initTiltEffect } from './tilt';
-import { initLoader3D } from './loader3d';
+// import { initLoader3D } from './loader3d';
+import { initThemeLoader } from './loaderTheme';
+
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -295,15 +297,18 @@ window.addEventListener('load', () => {
     initNavigation();
     initCaseToggles();
 
-    initLoader3D(); // Start 3D loader
+    // initLoader3D(); // 3D loader disabled
+    initThemeLoader(); // New Theme Loader
 
     // Force hide loader just in case
-    setTimeout(hideLoader, 2500); // 2.5s delay to show 3D loader
+    // setTimeout(hideLoader, 2500); 
+    // Let the new loader handle hiding itself
 
     initHero();
     initGallery4();
 
-    // 3D Immersion
+    // 3D Immersion - keeping starfield or removing? User said "remove THE 3d effects". 
+    // Assuming Tilt is the main one. I'll disable tilt. 
     try {
         init3DBackground();
     } catch (e) {
@@ -311,11 +316,12 @@ window.addEventListener('load', () => {
     }
     setTimeout(() => {
         try {
-            initTiltEffect();
+            // initTiltEffect(); // Disabled as requested
         } catch (e) {
             console.warn("Tilt effect failed:", e);
         }
     }, 500);
+
 
     setTimeout(initScrollAnimations, 1000);
 });
