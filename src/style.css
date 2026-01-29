@@ -798,7 +798,7 @@ body.cursor-down .cursor {
 }
 
 .gp-case-3::before {
-    background-image: url('/assets/ball.png');
+    background-image: url('/assets/project-physics-new.jpg');
 }
 
 /* Remove hover pause for guaranteed flow */
