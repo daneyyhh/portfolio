@@ -29,7 +29,7 @@ export function init3DBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // Create Stars
-    const starCount = 6000;
+    const starCount = 8;
     starGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(starCount * 3);
     const velocities = [];

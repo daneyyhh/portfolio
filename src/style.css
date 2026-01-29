@@ -22,12 +22,16 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9000;
+    z-index: 1000;
+    /* Ensure it's high but below cursor */
     padding: 1.5rem 0;
-    background: rgba(5, 5, 5, 0.85);
+    background: rgba(5, 5, 5, 0.95);
+    /* Darker */
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(74, 222, 128, 0.5);
+    /* More visible green */
     transition: transform 0.4s var(--easing);
+    pointer-events: auto;
 }
 
 html {
@@ -35,6 +39,13 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
 /* ... (skipping unchanged parts) ... */
