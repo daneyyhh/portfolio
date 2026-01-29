@@ -286,6 +286,22 @@ function initScrollAnimations() {
                 ease: 'power2.out'
             });
         }
+
+        // Marquee Text Entrance Animation (Cover Fonts)
+        const marqueeText = sec.querySelectorAll('.marquee-track span');
+        if (marqueeText.length > 0) {
+            gsap.from(marqueeText, {
+                scrollTrigger: {
+                    trigger: sec,
+                    start: "top 75%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        }
     });
 }
 
