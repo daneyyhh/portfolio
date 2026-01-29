@@ -798,8 +798,12 @@ body.cursor-down .cursor {
 }
 
 .gp-case-3::before {
-    background-image: url('/assets/project-astro.jpg');
-    /* Fallback or same as Astro */
+    background-image: url('/assets/ball.png');
+}
+
+/* Remove hover pause for guaranteed flow */
+.marquee:hover .marquee-track {
+    animation-play-state: running;
 }
 
 .gp-article-1::before {

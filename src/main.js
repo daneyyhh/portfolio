@@ -259,16 +259,33 @@ function initScrollAnimations() {
     // Reveal sections on scroll
     const sections = document.querySelectorAll('section');
     sections.forEach(sec => {
+        // Section Reveal
         gsap.from(sec, {
             scrollTrigger: {
                 trigger: sec,
-                start: "top 80%",
+                start: "top 85%", // Trigger earlier
             },
-            y: 50,
+            y: 30,
             opacity: 0,
-            duration: 1,
+            duration: 0.8,
             ease: 'power3.out'
         });
+
+        // Text Animation (Tags & Chips)
+        const textElements = sec.querySelectorAll('.gp-case-tags span, .gp-chip');
+        if (textElements.length > 0) {
+            gsap.from(textElements, {
+                scrollTrigger: {
+                    trigger: sec,
+                    start: "top 70%",
+                },
+                y: 20,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+        }
     });
 }
 
