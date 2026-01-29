@@ -19,25 +19,26 @@
 /* --- Header (Floating Pill Style) --- */
 .header {
     position: fixed;
-    top: 1.5rem;
+    top: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    width: min(90%, 900px);
-    /* Limit width */
-    z-index: 9998;
+    width: min(95%, 850px);
+    z-index: 99999;
+    /* Max Z-Index */
     padding: 0.8rem 2rem;
-    background: rgba(10, 10, 10, 0.6);
-    /* Slightly more transparent */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    /* Subtle white border */
-    border-radius: 100px;
-    /* Pill shape */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    /* Drop shadow */
+    background: #000;
+    /* Solid Black for visibility */
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    /* Green Border */
+    border-radius: 50px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Ensure spacing */
     transition: all 0.4s var(--easing);
     pointer-events: auto;
+
 }
 
 /* Remove bottom border from old style if present */
