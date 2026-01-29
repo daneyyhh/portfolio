@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { init3DBackground } from './background3d';
 import { initTiltEffect } from './tilt';
+import { initLoader3D } from './loader3d';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -294,8 +295,10 @@ window.addEventListener('load', () => {
     initNavigation();
     initCaseToggles();
 
+    initLoader3D(); // Start 3D loader
+
     // Force hide loader just in case
-    hideLoader();
+    setTimeout(hideLoader, 2500); // 2.5s delay to show 3D loader
 
     initHero();
     initGallery4();

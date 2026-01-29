@@ -772,15 +772,15 @@ body.cursor-down .cursor {
 
 /* Project Images via Pseudo-element */
 .gp-case-1::before {
-    background-image: url('/images/project1.jpg');
+    background-image: url('/assets/fivem.png');
 }
 
 .gp-case-2::before {
-    background-image: url('/images/project2.jpg');
+    background-image: url('/assets/astro.png');
 }
 
 .gp-case-3::before {
-    background-image: url('/images/project3.jpg');
+    background-image: url('/assets/ball.png');
 }
 
 .gp-article-1::before {
