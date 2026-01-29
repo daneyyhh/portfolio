@@ -703,8 +703,8 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 50s linear infinite;
-    /* Slowed down from 18s */
+    animation: marquee 120s linear infinite;
+    /* Slowed down to 120s for slow run */
 }
 
 .marquee:hover .marquee-track {
@@ -804,13 +804,14 @@ body.cursor-down .cursor {
     background-image: url('/images/illuminati-cover-v2.jpg');
 }
 
-/* Top Marquee - Absolute at Top */
+/* Top Marquee - Centered now as main title */
 .gp-case-head {
     position: absolute;
-    top: 2rem;
+    top: 50%;
     left: 0;
     width: 100%;
     padding: 0;
+    transform: translateY(-50%);
 
     /* Force Transparent Container */
     background: transparent !important;
@@ -820,7 +821,6 @@ body.cursor-down .cursor {
 
     z-index: 10;
     pointer-events: none;
-    /* Removed mix-blend-mode to avoid artifacts */
 }
 
 /* Ensure inner marquee wrapper is also clean */
