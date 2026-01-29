@@ -16,23 +16,31 @@
 
 /* ... existing code ... */
 
-/* --- Header --- */
+/* --- Header (Floating Pill Style) --- */
 .header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90%, 900px);
+    /* Limit width */
     z-index: 9998;
-    /* High z-index to ensure visibility */
-    padding: 1.5rem 0;
-    background: rgba(5, 5, 5, 0.95);
-    /* Darker */
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(74, 222, 128, 0.5);
-    /* More visible green */
-    transition: transform 0.4s var(--easing);
+    padding: 0.8rem 2rem;
+    background: rgba(10, 10, 10, 0.6);
+    /* Slightly more transparent */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Subtle white border */
+    border-radius: 100px;
+    /* Pill shape */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    /* Drop shadow */
+    transition: all 0.4s var(--easing);
     pointer-events: auto;
 }
+
+/* Remove bottom border from old style if present */
 
 html {
     scroll-behavior: smooth;
@@ -1209,6 +1217,13 @@ body.cursor-down .cursor {
 
 /* Old header removed */
 
+/* Header-specific container reset */
+.header .container {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+}
+
 .nav-container {
     display: flex;
     justify-content: space-between;
@@ -1217,7 +1232,8 @@ body.cursor-down .cursor {
 
 .logo {
     font-family: var(--font-heading);
-    font-size: 2.4rem;
+    font-size: 1.8rem;
+    /* Slightly smaller for pill */
     /* Increased from 1.5rem */
     font-weight: 700;
     text-transform: uppercase;
@@ -1237,7 +1253,8 @@ body.cursor-down .cursor {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
+    /* Reduced gap for compact pill */
 }
 
 .nav-item {
