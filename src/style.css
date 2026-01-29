@@ -703,8 +703,8 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 240s linear infinite;
-    /* Slowed down to 240s for very slow run */
+    animation: marquee 400s linear infinite;
+    /* Slowed down to 400s for ultra slow run */
 }
 
 .marquee:hover .marquee-track {
@@ -802,7 +802,7 @@ body.cursor-down .cursor {
 }
 
 .gp-article-1::before {
-    background-image: url('/assets/project-illuminati.jpg');
+    background-image: url('/images/illuminati-cover-v2.jpg');
 }
 
 /* Top Marquee - Centered now as main title */
