@@ -22,8 +22,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
-    /* Ensure it's high but below cursor */
+    z-index: 9998;
+    /* High z-index to ensure visibility */
     padding: 1.5rem 0;
     background: rgba(5, 5, 5, 0.95);
     /* Darker */

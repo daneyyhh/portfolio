@@ -320,6 +320,7 @@ function hideLoader() {
 
 // --- Global Load and Init ---
 window.addEventListener('load', () => {
+    console.log("System Status: ONLINE | v0.0.19");
     initSmoothScroll();
     initCursor();
     initCursorTrail();
