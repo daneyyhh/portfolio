@@ -789,19 +789,20 @@ body.cursor-down .cursor {
 
 /* Project Images via Pseudo-element */
 .gp-case-1::before {
-    background-image: url('/assets/fivem.png');
+    background-image: url('/assets/project-fivem.jpg');
 }
 
 .gp-case-2::before {
-    background-image: url('/assets/astro.png');
+    background-image: url('/assets/project-astro.jpg');
 }
 
 .gp-case-3::before {
-    background-image: url('/assets/ball.png');
+    background-image: url('/assets/project-astro.jpg');
+    /* Fallback or same as Astro */
 }
 
 .gp-article-1::before {
-    background-image: url('/images/illuminati-cover-v2.jpg');
+    background-image: url('/assets/project-illuminati.jpg');
 }
 
 /* Top Marquee - Centered now as main title */
