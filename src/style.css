@@ -703,8 +703,9 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 400s linear infinite;
-    /* Slowed down to 400s for ultra slow run */
+    animation: marquee 60s linear infinite;
+    will-change: transform;
+    /* Speed set to 60s for visible slow scrolling */
 }
 
 .marquee:hover .marquee-track {
