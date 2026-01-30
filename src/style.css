@@ -2151,20 +2151,21 @@ body.cursor-down .cursor {
 }
 
 /* Ensure mobile stacking for contact */
-.gp-contact-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-}
+@media (max-width: 900px) {
+    .gp-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
 
-.gp-contact-left .gp-h2 {
-    font-size: 2.5rem;
-    /* Smaller for mobile */
-}
+    .gp-contact-left .gp-h2 {
+        font-size: 2.5rem;
+        /* Smaller for mobile */
+    }
 
-.gp-contact {
-    padding: 4rem 1.5rem;
-    /* Less padding */
-}
+    .gp-contact {
+        padding: 4rem 1.5rem;
+        /* Less padding */
+    }
 }
 
 /* Standard Mobile (600px) */
@@ -2190,148 +2191,148 @@ body.cursor-down .cursor {
         font-size: 0.8rem;
         padding: 0.4rem;
     }
+}
 
+/* Carousel */
+.gallery4-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
 
-    /* Carousel */
-    .gallery4-carousel {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-    }
+.gallery4-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 2rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
-    .gallery4-track {
-        display: flex;
-        gap: 1.5rem;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        padding-bottom: 2rem;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+.gallery4-track::-webkit-scrollbar {
+    display: none;
+}
 
-    .gallery4-track::-webkit-scrollbar {
-        display: none;
-    }
+.gallery4-item {
+    min-width: 320px;
+    max-width: 360px;
+    flex: 0 0 auto;
+}
 
-    .gallery4-item {
-        min-width: 320px;
-        max-width: 360px;
-        flex: 0 0 auto;
-    }
+.gallery4-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 320px;
+    /* Fixed height for consistency */
+    background: #0e0e0e;
+    /* Dark background */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+    padding: 1.5rem;
+}
 
+.gallery4-card:hover {
+    background: #141414;
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
     .gallery4-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-        height: 320px;
-        /* Fixed height for consistency */
-        background: #0e0e0e;
-        /* Dark background */
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        color: white;
-        text-decoration: none;
-        transition: transform 0.3s ease, background 0.3s ease;
-        padding: 1.5rem;
+        height: 280px;
     }
+}
 
-    .gallery4-card:hover {
-        background: #141414;
-        border-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-5px);
-    }
+.gallery4-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
-    @media (max-width: 768px) {
-        .gallery4-card {
-            height: 280px;
-        }
-    }
+.gallery4-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
 
-    .gallery4-image-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
+.gallery4-card:hover .gallery4-img {
+    transform: scale(1.05);
+}
 
-    .gallery4-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
+.gallery4-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+}
 
-    .gallery4-card:hover .gallery4-img {
-        transform: scale(1.05);
-    }
+.gallery4-content {
+    /* Reset absolute positioning for text-only card */
+    position: relative;
+    padding: 0;
+    z-index: 2;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-    .gallery4-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0) 100%);
-        pointer-events: none;
-    }
+.gallery4-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
 
-    .gallery4-content {
-        /* Reset absolute positioning for text-only card */
-        position: relative;
-        padding: 0;
-        z-index: 2;
-        transform: none;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
+.gallery4-card-desc {
+    color: #a1a1aa;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: auto;
+    /* Push readmore to bottom */
+}
 
-    .gallery4-card-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        line-height: 1.2;
-    }
+.gallery4-readmore {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    color: var(--color-mint, #bc13fe);
+    /* Accent color */
+}
 
-    .gallery4-card-desc {
-        color: #a1a1aa;
-        font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: auto;
-        /* Push readmore to bottom */
-    }
+.gallery4-card:hover .gallery4-readmore {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
 
-    .gallery4-readmore {
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        font-weight: 500;
-        margin-top: 1.5rem;
-        color: var(--color-mint, #bc13fe);
-        /* Accent color */
-    }
+.gallery4-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
 
-    .gallery4-card:hover .gallery4-readmore {
-        text-decoration: underline;
-        text-underline-offset: 4px;
-    }
+.gallery4-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: background 0.3s;
+}
 
-    .gallery4-dots {
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .gallery4-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-        border: none;
-        padding: 0;
-        transition: background 0.3s;
-    }
-
-    .gallery4-dot.active {
-        background: white;
-    }
+.gallery4-dot.active {
+    background: white;
+}
