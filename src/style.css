@@ -559,43 +559,66 @@ body.cursor-down .cursor {
     margin-top: 5vh;
 }
 
-.gp-hero-name {
-    text-align: center;
-    margin-bottom: 4rem;
+/* Separator Line between Title and Data */
+.gp-hero-name::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 60px;
+    background: var(--accent-color);
+    margin: 2rem auto 0;
+    /* Center lines */
+    box-shadow: 0 0 10px var(--accent-color);
 }
 
 .gp-hero-side {
     text-align: left;
-    border: none;
-    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle top border */
+    padding-top: 3rem;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* Center the blocks */
-    gap: 6rem;
+    gap: 8rem;
+    /* Wide gap */
     width: 100%;
+    position: relative;
 }
 
 .gp-side-block {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
-
-.gp-services {
-    text-align: left;
-}
-
-.gp-side-block+.gp-side-block {
-    margin-top: 2.5rem;
+    max-width: 300px;
 }
 
 .gp-side-label {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    /* Green Label */
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    letter-spacing: 0.1em;
+}
+
+.gp-side-text,
+.gp-services li {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.gp-services {
+    list-style: none;
+    padding: 0;
+}
+
+.gp-services li::before {
+    content: '> ';
+    color: var(--accent-color);
+    opacity: 0.5;
 }
 
 .gp-side-text {
