@@ -17,25 +17,26 @@
 /* ... existing code ... */
 
 /* --- Header (Floating Pill Style) --- */
+/* --- Header (Transparent Full Width) --- */
 .header {
     position: fixed;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-    /* Start slightly higher for anim */
-    width: min(95%, 850px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(-20px);
     z-index: 99999;
-    padding: 0.8rem 2rem;
-    background: rgba(10, 10, 10, 0.75);
-    /* Back to Glass */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(74, 222, 128, 0.3);
-    border-radius: 50px;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+    padding: 1.5rem 3%;
+    /* Comfortable spacing */
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* Spreads Logo left, Links right */
     transition: all 0.4s var(--easing);
     pointer-events: auto;
 
