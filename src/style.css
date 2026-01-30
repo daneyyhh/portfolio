@@ -2172,14 +2172,59 @@ body.cursor-down .cursor {
     }
 
     .nav-links {
-        gap: 0.5rem;
+        gap: 0.8rem;
         flex-wrap: wrap;
         justify-content: center;
+        padding: 0 1rem;
+        /* Ensure padding so it doesn't touch edges */
     }
 
     .nav-item {
-        font-size: 0.8rem;
-        padding: 0.4rem;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    /* --- Mobile Project Titles (Static, Centered, No Marquee) --- */
+    .gp-case-head {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* Perfectly centered */
+        width: 100%;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .gp-case-title.marquee {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .marquee-track {
+        display: flex;
+        animation: none !important;
+        /* Stop scrolling */
+        justify-content: center;
+        width: auto;
+    }
+
+    /* Hide all spans except the first one */
+    .marquee-track span {
+        display: none !important;
+    }
+
+    .marquee-track span:first-child {
+        display: block !important;
+        font-size: 3rem !important;
+        /* Readable size */
+        margin: 0 !important;
+        text-align: center;
+        white-space: normal;
+        /* Allow wrapping if needed */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
 }
 
