@@ -1170,18 +1170,22 @@ body.cursor-down .cursor {
 .gp-field input,
 .gp-field textarea {
     width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    /* Sharper corners for terminal feel */
     padding: 0.85rem 0.9rem;
     color: #fff;
     font-family: var(--font-body);
+    /* Monospace */
     outline: none;
+    transition: border-color 0.3s, background 0.3s;
 }
 
 .gp-field input:focus,
 .gp-field textarea:focus {
-    border-color: rgba(59, 130, 246, 0.75);
+    border-color: var(--accent-color);
+    background: rgba(74, 222, 128, 0.05);
 }
 
 .gp-form-note {
@@ -1191,6 +1195,20 @@ body.cursor-down .cursor {
 
 .gp-submit {
     justify-self: start;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 4px;
+    padding: 0.8rem 2rem;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gp-submit:hover {
+    background: var(--accent-color);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-color);
 }
 
 @media (max-width: 900px) {
