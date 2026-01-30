@@ -1197,13 +1197,25 @@ body.cursor-down .cursor {
     .gp-hero-top,
     .gp-about-grid {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
 
     .gp-hero-side {
         border-left: 0;
         padding-left: 0;
+        border-right: 0;
         border-top: 1px solid var(--border);
         padding-top: 2rem;
+        padding-right: 0;
+        margin-top: 2rem;
+        width: 100%;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .gp-services {
+        align-items: flex-start;
     }
 
     .gp-case-hit {
@@ -1215,9 +1227,99 @@ body.cursor-down .cursor {
         border-top: 1px solid var(--border);
         min-height: 260px;
     }
+
+    /* Header Adjustments */
+    .header {
+        width: 92%;
+        padding: 0.6rem 1.2rem;
+        top: 1.5rem;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-item {
+        font-size: 0.85rem;
+    }
 }
 
-/* --- Loader styles are defined at the top of the file --- */
+@media (max-width: 600px) {
+    .gp-title {
+        font-size: clamp(3rem, 15vw, 5rem);
+    }
+
+    .gp-subtitle {
+        font-size: clamp(1.4rem, 6vw, 2rem);
+    }
+
+    /* Hide some nav items if too cramped, or just shrink further */
+    .nav-links {
+        gap: 0.8rem;
+    }
+
+    .nav-item {
+        font-size: 0.75rem;
+        padding: 0;
+    }
+
+    /* Stack skills */
+    .gp-skill-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gp-footer-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gp-footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .gp-footer-links a {
+        margin-left: 0;
+        margin-right: 1.4rem;
+    }
+
+    /* Adjust Project/Case Text */
+    .gp-case-title .marquee-track span {
+        font-size: 1.5rem;
+        /* Smaller marquee */
+    }
+
+    .gp-case-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+/* Touch Device Optimization */
+@media (pointer: coarse) {
+
+    .cursor,
+    .cursor-dot,
+    #cursor-canvas {
+        display: none !important;
+    }
+
+    body {
+        cursor: auto;
+    }
+
+    a,
+    button,
+    [role="button"] {
+        cursor: pointer;
+    }
+}
 
 /* Old header removed */
 
