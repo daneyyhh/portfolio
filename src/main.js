@@ -439,3 +439,17 @@ function initGallery4() {
     // Initial check
     setTimeout(updateDots, 100);
 }
+
+// --- INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    initSmoothScroll();
+    initThemeLoader();
+    init3DBackground();
+    initTiltEffect();
+    initCursor();
+    initContactModal();
+    initShowreelModal();
+    initNavigation();
+    initScrollAnimations();
+    initGallery4();
+});
