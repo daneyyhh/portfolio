@@ -194,6 +194,12 @@ function initNavigation() {
             const href = link.getAttribute('href');
             if (href === '#') return;
             e.preventDefault();
+
+            // Animation on click
+            const tl = gsap.timeline();
+            tl.to(link, { scale: 0.9, color: "#4ade80", duration: 0.1, ease: "power1.out" })
+                .to(link, { scale: 1, color: "rgba(255, 255, 255, 0.7)", duration: 0.2, ease: "bounce.out" });
+
             const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth' });
