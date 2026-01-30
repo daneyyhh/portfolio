@@ -439,15 +439,19 @@ body.cursor-ready .cursor-dot {
 }
 
 .cursor {
-    width: 32px;
-    height: 32px;
-    /* border: 1px solid rgba(255, 255, 255, 0.5); Removed per request */
-    border-radius: 4px;
-    /* Slight rounding but mostly square */
+    width: 20px;
+    /* Small square */
+    height: 20px;
+    border: 1px solid var(--accent-color);
+    /* Green Border */
+    background: rgba(74, 222, 128, 0.1);
+    /* Slight tint */
+    border-radius: 0;
+    /* SQUARE */
     transform: translate3d(-999px, -999px, 0);
     will-change: transform;
-    margin-left: -16px;
-    margin-top: -16px;
+    margin-left: -10px;
+    margin-top: -10px;
     transition: border-color 220ms var(--easing), transform 220ms var(--easing), width 220ms var(--easing), height 220ms var(--easing), margin 220ms var(--easing);
 }
 
@@ -465,12 +469,13 @@ body.cursor-ready .cursor-dot {
 }
 
 body.cursor-hover .cursor {
-    width: 52px;
-    height: 52px;
-    margin-left: -26px;
-    margin-top: -26px;
-    border-color: rgba(59, 130, 246, 0.8);
-    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+    border-color: var(--accent-color);
+    background: rgba(74, 222, 128, 0.2);
+    border-radius: 0;
 }
 
 body.cursor-hover .cursor-dot {
@@ -545,56 +550,41 @@ body.cursor-down .cursor {
 
 .gp-hero-top {
     display: flex;
-    /* Changed from grid to flex for full "both sides" spread */
-    justify-content: space-between;
-    /* Push content to far edges */
-    align-items: flex-start;
+    flex-direction: column;
+    /* Vertical Layout */
+    justify-content: center;
+    align-items: center;
+    /* Center everything */
     width: 100%;
+    margin-top: 5vh;
 }
 
-.gp-title {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    /* Reduced from 900 */
-    font-size: clamp(4rem, 10vw, 10rem);
-    /* Increased for VT323 which is taller/thinner */
-    letter-spacing: -0.03em;
-    /* Adjusted for VT323 */
-    margin-top: 1rem;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.gp-subtitle {
-    margin-top: 1.2rem;
-    font-family: var(--font-heading);
-    font-weight: 400;
-    /* Reduced from 700 */
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    line-height: 0.95;
-    font-size: clamp(1.8rem, 3.8vw, 3.8rem);
-    color: rgba(255, 255, 255, 0.92);
-}
-
-.reveal-line {
-    display: block;
-    overflow: hidden;
+.gp-hero-name {
+    text-align: center;
+    margin-bottom: 4rem;
 }
 
 .gp-hero-side {
-    /* Aligned to right per user request */
-    text-align: right;
-    border-left: none;
-    /* Removed left border as it clashes with right align */
-    border-right: 1px solid var(--border);
-    /* Moved border to right side for consistency */
-    padding-left: 0;
-    padding-right: 2.5rem;
+    text-align: left;
+    border: none;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* Center the blocks */
+    gap: 6rem;
+    width: 100%;
+}
+
+.gp-side-block {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    /* Force flex items to right */
+    align-items: flex-start;
+}
+
+.gp-services {
+    text-align: left;
 }
 
 .gp-side-block+.gp-side-block {

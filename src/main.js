@@ -107,11 +107,11 @@ function initCursorTrail() {
         constructor() {
             this.x = mouse.x;
             this.y = mouse.y;
-            this.size = Math.random() * 3 + 1;
+            this.size = Math.random() * 4 + 2; // Slightly larger for pixel look
             this.speedX = Math.random() * 2 - 1;
             this.speedY = Math.random() * 2 - 1;
             this.life = 1; // opacity/life
-            this.decay = Math.random() * 0.02 + 0.01;
+            this.decay = Math.random() * 0.05 + 0.02; // Faster decay for glitch feel
         }
         update() {
             this.x += this.speedX;
@@ -119,15 +119,15 @@ function initCursorTrail() {
             this.life -= this.decay;
         }
         draw() {
-            ctx.fillStyle = `rgba(255, 0, 0, ${this.life})`; // Red trail per request
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillStyle = `rgba(74, 222, 128, ${this.life})`; // Terminal Green (#4ade80)
+            // Draw Square (Pixel)
+            ctx.fillRect(this.x, this.y, this.size, this.size);
         }
     }
 
     function createParticle() {
-        particles.push(new Particle());
+        // Emit fewer particles for cleaner "pixel" look
+        if (Math.random() > 0.5) particles.push(new Particle());
     }
 
     function animateTrail() {
