@@ -185,7 +185,7 @@ function initShowreelModal() {
 // --- 4. NAVIGATION & INTERACTIONS ---
 function initNavigation() {
     // Reveal header on load
-    gsap.from('.header', { y: -100, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.5 });
+    // Reveal header handled by loaderTheme.js now
 
     // Smooth scroll anchors
     const links = document.querySelectorAll('a[href^="#"]');
@@ -337,46 +337,7 @@ function hideLoader() {
 }
 
 // --- Global Load and Init ---
-window.addEventListener('load', () => {
-    console.log("System Status: ONLINE | v0.0.19");
-    initSmoothScroll();
-    initCursor();
-    initCursorTrail();
-
-    initContactModal();
-    initShowreelModal();
-    initMagnetic();
-    initNavigation();
-    initCaseToggles();
-
-    // initLoader3D(); // 3D loader disabled
-    initThemeLoader(); // New Theme Loader
-
-    // Force hide loader just in case
-    // setTimeout(hideLoader, 2500); 
-    // Let the new loader handle hiding itself
-
-    initHero();
-    initGallery4();
-
-    // 3D Immersion - keeping starfield or removing? User said "remove THE 3d effects". 
-    // Assuming Tilt is the main one. I'll disable tilt. 
-    try {
-        init3DBackground();
-    } catch (e) {
-        console.warn("3D Background failed:", e);
-    }
-    setTimeout(() => {
-        try {
-            // initTiltEffect(); // Disabled as requested
-        } catch (e) {
-            console.warn("Tilt effect failed:", e);
-        }
-    }, 500);
-
-
-    setTimeout(initScrollAnimations, 1000);
-});
+// Old load listener removed
 
 
 // --- Gallery4 Carousel Logic (Preserved) ---
@@ -442,6 +403,7 @@ function initGallery4() {
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("System Initializing...");
     initSmoothScroll();
     initThemeLoader();
     init3DBackground();
@@ -452,4 +414,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initScrollAnimations();
     initGallery4();
+    initHero(); // Added missing hero init
 });
