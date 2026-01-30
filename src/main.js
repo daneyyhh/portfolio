@@ -313,6 +313,18 @@ function hideLoader() {
             duration: 0.5,
             onComplete: () => {
                 loader.style.display = 'none';
+
+                // Show Header/Navbar after loader is gone
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.style.visibility = 'visible'; // Make interactive
+                    gsap.to(header, {
+                        opacity: 1,
+                        y: 0, // Reset from -20px
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+                }
             }
         });
     }

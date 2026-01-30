@@ -21,24 +21,27 @@
     position: fixed;
     top: 2rem;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(-20px);
+    /* Start slightly higher for anim */
     width: min(95%, 850px);
     z-index: 99999;
-    /* Max Z-Index */
     padding: 0.8rem 2rem;
-    background: #000;
-    /* Solid Black for visibility */
-    border: 1px solid rgba(74, 222, 128, 0.4);
-    /* Green Border */
+    background: rgba(10, 10, 10, 0.75);
+    /* Back to Glass */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(74, 222, 128, 0.3);
     border-radius: 50px;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Ensure spacing */
     transition: all 0.4s var(--easing);
     pointer-events: auto;
 
+    /* Initial State for Loader Sync */
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Remove bottom border from old style if present */
