@@ -420,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // init3DBackground(); // Disabled per request
     // initTiltEffect();   // Disabled per request
     initCursor();
+    initCursorTrail(); // Activate Green Pixel Particles
     initContactModal();
     initShowreelModal();
     initNavigation();

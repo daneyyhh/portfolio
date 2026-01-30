@@ -439,13 +439,13 @@ body.cursor-ready .cursor-dot {
 }
 
 .cursor {
-    width: 20px;
-    /* Small square */
-    height: 20px;
-    border: 1px solid var(--accent-color);
-    /* Green Border */
-    background: rgba(74, 222, 128, 0.1);
-    /* Slight tint */
+    width: 14px;
+    /* Pixel size */
+    height: 14px;
+    border: none;
+    /* No border, just filled pixel */
+    background: var(--accent-color);
+    /* Solid Green */
     border-radius: 0;
     /* SQUARE */
     transform: translate3d(-999px, -999px, 0);
@@ -496,6 +496,29 @@ body.cursor-down .cursor {
     button,
     [role="button"] {
         cursor: none;
+    }
+}
+
+/* --- Mobile Upgrades --- */
+@media (max-width: 900px) {
+
+    /* Fixed Navbar for Mobile */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10000;
+        background: rgba(5, 5, 5, 0.85);
+        /* Dark background for readability */
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Adjust main content padding so it's not hidden behind fixed nav */
+    .gp-hero {
+        padding-top: 140px;
     }
 }
 
@@ -781,6 +804,13 @@ body.cursor-down .cursor {
     /* Removed gap to allow seamless full screen */
 }
 
+/* Ensure mobile stacking */
+@media (max-width: 900px) {
+    .gp-case-list {
+        display: block;
+    }
+}
+
 /* Base Case Style */
 /* Base Case Style */
 /* Base Case Style */
@@ -912,6 +942,18 @@ body.cursor-down .cursor {
     /* Pure White */
     text-transform: uppercase;
     text-align: center;
+
+    /* Mobile Override: Static & Centered */
+    @media (max-width: 900px) {
+        transform: none !important;
+        /* Disable scroll effects */
+        text-align: center !important;
+        font-size: 15vw;
+        /* Adjust for mobile */
+        width: 100%;
+        margin: 0 auto;
+    }
+
     z-index: 5;
     pointer-events: none;
     mix-blend-mode: normal;
@@ -923,9 +965,8 @@ body.cursor-down .cursor {
     left: auto;
     transform: none;
     /* Heavy Shadow for contrast and "blocky" feel */
-    text-shadow:
-        4px 4px 0px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(0, 0, 0, 0.8);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 0, 0, 0.8);
     letter-spacing: -0.05em;
 }
 
@@ -969,6 +1010,24 @@ body.cursor-down .cursor {
     width: 100%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     gap: 1rem;
+}
+
+@media (max-width: 900px) {
+    .gp-case-body {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 6rem;
+        /* Space for bottom interaction */
+    }
+
+    .gp-case-tags {
+        max-width: 100%;
+    }
+
+    .gp-case-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
 }
 
 /* Tags */
