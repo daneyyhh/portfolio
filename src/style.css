@@ -1299,6 +1299,21 @@ body.cursor-down .cursor {
         flex-wrap: wrap;
         gap: 0.5rem;
     }
+
+    /* Fix Project Covers on Mobile */
+    .gp-case {
+        height: 100dvh;
+        min-height: 500px;
+    }
+
+    .gp-case::before {
+        background-size: cover;
+        background-position: center;
+        transform: none;
+        /* Remove zoom */
+        filter: brightness(0.6);
+        /* Clearer */
+    }
 }
 
 /* Touch Device Optimization */
