@@ -42,8 +42,7 @@
                         <li><a href="#about" class="nav-item" data-nav-link>About Us</a></li>
                         <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
                         <li><a href="#articles" class="nav-item" data-nav-link>Articles</a></li>
-                        <li><button type="button" class="nav-item" data-open-contact
-                                style="background:none; border:none; cursor:pointer;">Talk</button></li>
+                        <li><a href="#contact" class="nav-item" data-nav-link>Talk</a></li>
                     </ul>
                 </nav>
             </div>
@@ -270,6 +269,39 @@
                 </div>
             </section>
 
+            <!-- Contact Section (New) -->
+            <section id="contact" class="gp-contact">
+                <div class="container">
+                    <div class="gp-contact-grid">
+                        <div class="gp-contact-left">
+                            <div class="gp-mini">Get in Touch</div>
+                            <h2 class="gp-h2">Let’s Talk</h2>
+                            <p class="gp-lead">
+                                Have a project in mind or just want to say hi? Fill out the form below.
+                            </p>
+                        </div>
+                        <div class="gp-contact-right">
+                            <form class="gp-form">
+                                <label class="gp-field">
+                                    <span>Name*</span>
+                                    <input type="text" name="name" required autocomplete="name">
+                                </label>
+                                <label class="gp-field">
+                                    <span>Mail ID*</span>
+                                    <input type="email" name="email" required autocomplete="email">
+                                </label>
+                                <label class="gp-field">
+                                    <span>Message*</span>
+                                    <textarea name="message" rows="4" required></textarea>
+                                </label>
+                                <button class="gp-submit" type="submit">Send Message</button>
+                                <div class="gp-form-note">This demo form doesn’t send yet.</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- UI Section Removed -->
 
             <!-- Footer -->
@@ -287,8 +319,7 @@
                         <div class="gp-audio">
                             <!-- Unmute removed as requested -->
                         </div>
-                        <button class="gp-pill" data-open-contact type="button" data-cursor-label="Say Hi">Say
-                            Hi</button>
+                        <!-- Say Hi button removed -->
                     </div>
                     <div class="gp-footer-bottom">
                         <div class="gp-mini">Copyright 2026 • All rights reserved (v0.0.16)</div>
@@ -322,35 +353,7 @@
         </div>
     </div>
 
-    <!-- Contact Modal -->
-    <div class="gp-modal" data-modal aria-hidden="true">
-        <div class="gp-modal-backdrop" data-close-contact></div>
-        <div class="gp-modal-panel" role="dialog" aria-modal="true" aria-label="Contact">
-            <div class="gp-modal-head">
-                <div>
-                    <div class="gp-mini">Leave your details</div>
-                    <div class="gp-modal-title">Let’s talk</div>
-                </div>
-                <button class="gp-modal-close" type="button" data-close-contact>Close (esc)</button>
-            </div>
-            <form class="gp-form">
-                <label class="gp-field">
-                    <span>Name*</span>
-                    <input type="text" name="name" required autocomplete="name">
-                </label>
-                <label class="gp-field">
-                    <span>Mail ID*</span>
-                    <input type="email" name="email" required autocomplete="email">
-                </label>
-                <label class="gp-field">
-                    <span>Message*</span>
-                    <textarea name="message" rows="4" required></textarea>
-                </label>
-                <button class="gp-pill gp-submit" type="submit">Send</button>
-                <div class="gp-form-note">This demo form doesn’t send yet (we can wire EmailJS/Formspree next).</div>
-            </form>
-        </div>
-    </div>
+    <!-- Contact Modal Removed -->
 
     <!-- Main JS (GSAP Imported) -->
     <script type="module" src="/src/main.js"></script>

@@ -800,11 +800,12 @@ body.cursor-down .cursor {
     background-repeat: no-repeat;
 
     /* Strong Blur & Dim per user request */
-    filter: blur(12px) brightness(0.6);
-    transform: scale(1.1);
-    /* Scale up to prevent blurred edges */
-    z-index: 1;
+    /* Filter Adjusted */
+    filter: brightness(0.4);
+    /* Darker for better text contrast */
     transform: none;
+    /* No 3D scale/zoom */
+    z-index: 1;
     /* Removed scale */
     z-index: 1;
     pointer-events: none;
@@ -1481,25 +1482,49 @@ body.cursor-down .cursor {
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 9vw, 10rem);
+    font-size: clamp(4rem, 11vw, 12rem);
+    /* Larger */
     font-weight: 900;
     line-height: 0.9;
-    letter-spacing: -2px;
+    letter-spacing: -4px;
     text-transform: uppercase;
     color: #FFF;
     overflow: hidden;
-    /* For reveal anim */
+    position: relative;
+    text-shadow: 4px 4px 0px rgba(74, 222, 128, 0.2);
+    /* Terminal subtle shadow */
 }
 
-.hero-title.indent {
-    margin-left: 10vw;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
-    transition: color 0.3s;
+/* Glitch Effect on Title Hover */
+.hero-title:hover {
+    animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    color: var(--accent-color);
 }
 
-.hero-title.indent:hover {
-    color: #FFF;
+@keyframes glitch-anim {
+    0% {
+        transform: translate(0)
+    }
+
+    20% {
+        transform: translate(-2px, 2px)
+    }
+
+    40% {
+        transform: translate(-2px, -2px)
+    }
+
+    60% {
+        transform: translate(2px, 2px)
+    }
+
+    80% {
+        transform: translate(2px, -2px)
+    }
+
+    100% {
+        transform: translate(0)
+    }
 }
 
 .hero-footer {
@@ -2096,6 +2121,41 @@ body.cursor-down .cursor {
 .gallery4-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+}
+
+/* --- Contact Section --- */
+.gp-contact {
+    padding: 8rem 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(10, 10, 10, 0.8));
+}
+
+.gp-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.gp-contact-left .gp-h2 {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.gp-contact-right .gp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Ensure mobile stacking for contact */
+@media (max-width: 900px) {
+    .gp-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 }
 
 /* Carousel */
