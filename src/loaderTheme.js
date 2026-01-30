@@ -86,6 +86,12 @@ export function initThemeLoader() {
                 duration: 0.5,
                 onComplete: () => {
                     loader.style.display = 'none';
+                    // Reveal Header
+                    const header = document.querySelector('.header');
+                    if (header) {
+                        header.style.visibility = 'visible';
+                        gsap.to(header, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
+                    }
                     loader.innerHTML = ''; // Clean up
                 }
             });
