@@ -255,27 +255,30 @@ function initCaseToggles() {
 
 function initHero() {
     const tl = gsap.timeline();
-    tl.from('.gp-title .reveal-line', {
-        y: 100,
+    // 1. Title Pop
+    tl.from('.gp-title', {
+        scale: 0.5,
         opacity: 0,
         duration: 1.2,
-        stagger: 0.1,
-        ease: 'power3.out'
+        ease: 'back.out(1.7)',
+        transformOrigin: 'center center'
     })
-        .from('.gp-subtitle .reveal-line', {
-            y: 50,
+        // 2. Subtitle Pop
+        .from('.gp-subtitle', {
+            scale: 0.8,
+            y: 20,
             opacity: 0,
-            duration: 1,
-            stagger: 0.1,
-            ease: 'power3.out'
+            duration: 0.8,
+            ease: 'back.out(1.5)'
         }, "-=0.8")
+        // 3. Side Blocks Slide & Fade
         .from('.gp-side-block', {
             x: 50,
             opacity: 0,
             duration: 1,
             stagger: 0.2,
             ease: 'power3.out'
-        }, "-=0.8");
+        }, "-=0.6");
 }
 
 

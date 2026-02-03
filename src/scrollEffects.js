@@ -69,29 +69,8 @@ export function initScrollEffects() {
         );
     });
 
-    // 4. Hero Parallax
-    // Make the hero content move at different speeds
-    gsap.to('.gp-hero-name', {
-        yPercent: 50,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: '.gp-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        }
-    });
+    // 4. Hero Parallax REMOVED per request
 
-    gsap.to('.gp-hero-side', {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: '.gp-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        }
-    });
 
     // 5. RESTORED: Text Stagger Animations (Tags & Chips)
     const sectionsWithTags = document.querySelectorAll('section');
