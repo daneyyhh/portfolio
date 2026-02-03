@@ -6,6 +6,7 @@ import { init3DBackground } from './background3d';
 import { initTiltEffect } from './tilt';
 // import { initLoader3D } from './loader3d';
 import { initThemeLoader } from './loaderTheme';
+import { initScrollEffects } from './scrollEffects';
 
 
 
@@ -278,55 +279,7 @@ function initHero() {
 }
 
 
-function initScrollAnimations() {
-    // Reveal sections on scroll
-    const sections = document.querySelectorAll('section');
-    sections.forEach(sec => {
-        // Section Reveal
-        gsap.from(sec, {
-            scrollTrigger: {
-                trigger: sec,
-                start: "top 85%", // Trigger earlier
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        });
-
-        // Text Animation (Tags & Chips)
-        const textElements = sec.querySelectorAll('.gp-case-tags span, .gp-chip');
-        if (textElements.length > 0) {
-            gsap.from(textElements, {
-                scrollTrigger: {
-                    trigger: sec,
-                    start: "top 70%",
-                },
-                y: 20,
-                opacity: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power2.out'
-            });
-        }
-
-        // Marquee Text Entrance Animation (Cover Fonts)
-        const marqueeText = sec.querySelectorAll('.marquee-track span');
-        if (marqueeText.length > 0) {
-            gsap.from(marqueeText, {
-                scrollTrigger: {
-                    trigger: sec,
-                    start: "top 75%",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-        }
-    });
-}
+// function initScrollAnimations() removed - replaced by initScrollEffects
 
 function hideLoader() {
     const loader = document.querySelector('.loader');
@@ -424,13 +377,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initThemeLoader();
     // init3DBackground(); // Disabled per request
-    // initTiltEffect();   // Disabled per request
+    // initTiltEffect();   // Re-enabled for 3D effect
+    initTiltEffect();
     initCursor();
     initCursorTrail(); // Activate Green Pixel Particles
     initContactModal();
     initShowreelModal();
     initNavigation();
-    initScrollAnimations();
+    // initScrollAnimations(); // Replaced by initScrollEffects
+    initScrollEffects();
     initGallery4();
     initHero();
+
+    // Force refresh ScrollTrigger after everything interacts
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 1000);
 });
