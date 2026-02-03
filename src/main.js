@@ -263,9 +263,9 @@ function initHero() {
         // Create a container for the TextPressure effect
         // Create a container for the TextPressure effect
         const textPressureContainer = document.createElement('div');
-        textPressureContainer.style.height = '300px'; // Increased height to allow larger text
+        textPressureContainer.style.height = '300px'; // Keeps it tall
         textPressureContainer.style.width = '100%';
-        textPressureContainer.style.marginBottom = '1rem'; // Spacing for subtitle
+        textPressureContainer.style.marginBottom = '1rem';
 
         // Initialize TextPressure
         new TextPressure(textPressureContainer, {
@@ -276,8 +276,8 @@ function initHero() {
             width: true,
             weight: true,
             italic: true,
-            minFontSize: 100, // Significantly increased from 30
-            scale: false // Keep false to avoid distortion, let fontSize do the work
+            minFontSize: 100,
+            scale: true // Enable scaling to fill the 300px height!
         });
 
         // Replace content: Clear existing title and append new container
