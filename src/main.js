@@ -6,6 +6,7 @@ import { init3DBackground } from './background3d';
 import { initTiltEffect } from './tilt';
 // import { initLoader3D } from './loader3d';
 import { initThemeLoader } from './loaderTheme';
+import { TextPressure } from './TextPressure.js';
 
 
 // Register ScrollTrigger
@@ -247,29 +248,81 @@ function initCaseToggles() {
 
 // --- 5. INITIALIZATION ---
 
+
+
+// ... other imports
+
 function initHero() {
-    const tl = gsap.timeline();
-    tl.from('.gp-title .reveal-line', {
-        y: 100,
+    console.log('TextPressure: initHero called');
+
+    // Select the existing title element specifically
+    const existingTitle = document.querySelector('.gp-title');
+    const heroNameContainer = document.querySelector('.gp-hero-name');
+
+    if (existingTitle && heroNameContainer) {
+        // Create a container for the TextPressure effect
+        const textPressureContainer = document.createElement('div');
+        textPressureContainer.style.height = '150px'; // Slightly reduced height to fit better
+        textPressureContainer.style.width = '100%';
+        textPressureContainer.style.marginBottom = '1rem'; // Spacing for subtitle
+
+        // Initialize TextPressure
+        new TextPressure(textPressureContainer, {
+            text: 'REUBEN BINU GEORGE',
+            flex: true,
+            alpha: false,
+            stroke: false,
+            width: true,
+            weight: true,
+            italic: true,
+            minFontSize: 30,
+            scale: false
+        });
+
+        // Replace content: Clear existing title and append new container
+        // This ensures the old text is definitely gone and replaced by the new effect
+        existingTitle.innerHTML = '';
+        existingTitle.appendChild(textPressureContainer);
+        // Instead of replacing the node, we clear it and append to it to maintain layout if needed, 
+        // OR we can stick to replaceChild but ensure it works. 
+        // Let's try completely swapping the element's content instead of the element itself to avoid reference issues.
+
+        // Actually, let's Stick to replacing the element but verify we aren't leaving anything behind.
+        // Better yet: Hide the old one, insert new one. 
+        existingTitle.style.display = 'none';
+        heroNameContainer.insertBefore(textPressureContainer, existingTitle);
+        existingTitle.remove();
+
+
+        // Animation for entrance (optional, similar to original)
+        gsap.from(textPressureContainer, {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power3.out'
+        });
+    } else {
+        console.error('TextPressure: .gp-title or .gp-hero-name not found');
+    }
+
+    // ANIMATE SUBTITLE (Restoring original logic)
+    gsap.from('.gp-subtitle .reveal-line', {
+        y: 50,
         opacity: 0,
-        duration: 1.2,
+        duration: 1,
         stagger: 0.1,
+        ease: 'power3.out',
+        delay: 0.5 // Delay slightly to sync with title
+    });
+
+    // Animate side blocks as before
+    gsap.from('.gp-side-block', {
+        x: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
         ease: 'power3.out'
-    })
-        .from('.gp-subtitle .reveal-line', {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.1,
-            ease: 'power3.out'
-        }, "-=0.8")
-        .from('.gp-side-block', {
-            x: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: 'power3.out'
-        }, "-=0.8");
+    }, "-=0.8");
 }
 
 function initScrollAnimations() {
