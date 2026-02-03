@@ -92,4 +92,39 @@ export function initScrollEffects() {
             scrub: true
         }
     });
+
+    // 5. RESTORED: Text Stagger Animations (Tags & Chips)
+    const sectionsWithTags = document.querySelectorAll('section');
+    sectionsWithTags.forEach(sec => {
+        const textElements = sec.querySelectorAll('.gp-case-tags span, .gp-chip');
+        if (textElements.length > 0) {
+            gsap.from(textElements, {
+                scrollTrigger: {
+                    trigger: sec,
+                    start: "top 70%",
+                },
+                y: 20,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+        }
+
+        // Marquee Text Entrance Animation
+        const marqueeText = sec.querySelectorAll('.marquee-track span');
+        if (marqueeText.length > 0) {
+            gsap.from(marqueeText, {
+                scrollTrigger: {
+                    trigger: sec,
+                    start: "top 75%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        }
+    });
 }
