@@ -31,64 +31,48 @@
     </div>
 
     <!-- Main Site -->
+    <!-- Vignette Overlay -->
+    <div class="vignette-overlay"></div>
+
     <div class="site-wrapper" style="opacity: 1; pointer-events: auto;">
         <header class="header">
             <div class="container nav-container">
-                <a href="#" class="logo">REUBEN<span class="dot">_</span>
-                </a>
+                <a href="#" class="logo">REUBEN<span class="dot" style="color:var(--accent-color)">_</span></a>
                 <nav>
                     <ul class="nav-links">
-                        <li><a href="#" class="nav-item" data-nav-link>Home</a></li>
-                        <li><a href="#about" class="nav-item" data-nav-link>About Us</a></li>
-                        <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
-                        <li><a href="#articles" class="nav-item" data-nav-link>Articles</a></li>
-                        <li><a href="#contact" class="nav-item" data-nav-link>Talk</a></li>
+                        <li><a href="#" class="nav-item">Home</a></li>
+                        <li><a href="#projects" class="nav-item">Projects</a></li>
+                        <li><a href="#about" class="nav-item">About</a></li>
+                        <li><a href="#contact" class="nav-item">Contact</a></li>
                     </ul>
                 </nav>
             </div>
         </header>
 
         <main id="main-content">
-            <!-- Hero -->
+            <!-- 3D Hero -->
             <section class="gp-hero">
-                <div class="container">
-                    <div class="gp-hero-top">
-                        <div class="gp-hero-name">
-                            <h1 class="gp-title">
-                                <span class="reveal-line">Reuben</span>
-                                <span class="reveal-line">Binu George</span>
-                            </h1>
-                            <div class="gp-subtitle">
-                                <span class="reveal-line">Gaming Enthusiast |</span>
-                                <span class="reveal-line">Tech Explorer</span>
-                            </div>
-                        </div>
-
-                        <div class="gp-hero-side">
-                            <div class="gp-side-block">
-                                <div class="gp-side-label">What I do</div>
-                                <p class="gp-side-text">I create high-impact digital experiences for products, games,
-                                    tools and websites.</p>
-                            </div>
-                            <div class="gp-side-block">
-                                <div class="gp-side-label">Services</div>
-                                <ul class="gp-services">
-                                    <li>Creative Direction & Strategy</li>
-                                    <li>UX / UI Design</li>
-                                    <li>Web Development</li>
-                                    <li>Realtime / Game Systems</li>
-                                    <li>Animation & Motion</li>
-                                </ul>
-                            </div>
-                        </div>
+                <!-- Floating Blobs loaded via JS or simple SVG here -->
+                <div class="hero-blobs">
+                    <div class="hero-blob"
+                        style="top: 20%; left: 10%; width: 300px; height: 300px; background: rgba(0, 255, 136, 0.3); border-radius: 50%;">
                     </div>
+                    <div class="hero-blob"
+                        style="bottom: 20%; right: 10%; width: 400px; height: 400px; background: rgba(0, 100, 255, 0.2); border-radius: 40%;">
+                    </div>
+                </div>
 
-                    <!-- Marquee Removed as requested -->
-
-                    <div class="gp-hero-bottom">
-                        <div class="scroll-down-indicator">
-                            <span class="scroll-text">SCROLL DOWN</span>
-                            <div class="scroll-arrow">↓</div>
+                <div class="container" style="display:flex; justify-content:center; perspective: 1000px;">
+                    <div class="gp-hero-card" id="hero-card">
+                        <h1 class="gp-title">
+                            GRILL&Eacute;D<br>
+                            <span style="color:transparent; -webkit-text-stroke: 2px #fff;">PIXELS</span>
+                        </h1>
+                        <div class="gp-subtitle-marquee">
+                            <div class="marquee-track" style="animation-duration: 20s;">
+                                <span>Game Developer • UI/UX Designer • Visualist • </span>
+                                <span>Game Developer • UI/UX Designer • Visualist • </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,206 +112,195 @@
                 </div>
             </section>
 
-            <!-- Cases -->
-            <section id="cases" class="gp-cases">
-                <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">Cases (3) • Archive (0)</div>
+            <article class="gp-case gp-case-1" data-case>
+                <!-- Top Marquee -->
+                <div class="gp-case-head">
+                    <div class="gp-case-title marquee" aria-hidden="true">
+                        <div class="marquee-track">
+                            <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
+                                Resources •</span><span>FiveM Resources •</span>
+                            <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
+                                Resources •</span><span>FiveM Resources •</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="gp-case-list">
-                        <!-- Project 1 -->
-                        <article class="gp-case gp-case-1" data-case>
-                            <!-- Top Marquee -->
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                            Resources •</span><span>FiveM Resources •</span>
-                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                            Resources •</span><span>FiveM Resources •</span>
-                                    </div>
-                                </div>
+                <!-- Centered Big Title -->
+                <a class="gp-case-hit" href="https://github.com/daneyyhh/fivem-resources" target="_blank"
+                    rel="noreferrer">
+                    <!-- Body for Bottom Controls -->
+                    <div class="gp-case-body">
+                        <div class="gp-case-tags">
+                            <span>LUA</span><span>SQL</span><span>UI</span><span>Optimized Networking</span>
+                        </div>
+                        <div class="gp-case-actions">
+                            <span class="gp-chip">View Project</span>
+                            <span class="gp-chip">Details</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="gp-case gp-case-2" data-case>
+                <div class="gp-case-head">
+                    <div class="gp-case-title marquee" aria-hidden="true">
+                        <div class="marquee-track">
+                            <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
+                                •</span><span>Astro Bot •</span>
+                            <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
+                                •</span><span>Astro Bot •</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="gp-case-hit" href="https://github.com/daneyyhh/astrobot-discord" target="_blank"
+                    rel="noreferrer">
+                    <div class="gp-case-body">
+                        <div class="gp-case-tags">
+                            <span>Python</span><span>Discord.py</span><span>Automation</span><span>Community</span>
+                        </div>
+                        <div class="gp-case-actions">
+                            <span class="gp-chip">View Project</span>
+                            <span class="gp-chip">Details</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="gp-case gp-case-3" data-case>
+                <div class="gp-case-head">
+                    <div class="gp-case-title marquee" aria-hidden="true">
+                        <div class="marquee-track">
+                            <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
+                                •</span><span>3D Physics •</span>
+                            <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
+                                •</span><span>3D Physics •</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="gp-case-hit" href="https://github.com/daneyyhh/3d-bouncing-ball-game" target="_blank"
+                    rel="noreferrer">
+                    <div class="gp-case-body">
+                        <div class="gp-case-tags">
+                            <span>Unity</span><span>C#</span><span>HLSL</span><span>Realtime
+                                Simulation</span>
+                        </div>
+                        <div class="gp-case-actions">
+                            <span class="gp-chip">View Project</span>
+                            <span class="gp-chip">Details</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+    </div>
+    </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles" class="gp-cases">
+        <div class="container">
+            <div class="gp-cases-top">
+                <div class="gp-cases-meta">
+                    <div class="gp-mini">Articles</div>
+                </div>
+            </div>
+
+            <div class="gp-case-list">
+                <!-- Article 1 -->
+                <article class="gp-case gp-article-1" data-case>
+                    <div class="gp-case-head">
+                        <div class="gp-case-title marquee" aria-hidden="true">
+                            <div class="marquee-track">
+                                <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
+                                    •</span><span>THE ILLUMINATI •</span>
+                                <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
+                                    •</span><span>THE ILLUMINATI •</span>
                             </div>
+                        </div>
+                    </div>
 
-                            <!-- Centered Big Title -->
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/fivem-resources" target="_blank"
-                                rel="noreferrer">
-                                <!-- Body for Bottom Controls -->
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>LUA</span><span>SQL</span><span>UI</span><span>Optimized Networking</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-
-                        <!-- Project 2 -->
-                        <article class="gp-case gp-case-2" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                            •</span><span>Astro Bot •</span>
-                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                            •</span><span>Astro Bot •</span>
-                                    </div>
-                                </div>
+                    <a class="gp-case-hit" href="https://github.com/daneyyhh/illuminati-article" target="_blank"
+                        rel="noreferrer">
+                        <div class="gp-case-body">
+                            <div class="gp-case-tags">
+                                <span>History</span><span>Myths</span><span>Conspiracy</span><span>Analysis</span>
                             </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/astrobot-discord" target="_blank"
-                                rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Python</span><span>Discord.py</span><span>Automation</span><span>Community</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-
-                        <!-- Project 3 -->
-                        <article class="gp-case gp-case-3" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                            •</span><span>3D Physics •</span>
-                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                            •</span><span>3D Physics •</span>
-                                    </div>
-                                </div>
+                            <div class="gp-case-actions">
+                                <span class="gp-chip">Read Article</span>
+                                <span class="gp-chip">Details</span>
                             </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/3d-bouncing-ball-game"
-                                target="_blank" rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Unity</span><span>C#</span><span>HLSL</span><span>Realtime
-                                            Simulation</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Articles Section -->
-            <section id="articles" class="gp-cases">
-                <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">Articles</div>
                         </div>
-                    </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                    <div class="gp-case-list">
-                        <!-- Article 1 -->
-                        <article class="gp-case gp-article-1" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
-                                            •</span><span>THE ILLUMINATI •</span>
-                                        <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
-                                            •</span><span>THE ILLUMINATI •</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/illuminati-article" target="_blank"
-                                rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>History</span><span>Myths</span><span>Conspiracy</span><span>Analysis</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">Read Article</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
+    <!-- Contact Section (New) -->
+    <section id="contact" class="gp-contact">
+        <div class="container">
+            <div class="gp-contact-grid">
+                <div class="gp-contact-left">
+                    <div class="gp-mini">Get in Touch</div>
+                    <h2 class="gp-h2">Let’s Talk</h2>
+                    <p class="gp-lead">
+                        Have a project in mind or just want to say hi? Fill out the form below.
+                    </p>
                 </div>
-            </section>
-
-            <!-- Contact Section (New) -->
-            <section id="contact" class="gp-contact">
-                <div class="container">
-                    <div class="gp-contact-grid">
-                        <div class="gp-contact-left">
-                            <div class="gp-mini">Get in Touch</div>
-                            <h2 class="gp-h2">Let’s Talk</h2>
-                            <p class="gp-lead">
-                                Have a project in mind or just want to say hi? Fill out the form below.
-                            </p>
-                        </div>
-                        <div class="gp-contact-right">
-                            <form class="gp-form">
-                                <label class="gp-field">
-                                    <span>Name*</span>
-                                    <input type="text" name="name" required autocomplete="name">
-                                </label>
-                                <label class="gp-field">
-                                    <span>Mail ID*</span>
-                                    <input type="email" name="email" required autocomplete="email">
-                                </label>
-                                <label class="gp-field">
-                                    <span>Message*</span>
-                                    <textarea name="message" rows="4" required></textarea>
-                                </label>
-                                <button class="gp-submit" type="submit">Send Message</button>
-                                <div class="gp-form-note">This demo form doesn’t send yet.</div>
-                            </form>
-                        </div>
-                    </div>
+                <div class="gp-contact-right">
+                    <form class="gp-form">
+                        <label class="gp-field">
+                            <span>Name*</span>
+                            <input type="text" name="name" required autocomplete="name">
+                        </label>
+                        <label class="gp-field">
+                            <span>Mail ID*</span>
+                            <input type="email" name="email" required autocomplete="email">
+                        </label>
+                        <label class="gp-field">
+                            <span>Message*</span>
+                            <textarea name="message" rows="4" required></textarea>
+                        </label>
+                        <button class="gp-submit" type="submit">Send Message</button>
+                        <div class="gp-form-note">This demo form doesn’t send yet.</div>
+                    </form>
                 </div>
-            </section>
+            </div>
+        </div>
+    </section>
 
-            <!-- UI Section Removed -->
+    <!-- UI Section Removed -->
 
-            <!-- Footer -->
-            <footer class="gp-footer">
-                <div class="gp-footer-marquee marquee" aria-hidden="true">
-                    <div class="marquee-track">
-                        <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
-                            •</span><span>Let’s work together •</span>
-                        <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
-                            •</span><span>Let’s work together •</span>
-                    </div>
+    <!-- Footer -->
+    <footer class="gp-footer">
+        <div class="gp-footer-marquee marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
+                    •</span><span>Let’s work together •</span>
+                <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
+                    •</span><span>Let’s work together •</span>
+            </div>
+        </div>
+        <div class="container gp-footer-inner">
+            <div class="gp-footer-top">
+                <div class="gp-audio">
+                    <!-- Unmute removed as requested -->
                 </div>
-                <div class="container gp-footer-inner">
-                    <div class="gp-footer-top">
-                        <div class="gp-audio">
-                            <!-- Unmute removed as requested -->
-                        </div>
-                        <!-- Say Hi button removed -->
-                    </div>
-                    <div class="gp-footer-bottom">
-                        <div class="gp-mini">Copyright 2026 • All rights reserved (v0.0.16)</div>
-                        <div class="gp-footer-links">
-                            <a href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">Github</a>
-                            <!-- LinkedIn removed as requested -->
-                        </div>
-                    </div>
+                <!-- Say Hi button removed -->
+            </div>
+            <div class="gp-footer-bottom">
+                <div class="gp-mini">Copyright 2026 • All rights reserved (v0.0.16)</div>
+                <div class="gp-footer-links">
+                    <a href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">Github</a>
+                    <!-- LinkedIn removed as requested -->
                 </div>
-            </footer>
-        </main>
+            </div>
+        </div>
+    </footer>
+    </main>
     </div>
 
     <!-- Showreel Modal -->
