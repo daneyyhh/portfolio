@@ -4,355 +4,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reuben Binu George | Game Developer</title>
-    <link rel="canonical" href="https://reubenbg-portfolio.vercel.app/" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="./src/style.css?v=21">
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-
+    <title>Reuben George | Game Developer</title>
+    <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
 
-    <!-- Canvas for Cursor Trail -->
-    <canvas id="cursor-canvas"></canvas>
-
     <!-- Custom Cursor -->
-    <div class="cursor" aria-hidden="true"></div>
-    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-trail"></div>
 
-    <!-- Loader -->
-    <div class="loader">
-        <!-- 3D Canvas will be injected here by loader3d.js -->
-    </div>
+    <!-- Navigation -->
+    <nav
+        style="position:fixed; top:0; width:100%; padding: 2rem 5vw; display:flex; justify-content:space-between; z-index:100; mix-blend-mode:exclusion;">
+        <div style="font-weight:700; font-size:1.5rem;">RG_</div>
+        <div class="flex">
+            <a href="#projects" class="btn-magnetic">PROJECTS</a>
+            <a href="#about" class="btn-magnetic">ABOUT</a>
+            <a href="#contact" class="btn-magnetic">CONTACT</a>
+        </div>
+    </nav>
 
-    <!-- Main Site -->
-    <div class="site-wrapper" style="opacity: 1; pointer-events: auto;">
-        <header class="header">
-            <div class="container nav-container">
-                <a href="#" class="logo">REUBEN<span class="dot">_</span>
-                </a>
-                <nav>
-                    <ul class="nav-links">
-                        <li><a href="#" class="nav-item" data-nav-link>Home</a></li>
-                        <li><a href="#about" class="nav-item" data-nav-link>About Us</a></li>
-                        <li><a href="#cases" class="nav-item" data-nav-link>Projects</a></li>
-                        <li><a href="#articles" class="nav-item" data-nav-link>Articles</a></li>
-                        <li><a href="#contact" class="nav-item" data-nav-link>Talk</a></li>
-                    </ul>
-                </nav>
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-title">
+            <h1 class="reveal-text">REUBEN</h1>
+            <h1 class="reveal-text" style="color:var(--neon)">GEORGE</h1>
+        </div>
+
+        <div class="hero-marquee">
+            <div class="marquee-track">
+                <span class="marquee-item">FINAL YEAR GAME DEVELOPMENT STUDENT • KERALA, IN • </span>
+                <span class="marquee-item">UI/UX DESIGNER • 3D GENERALIST • </span>
+                <span class="marquee-item">REACT DEVELOPER • FIVEM SCRIPTING • </span>
+                <span class="marquee-item">FINAL YEAR GAME DEVELOPMENT STUDENT • KERALA, IN • </span>
             </div>
-        </header>
+        </div>
 
-        <main id="main-content">
-            <!-- Hero -->
-            <section class="gp-hero">
-                <div class="container">
-                    <div class="gp-hero-top">
-                        <div class="gp-hero-name">
-                            <h1 class="gp-title">
-                                <span class="reveal-line">Reuben</span>
-                                <span class="reveal-line">Binu George</span>
-                            </h1>
-                            <div class="gp-subtitle">
-                                <span class="reveal-line">Gaming Enthusiast |</span>
-                                <span class="reveal-line">Tech Explorer</span>
-                            </div>
-                        </div>
-
-                        <div class="gp-hero-side">
-                            <div class="gp-side-block">
-                                <div class="gp-side-label">What I do</div>
-                                <p class="gp-side-text">I create high-impact digital experiences for products, games,
-                                    tools and websites.</p>
-                            </div>
-                            <div class="gp-side-block">
-                                <div class="gp-side-label">Services</div>
-                                <ul class="gp-services">
-                                    <li>Creative Direction & Strategy</li>
-                                    <li>UX / UI Design</li>
-                                    <li>Web Development</li>
-                                    <li>Realtime / Game Systems</li>
-                                    <li>Animation & Motion</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Marquee Removed as requested -->
-
-                    <div class="gp-hero-bottom">
-                        <div class="scroll-down-indicator">
-                            <span class="scroll-text">SCROLL DOWN</span>
-                            <div class="scroll-arrow">↓</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About -->
-            <section id="about" class="gp-about">
-                <div class="container">
-                    <div class="gp-about-grid">
-                        <div class="gp-about-left">
-                            <div class="gp-mini">Who I Am</div>
-                            <h2 class="gp-h2">Passionate Developer & Creative Coder</h2>
-                        </div>
-                        <div class="gp-about-right">
-                            <p class="gp-lead">
-                                I'm a passionate developer with a love for web development, gaming, and creative coding.
-                                I enjoy building immersive experiences through FiveM scripting, crafting elegant web
-                                solutions, and exploring innovative technologies. Whether it's developing server-side
-                                scripts, creating engaging web interfaces, or working on academic projects, I'm always
-                                eager to learn and push the boundaries of what's possible.
-                            </p>
-
-                            <!-- Skills Marquee -->
-                            <div class="marquee gp-skill-marquee" aria-hidden="true">
-                                <div class="marquee-track">
-                                    <span>C++ •</span><span>Lua •</span><span>C# •</span><span>Python •</span>
-                                    <span>Unity •</span><span>Unreal •</span><span>Docker •</span><span>Git •</span>
-                                    <span>React •</span><span>GSAP •</span><span>Three.js •</span><span>Node.js •</span>
-                                    <!-- Duplicated for loop -->
-                                    <span>C++ •</span><span>Lua •</span><span>C# •</span><span>Python •</span>
-                                    <span>Unity •</span><span>Unreal •</span><span>Docker •</span><span>Git •</span>
-                                    <span>React •</span><span>GSAP •</span><span>Three.js •</span><span>Node.js •</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Cases -->
-            <section id="cases" class="gp-cases">
-                <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">Cases (3) • Archive (0)</div>
-                        </div>
-                    </div>
-
-                    <div class="gp-case-list">
-                        <!-- Project 1 -->
-                        <article class="gp-case gp-case-1" data-case>
-                            <!-- Top Marquee -->
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                            Resources •</span><span>FiveM Resources •</span>
-                                        <span>FiveM Resources •</span><span>FiveM Resources •</span><span>FiveM
-                                            Resources •</span><span>FiveM Resources •</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Centered Big Title -->
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/fivem-resources" target="_blank"
-                                rel="noreferrer">
-                                <!-- Body for Bottom Controls -->
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>LUA</span><span>SQL</span><span>UI</span><span>Optimized Networking</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-
-                        <!-- Project 2 -->
-                        <article class="gp-case gp-case-2" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                            •</span><span>Astro Bot •</span>
-                                        <span>Astro Bot •</span><span>Astro Bot •</span><span>Astro Bot
-                                            •</span><span>Astro Bot •</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/astrobot-discord" target="_blank"
-                                rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Python</span><span>Discord.py</span><span>Automation</span><span>Community</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-
-                        <!-- Project 3 -->
-                        <article class="gp-case gp-case-3" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                            •</span><span>3D Physics •</span>
-                                        <span>3D Physics •</span><span>3D Physics •</span><span>3D Physics
-                                            •</span><span>3D Physics •</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/3d-bouncing-ball-game"
-                                target="_blank" rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>Unity</span><span>C#</span><span>HLSL</span><span>Realtime
-                                            Simulation</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">View Project</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Articles Section -->
-            <section id="articles" class="gp-cases">
-                <div class="container">
-                    <div class="gp-cases-top">
-                        <div class="gp-cases-meta">
-                            <div class="gp-mini">Articles</div>
-                        </div>
-                    </div>
-
-                    <div class="gp-case-list">
-                        <!-- Article 1 -->
-                        <article class="gp-case gp-article-1" data-case>
-                            <div class="gp-case-head">
-                                <div class="gp-case-title marquee" aria-hidden="true">
-                                    <div class="marquee-track">
-                                        <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
-                                            •</span><span>THE ILLUMINATI •</span>
-                                        <span>THE ILLUMINATI •</span><span>THE ILLUMINATI •</span><span>THE ILLUMINATI
-                                            •</span><span>THE ILLUMINATI •</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class="gp-case-hit" href="https://github.com/daneyyhh/illuminati-article" target="_blank"
-                                rel="noreferrer">
-                                <div class="gp-case-body">
-                                    <div class="gp-case-tags">
-                                        <span>History</span><span>Myths</span><span>Conspiracy</span><span>Analysis</span>
-                                    </div>
-                                    <div class="gp-case-actions">
-                                        <span class="gp-chip">Read Article</span>
-                                        <span class="gp-chip">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section (New) -->
-            <section id="contact" class="gp-contact">
-                <div class="container">
-                    <div class="gp-contact-grid">
-                        <div class="gp-contact-left">
-                            <div class="gp-mini">Get in Touch</div>
-                            <h2 class="gp-h2">Let’s Talk</h2>
-                            <p class="gp-lead">
-                                Have a project in mind or just want to say hi? Fill out the form below.
-                            </p>
-                        </div>
-                        <div class="gp-contact-right">
-                            <form class="gp-form">
-                                <label class="gp-field">
-                                    <span>Name*</span>
-                                    <input type="text" name="name" required autocomplete="name">
-                                </label>
-                                <label class="gp-field">
-                                    <span>Mail ID*</span>
-                                    <input type="email" name="email" required autocomplete="email">
-                                </label>
-                                <label class="gp-field">
-                                    <span>Message*</span>
-                                    <textarea name="message" rows="4" required></textarea>
-                                </label>
-                                <button class="gp-submit" type="submit">Send Message</button>
-                                <div class="gp-form-note">This demo form doesn’t send yet.</div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- UI Section Removed -->
-
-            <!-- Footer -->
-            <footer class="gp-footer">
-                <div class="gp-footer-marquee marquee" aria-hidden="true">
-                    <div class="marquee-track">
-                        <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
-                            •</span><span>Let’s work together •</span>
-                        <span>Let’s work together •</span><span>Let’s work together •</span><span>Let’s work together
-                            •</span><span>Let’s work together •</span>
-                    </div>
-                </div>
-                <div class="container gp-footer-inner">
-                    <div class="gp-footer-top">
-                        <div class="gp-audio">
-                            <!-- Unmute removed as requested -->
-                        </div>
-                        <!-- Say Hi button removed -->
-                    </div>
-                    <div class="gp-footer-bottom">
-                        <div class="gp-mini">Copyright 2026 • All rights reserved (v0.0.16)</div>
-                        <div class="gp-footer-links">
-                            <a href="https://github.com/daneyyhh" target="_blank" rel="noreferrer">Github</a>
-                            <!-- LinkedIn removed as requested -->
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </main>
-    </div>
-
-    <!-- Showreel Modal -->
-    <div class="gp-modal" data-showreel-modal aria-hidden="true">
-        <div class="gp-modal-backdrop" data-close-showreel></div>
-        <div class="gp-modal-panel" role="dialog" aria-modal="true" aria-label="Showreel">
-            <div class="gp-modal-head">
-                <div>
-                    <div class="gp-mini">Showreel</div>
-                    <div class="gp-modal-title">Play Showreel</div>
-                </div>
-                <button class="gp-modal-close" type="button" data-close-showreel>Close (esc)</button>
+        <div class="hero-stats reveal-text">
+            <div>Next Milestone: Germany Masters 2026</div>
+            <div class="flex" style="gap:2rem">
+                <a href="#projects" class="btn-magnetic" style="color:var(--neon)">ON TRACK &rarr;</a>
+                <a href="#about" class="btn-magnetic">OFF TRACK &rarr;</a>
             </div>
-            <div class="gp-showreel">
-                <div class="gp-showreel-placeholder">
-                    <div class="gp-mini">Coming soon</div>
-                    <div class="gp-showreel-big">Drop a video URL here later (YouTube/Vimeo/local).</div>
+        </div>
+    </header>
+
+    <!-- ON TRACK (Projects) -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="reveal-text">ON TRACK <span style="color:var(--neon)">// PROJECTS</span></h2>
+            <div class="grid project-grid">
+                <!-- Project 1 -->
+                <article class="project-card" data-tilt>
+                    <div class="project-thumb">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=900&auto=format&fit=crop"
+                            alt="Game Project">
+                    </div>
+                    <div class="project-info">
+                        <h3>Unity FPS Mod</h3>
+                        <p>High-octane shooter mechanics built in C#.</p>
+                        <div class="project-stats">
+                            <span>Unity 2023</span>
+                            <span>C#</span>
+                            <span>Multiplayer</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card" data-tilt>
+                    <div class="project-thumb">
+                        <img src="https://images.unsplash.com/photo-1614726365723-49cfa080f5d9?q=80&w=900&auto=format&fit=crop"
+                            alt="FiveM">
+                    </div>
+                    <div class="project-info">
+                        <h3>FiveM Server Core</h3>
+                        <p>Custom Lua scripts for RP economy play.</p>
+                        <div class="project-stats">
+                            <span>Lua</span>
+                            <span>SQL</span>
+                            <span>NUI (React)</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card" data-tilt>
+                    <div class="project-thumb">
+                        <img src="https://images.unsplash.com/photo-1629814275080-6060c2838392?q=80&w=900&auto=format&fit=crop"
+                            alt="Discord Bot">
+                    </div>
+                    <div class="project-info">
+                        <h3>Discord Bot V3</h3>
+                        <p>Moderation & Music bot used by 15+ servers.</p>
+                        <div class="project-stats">
+                            <span>Node.js</span>
+                            <span>Discord.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </article>
+                <!-- Project 4 -->
+                <article class="project-card" data-tilt>
+                    <div class="project-thumb">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=900&auto=format&fit=crop"
+                            alt="React">
+                    </div>
+                    <div class="project-info">
+                        <h3>Portfolio V1</h3>
+                        <p>Previous iteration built with React & Three.js.</p>
+                        <div class="project-stats">
+                            <span>React</span>
+                            <span>Three Fiber</span>
+                            <span>Vercel</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- HELMETS (Carousel / Skills) -->
+    <section class="section" style="border-top:none; padding-top:0;">
+        <div class="container">
+            <h2 class="reveal-text">ARSENAL <span style="color:var(--text-dim)">// SKILLS</span></h2>
+            <div class="carousel-wrap">
+                <div class="carousel-track">
+                    <div class="helmet-card">
+                        <div class="helmet-visual">
+                            <h3 style="font-size:2rem; color:var(--neon)">C#</h3>
+                        </div>
+                        <div class="helmet-label">Unity Engine</div>
+                    </div>
+                    <div class="helmet-card">
+                        <div class="helmet-visual">
+                            <h3 style="font-size:2rem; color:var(--neon)">JS</h3>
+                        </div>
+                        <div class="helmet-label">React / Vue</div>
+                    </div>
+                    <div class="helmet-card">
+                        <div class="helmet-visual">
+                            <h3 style="font-size:2rem; color:var(--neon)">Lua</h3>
+                        </div>
+                        <div class="helmet-label">FiveM Scripting</div>
+                    </div>
+                    <div class="helmet-card">
+                        <div class="helmet-visual">
+                            <h3 style="font-size:2rem; color:var(--neon)">Py</h3>
+                        </div>
+                        <div class="helmet-label">Automation</div>
+                    </div>
+                    <div class="helmet-card">
+                        <div class="helmet-visual">
+                            <h3 style="font-size:2rem; color:var(--neon)">Git</h3>
+                        </div>
+                        <div class="helmet-label">Version Control</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Contact Modal Removed -->
+    <!-- OFF TRACK (Lifestyle) -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="reveal-text">OFF TRACK <span style="color:var(--neon)">// LIFESTYLE</span></h2>
+            <div class="grid lifestyle-grid">
+                <div class="lifestyle-item">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=900&auto=format&fit=crop"
+                        alt="Gaming">
+                    <h3>GAMING</h3>
+                </div>
+                <div class="lifestyle-item">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=900&auto=format&fit=crop"
+                        alt="Coding">
+                    <h3>CODING</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Main JS (GSAP Imported) -->
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div>&copy; 2026 REUBEN GEORGE. ALL RIGHTS RESERVED.</div>
+        <div class="socials">
+            <a href="#">GITHUB</a>
+            <a href="#">LINKEDIN</a>
+            <a href="#">INSTAGRAM</a>
+            <a href="#">DISCORD</a>
+        </div>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
 </body>
 
