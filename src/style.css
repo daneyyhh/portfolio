@@ -580,9 +580,6 @@ body.cursor-down .cursor {
     /* Center everything */
     width: 100%;
     margin-top: 5vh;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    /* Essential for 3D tilt */
 }
 
 .glare {

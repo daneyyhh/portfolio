@@ -4,48 +4,33 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function initScrollEffects() {
-    console.log('3D Scroll Effects Initialized');
+    console.log('Scroll Effects Initialized (3D Removed)');
 
-    // 1. Projects Entrance (3D Rotate & Scale)
+    // 1. Projects Entrance (Simple Fade Up)
     const cards = document.querySelectorAll('.gp-case');
 
     cards.forEach((card, i) => {
-        // Set initial 3D state
-        gsap.set(card, {
-            transformPerspective: 1000,
-            transformStyle: "preserve-3d"
-        });
+        gsap.set(card, { clearProps: "all" }); // Clear 3D props
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: card,
-                start: "top 85%", // Start when top of card hits 85% of viewport
-                end: "top 50%",
-                toggleActions: "play none none reverse"
-            }
-        });
-
-        tl.fromTo(card,
+        gsap.fromTo(card,
             {
                 opacity: 0,
-                rotateX: 15,
-                y: 100,
-                scale: 0.9,
-                filter: "blur(10px)"
+                y: 50
             },
             {
                 opacity: 1,
-                rotateX: 0,
                 y: 0,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 1.2,
-                ease: "power3.out"
+                duration: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%"
+                }
             }
         );
 
-        // Internal Parallax for Card Content
-        const image = card.querySelector('.gp-case-hit img, .gp-case-body'); // Fallback to body
+        // Slight Parallax for Content (Internal) - Keeping this as it's subtle and nice
+        const image = card.querySelector('.gp-case-hit img, .gp-case-body');
         if (image) {
             gsap.to(image, {
                 y: -30,
@@ -60,34 +45,22 @@ export function initScrollEffects() {
         }
     });
 
-    // 2. Velocity Skew (Retained & Tuned)
-    let proxy = { skew: 0 },
-        skewSetter = gsap.quickSetter(".gp-case", "skewY", "deg"),
-        clamp = gsap.utils.clamp(-5, 5); // Reduce clamp for subtler effect
+    // 2. Velocity Skew REMOVED for Readability
 
-    ScrollTrigger.create({
-        onUpdate: (self) => {
-            let skew = clamp(self.getVelocity() / -500);
-            if (Math.abs(skew) > 0.1) skewSetter(skew);
-            else skewSetter(0);
-        }
-    });
-
-    // 3. Section Titles 3D Reveal
+    // 3. Section Titles Reveal (Simple Fade)
     const headings = document.querySelectorAll('.gp-h2, .gp-lead');
     headings.forEach(h => {
+        gsap.set(h, { clearProps: "all" });
+
         gsap.fromTo(h,
             {
                 opacity: 0,
-                y: 50,
-                rotateX: 10,
-                transformPerspective: 2500
+                y: 30
             },
             {
                 opacity: 1,
                 y: 0,
-                rotateX: 0,
-                duration: 1,
+                duration: 0.8,
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: h,
@@ -97,23 +70,40 @@ export function initScrollEffects() {
         );
     });
 
-    // 4. Case Tags Stagger
+    // 4. Case Tags Stagger (Kept, just removed delays/complex easing)
     const cases = document.querySelectorAll('.gp-case');
     cases.forEach(c => {
         const tags = c.querySelectorAll('.gp-case-tags span');
         if (tags.length > 0) {
             gsap.from(tags, {
-                y: 20,
+                y: 10,
                 opacity: 0,
                 duration: 0.5,
                 stagger: 0.05,
-                delay: 0.2,
-                ease: 'back.out(1.5)',
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: c,
-                    start: "top 75%"
+                    start: "top 80%"
                 }
             });
         }
+    });
+
+    // 5. General Section Fade
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => {
+        gsap.fromTo(sec,
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: sec,
+                    start: 'top 90%'
+                }
+            }
+        );
     });
 }
