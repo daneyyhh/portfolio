@@ -6,103 +6,113 @@ gsap.registerPlugin(ScrollTrigger);
 export function initScrollEffects() {
     console.log('3D Scroll Effects Initialized');
 
-    // 1. Parallax for Project Images
-    // Move images slightly slower/faster than scroll to create depth
-    const projectImages = document.querySelectorAll('.gp-case-hit img, .gp-case-body'); // Targeting body/images
-
-    // If no direct images, let's target the article/cards themselves for a simpler parallax lift
+    // 1. Projects Entrance (3D Rotate & Scale)
     const cards = document.querySelectorAll('.gp-case');
 
-    cards.forEach(card => {
-        gsap.to(card, {
-            y: -50, // Move up slightly as we scroll down (parallax)
-            ease: 'none',
+    cards.forEach((card, i) => {
+        // Set initial 3D state
+        gsap.set(card, {
+            transformPerspective: 1000,
+            transformStyle: "preserve-3d"
+        });
+
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: card,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true
+                start: "top 85%", // Start when top of card hits 85% of viewport
+                end: "top 50%",
+                toggleActions: "play none none reverse"
             }
         });
-    });
 
-    // 2. Velocity Skew Effect
-    // Skew elements based on scroll velocity to give "weight"
-    let proxy = { skew: 0 },
-        skewSetter = gsap.quickSetter(".gp-case", "skewY", "deg"), // fast
-        clamp = gsap.utils.clamp(-10, 10); // Don't skew too much
-
-    ScrollTrigger.create({
-        onUpdate: (self) => {
-            let skew = clamp(self.getVelocity() / -300);
-            // Only skew if velocity is significant
-            if (Math.abs(skew) > 0.1) {
-                skewSetter(skew);
-            } else {
-                skewSetter(0);
+        tl.fromTo(card,
+            {
+                opacity: 0,
+                rotateX: 15,
+                y: 100,
+                scale: 0.9,
+                filter: "blur(10px)"
+            },
+            {
+                opacity: 1,
+                rotateX: 0,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 1.2,
+                ease: "power3.out"
             }
+        );
+
+        // Internal Parallax for Card Content
+        const image = card.querySelector('.gp-case-hit img, .gp-case-body'); // Fallback to body
+        if (image) {
+            gsap.to(image, {
+                y: -30,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
         }
     });
 
-    // 3. Section Depth / 3D Reveal
-    // Animate sections appearing with a slight rotation/scale
-    const sections = document.querySelectorAll('section');
-    sections.forEach(sec => {
-        gsap.fromTo(sec,
+    // 2. Velocity Skew (Retained & Tuned)
+    let proxy = { skew: 0 },
+        skewSetter = gsap.quickSetter(".gp-case", "skewY", "deg"),
+        clamp = gsap.utils.clamp(-5, 5); // Reduce clamp for subtler effect
+
+    ScrollTrigger.create({
+        onUpdate: (self) => {
+            let skew = clamp(self.getVelocity() / -500);
+            if (Math.abs(skew) > 0.1) skewSetter(skew);
+            else skewSetter(0);
+        }
+    });
+
+    // 3. Section Titles 3D Reveal
+    const headings = document.querySelectorAll('.gp-h2, .gp-lead');
+    headings.forEach(h => {
+        gsap.fromTo(h,
             {
                 opacity: 0,
-                y: 100,
-                rotateX: 5,
-                transformPerspective: 1000
+                y: 50,
+                rotateX: 10,
+                transformPerspective: 2500
             },
             {
                 opacity: 1,
                 y: 0,
                 rotateX: 0,
-                duration: 1.2,
-                ease: 'power3.out',
+                duration: 1,
+                ease: "power2.out",
                 scrollTrigger: {
-                    trigger: sec,
-                    start: 'top 85%'
+                    trigger: h,
+                    start: "top 90%"
                 }
             }
         );
     });
 
-    // 4. Hero Parallax REMOVED per request
-
-
-    // 5. RESTORED: Text Stagger Animations (Tags & Chips)
-    const sectionsWithTags = document.querySelectorAll('section');
-    sectionsWithTags.forEach(sec => {
-        const textElements = sec.querySelectorAll('.gp-case-tags span, .gp-chip');
-        if (textElements.length > 0) {
-            gsap.from(textElements, {
-                scrollTrigger: {
-                    trigger: sec,
-                    start: "top 70%",
-                },
+    // 4. Case Tags Stagger
+    const cases = document.querySelectorAll('.gp-case');
+    cases.forEach(c => {
+        const tags = c.querySelectorAll('.gp-case-tags span');
+        if (tags.length > 0) {
+            gsap.from(tags, {
                 y: 20,
                 opacity: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power2.out'
-            });
-        }
-
-        // Marquee Text Entrance Animation
-        const marqueeText = sec.querySelectorAll('.marquee-track span');
-        if (marqueeText.length > 0) {
-            gsap.from(marqueeText, {
+                duration: 0.5,
+                stagger: 0.05,
+                delay: 0.2,
+                ease: 'back.out(1.5)',
                 scrollTrigger: {
-                    trigger: sec,
-                    start: "top 75%",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: 'power3.out'
+                    trigger: c,
+                    start: "top 75%"
+                }
             });
         }
     });

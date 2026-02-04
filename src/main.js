@@ -40,41 +40,79 @@ function initCursor() {
 
     if (!cursor || !cursorDot) return;
 
-    document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.1,
-            ease: 'power2.out'
-        });
+    // Mouse Tracking with GSAP for smooth delay
+    window.addEventListener('mousemove', (e) => {
+        // Dot follows instantly
         gsap.to(cursorDot, {
             x: e.clientX,
             y: e.clientY,
-            duration: 0.05,
-            ease: 'power2.out'
+            duration: 0.1,
+            ease: 'power2.out',
+            overwrite: 'auto'
+        });
+        // Cursor Circle follows with delay
+        gsap.to(cursor, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.5,
+            ease: 'power2.out',
+            overwrite: 'auto'
         });
     });
 
     // Hover effects
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, [data-cursor-label]');
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, .gp-case-hit, .gp-case');
+
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('active');
             cursorDot.classList.add('active');
             document.body.classList.add('cursor-hover');
 
-            if (el.getAttribute('data-cursor-label')) {
-                const label = el.getAttribute('data-cursor-label');
-                cursor.setAttribute('data-label', label);
-                document.body.classList.add('cursor-labeled');
-                // You might need a label element if you want to show text
+            // Specific Case/Project Hover
+            if (el.classList.contains('gp-case-hit') || el.closest('.gp-case')) {
+                cursor.innerHTML = '<span style="font-size: 10px; color: black; font-weight: bold;">VIEW</span>';
+                gsap.to(cursor, { width: 60, height: 60, backgroundColor: '#4ade80', mixBlendMode: 'normal' });
             }
         });
+
         el.addEventListener('mouseleave', () => {
             cursor.classList.remove('active');
             cursorDot.classList.remove('active');
             document.body.classList.remove('cursor-hover');
-            document.body.classList.remove('cursor-labeled');
+
+            // Reset
+            cursor.innerHTML = '';
+            gsap.to(cursor, { width: 14, height: 14, backgroundColor: '#4ade80', mixBlendMode: 'difference' });
+        });
+    });
+
+    // Magnetic Buttons
+    // Find buttons specifically to apply magnetic effect
+    const buttons = document.querySelectorAll('.gp-pill, .gp-submit');
+    buttons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // Magnetic pull strength
+            gsap.to(btn, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+            // Cursor also attracted slightly
+            gsap.to([cursor, cursorDot], {
+                x: e.clientX + (x * 0.1),
+                y: e.clientY + (y * 0.1),
+                duration: 0.3
+            });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
         });
     });
 }
@@ -91,11 +129,20 @@ function initCursorTrail() {
 
     let particles = [];
     const mouse = { x: 0, y: 0 };
+    let lastMouse = { x: 0, y: 0 };
 
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-        createParticle();
+
+        // Spawn based on velocity
+        const dist = Math.hypot(mouse.x - lastMouse.x, mouse.y - lastMouse.y);
+        if (dist > 5) { // Only spawn if moved enough
+            const count = Math.min(5, Math.floor(dist / 5)); // More movement = more particles
+            for (let i = 0; i < count; i++) createParticle();
+        }
+        lastMouse.x = mouse.x;
+        lastMouse.y = mouse.y;
     });
 
     window.addEventListener('resize', () => {
@@ -107,13 +154,13 @@ function initCursorTrail() {
 
     class Particle {
         constructor() {
-            this.x = mouse.x;
-            this.y = mouse.y;
-            this.size = Math.random() * 4 + 2; // Slightly larger for pixel look
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
-            this.life = 1; // opacity/life
-            this.decay = Math.random() * 0.05 + 0.02; // Faster decay for glitch feel
+            this.x = mouse.x + (Math.random() - 0.5) * 10;
+            this.y = mouse.y + (Math.random() - 0.5) * 10;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = (Math.random() - 0.5) * 0.5; // Slower float
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.life = 1;
+            this.decay = Math.random() * 0.03 + 0.01;
         }
         update() {
             this.x += this.speedX;
@@ -121,15 +168,15 @@ function initCursorTrail() {
             this.life -= this.decay;
         }
         draw() {
-            ctx.fillStyle = `rgba(74, 222, 128, ${this.life})`; // Terminal Green (#4ade80)
-            // Draw Square (Pixel)
-            ctx.fillRect(this.x, this.y, this.size, this.size);
+            ctx.fillStyle = `rgba(74, 222, 128, ${this.life})`; // Terminal Green
+            ctx.fillRect(this.x, this.y, this.size, this.size); // Square pixels
         }
     }
 
     function createParticle() {
-        // Emit fewer particles for cleaner "pixel" look
-        if (Math.random() > 0.5) particles.push(new Particle());
+        if (particles.length < 100) { // Limit total
+            particles.push(new Particle());
+        }
     }
 
     function animateTrail() {
