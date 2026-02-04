@@ -47,27 +47,12 @@ export function initScrollEffects() {
 
     // 2. Velocity Skew REMOVED for Readability
 
-    // 3. Section Titles Reveal (Simple Fade)
+    // 3. Section Titles - REMOVED ANIMATION FOR READABILITY
+    // Text will appear naturally via CSS
     const headings = document.querySelectorAll('.gp-h2, .gp-lead');
     headings.forEach(h => {
         gsap.set(h, { clearProps: "all" });
-
-        gsap.fromTo(h,
-            {
-                opacity: 0,
-                y: 30
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: h,
-                    start: "top 90%"
-                }
-            }
-        );
+        gsap.set(h, { opacity: 1, y: 0, x: 0, transform: "none" });
     });
 
     // 4. Case Tags Stagger (Kept, just removed delays/complex easing)

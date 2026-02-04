@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initThemeLoader();
     // init3DBackground(); // Disabled per request
     // initTiltEffect();   // Re-enabled for 3D effect
-    initTiltEffect();
+    // initTiltEffect();   // Removed per user request
     initCursor();
     initCursorTrail(); // Activate Green Pixel Particles
     initContactModal();

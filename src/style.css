@@ -2466,3 +2466,7 @@ body.cursor-down .cursor {
 .gallery4-dot.active {
     background: white;
 }
+/* --- EMERGENCY READABILITY FIXES --- */
+.gp-about, .gp-lead, .gp-h2, .gp-hero-name, .gp-hero-side { transform: none !important; perspective: none !important; filter: none !important; opacity: 1 !important; text-shadow: none !important; }
+.gp-case { transform: none !important; box-shadow: none !important; }
+* { transform-style: flat !important; }
