@@ -7,9 +7,7 @@ import { initTiltEffect } from './tilt';
 // import { initLoader3D } from './loader3d';
 import { initThemeLoader } from './loaderTheme';
 import { initScrollEffects } from './scrollEffects';
-
-
-
+import { initSkillsMarquee } from './skillsMarquee';
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
@@ -436,6 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     // initScrollAnimations(); // Replaced by initScrollEffects
     initScrollEffects();
+    initSkillsMarquee(); // New Advanced Marquee
     initGallery4();
     initHero();
 

@@ -2477,3 +2477,10 @@ body.cursor-down .cursor {
 .gp-about-left { width: 100%; max-width: 600px; }
 .gp-about-right { width: 100%; max-width: 800px; }
 @media (min-width: 900px) { .gp-about-grid { flex-direction: row; justify-content: space-between; align-items: flex-start; } .gp-about-left { width: 35%; } .gp-about-right { width: 60%; } }
+
+/* --- ADVANCED SKILLS MARQUEE --- */
+.skills-marquee { width: 100%; overflow: hidden; background: #050505; padding: 4rem 0; box-sizing: border-box; display: flex; align-items: center; white-space: nowrap; position: relative; }
+.skills-track { display: flex; align-items: center; /* No gap here, logic handles it */ }
+.skill-item { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 48px; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4); margin-right: 100px; /* GAP */ text-transform: uppercase; transition: all 0.3s ease; cursor: default; }
+.skill-item.hovered { color: #fff; text-shadow: 0 0 15px rgba(255,255,255, 0.6); -webkit-text-stroke: 0; }
+@media (max-width: 768px) { .skill-item { font-size: 32px; margin-right: 50px; } }
