@@ -2484,7 +2484,3 @@ body.cursor-down .cursor {
 .skill-item { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 48px; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4); margin-right: 100px; /* GAP */ text-transform: uppercase; transition: all 0.3s ease; cursor: default; }
 .skill-item.hovered { color: #fff; text-shadow: 0 0 15px rgba(255,255,255, 0.6); -webkit-text-stroke: 0; }
 @media (max-width: 768px) { .skill-item { font-size: 32px; margin-right: 50px; } }
-
-/* --- ADVANCED CURSOR --- */
-.cursor-dot-main { width: 12px; height: 12px; background: #00ff88; border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; }
-.cursor-ring-main { width: 40px; height: 40px; border: 1px solid #00ff88; border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; }
