@@ -878,9 +878,7 @@ body.cursor-down .cursor {
     background-image: url('/assets/project-astro.jpg');
 }
 
-.gp-case-3::before {
-    background-image: url('/assets/project-physics-new.jpg');
-}
+
 
 .gp-case-4::before {
     background-image: url('/assets/haunted-house.svg');
