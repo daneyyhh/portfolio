@@ -91,4 +91,38 @@ export function initScrollEffects() {
             }
         );
     });
+
+
+    // 6. Controller Parallax (Explosion Effect)
+    const ctrlWrapper = document.querySelector('.controller-wrapper');
+    if (ctrlWrapper) {
+        const back = ctrlWrapper.querySelector('.layer-back');
+        const front = ctrlWrapper.querySelector('.layer-front');
+
+        // Sepration Animation on Scroll
+        gsap.to(back, {
+            y: -50, // Move up
+            scale: 0.9,
+            opacity: 0.5,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ctrlWrapper,
+                start: "top center",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        gsap.to(front, {
+            y: 50, // Move down
+            scale: 1.1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ctrlWrapper,
+                start: "top center",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    }
 }
