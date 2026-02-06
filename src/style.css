@@ -882,6 +882,10 @@ body.cursor-down .cursor {
     background-image: url('/assets/project-physics-new.jpg');
 }
 
+.gp-case-4::before {
+    background-image: url('/assets/haunted-house.svg');
+}
+
 /* Remove hover pause for guaranteed flow */
 .marquee:hover .marquee-track {
     animation-play-state: running;
@@ -2466,21 +2470,112 @@ body.cursor-down .cursor {
 .gallery4-dot.active {
     background: white;
 }
+
 /* --- EMERGENCY READABILITY FIXES --- */
-.gp-about, .gp-lead, .gp-h2, .gp-hero-name, .gp-hero-side { transform: none !important; perspective: none !important; filter: none !important; opacity: 1 !important; text-shadow: none !important; }
-.gp-case { transform: none !important; box-shadow: none !important; }
-* { transform-style: flat !important; }
+.gp-about,
+.gp-lead,
+.gp-h2,
+.gp-hero-name,
+.gp-hero-side {
+    transform: none !important;
+    perspective: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.gp-case {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+* {
+    transform-style: flat !important;
+}
 
 /* --- ABOUT LAYOUT FIX --- */
-.gp-about { padding: 4rem 0; overflow-x: hidden; width: 100%; box-sizing: border-box; }
-.gp-about-grid { display: flex; flex-direction: column; gap: 4rem; max-width: 100vw; margin: 0 auto; }
-.gp-about-left { width: 100%; max-width: 600px; }
-.gp-about-right { width: 100%; max-width: 800px; }
-@media (min-width: 900px) { .gp-about-grid { flex-direction: row; justify-content: space-between; align-items: flex-start; } .gp-about-left { width: 35%; } .gp-about-right { width: 60%; } }
+.gp-about {
+    padding: 4rem 0;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gp-about-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 100vw;
+    margin: 0 auto;
+}
+
+.gp-about-left {
+    width: 100%;
+    max-width: 600px;
+}
+
+.gp-about-right {
+    width: 100%;
+    max-width: 800px;
+}
+
+@media (min-width: 900px) {
+    .gp-about-grid {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .gp-about-left {
+        width: 35%;
+    }
+
+    .gp-about-right {
+        width: 60%;
+    }
+}
 
 /* --- ADVANCED SKILLS MARQUEE --- */
-.skills-marquee { width: 100%; overflow: hidden; background: #050505; padding: 4rem 0; box-sizing: border-box; display: flex; align-items: center; white-space: nowrap; position: relative; }
-.skills-track { display: flex; align-items: center; /* No gap here, logic handles it */ }
-.skill-item { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 48px; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4); margin-right: 100px; /* GAP */ text-transform: uppercase; transition: all 0.3s ease; cursor: default; }
-.skill-item.hovered { color: #fff; text-shadow: 0 0 15px rgba(255,255,255, 0.6); -webkit-text-stroke: 0; }
-@media (max-width: 768px) { .skill-item { font-size: 32px; margin-right: 50px; } }
+.skills-marquee {
+    width: 100%;
+    overflow: hidden;
+    background: #050505;
+    padding: 4rem 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+}
+
+.skills-track {
+    display: flex;
+    align-items: center;
+    /* No gap here, logic handles it */
+}
+
+.skill-item {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+    margin-right: 100px;
+    /* GAP */
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-item.hovered {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    -webkit-text-stroke: 0;
+}
+
+@media (max-width: 768px) {
+    .skill-item {
+        font-size: 32px;
+        margin-right: 50px;
+    }
+}
