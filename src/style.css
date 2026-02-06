@@ -580,8 +580,66 @@ body.cursor-down .cursor {
     /* Center everything */
     width: 100%;
     margin-top: 5vh;
-    position: relative;
     /* For visual positioning */
+}
+
+/* --- Exploded Controller Visual --- */
+.gp-hero-visual {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+    /* Keep it contained */
+}
+
+.controller-exploded {
+    position: relative;
+    width: 600px;
+    /* Base width of SVG viewbox roughly */
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ctrl-slice {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/controller.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
+/* 
+   Slicing Logic (Approximate for 800x600 viewBox)
+   Left: 0% to 35%
+   Center: 35% to 65%
+   Right: 65% to 100%
+*/
+
+.slice-left {
+    clip-path: polygon(0 0, 37% 0, 37% 100%, 0 100%);
+    z-index: 1;
+}
+
+.slice-center {
+    clip-path: polygon(37% 0, 63% 0, 63% 100%, 37% 100%);
+    z-index: 2;
+    /* Center on top often looks better */
+}
+
+.slice-right {
+    clip-path: polygon(63% 0, 100% 0, 100% 100%, 63% 100%);
+    z-index: 1;
 }
 
 
