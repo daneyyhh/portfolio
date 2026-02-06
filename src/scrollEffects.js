@@ -92,53 +92,5 @@ export function initScrollEffects() {
         );
     });
 
-    // 6. Exploded Controller Animation
-    const explodedWrapper = document.querySelector('.controller-exploded');
-    if (explodedWrapper) {
-        const left = explodedWrapper.querySelector('.slice-left');
-        const center = explodedWrapper.querySelector('.slice-center');
-        const right = explodedWrapper.querySelector('.slice-right');
 
-        // Animation: Parts move away from center
-        // Left moves Left/Down
-        gsap.to(left, {
-            x: -40,
-            y: 20,
-            rotation: -5,
-            ease: "none",
-            scrollTrigger: {
-                trigger: explodedWrapper,
-                start: "top center",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-
-        // Center moves Up/Scale (Focus)
-        gsap.to(center, {
-            y: -20,
-            scale: 1.05,
-            ease: "none",
-            scrollTrigger: {
-                trigger: explodedWrapper,
-                start: "top center",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-
-        // Right moves Right/Down
-        gsap.to(right, {
-            x: 40,
-            y: 20,
-            rotation: 5,
-            ease: "none",
-            scrollTrigger: {
-                trigger: explodedWrapper,
-                start: "top center",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-    }
 }
