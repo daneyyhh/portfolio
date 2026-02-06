@@ -584,64 +584,7 @@ body.cursor-down .cursor {
     /* For visual positioning */
 }
 
-/* --- Controller Visual --- */
-.gp-hero-visual {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0;
-    perspective: 1000px;
-    overflow: visible;
-}
 
-.controller-wrapper {
-    position: relative;
-    width: 600px;
-    height: 400px;
-    /* transform-style: preserve-3d; Removed to simpler parallax */
-}
-
-.controller-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/assets/controller.svg');
-    /* Using SVG placeholder */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.1s linear;
-}
-
-/* Layer 1: Back (Body/Handles) */
-.layer-back {
-    z-index: 1;
-    filter: brightness(0.8);
-    /* Clip to show only handles/body essentially */
-    /* Simple clip for demo: bottom half */
-    /* clip-path: polygon(0 40%, 100% 40%, 100% 100%, 0 100%); */
-}
-
-/* Layer 2: Main (Middle) */
-.collection-main {
-    z-index: 2;
-}
-
-/* Layer 3: Front (Buttons/Sticks) - Imagined via clip-path for now */
-.layer-front {
-    z-index: 3;
-    /* clip-path: circle(30% at 50% 50%); */
-    /* Just a demo clip if generated parts failed */
-}
-
-/* If we had separate images:
-.layer-back { bg-image: url('body.png'); }
-.layer-front { bg-image: url('buttons.png'); }
-*/
 
 .glare {
     position: absolute;
