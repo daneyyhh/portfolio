@@ -98,7 +98,27 @@ TRANSFORM my portfolio to EXACTLY match grilledpixels.com style - premium $50K d
    - Creative experiments
    - Archive section for older work
 
-### PHASE 5: Scroll & Cursor Effects (EXACT GRILLEDPIXELS)
+### PHASE 5: Premium Scroll Effects (GrilledPixels Style)
+1. **LENIS SMOOTH SCROLLING**
+   - 1.2s duration, 0.8 wheel multiplier for premium feel
+   - Custom easing curves: Math.min(1, 1.001 - Math.pow(2, -10 * t))
+   - 60fps RAF loop with requestAnimationFrame
+   - Scroll stop detection with velocity threshold
+
+2. **CUSTOM CURSOR**
+   - Large outer circle (40px, white border, 20% opacity)
+   - Smaller inner dot (8px, solid white)
+   - Scale to 1.5x on hover over interactive elements
+   - Mix-blend-difference for premium effect
+   - GSAP animations with power2.out easing
+
+3. **SCROLL TRIGGER ANIMATIONS**
+   - Text reveals at 85% viewport entry
+   - Parallax layers (slow: -20%, medium: -10%)
+   - Smooth 1.5x scrubbing
+   - Staggered animations with natural timing
+
+### PHASE 6: Cursor Effects (EXACT GRILLEDPIXELS)
 1. **CUSTOM CURSOR**
    - Large outer circle (white, semi-transparent)
    - Smaller inner dot (white, solid)
