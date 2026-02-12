@@ -54,28 +54,44 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Neofont-inspired font loading */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+/* Neofolia font - premium tech font */
+@import url('https://db.onlinewebfonts.com/t/09fb4cb5adae5a09246cf476bd3badbf.woff2') format('woff2');
 
-/* Premium font weights for Neofont-style */
+/* Neofolia font weights and styling */
+@font-face {
+    font-family: 'Neofolia';
+    src: url('https://db.onlinewebfonts.com/t/09fb4cb5adae5a09246cf476bd3badbf.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .gp-title {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 700;
+    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: normal;
     font-stretch: 95%;
     letter-spacing: -0.02em;
+    font-size: clamp(3rem, 8vw, 6rem);
 }
 
 .gp-subtitle {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 300;
+    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: normal;
     letter-spacing: 0.05em;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .gp-side-label {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 600;
+    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: normal;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+}
+
+/* Body text fallback */
+body {
+    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: normal;
 }
 
 .container {
