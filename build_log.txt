@@ -1,0 +1,22 @@
+
+> portfolio@0.0.23 build C:\Users\reubx\Documents\Portfoliio
+> vite build
+
+(node:16144) ExperimentalWarning: The ESM module loader is experimental.
+file:///C:/Users/reubx/Documents/Portfoliio/node_modules/vite/bin/vite.js:8
+    await import('source-map-support').then((r) => r.default.install())
+    ^^^^^
+
+SyntaxError: Unexpected reserved word
+    at Loader.moduleStrategy (internal/modules/esm/translators.js:88:18)
+    at async link (internal/modules/esm/module_job.js:41:21)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! portfolio@0.0.23 build: `vite build`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the portfolio@0.0.23 build script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\reubx\AppData\Roaming\npm-cache\_logs\2026-02-12T08_09_04_437Z-debug.log

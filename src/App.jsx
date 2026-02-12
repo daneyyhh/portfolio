@@ -1,42 +1,125 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Components
+// Components
+import Header from './components/Layout/Header.jsx';
+import Hero from './components/Sections/Hero.jsx';
+import About from './components/Sections/About.jsx';
+import Projects from './components/Sections/Projects.jsx';
+import Articles from './components/Sections/Articles.jsx';
+import Contact from './components/Sections/Contact.jsx';
+import Footer from './components/Layout/Footer.jsx';
+import Particles from './components/UI/Particles.jsx';
+
+// Styles
 import './style.css';
-import Cursor from './Cursor';
-import ProjectCard3D from './ProjectCard3D';
+
+// Register Plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
+    useEffect(() => {
+        // Initialize Lenis
+        const lenis = new Lenis({
+            duration: 2.0,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureDirection: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 0.8,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Custom Cursor Logic
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        if (cursor && cursorDot) {
+            const onMouseMove = (e) => {
+                gsap.to(cursorDot, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.1,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                });
+                gsap.to(cursor, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                });
+            };
+
+            window.addEventListener('mousemove', onMouseMove);
+
+            // Hover effects
+            const onMouseEnter = () => {
+                cursor.classList.add('active');
+                cursorDot.classList.add('active');
+                document.body.classList.add('cursor-hover');
+            };
+
+            const onMouseLeave = () => {
+                cursor.classList.remove('active');
+                cursorDot.classList.remove('active');
+                document.body.classList.remove('cursor-hover');
+            };
+
+            const addHoverListeners = () => {
+                const interactiveElements = document.querySelectorAll('a, button, input, textarea, .gp-case-hit, .gp-case');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', onMouseEnter);
+                    el.addEventListener('mouseleave', onMouseLeave);
+                });
+            };
+
+            // Call immediately and potentially on updates
+            addHoverListeners();
+
+            return () => {
+                window.removeEventListener('mousemove', onMouseMove);
+                const interactiveElements = document.querySelectorAll('a, button, input, textarea, .gp-case-hit, .gp-case');
+                interactiveElements.forEach(el => {
+                    el.removeEventListener('mouseenter', onMouseEnter);
+                    el.removeEventListener('mouseleave', onMouseLeave);
+                });
+                lenis.destroy();
+            };
+        }
+    }, []);
+
     return (
-        <div>
-            <Cursor />
+        <div className="site-wrapper">
+            {/* Cursor Elements - recreated here if they were outside in index.html, 
+                 but keeping them in markup or creating them here is fine. 
+                 Since index.html was cleared, we add them here. 
+             */}
+            <div className="cursor" aria-hidden="true"></div>
+            <div className="cursor-dot" aria-hidden="true"></div>
 
-            <main style={{ padding: '8rem 2rem', background: '#050505', minHeight: '100vh', color: 'white' }}>
-                <h1 className="hover-target" data-magnetic="true" style={{ marginBottom: '4rem', fontSize: '4rem' }}>
-                    Portfolio Demo
-                </h1>
+            <Particles />
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-                    <ProjectCard3D
-                        title="Cyberpunk 2077"
-                        desc="Immersive open world RPG built with REDengine 4."
-                        image="https://images.unsplash.com/photo-1555680202-c86f0e12f086?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"
-                    />
-                    <ProjectCard3D
-                        title="Neon Racer"
-                        desc="High-speed rhythm game with reactive audio visualizers."
-                        image="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"
-                    />
-                </div>
+            <Header />
 
-                <button
-                    className="hover-target"
-                    data-magnetic="true"
-                    style={{
-                        marginTop: '4rem', padding: '1rem 2rem',
-                        background: 'transparent', border: '1px solid #00ff88', color: '#00ff88',
-                        fontSize: '1.2rem', cursor: 'none'
-                    }}
-                >
-                    Get In Touch
-                </button>
+            <main id="main-content">
+                <Hero />
+                <About />
+                <Projects />
+                <Articles />
+                <Contact />
+                <Footer />
             </main>
         </div>
     );
