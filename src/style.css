@@ -4,9 +4,9 @@
     --accent-color: #4ade80;
     /* Switched to Terminal Green to match Loader */
 
-    --font-heading: 'Space Mono', monospace;
+    --font-heading: 'Orbitron', 'Space Mono', monospace;
     --font-body: 'Space Mono', monospace;
-    /* Switched to Space Mono to match Terminal Loader theme */
+    /* Switched to Orbitron for Neofolia-like futuristic aesthetic */
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
     --panel: rgba(255, 255, 255, 0.06);
