@@ -4,9 +4,9 @@
     --accent-color: #4ade80;
     /* Switched to Terminal Green to match Loader */
 
-    --font-heading: 'Osiris', serif;
-    --font-body: 'Osiris', serif;
-    /* Osiris premium serif font */
+    --font-heading: 'Merriweather', serif;
+    --font-body: 'Merriweather', serif;
+    /* Merriweather premium serif font */
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
     --panel: rgba(255, 255, 255, 0.06);
@@ -54,12 +54,12 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Osiris font - premium serif font */
-@import url('https://fonts.googleapis.com/css2?family=Osiris:wght@300;400;500;600;700&display=swap');
+/* Merriweather font - premium serif from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
-/* Osiris font weights and styling */
+/* Merriweather font weights and styling */
 .gp-title {
-    font-family: 'Osiris', serif;
+    font-family: 'Merriweather', serif;
     font-weight: 700;
     font-stretch: 95%;
     letter-spacing: -0.02em;
@@ -67,22 +67,22 @@ html {
 }
 
 .gp-subtitle {
-    font-family: 'Osiris', serif;
+    font-family: 'Merriweather', serif;
     font-weight: 300;
     letter-spacing: 0.05em;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .gp-side-label {
-    font-family: 'Osiris', serif;
-    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
 
 /* Body text fallback */
 body {
-    font-family: 'Osiris', serif;
+    font-family: 'Merriweather', serif;
     font-weight: 400;
 }
 
