@@ -4,9 +4,9 @@
     --accent-color: #4ade80;
     /* Switched to Terminal Green to match Loader */
 
-    --font-heading: 'Space Grotesk', 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    /* Neofont-inspired typography for premium feel */
+    --font-heading: 'Osiris', serif;
+    --font-body: 'Osiris', serif;
+    /* Osiris premium serif font */
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
     --panel: rgba(255, 255, 255, 0.06);
@@ -54,44 +54,36 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Neofolia font - premium tech font */
-@import url('https://db.onlinewebfonts.com/t/09fb4cb5adae5a09246cf476bd3badbf.woff2') format('woff2');
+/* Osiris font - premium serif font */
+@import url('https://fonts.googleapis.com/css2?family=Osiris:wght@300;400;500;600;700&display=swap');
 
-/* Neofolia font weights and styling */
-@font-face {
-    font-family: 'Neofolia';
-    src: url('https://db.onlinewebfonts.com/t/09fb4cb5adae5a09246cf476bd3badbf.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
+/* Osiris font weights and styling */
 .gp-title {
-    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: normal;
+    font-family: 'Osiris', serif;
+    font-weight: 700;
     font-stretch: 95%;
     letter-spacing: -0.02em;
     font-size: clamp(3rem, 8vw, 6rem);
 }
 
 .gp-subtitle {
-    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: normal;
+    font-family: 'Osiris', serif;
+    font-weight: 300;
     letter-spacing: 0.05em;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .gp-side-label {
-    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: normal;
+    font-family: 'Osiris', serif;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
 
 /* Body text fallback */
 body {
-    font-family: 'Neofolia', 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: normal;
+    font-family: 'Osiris', serif;
+    font-weight: 400;
 }
 
 .container {
