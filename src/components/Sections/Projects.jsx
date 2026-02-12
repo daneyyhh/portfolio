@@ -11,30 +11,6 @@ const Projects = () => {
                 </div>
 
                 <div className="gp-case-list">
-                    {/* Project: DualSense Pro */}
-                    <article className="gp-case gp-case-dualsense" data-case>
-                        <div className="gp-case-head">
-                            <div className="gp-case-title marquee" aria-hidden="true">
-                                <div className="marquee-track">
-                                    <span>DualSense Pro •</span><span>DualSense Pro •</span><span>DualSense Pro •</span><span>DualSense Pro •</span>
-                                    <span>DualSense Pro •</span><span>DualSense Pro •</span><span>DualSense Pro •</span><span>DualSense Pro •</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a className="gp-case-hit" href="/dualsense-pro/" target="_blank" rel="noreferrer">
-                            <div className="gp-case-body">
-                                <div className="gp-case-tags">
-                                    <span>Next.js 14</span><span>Framer Motion</span><span>3D Scroll</span><span>Tailwind</span>
-                                </div>
-                                <div className="gp-case-actions">
-                                    <span className="gp-chip">View Site</span>
-                                    <span className="gp-chip">Case Study</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-
                     {/* Project: FiveM Resources */}
                     <article className="gp-case gp-case-1" data-case>
                         <div className="gp-case-head">
