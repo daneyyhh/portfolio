@@ -39,7 +39,15 @@ TRANSFORM my portfolio to EXACTLY match grilledpixels.com style - premium $50K d
    - Remove any dualsense references
    - Clean up any related configurations
 
-### PHASE 2: GrilledPixels Hero Section (EXACT REPLICA)
+### PHASE 2: Loading Screen (GrilledPixels Style)
+1. **LOADING SCREEN** (match grilledpixels.com exactly)
+   - "0%" text that counts up to 100%
+   - Centered on dark background
+   - Smooth loading animation
+   - Professional timing (2-3 seconds total)
+   - Disappears when page fully loaded
+
+### PHASE 3: GrilledPixels Hero Section (EXACT REPLICA)
 1. **HERO LAYOUT** (match grilledpixels.com exactly)
    - Large split text: "Reuben" on line 1, "Binu George" on line 2
    - "Reuben" in normal font, "Binu George" in italic styling
@@ -55,7 +63,14 @@ TRANSFORM my portfolio to EXACTLY match grilledpixels.com style - premium $50K d
        - Animation & Motion
        - Technical Art
 
-2. **STYLING** (exact colors & fonts)
+2. **LOADING SCREEN** (grilledpixels style)
+   - Simple "0%" text center screen
+   - Counts up smoothly from 0% to 100%
+   - Professional loading duration (2-3 seconds)
+   - Smooth fade out when complete
+   - Dark background with white text
+
+3. **STYLING** (exact colors & fonts)
    - Background: #0a0a0a (near black)
    - Text: #ffffff (white)
    - Font: Large sans-serif (Inter/Space Grotesk)
