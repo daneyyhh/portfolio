@@ -8,28 +8,28 @@ const Hero = () => {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline();
 
-            // 1. Title Pop
+            // 1. Title Pop - SLOW Neofont reveal
             tl.from('.gp-title', {
                 scale: 0.5,
                 opacity: 0,
-                duration: 1.2,
+                duration: 2.5,  // Slower for premium feel
                 ease: 'back.out(1.7)',
                 transformOrigin: 'center center'
             })
-                // 2. Subtitle Pop
+                // 2. Subtitle Pop - SLOW reveal
                 .from('.gp-subtitle', {
                     scale: 0.8,
                     y: 20,
                     opacity: 0,
-                    duration: 0.8,
+                    duration: 1.8,  // Slower duration
                     ease: 'back.out(1.5)'
                 }, "-=0.8")
-                // 3. Side Blocks Slide & Fade
+                // 3. Side Blocks Slide & Fade - SLOW
                 .from('.gp-side-block', {
                     x: 50,
                     opacity: 0,
-                    duration: 1,
-                    stagger: 0.2,
+                    duration: 2.0,  // Slower animation
+                    stagger: 0.4,      // Slower stagger
                     ease: 'power3.out'
                 }, "-=0.6");
         }, heroRef);
@@ -44,7 +44,7 @@ const Hero = () => {
                     <div className="gp-hero-name">
                         <h1 className="gp-title">
                             <span className="reveal-line">Reuben</span>
-                            <span className="reveal-line">Binu George</span>
+                            <span className="reveal-line" style={{fontStyle: 'italic'}}>Binu George</span>
                         </h1>
                         <div className="gp-subtitle">
                             <span className="reveal-line">Gaming Enthusiast |</span>

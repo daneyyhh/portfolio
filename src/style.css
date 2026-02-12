@@ -4,9 +4,9 @@
     --accent-color: #4ade80;
     /* Switched to Terminal Green to match Loader */
 
-    --font-heading: 'Orbitron', 'Space Mono', monospace;
-    --font-body: 'Space Mono', monospace;
-    /* Switched to Orbitron for Neofolia-like futuristic aesthetic */
+    --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    /* Neofont-inspired typography for premium feel */
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
     --panel: rgba(255, 255, 255, 0.06);
@@ -52,6 +52,30 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Neofont-inspired font loading */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* Premium font weights for Neofont-style */
+.gp-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 700;
+    font-stretch: 95%;
+    letter-spacing: -0.02em;
+}
+
+.gp-subtitle {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.gp-side-label {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .container {
