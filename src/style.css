@@ -816,9 +816,9 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 60s linear infinite;
+    animation: marquee 20s linear infinite;
     will-change: transform;
-    /* Speed set to 60s for visible slow scrolling */
+    /* Speed set to 20s for visible scrolling */
 }
 
 .marquee:hover .marquee-track {
