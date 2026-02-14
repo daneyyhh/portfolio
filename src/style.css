@@ -816,7 +816,7 @@ body.cursor-down .cursor {
     gap: 1.2rem;
     white-space: nowrap;
     padding: 0.9rem 0;
-    animation: marquee 20s linear infinite;
+    animation: marquee-scroll 20s linear infinite;
     will-change: transform;
     /* Speed set to 20s for visible scrolling */
 }
@@ -835,7 +835,7 @@ body.cursor-down .cursor {
     font-size: clamp(1.2rem, 2.8vw, 2.4rem);
 }
 
-@keyframes marquee {
+@keyframes marquee-scroll {
     from {
         transform: translateX(0);
     }
