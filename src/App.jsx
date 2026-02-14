@@ -112,6 +112,7 @@ const App = () => {
              */}
             <div className="cursor" aria-hidden="true"></div>
             <div className="cursor-dot" aria-hidden="true"></div>
+            <canvas id="cursor-canvas"></canvas>
 
             <Loader onComplete={() => setLoading(false)} />
             {!loading && <Particles />}

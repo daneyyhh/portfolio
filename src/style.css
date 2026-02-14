@@ -2686,3 +2686,15 @@ body.cursor-down .cursor {
     to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* --- Cursor Trail Canvas --- */
+#cursor-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998; /* Below loader (99999) but above content */
+}
+
