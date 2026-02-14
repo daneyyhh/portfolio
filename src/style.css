@@ -4,9 +4,9 @@
     --accent-color: #4ade80;
     /* Switched to Terminal Green to match Loader */
 
-    --font-heading: 'Merriweather', serif;
-    --font-body: 'Merriweather', serif;
-    /* Merriweather premium serif font */
+    --font-heading: 'Neofolia', sans-serif;
+    --font-body: 'Neofolia', sans-serif;
+    /* Neofolia font */
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
     --panel: rgba(255, 255, 255, 0.06);
@@ -14,9 +14,6 @@
     /* Greenish border */
 }
 
-/* ... existing code ... */
-
-/* --- Header (Floating Pill Style) --- */
 /* --- Header (Transparent Full Width) --- */
 .header {
     position: fixed;
@@ -54,12 +51,12 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Merriweather font - premium serif from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+/* Neofolia font - from CDNFonts */
+@import url('https://fonts.cdnfonts.com/css/neofolia');
 
-/* Merriweather font weights and styling */
+/* Font weights and styling */
 .gp-title {
-    font-family: 'Merriweather', serif;
+    font-family: 'Neofolia', sans-serif;
     font-weight: 700;
     font-stretch: 95%;
     letter-spacing: -0.02em;
@@ -67,14 +64,14 @@ html {
 }
 
 .gp-subtitle {
-    font-family: 'Merriweather', serif;
+    font-family: 'Neofolia', sans-serif;
     font-weight: 300;
     letter-spacing: 0.05em;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .gp-side-label {
-    font-family: 'Merriweather', serif;
+    font-family: 'Neofolia', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -82,7 +79,7 @@ html {
 
 /* Body text fallback */
 body {
-    font-family: 'Merriweather', serif;
+    font-family: 'Neofolia', sans-serif;
     font-weight: 400;
 }
 
