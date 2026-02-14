@@ -423,7 +423,7 @@ function initGallery4() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("System Initializing...");
     initSmoothScroll();
-    initThemeLoader();
+    // initThemeLoader(); // Replaced by React Loader component
     // init3DBackground(); // Disabled per request
     // initTiltEffect();   // Re-enabled for 3D effect
     // initTiltEffect();   // Removed per user request

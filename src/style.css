@@ -2617,3 +2617,72 @@ body.cursor-down .cursor {
         margin-right: 50px;
     }
 }
+/* --- Loader Component --- */
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #050505;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease;
+}
+
+.loader-content {
+    width: 300px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.loader-text {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #4ade80; /* Terminal Green */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.loader-bar-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.loader-fill {
+    height: 100%;
+    width: 0;
+    background: #4ade80;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+    transition: width 0.1s linear;
+}
+
+.loader-status {
+    margin-top: 1rem;
+    height: 60px;
+    text-align: left;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.status-item {
+    animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+

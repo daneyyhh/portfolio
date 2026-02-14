@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,10 +17,14 @@ import Particles from './components/UI/Particles.jsx';
 // Styles
 import './style.css';
 
+import Loader from './components/UI/Loader.jsx';
+
 // Register Plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         // Initialize Lenis
         const lenis = new Lenis({
@@ -109,7 +113,8 @@ const App = () => {
             <div className="cursor" aria-hidden="true"></div>
             <div className="cursor-dot" aria-hidden="true"></div>
 
-            <Particles />
+            <Loader onComplete={() => setLoading(false)} />
+            {!loading && <Particles />}
 
             <Header />
 
