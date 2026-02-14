@@ -2108,6 +2108,37 @@ body.cursor-down .cursor {
     transform: perspective(1000px);
 }
 
+/* Custom Cursor - High Visibility */
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10002;
+    /* Above loader */
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+    mix-blend-mode: normal;
+    /* Ensure visibility on black */
+    display: block;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10003;
+    /* Above circle */
+    transform: translate(-50%, -50%);
+    mix-blend-mode: normal;
+    display: block;
+}
+
 .item-color {
     position: relative;
     flex-shrink: 0;
@@ -2617,6 +2648,7 @@ body.cursor-down .cursor {
         margin-right: 50px;
     }
 }
+
 /* --- Loader Component --- */
 .loader-overlay {
     position: fixed;
@@ -2643,7 +2675,8 @@ body.cursor-down .cursor {
 .loader-text {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    color: #4ade80; /* Terminal Green */
+    color: #4ade80;
+    /* Terminal Green */
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -2682,8 +2715,15 @@ body.cursor-down .cursor {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -2695,6 +2735,6 @@ body.cursor-down .cursor {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9998; /* Below loader (99999) but above content */
+    z-index: 9998;
+    /* Below loader (99999) but above content */
 }
-

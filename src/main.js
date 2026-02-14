@@ -81,7 +81,7 @@ function initCursor() {
 
             // Reset
             cursor.innerHTML = '';
-            gsap.to(cursor, { width: 14, height: 14, backgroundColor: '#4ade80', mixBlendMode: 'difference' });
+            gsap.to(cursor, { width: 14, height: 14, backgroundColor: 'transparent', borderColor: '#4ade80', mixBlendMode: 'normal' });
         });
     });
 
