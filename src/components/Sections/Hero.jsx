@@ -44,7 +44,7 @@ const Hero = () => {
                     <div className="gp-hero-name">
                         <h1 className="gp-title">
                             <span className="reveal-line">Reuben</span>
-                            <span className="reveal-line" style={{fontStyle: 'italic'}}>Binu George</span>
+                            <span className="reveal-line">Binu George</span>
                         </h1>
                         <div className="gp-subtitle">
                             <span className="reveal-line">Gaming Enthusiast |</span>
