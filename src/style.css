@@ -10,11 +10,14 @@
         src: url('/fonts/neofolia.woff') format('woff');
         font-weight: normal;
         font-style: normal;
+        font-display: swap;
     }
 
     --font-heading: 'Neofolia',
+    'Orbitron',
     sans-serif;
     --font-body: 'Neofolia',
+    'Orbitron',
     sans-serif;
 
     --easing: cubic-bezier(0.19, 1, 0.22, 1);
