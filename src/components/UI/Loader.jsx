@@ -14,6 +14,7 @@ const Loader = ({ onComplete }) => {
                     opacity: 0,
                     duration: 0.5,
                     onComplete: () => {
+                        if (loaderRef.current) loaderRef.current.style.display = 'none';
                         if (onComplete) onComplete();
                     }
                 });

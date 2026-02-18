@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-background text-cyan-400 font-mono overflow-x-hidden;
+        background-image:
+            radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+            linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.9)),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230e7490' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Custom Scrollbar for Webkit */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-black;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-cyan-900/40 rounded hover:bg-cyan-500/60 transition-colors;
+    }
+}
+
+@layer components {
+
+    /* Scanline Overlay */
+    .scanlines {
+        background: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.2));
+        background-size: 100% 4px;
+        @apply fixed inset-0 pointer-events-none z-50 opacity-20;
+        animation: scanlines 0.2s linear infinite;
+    }
+
+    /* Glassmorphism Panel */
+    .glass-panel {
+        @apply bg-black/40 backdrop-blur-md border border-cyan-500/30 shadow-[0_0_15px_rgba(6, 182, 212, 0.1)];
+    }
+
+    /* Glitch Text Effect Wrapper */
+    .glitch-wrapper {
+        @apply relative inline-block;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+        @apply absolute top-0 left-0 w-full h-full bg-background opacity-50 content-[''];
+    }
+}
+
+/* Typography Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap');

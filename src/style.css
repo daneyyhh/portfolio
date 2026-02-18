@@ -2738,3 +2738,15 @@ body.cursor-down .cursor {
     z-index: 9998;
     /* Below loader (99999) but above content */
 }
+/* Global Cursor Hide (Desktop Only) */
+@media (pointer: fine) {
+    *, *::before, *::after {
+        cursor: none !important;
+    }
+}
+
+/* Force Cursor on top of EVERYTHING including Loader */
+.cursor, .cursor-dot {
+    z-index: 100001 !important;
+}
+
