@@ -1,68 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import gsap from 'gsap';
-import './Header.css';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+
+const navItems = [
+    { name: 'Home', href: '#hero' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Articles', href: '#articles' },
+    { name: 'Talk', href: '#contact' },
+];
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    useEffect(() => {
-        // Reveal header animation
-        gsap.to('.header', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: 0.5,
-            visibility: 'visible'
-        });
-    }, []);
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
-    const handleNavClick = (e, targetId) => {
-        e.preventDefault();
-        setIsMenuOpen(false);
-
-        const target = document.querySelector(targetId);
-        if (target) {
-            gsap.to('#main-content', {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    target.scrollIntoView({ behavior: 'auto' });
-                    gsap.to('#main-content', {
-                        opacity: 1,
-                        duration: 0.5,
-                        ease: 'power2.out',
-                        delay: 0.1
-                    });
-                }
-            });
-        }
-    };
+    const [activeTab, setActiveTab] = useState('Home');
 
     return (
-        <header className="header">
-            <div className="container nav-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                <a href="#" className="logo">REUBEN<span className="dot">_</span></a>
+        <motion.header
+            className="fixed top-0 left-0 w-full z-50 flex justify-center py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm pointer-events-none"
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 3, type: 'spring', stiffness: 100 }} // Delay to sync with LoadingScreen
+        >
+            <nav className="pointer-events-auto bg-black/60 border border-cyan-900/50 rounded-full px-6 py-2 flex gap-4 shadow-[0_0_15px_rgba(6,182,212,0.15)] relative overflow-hidden backdrop-blur-md">
+                {/* Circuit Line Decor */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
 
-                <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle Menu">
-                    <span className={`hamburger ${isMenuOpen ? 'open' : ''}`}></span>
-                </button>
+                {navItems.map((item) => (
+                    <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setActiveTab(item.name)}
+                        className={`relative px-4 py-2 text-sm md:text-base font-mono uppercase tracking-wider transition-colors duration-300 ${activeTab === item.name ? 'text-cyan-400' : 'text-gray-400 hover:text-cyan-200'
+                            }`}
+                    >
+                        {item.name}
 
-                <nav className={`nav-menu ${isMenuOpen ? 'open' : ''}`}>
-                    <ul className="nav-links">
-                        <li><a href="#" className="nav-item" onClick={(e) => handleNavClick(e, '#root')}>Home</a></li>
-                        <li><a href="#about" className="nav-item" onClick={(e) => handleNavClick(e, '#about')}>About Us</a></li>
-                        <li><a href="#cases" className="nav-item" onClick={(e) => handleNavClick(e, '#cases')}>Projects</a></li>
-                        <li><a href="#articles" className="nav-item" onClick={(e) => handleNavClick(e, '#articles')}>Articles</a></li>
-                        <li><a href="#contact" className="nav-item" onClick={(e) => handleNavClick(e, '#contact')}>Talk</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+                        {/* Active Tab Indicator (Underline/Glow) */}
+                        {activeTab === item.name && (
+                            <motion.div
+                                layoutId="activeTab"
+                                className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"
+                                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            />
+                        )}
+
+                        {/* Hover Glitch Effect (could be expanded) */}
+                        <span className="absolute inset-0 bg-cyan-400/5 opacity-0 hover:opacity-100 rounded transition-opacity -z-10"></span>
+                    </a>
+                ))}
+            </nav>
+        </motion.header>
     );
 };
 

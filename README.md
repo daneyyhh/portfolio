@@ -1,22 +1,50 @@
-# Portfolio
+# Gamer/Dev 2D Portfolio
 
-This is the personal portfolio website for **Reuben Binu George**, a Game Developer and Creative Coder.
+> "Gamer by passion, Developer by craft."
 
-## Live Site
-[https://reubenbg-portfolio.vercel.app/](https://reubenbg-portfolio.vercel.app/)
+A futuristic, high-fidelity portfolio website featuring a 2D cyber-aesthetic, game-inspired UI, and live GitHub project integration.
 
-## Content
+## 🌟 Features
 
-### Projects
-- **FiveM Resources**: Lua, SQL, UI, Optimized Networking
-- **Astro Bot**: Python, Discord.py, Automation
-- **3D Physics**: Unity, C#, HLSL, Realtime Simulation
+- **Game Loading Screen**: Immersive boot-up sequence with randomized loading text.
+- **Neon 2D Aesthetic**: Dark charcoal theme with high-contrast Cyan/Purple accents and glassmorphism.
+- **Live GitHub Projects**: Automatically fetches and displays repositories from GitHub (`daneyyhh`).
+- **Interactive UI**: Hover effects, Framer Motion animations, and "Game Cartridge" style cards.
+- **Responsive**: Fully optimized for Desktop and Mobile.
 
-### Articles
-- **[The Illuminati](https://github.com/daneyyhh/illuminati-article)**: A comprehensive analysis of history, myths, and conspiracy theories.
+## 🛠 Tech Stack
 
-## Tech Stack
-- HTML5 / CSS3 (Custom Design System)
-- JavaScript (Vanilla + ES6 Modules)
-- GSAP (Animation)
-- Vite (Build Tool)
+- **Framework**: React 19 (Vite)
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Vercel
+
+## 🚀 Getting Started
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/daneyyhh/portfolio.git
+    cd portfolio
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install --legacy-peer-deps
+    ```
+
+3.  **Run locally:**
+    ```bash
+    npm run dev
+    ```
+
+## 📦 Deployment
+
+This project is configured for **Vercel**.
+Pushes to the `main` branch trigger automatic deployments.
+
+**Note on Peer Dependencies:**
+This project uses `.npmrc` with `legacy-peer-deps=true` to resolve conflicts between React 19 and certain UI libraries.
+
+---
+*Built by [daneyyhh](https://github.com/daneyyhh)*
