@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import DashboardLayout from './components/Layout/DashboardLayout';
-import CinematicLoader from './components/UI/CinematicLoader';
+import SystemBootLoader from './components/UI/SystemBootLoader';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     return (
         <>
-            {isLoading && <CinematicLoader onComplete={() => setIsLoading(false)} />}
+            <AnimatePresence>
+                {isLoading && <SystemBootLoader onComplete={() => setIsLoading(false)} />}
+            </AnimatePresence>
             {!isLoading && <DashboardLayout />}
         </>
     );

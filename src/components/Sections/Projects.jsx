@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGitHubProjects } from '../../utils/github';
-import { Play, Code, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const manualProjects = [
     {
@@ -33,35 +33,44 @@ const manualProjects = [
 const ProjectCard = ({ project }) => (
     <motion.div
         layout
-        className="group relative bg-carbon border border-steel overflow-hidden clip-card transition-all hover:bg-steel"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        whileHover={{ scale: 1.02 }}
+        className="group relative bg-carbon border border-steel overflow-hidden clip-card transition-all hover:border-racing-orange/50 h-full flex flex-col"
     >
         {/* Top Danger Bar */}
         <div className="h-1 w-full bg-steel group-hover:bg-neon-teal transition-colors"></div>
 
-        <div className="p-6">
+        <div className="p-6 flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
-                <span className="font-speed text-2xl text-white uppercase tracking-wider">{project.name}</span>
-                <span className="text-[10px] font-bold font-tech bg-void px-2 py-1 text-neon-teal border border-neon-teal/30">
+                <span className="font-speed text-2xl lg:text-3xl text-white uppercase tracking-wider">{project.name}</span>
+                <span className="text-[10px] font-bold font-tech bg-void px-2 py-1 text-neon-teal border border-neon-teal/30 rounded-sm">
                     {project.language || "DEV"}
                 </span>
             </div>
 
-            <p className="font-tech text-dust text-sm mb-6 line-clamp-2">
+            <p className="font-tech text-dust text-sm mb-6 line-clamp-3">
                 {project.description || "Classified mission data."}
             </p>
 
-            <a
-                href={project.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-speed text-xl text-racing-orange hover:gap-3 transition-all"
-            >
-                {project.homepage ? "PLAY NOW" : "ACCESS CODE"} <ArrowRight className="w-4 h-4" />
-            </a>
+            <div className="mt-auto">
+                <a
+                    href={project.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-speed text-xl text-racing-orange hover:gap-3 transition-all group-hover:text-neon-teal"
+                >
+                    {project.homepage ? "PLAY NOW" : "ACCESS CODE"} <ArrowRight className="w-4 h-4" />
+                </a>
+            </div>
         </div>
 
-        {/* Bottom Stripes */}
+        {/* Bottom Stripes Overlay */}
         <div className="absolute bottom-0 left-0 w-full h-2 danger-stripes opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+        {/* Scanline Effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
     </motion.div>
 );
 
@@ -78,17 +87,20 @@ const Projects = () => {
 
     return (
         <section id="projects" className="py-24 bg-void relative">
-            <div className="container mx-auto px-6">
-                <div className="flex items-end justify-between mb-12 border-b border-steel pb-6">
-                    <h2 className="font-speed text-6xl text-white italic">
+            {/* Background Decoration */}
+            <div className="absolute right-0 top-0 w-1/3 h-full bg-grid-pattern opacity-10 pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 border-b border-steel pb-6 gap-4">
+                    <h2 className="font-speed text-5xl md:text-6xl text-white italic">
                         ACTIVE <span className="text-transparent text-stroke">MISSIONS</span>
                     </h2>
-                    <div className="hidden md:block font-tech text-neon-teal tracking-widest">
-                        // SELECT TARGET
+                    <div className="font-tech text-neon-teal tracking-widest text-xs md:text-sm">
+                        // SELECT TARGET TO INITIALIZE
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     <AnimatePresence>
                         {projects.map((p) => (
                             <ProjectCard key={p.id} project={p} />
