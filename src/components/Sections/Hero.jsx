@@ -3,83 +3,119 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
     return (
-        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-paper-white">
+        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void">
 
-            {/* Split Background (Pink Right Side) */}
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-cyber-pink clip-angle-left z-0"></div>
+            {/* Background Texture/Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,77,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,77,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_90%)]"></div>
 
-            {/* Geometric Decor */}
-            <div className="absolute top-20 left-10 w-12 h-1 bg-void mb-2"></div>
-            <div className="absolute top-24 left-10 w-8 h-1 bg-cyber-pink"></div>
-            <div className="absolute bottom-10 right-10 w-24 h-24 border-2 border-void opacity-20 rotate-45"></div>
-
-            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 h-full items-center">
-
-                {/* Left: Text & Info */}
-                <motion.div
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex flex-col justify-center h-full order-2 lg:order-1 pt-20 lg:pt-0"
-                >
-                    <h5 className="font-tech text-void tracking-[0.5em] text-sm mb-4 bg-cyber-pink inline-block px-2 py-1 w-max">
-                        REUBEN // V3.0
-                    </h5>
-
-                    {/* Giant Typography */}
-                    <div className="relative leading-[0.8] mix-blend-difference text-void z-20">
-                        <h1 className="font-poster text-[15vw] lg:text-[12rem] uppercase flex flex-col">
-                            <span>BURN</span>
-                            <span className="text-stroke text-transparent ml-20">THE</span>
-                            <span>PAST</span>
-                        </h1>
-                    </div>
-
-                    <p className="font-sans text-charcoal max-w-md mt-8 text-lg font-bold border-l-4 border-void pl-6 tracking-wide">
-                        MOVE ON. BUILD FASTER. <br />
-                        RE-IMAGINE THE DIGITAL LANDSCAPE.
-                    </p>
-
-                    <div className="mt-12 flex gap-4">
-                        <a href="#projects" className="px-8 py-3 bg-void text-white font-poster tracking-wider text-xl hover:bg-cyber-pink transition-colors skew-x-[-10deg]">
-                            <span className="skew-x-[10deg] block">VIEW WORK</span>
-                        </a>
-                    </div>
-                </motion.div>
-
-                {/* Right: Character Visual (Placeholder) */}
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                    className="relative h-[50vh] lg:h-[80vh] flex items-center justify-center order-1 lg:order-2"
-                >
-                    {/* Glitch Box / Image Placeholder */}
-                    <div className="relative w-full h-full max-w-md bg-charcoal clip-angle overflow-hidden group">
-                        <img
-                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1760&auto=format&fit=crop"
-                            alt="Cyber Character"
-                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110"
-                        />
-
-                        {/* Glitch Overlay Layers */}
-                        <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 mix-blend-multiply transition-opacity"></div>
-                        <div className="absolute top-10 left-0 w-full h-1 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-300 delay-75"></div>
-                        <div className="absolute bottom-20 right-0 w-full h-2 bg-cyber-pink translate-x-full group-hover:translate-x-0 transition-transform duration-300 delay-150"></div>
-                    </div>
-
-                    {/* Floating Tech Elements */}
-                    <div className="absolute -right-8 top-1/4 font-tech text-xs text-white rotate-90 tracking-widest opacity-50">
-                        SYSTEM_OVERRIDE
-                    </div>
-                </motion.div>
+            {/* Giant Background Text */}
+            <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0">
+                <h1 className="text-[25vw] font-speed font-bold text-transparent text-stroke opacity-20 italic tracking-tighter leading-none">
+                    REUBEN
+                </h1>
             </div>
 
-            {/* Bottom Glitch Bar */}
-            <div className="absolute bottom-0 w-full h-4 bg-void flex space-x-1">
-                <div className="w-1/4 h-full bg-cyber-pink animate-pulse"></div>
-                <div className="w-1/2 h-full bg-charcoal"></div>
-                <div className="w-1/4 h-full bg-ash"></div>
+            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 h-screen items-center">
+
+                {/* Left UI Panel */}
+                <div className="lg:col-span-3 flex flex-col gap-8 order-2 lg:order-1 pt-10 lg:pt-0">
+                    <motion.div
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-carbon border-l-4 border-neon-teal p-6 clip-card"
+                    >
+                        <h3 className="font-speed text-3xl text-white mb-2">FULL STACK DEV</h3>
+                        <p className="font-tech text-dust text-sm leading-relaxed">
+                            Specialized in high-performance web applications and immersive game interfaces.
+                        </p>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                        className="group"
+                    >
+                        <h2 className="text-6xl font-speed text-white italic group-hover:text-racing-orange transition-colors">
+                            LVL <span className="text-transparent text-stroke">20</span>
+                        </h2>
+                        <div className="w-full h-2 bg-steel mt-2 skew-x-[-20deg]">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: "80%" }}
+                                transition={{ delay: 1, duration: 1 }}
+                                className="h-full bg-racing-orange"
+                            />
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Center Character (Hook Placeholder) */}
+                <div className="lg:col-span-6 relative flex justify-center order-1 lg:order-2 h-[50vh] lg:h-[80vh]">
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative w-full h-full flex items-center justify-center"
+                    >
+                        {/* Glow Behind */}
+                        <div className="absolute w-[300px] h-[300px] bg-racing-orange blur-[100px] opacity-20 animate-pulse"></div>
+
+                        {/* Robot Character Placeholder */}
+                        {/* User can replace 'src' with their actual Hook Character image */}
+                        <img
+                            src="https://images.unsplash.com/photo-1616169542099-56833c87dc14?q=80&w=1000&auto=format&fit=crop"
+                            alt="Hook Character"
+                            className="h-full object-contain grayscale-[0.2] drop-shadow-[0_0_30px_rgba(255,77,0,0.3)] mask-image:linear-gradient(to bottom, black 80%, transparent 100%)"
+                        />
+
+                        {/* Floating HUD Elements */}
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ repeat: Infinity, duration: 4 }}
+                            className="absolute top-20 right-10 bg-void/80 backdrop-blur border border-neon-teal/50 px-4 py-1 rounded text-neon-teal font-tech text-xs"
+                        >
+                            SYS: OPTIMAL
+                        </motion.div>
+                    </motion.div>
+                </div>
+
+                {/* Right UI Panel */}
+                <div className="lg:col-span-3 flex flex-col items-end gap-6 order-3">
+                    <motion.div
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.6 }}
+                        className="text-right"
+                    >
+                        <div className="font-speed text-9xl text-white leading-none italic">
+                            DEV
+                        </div>
+                        <div className="font-speed text-4xl text-transparent text-stroke -mt-4 italic">
+                            OPS_MODE
+                        </div>
+                    </motion.div>
+
+                    <motion.a
+                        href="#projects"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                        className="bg-racing-orange text-black font-speed text-2xl px-10 py-3 skew-x-[-20deg] hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,77,0,0.4)]"
+                    >
+                        <span className="block skew-x-[20deg]">START GAME</span>
+                    </motion.a>
+
+                    <div className="mt-8 border border-racing-orange/30 p-4 w-full bg-racing-orange/5 clip-bento relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-1 bg-racing-orange text-[10px] text-black font-bold">DANGER</div>
+                        <p className="font-tech text-dust text-xs">
+                            CAUTION: HIGH VELOCITY CODING IN PROGRESS.
+                            KEEP HANDS AND FEET INSIDE THE RIG.
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
     );

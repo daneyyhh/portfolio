@@ -1,55 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const Header = () => {
-    const [hidden, setHidden] = useState(false);
-    const { scrollY } = useScroll();
-
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = scrollY.getPrevious();
-        if (latest > previous && latest > 150) {
-            setHidden(true);
-        } else {
-            setHidden(false);
-        }
-    });
-
-    const links = [
-        { name: "SURVIVOR", href: "#about" },
-        { name: "TERRITORY", href: "#projects" },
-        { name: "SIGNAL", href: "#contact" },
-    ];
-
     return (
-        <motion.header
-            variants={{
-                visible: { y: 0 },
-                hidden: { y: "-100%" },
-            }}
-            animate={hidden ? "hidden" : "visible"}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed top-0 inset-x-0 z-50 mix-blend-difference"
-        >
-            <nav className="container mx-auto px-6 py-8 flex justify-between items-center bg-transparent">
-                <a href="#" className="font-brush text-2xl text-ash z-50">
-                    REUBX
-                </a>
+        <header className="fixed top-0 inset-x-0 z-50 py-6 px-4 md:px-8">
+            <div className="container mx-auto flex justify-between items-center">
 
-                <ul className="flex gap-8">
-                    {links.map((link) => (
-                        <li key={link.name}>
-                            <a
-                                href={link.href}
-                                className="font-tech text-sm tracking-[0.2em] text-ash hover:text-ember transition-colors relative group"
-                            >
-                                {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ember group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </motion.header>
+                {/* Logo */}
+                <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    className="flex items-center gap-2"
+                >
+                    <span className="text-4xl font-speed font-bold text-white tracking-widest">
+                        REUBEN<span className="text-racing-orange">X</span>
+                    </span>
+                    <span className="hidden md:block py-1 px-3 bg-steel/50 text-neon-teal font-tech text-xs tracking-widest rounded-sm border border-neon-teal/20">
+                        SYSTEM_ONLINE
+                    </span>
+                </motion.div>
+
+                {/* Nav */}
+                <nav className="flex items-center gap-6">
+                    <ul className="hidden md:flex gap-8">
+                        {['NEXUS', 'MISSIONS', 'DATA_LOG'].map((item) => (
+                            <li key={item}>
+                                <a href={`#${item.toLowerCase().split('_')[0] === 'missions' ? 'projects' : item.toLowerCase().split('_')[0] === 'data' ? 'about' : 'hero'}`}
+                                    className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                                    {item}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* CTA Button */}
+                    <a href="#contact" className="relative group">
+                        <div className="absolute inset-0 bg-neon-teal skew-x-[-20deg] blur-md opacity-20 group-hover:opacity-50 transition-opacity"></div>
+                        <div className="relative bg-void border border-neon-teal text-neon-teal px-6 py-2 skew-x-[-20deg] hover:bg-neon-teal hover:text-black transition-all">
+                            <span className="block skew-x-[20deg] font-bold font-tech tracking-widest">
+                                INITIATE_CHAT
+                            </span>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+        </header>
     );
 };
 

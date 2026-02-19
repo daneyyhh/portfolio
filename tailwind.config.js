@@ -8,22 +8,20 @@ export default {
         extend: {
             colors: {
                 void: "#0a0a0a",
-                ember: "#ff4d00", // Last Oasis orange
-                "cyber-pink": "#ff003c", // Glitch Pop Pink
-                "paper-white": "#f5f5f7",
+                "racing-orange": "#FF4D00", // Hook Character Orange
+                "neon-teal": "#00FFFF", // Gamerlix Accent
+                carbon: "#111111",
+                steel: "#222222",
                 ash: "#e5e5e5",
-                "charcoal": "#1a1a1a",
-                "dust": "#888888",
             },
             fontFamily: {
-                brush: ['"Permanent Marker"', 'cursive'],
-                tech: ['Rajdhani', 'sans-serif'],
-                poster: ['Antonio', 'sans-serif'], // New Condensed Hero Font
+                speed: ['Teko', 'sans-serif'], // Primary Headlines
+                tech: ['Rajdhani', 'sans-serif'], // UI Text
                 sans: ['Inter', 'sans-serif'],
             },
             backgroundImage: {
-                'noise': "url('/noise.png')", // We'll simulate this with CSS if image missing
-                'grunge': "linear-gradient(to bottom, transparent, #0a0a0a), url('https://images.unsplash.com/photo-1542256844-3b957662c199?q=80&w=2000&auto=format&fit=crop')", // Placeholder rough texture
+                'speed-lines': "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 77, 0, 0.05) 10px, rgba(255, 77, 0, 0.05) 20px)",
+                'grid-pattern': "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
             },
             animation: {
                 "flicker": "flicker 3s linear infinite",
