@@ -1,51 +1,53 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-
-const navItems = [
-    { name: 'Home', href: '#hero' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Articles', href: '#articles' },
-    { name: 'Talk', href: '#contact' },
-];
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const Header = () => {
-    const [activeTab, setActiveTab] = useState('Home');
+    const [hidden, setHidden] = useState(false);
+    const { scrollY } = useScroll();
+
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious();
+        if (latest > previous && latest > 150) {
+            setHidden(true);
+        } else {
+            setHidden(false);
+        }
+    });
+
+    const links = [
+        { name: "SURVIVOR", href: "#about" },
+        { name: "TERRITORY", href: "#projects" },
+        { name: "SIGNAL", href: "#contact" },
+    ];
 
     return (
         <motion.header
-            className="fixed top-0 left-0 w-full z-50 flex justify-center py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm pointer-events-none"
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 3, type: 'spring', stiffness: 100 }} // Delay to sync with LoadingScreen
+            variants={{
+                visible: { y: 0 },
+                hidden: { y: "-100%" },
+            }}
+            animate={hidden ? "hidden" : "visible"}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="fixed top-0 inset-x-0 z-50 mix-blend-difference"
         >
-            <nav className="pointer-events-auto bg-black/60 border border-cyan-900/50 rounded-full px-6 py-2 flex gap-4 shadow-[0_0_15px_rgba(6,182,212,0.15)] relative overflow-hidden backdrop-blur-md">
-                {/* Circuit Line Decor */}
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
+            <nav className="container mx-auto px-6 py-8 flex justify-between items-center bg-transparent">
+                <a href="#" className="font-brush text-2xl text-ash z-50">
+                    REUBX
+                </a>
 
-                {navItems.map((item) => (
-                    <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setActiveTab(item.name)}
-                        className={`relative px-4 py-2 text-sm md:text-base font-mono uppercase tracking-wider transition-colors duration-300 ${activeTab === item.name ? 'text-cyan-400' : 'text-gray-400 hover:text-cyan-200'
-                            }`}
-                    >
-                        {item.name}
-
-                        {/* Active Tab Indicator (Underline/Glow) */}
-                        {activeTab === item.name && (
-                            <motion.div
-                                layoutId="activeTab"
-                                className="absolute bottom-0 left-0 w-full h-0.5 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"
-                                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                            />
-                        )}
-
-                        {/* Hover Glitch Effect (could be expanded) */}
-                        <span className="absolute inset-0 bg-cyan-400/5 opacity-0 hover:opacity-100 rounded transition-opacity -z-10"></span>
-                    </a>
-                ))}
+                <ul className="flex gap-8">
+                    {links.map((link) => (
+                        <li key={link.name}>
+                            <a
+                                href={link.href}
+                                className="font-tech text-sm tracking-[0.2em] text-ash hover:text-ember transition-colors relative group"
+                            >
+                                {link.name}
+                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ember group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
             </nav>
         </motion.header>
     );

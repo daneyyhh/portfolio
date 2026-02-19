@@ -7,31 +7,33 @@ export default {
     theme: {
         extend: {
             colors: {
-                background: "#050505",
-                "neon-cyan": "rgba(6, 182, 212, 1)", // cyan-500
-                "neon-gold": "rgba(234, 179, 8, 1)", // yellow-500
+                void: "#0a0a0a",
+                ember: "#ff4d00", // The signature 'Last Oasis' orange
+                ash: "#e5e5e5",
+                "charcoal": "#1a1a1a",
+                "dust": "#888888",
             },
             fontFamily: {
-                sans: ['Orbitron', 'Inter', 'sans-serif'],
-                mono: ['"Share Tech Mono"', 'monospace'],
+                brush: ['"Permanent Marker"', 'cursive'], // For Titles
+                tech: ['Rajdhani', 'sans-serif'], // For UI elements
+                sans: ['Inter', 'sans-serif'], // Fallback body
+            },
+            backgroundImage: {
+                'noise': "url('/noise.png')", // We'll simulate this with CSS if image missing
+                'grunge': "linear-gradient(to bottom, transparent, #0a0a0a), url('https://images.unsplash.com/photo-1542256844-3b957662c199?q=80&w=2000&auto=format&fit=crop')", // Placeholder rough texture
             },
             animation: {
-                "spin-slow": "spin 3s linear infinite",
-                "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-                "glitch": "glitch 1s linear infinite",
-                "scanline": "scanline 8s linear infinite",
+                "flicker": "flicker 3s linear infinite",
+                "drift": "drift 20s linear infinite",
             },
             keyframes: {
-                glitch: {
-                    "0%, 100%": { transform: "translate(0)" },
-                    "20%": { transform: "translate(-2px, 2px)" },
-                    "40%": { transform: "translate(-2px, -2px)" },
-                    "60%": { transform: "translate(2px, 2px)" },
-                    "80%": { transform: "translate(2px, -2px)" },
+                flicker: {
+                    "0%, 100%": { opacity: 1 },
+                    "50%": { opacity: 0.8 },
                 },
-                scanline: {
-                    "0%": { transform: "translateY(-100%)" },
-                    "100%": { transform: "translateY(100%)" },
+                drift: {
+                    "0%": { backgroundPosition: "0% 0%" },
+                    "100%": { backgroundPosition: "100% 100%" },
                 }
             }
         },

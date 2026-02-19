@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DashboardLayout from './components/Layout/DashboardLayout';
-import LoadingScreen from './components/UI/LoadingScreen';
+import CinematicLoader from './components/UI/CinematicLoader';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     return (
         <>
-            {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+            {isLoading && <CinematicLoader onComplete={() => setIsLoading(false)} />}
             {!isLoading && <DashboardLayout />}
         </>
     );

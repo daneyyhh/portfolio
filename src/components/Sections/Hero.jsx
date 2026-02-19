@@ -1,90 +1,99 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Gamepad2, MessageSquare, ArrowDown } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 
 const Hero = () => {
+    const { scrollY } = useScroll();
+    const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+    const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+
     return (
-        <section id="hero" className="min-h-screen flex flex-col items-center justify-center relative bg-black overflow-hidden pt-20 pb-16">
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] pointer-events-none"></div>
+        <section id="hero" className="relative h-screen overflow-hidden flex items-center justify-center bg-void">
+            {/* Background Parallax Layer (Fog/Smoke) */}
+            <motion.div
+                style={{ y: y1 }}
+                className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1542256844-3b957662c199?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay grayscale"
+            ></motion.div>
 
-            <div className="container mx-auto px-6 flex flex-col items-center text-center z-10">
+            {/* Secondary Texture Layer */}
+            <div className="absolute inset-0 z-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/concrete-wall.png')]"></div>
 
-                {/* 2D Illustration Placeholder */}
+            {/* Ember Particles Overlay */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                {[...Array(15)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-ember rounded-full blur-[1px]"
+                        initial={{
+                            x: Math.random() * 100 + "%",
+                            y: "100vh",
+                            opacity: 0
+                        }}
+                        animate={{
+                            y: "-10vh",
+                            opacity: [0, 1, 0],
+                            x: `calc(${Math.random() * 100}% + ${Math.random() * 200 - 100}px)`
+                        }}
+                        transition={{
+                            duration: Math.random() * 10 + 10,
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: Math.random() * 10
+                        }}
+                    />
+                ))}
+            </div>
+
+            {/* Foreground Content */}
+            <motion.div
+                style={{ y: y2 }}
+                className="relative z-10 text-center px-4 flex flex-col items-center"
+            >
+                {/* Small Top Tag */}
                 <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1, duration: 1 }}
+                    className="text-ember font-tech tracking-[0.5em] text-sm md:text-base mb-4 uppercase"
+                >
+                    System Status: Critical
+                </motion.div>
+
+                {/* Main Brush Title */}
+                <motion.h1
+                    initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-b from-cyan-900/20 to-transparent rounded-full flex items-center justify-center mb-8 border border-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.15)]"
+                    transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
+                    className="text-6xl md:text-8xl lg:text-9xl font-brush text-ash leading-none mb-6 text-stroke shadow-black drop-shadow-2xl"
                 >
-                    <div className="text-cyan-500/50 font-mono text-sm">[AVATAR_MODEL_LOADED]</div>
-                    {/* Ideally replace this div with an <img> tag pointing to the character illustration */}
-                </motion.div>
+                    KEEP <br />
+                    <span className="text-ember">MOVING</span>
+                </motion.h1>
 
-                <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                {/* Subtitle / Quote */}
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
+                    className="text-dust font-tech text-lg md:text-xl max-w-xl mx-auto tracking-widest bg-black/50 p-4 border-l-2 border-ember backdrop-blur-sm"
                 >
-                    <h1 className="text-5xl md:text-7xl font-bold font-[Orbitron,sans-serif] text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-gray-400 mb-2">
-                        REUBEN
-                    </h1>
-                    <h2 className="text-xl md:text-2xl text-cyan-400 font-mono tracking-widest mb-6">
-                        GAMER & GAME DEVELOPER
-                    </h2>
-                    <p className="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
-                        Building immersive worlds and digital experiences.
-                        Ready to join your party.
-                    </p>
+                    BUILD. SCAVENGE. DEPLOY. <br />
+                    THE WEB IS A VAST, DYING WORLD.
+                </motion.p>
+            </motion.div>
 
-                    <div className="flex flex-col md:flex-row gap-6 justify-center">
-                        <motion.a
-                            href="#projects"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-black font-bold py-3 px-8 rounded skew-x-[-10deg] shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all"
-                        >
-                            <Gamepad2 className="w-5 h-5 skew-x-[10deg]" />
-                            <span className="skew-x-[10deg]">VIEW QUESTS</span>
-                        </motion.a>
+            {/* Scroll Indicator */}
+            <motion.div
+                className="absolute bottom-10 z-10 flex flex-col items-center gap-2 text-ember opacity-80"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+            >
+                <span className="text-xs font-tech tracking-[0.3em]">DESCEND</span>
+                <ArrowDown className="w-6 h-6" />
+            </motion.div>
 
-                        <motion.a
-                            href="#contact"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 border border-cyan-500 text-cyan-400 hover:bg-cyan-950 font-bold py-3 px-8 rounded skew-x-[-10deg] transition-all shadow-[0_0_10px_rgba(6,182,212,0.1)]"
-                        >
-                            <MessageSquare className="w-5 h-5 skew-x-[10deg]" />
-                            <span className="skew-x-[10deg]">TALK / CONTACT</span>
-                        </motion.a>
-                    </div>
-                </motion.div>
-            </div>
-
-            {/* Bottom UI Elements */}
-            <div className="absolute bottom-10 w-full flex flex-col items-center gap-6 z-10 pointer-events-none">
-
-                {/* Press Start */}
-                <motion.div
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="flex flex-col items-center text-cyan-500 cursor-pointer pointer-events-auto"
-                >
-                    <span className="font-[Orbitron,sans-serif] tracking-[0.2em] text-sm mb-2">PRESS START</span>
-                    <ArrowDown className="w-5 h-5 animate-bounce" />
-                </motion.div>
-
-                {/* Fake Loading Bar */}
-                <div className="w-full max-w-2xl px-6">
-                    <div className="flex justify-between text-[10px] text-cyan-600 font-mono mb-1">
-                        <span>LOADING PLAYER: REUBEN...</span>
-                        <span>87%</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-cyan-950 rounded-full overflow-hidden">
-                        <div className="h-full bg-cyan-600 w-[87%] shadow-[0_0_10px_#0891b2]"></div>
-                    </div>
-                </div>
-            </div>
+            {/* Bottom Rough Edge Mask */}
+            <div className="absolute bottom-0 left-0 w-full h-24 bg-void clip-rough z-20 translate-y-1"></div>
         </section>
     );
 };
