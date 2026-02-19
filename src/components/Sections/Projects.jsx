@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGitHubProjects } from '../../utils/github';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Gamepad2, Server } from 'lucide-react';
 
 const ProjectCard = ({ project }) => (
     <motion.div
@@ -18,7 +18,7 @@ const ProjectCard = ({ project }) => (
         <div className="relative z-10 bg-ash p-6 h-full flex flex-col clip-rough">
             {/* Date / Tech Tag */}
             <span className="font-brush text-ember text-xl mb-2 -rotate-2">
-                {project.language || "CODE"}
+                {project.language || "GAME"}
             </span>
 
             <h3 className="font-tech font-bold text-2xl uppercase tracking-tighter mb-4 group-hover:text-ember transition-colors">
@@ -35,7 +35,7 @@ const ProjectCard = ({ project }) => (
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 font-tech font-bold text-sm tracking-widest uppercase hover:gap-4 transition-all"
             >
-                READ FULL STORY <ArrowRight className="w-4 h-4 text-ember" />
+                {project.homepage ? "PLAY GAME" : "VIEW CODE"} <ArrowRight className="w-4 h-4 text-ember" />
             </a>
 
             {/* Ember Decor */}
@@ -44,14 +44,43 @@ const ProjectCard = ({ project }) => (
     </motion.div>
 );
 
+const manualProjects = [
+    {
+        id: 'manual-1',
+        name: 'Haunted Game',
+        description: 'A spooky survival experience created in Unity. Explore the haunted house if you dare.',
+        language: 'UNITY',
+        html_url: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
+        homepage: true
+    },
+    {
+        id: 'manual-2',
+        name: 'Sprite Flight',
+        description: 'High-flying arcade action. Dodge obstacles and collect points in this Unity 2D adventure.',
+        language: 'UNITY',
+        html_url: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
+        homepage: true
+    },
+    {
+        id: 'manual-3',
+        name: 'FiveM Resources',
+        description: 'Custom scripts, assets, and server configurations for FiveM roleplay servers.',
+        language: 'LUA',
+        html_url: 'https://github.com/daneyyhh', // Fallback to profile as no specific link provided
+        homepage: false
+    }
+];
+
 const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const load = async () => {
-            const data = await fetchGitHubProjects();
-            setProjects(data.slice(0, 6)); // Limit to 6 for the grid
+            const githubData = await fetchGitHubProjects();
+            // Combine manual projects with GitHub ones
+            const combined = [...manualProjects, ...githubData].slice(0, 9);
+            setProjects(combined);
             setLoading(false);
         };
         load();

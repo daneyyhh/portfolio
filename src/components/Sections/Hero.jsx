@@ -23,7 +23,7 @@ const Hero = () => {
                     className="flex flex-col justify-center h-full order-2 lg:order-1 pt-20 lg:pt-0"
                 >
                     <h5 className="font-tech text-void tracking-[0.5em] text-sm mb-4 bg-cyber-pink inline-block px-2 py-1 w-max">
-                        REUBX_DEV // V3.0
+                        REUBEN // V3.0
                     </h5>
 
                     {/* Giant Typography */}
