@@ -1,99 +1,86 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
-    const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-    const y2 = useTransform(scrollY, [0, 500], [0, -150]);
-
     return (
-        <section id="hero" className="relative h-screen overflow-hidden flex items-center justify-center bg-void">
-            {/* Background Parallax Layer (Fog/Smoke) */}
-            <motion.div
-                style={{ y: y1 }}
-                className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1542256844-3b957662c199?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay grayscale"
-            ></motion.div>
+        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-paper-white">
 
-            {/* Secondary Texture Layer */}
-            <div className="absolute inset-0 z-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/concrete-wall.png')]"></div>
+            {/* Split Background (Pink Right Side) */}
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-cyber-pink clip-angle-left z-0"></div>
 
-            {/* Ember Particles Overlay */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                {[...Array(15)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-ember rounded-full blur-[1px]"
-                        initial={{
-                            x: Math.random() * 100 + "%",
-                            y: "100vh",
-                            opacity: 0
-                        }}
-                        animate={{
-                            y: "-10vh",
-                            opacity: [0, 1, 0],
-                            x: `calc(${Math.random() * 100}% + ${Math.random() * 200 - 100}px)`
-                        }}
-                        transition={{
-                            duration: Math.random() * 10 + 10,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: Math.random() * 10
-                        }}
-                    />
-                ))}
-            </div>
+            {/* Geometric Decor */}
+            <div className="absolute top-20 left-10 w-12 h-1 bg-void mb-2"></div>
+            <div className="absolute top-24 left-10 w-8 h-1 bg-cyber-pink"></div>
+            <div className="absolute bottom-10 right-10 w-24 h-24 border-2 border-void opacity-20 rotate-45"></div>
 
-            {/* Foreground Content */}
-            <motion.div
-                style={{ y: y2 }}
-                className="relative z-10 text-center px-4 flex flex-col items-center"
-            >
-                {/* Small Top Tag */}
+            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 h-full items-center">
+
+                {/* Left: Text & Info */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="text-ember font-tech tracking-[0.5em] text-sm md:text-base mb-4 uppercase"
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="flex flex-col justify-center h-full order-2 lg:order-1 pt-20 lg:pt-0"
                 >
-                    System Status: Critical
+                    <h5 className="font-tech text-void tracking-[0.5em] text-sm mb-4 bg-cyber-pink inline-block px-2 py-1 w-max">
+                        REUBX_DEV // V3.0
+                    </h5>
+
+                    {/* Giant Typography */}
+                    <div className="relative leading-[0.8] mix-blend-difference text-void z-20">
+                        <h1 className="font-poster text-[15vw] lg:text-[12rem] uppercase flex flex-col">
+                            <span>BURN</span>
+                            <span className="text-stroke text-transparent ml-20">THE</span>
+                            <span>PAST</span>
+                        </h1>
+                    </div>
+
+                    <p className="font-sans text-charcoal max-w-md mt-8 text-lg font-bold border-l-4 border-void pl-6 tracking-wide">
+                        MOVE ON. BUILD FASTER. <br />
+                        RE-IMAGINE THE DIGITAL LANDSCAPE.
+                    </p>
+
+                    <div className="mt-12 flex gap-4">
+                        <a href="#projects" className="px-8 py-3 bg-void text-white font-poster tracking-wider text-xl hover:bg-cyber-pink transition-colors skew-x-[-10deg]">
+                            <span className="skew-x-[10deg] block">VIEW WORK</span>
+                        </a>
+                    </div>
                 </motion.div>
 
-                {/* Main Brush Title */}
-                <motion.h1
+                {/* Right: Character Visual (Placeholder) */}
+                <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
-                    className="text-6xl md:text-8xl lg:text-9xl font-brush text-ash leading-none mb-6 text-stroke shadow-black drop-shadow-2xl"
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="relative h-[50vh] lg:h-[80vh] flex items-center justify-center order-1 lg:order-2"
                 >
-                    KEEP <br />
-                    <span className="text-ember">MOVING</span>
-                </motion.h1>
+                    {/* Glitch Box / Image Placeholder */}
+                    <div className="relative w-full h-full max-w-md bg-charcoal clip-angle overflow-hidden group">
+                        <img
+                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1760&auto=format&fit=crop"
+                            alt="Cyber Character"
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110"
+                        />
 
-                {/* Subtitle / Quote */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                    className="text-dust font-tech text-lg md:text-xl max-w-xl mx-auto tracking-widest bg-black/50 p-4 border-l-2 border-ember backdrop-blur-sm"
-                >
-                    BUILD. SCAVENGE. DEPLOY. <br />
-                    THE WEB IS A VAST, DYING WORLD.
-                </motion.p>
-            </motion.div>
+                        {/* Glitch Overlay Layers */}
+                        <div className="absolute inset-0 bg-cyber-pink opacity-0 group-hover:opacity-20 mix-blend-multiply transition-opacity"></div>
+                        <div className="absolute top-10 left-0 w-full h-1 bg-white translate-x-full group-hover:translate-x-0 transition-transform duration-300 delay-75"></div>
+                        <div className="absolute bottom-20 right-0 w-full h-2 bg-cyber-pink translate-x-full group-hover:translate-x-0 transition-transform duration-300 delay-150"></div>
+                    </div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-                className="absolute bottom-10 z-10 flex flex-col items-center gap-2 text-ember opacity-80"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-            >
-                <span className="text-xs font-tech tracking-[0.3em]">DESCEND</span>
-                <ArrowDown className="w-6 h-6" />
-            </motion.div>
+                    {/* Floating Tech Elements */}
+                    <div className="absolute -right-8 top-1/4 font-tech text-xs text-white rotate-90 tracking-widest opacity-50">
+                        SYSTEM_OVERRIDE
+                    </div>
+                </motion.div>
+            </div>
 
-            {/* Bottom Rough Edge Mask */}
-            <div className="absolute bottom-0 left-0 w-full h-24 bg-void clip-rough z-20 translate-y-1"></div>
+            {/* Bottom Glitch Bar */}
+            <div className="absolute bottom-0 w-full h-4 bg-void flex space-x-1">
+                <div className="w-1/4 h-full bg-cyber-pink animate-pulse"></div>
+                <div className="w-1/2 h-full bg-charcoal"></div>
+                <div className="w-1/4 h-full bg-ash"></div>
+            </div>
         </section>
     );
 };

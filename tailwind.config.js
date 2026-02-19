@@ -8,15 +8,18 @@ export default {
         extend: {
             colors: {
                 void: "#0a0a0a",
-                ember: "#ff4d00", // The signature 'Last Oasis' orange
+                ember: "#ff4d00", // Last Oasis orange
+                "cyber-pink": "#ff003c", // Glitch Pop Pink
+                "paper-white": "#f5f5f7",
                 ash: "#e5e5e5",
                 "charcoal": "#1a1a1a",
                 "dust": "#888888",
             },
             fontFamily: {
-                brush: ['"Permanent Marker"', 'cursive'], // For Titles
-                tech: ['Rajdhani', 'sans-serif'], // For UI elements
-                sans: ['Inter', 'sans-serif'], // Fallback body
+                brush: ['"Permanent Marker"', 'cursive'],
+                tech: ['Rajdhani', 'sans-serif'],
+                poster: ['Antonio', 'sans-serif'], // New Condensed Hero Font
+                sans: ['Inter', 'sans-serif'],
             },
             backgroundImage: {
                 'noise': "url('/noise.png')", // We'll simulate this with CSS if image missing
