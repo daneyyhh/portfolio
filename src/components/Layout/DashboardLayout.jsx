@@ -6,22 +6,16 @@ import About from '../Sections/About';
 import Projects from '../Sections/Projects';
 import Contact from '../Sections/Contact';
 
-import StickyWrapper from './StickyWrapper';
-
 const DashboardLayout = () => {
     return (
-        <div className="bg-void min-h-screen text-ash font-sans selection:bg-ember selection:text-white">
+        <div className="portfolio-wrapper">
             <Header />
-
-            <main className="relative z-10">
-                <StickyWrapper>
-                    <Hero />
-                    <About />
-                    <Projects />
-                    <Contact />
-                </StickyWrapper>
+            <main>
+                <Hero />
+                <About />
+                <Projects />
+                <Contact />
             </main>
-
             <Footer />
         </div>
     );

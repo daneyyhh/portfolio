@@ -1,104 +1,116 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fetchGitHubProjects } from '../../utils/github';
-import { ArrowRight } from 'lucide-react';
+import { fivemProjects, unityProjects } from '../../data';
 
-const manualProjects = [
-    {
-        id: 'manual-1',
-        name: 'Haunted House',
-        description: 'Survival horror experience in Unity.',
-        language: 'UNITY',
-        html_url: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
-        homepage: true
-    },
-    {
-        id: 'manual-2',
-        name: 'Sprite Flight',
-        description: 'Arcade flight action.',
-        language: 'UNITY',
-        html_url: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
-        homepage: true
-    }
-];
+const tags = ['All', 'FiveM', 'Unity'];
 
-const ProjectCard = ({ project }) => (
-    <motion.div
-        layout
-        initial={{ opacity: 0, y: 20 }}
+const ProjectCard = ({ project, index }) => (
+    <motion.article
+        className="project-card"
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.02 }}
-        className="group relative bg-carbon border border-steel overflow-hidden clip-card transition-all hover:border-acid-lime/50 h-full flex flex-col"
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+        whileHover={{ y: -8 }}
     >
-        {/* Top Danger Bar */}
-        <div className="h-1 w-full bg-steel group-hover:bg-acid-lime transition-colors"></div>
+        {/* Top accent bar */}
+        <div className="card-accent-bar" style={{ background: project.accent }} />
 
-        <div className="p-6 flex flex-col h-full">
-            <div className="flex justify-between items-start mb-4">
-                <span className="font-speed text-2xl lg:text-3xl text-white uppercase tracking-wider">{project.name}</span>
-                <span className="text-[10px] font-bold font-tech bg-void px-2 py-1 text-acid-lime border border-acid-lime/30 rounded-sm">
-                    {project.language || "DEV"}
-                </span>
+        {/* Card content */}
+        <div className="project-card-inner">
+            <div className="project-card-header">
+                <span className="project-category">{project.category}</span>
+                <span className="project-tag-badge">{project.tag}</span>
             </div>
 
-            <p className="font-tech text-dust text-sm mb-6 line-clamp-3">
-                {project.description || "Classified mission data."}
-            </p>
+            <h3 className="project-name">{project.name}</h3>
+            <p className="project-desc">{project.description}</p>
 
-            <div className="mt-auto">
-                <a
-                    href={project.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-speed text-xl text-acid-lime hover:gap-3 transition-all group-hover:text-white"
-                >
-                    {project.homepage ? "PLAY NOW" : "ACCESS CODE"} <ArrowRight className="w-4 h-4" />
-                </a>
-            </div>
+            <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-cta"
+                style={{ '--accent': project.accent }}
+            >
+                {project.link.includes('unity.com') ? 'Play Now' : 'View Code'}
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </a>
+
+            {/* Hover glow */}
+            <div className="project-card-glow" style={{ background: project.accent }} />
         </div>
-
-        {/* Bottom Stripes Overlay */}
-        <div className="absolute bottom-0 left-0 w-full h-2 danger-stripes opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-        {/* Scanline Effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
-    </motion.div>
+    </motion.article>
 );
 
 const Projects = () => {
-    const [projects, setProjects] = useState([]);
+    const [activeTag, setActiveTag] = useState('All');
 
-    useEffect(() => {
-        const load = async () => {
-            const githubData = await fetchGitHubProjects();
-            setProjects([...manualProjects, ...githubData].slice(0, 9));
-        };
-        load();
-    }, []);
+    const allProjects = [...fivemProjects, ...unityProjects];
+    const filtered = activeTag === 'All'
+        ? allProjects
+        : activeTag === 'FiveM'
+            ? fivemProjects
+            : unityProjects;
 
     return (
-        <section id="projects" className="py-24 bg-void relative min-h-screen">
-            {/* Background Decoration */}
-            <div className="absolute right-0 top-0 w-1/3 h-full bg-grid-pattern opacity-10 pointer-events-none"></div>
+        <section id="projects" className="projects-section">
+            <div className="section-inner">
+                {/* Section label */}
+                <motion.div
+                    className="section-eyebrow"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                >
+                    <span className="eyebrow-line" />
+                    CHAPTER 03
+                    <span className="eyebrow-line" />
+                </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 border-b border-steel pb-6 gap-4">
-                    <h2 className="font-speed text-5xl md:text-6xl text-white italic">
-                        ACTIVE <span className="text-transparent text-stroke">MISSIONS</span>
-                    </h2>
-                    <div className="font-tech text-acid-lime tracking-widest text-xs md:text-sm">
-                        // SELECT TARGET TO INITIALIZE
-                    </div>
+                <div className="projects-header">
+                    <motion.h2
+                        className="section-title"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
+                    >
+                        ACTIVE<br />
+                        <span className="title-accent">MISSIONS</span>
+                    </motion.h2>
+
+                    {/* Filter pills */}
+                    <motion.div
+                        className="project-filters"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        {tags.map(t => (
+                            <button
+                                key={t}
+                                className={`filter-pill ${activeTag === t ? 'active' : ''}`}
+                                onClick={() => setActiveTag(t)}
+                            >
+                                {t}
+                            </button>
+                        ))}
+                    </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    <AnimatePresence>
-                        {projects.map((p) => (
-                            <ProjectCard key={p.id} project={p} />
+                {/* Cards grid */}
+                <motion.div className="projects-grid" layout>
+                    <AnimatePresence mode="popLayout">
+                        {filtered.map((p, i) => (
+                            <ProjectCard key={p.id} project={p} index={i} />
                         ))}
                     </AnimatePresence>
-                </div>
+                </motion.div>
+
+                {/* Decorative text */}
+                <div className="projects-bg-text" aria-hidden="true">PROJECTS</div>
             </div>
         </section>
     );

@@ -1,65 +1,51 @@
-import {
-    Code, Terminal, Cpu, Globe, Database, Layout,
-    Shield, Zap, Radio, Gamepad2, Layers
-} from 'lucide-react';
+// ============================================================
+// PORTFOLIO DATA — REUBEN
+// ============================================================
 
-export const playerStats = {
-    username: "REUBX_DEV",
-    level: 27,
-    class: "Cyber-Architect",
-    guild: "FullStack_Vanguard",
-    status: "ONLINE",
-    bio: "Constructing digital realities. Specializing in immersive front-end interfaces and robust back-end systems.",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4", // Placeholder
-    xp: 8450,
-    nextLevelXp: 10000,
-    stats: [
-        { name: "Frontend", value: 92, max: 100, icon: Layout, color: "text-cyan-400" },
-        { name: "Backend", value: 85, max: 100, icon: Database, color: "text-purple-400" },
-        { name: "UI/UX", value: 88, max: 100, icon: Layers, color: "text-pink-400" },
-        { name: "DevOps", value: 75, max: 100, icon: Terminal, color: "text-green-400" }
-    ]
-};
-
-export const quests = [
+export const fivemProjects = [
     {
-        id: 1,
-        title: "Project: NEON_NEXUS",
-        type: "Main Quest",
-        rarity: "Legendary",
-        description: "A high-fidelity dashboard for managing decentralized assets. Features real-time data visualization and holographic UI components.",
-        loot: ["React", "Three.js", "Web3.js"],
-        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1000",
-        status: "COMPLETE",
-        link: "#"
-    },
-    {
-        id: 2,
-        title: "Operation: VOID_CHAT",
-        type: "Side Quest",
-        rarity: "Rare",
-        description: "Encrypted real-time messaging platform with self-destructing messages and zero-knowledge proof authentication.",
-        loot: ["Socket.io", "Node.js", "Redis"],
-        image: "https://images.unsplash.com/photo-1516245834210-c4c14278733f?auto=format&fit=crop&q=80&w=1000",
-        status: "ACTIVE",
-        link: "#"
-    },
-    {
-        id: 3,
-        title: "Task: SYNTH_WAVE",
-        type: "Daily Bounty",
-        rarity: "Common",
-        description: "Audio-reactive visualizer for streaming services. Converts audio frequencies into geometric patterns.",
-        loot: ["WebAudio API", "Canvas", "JS"],
-        image: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&q=80&w=1000",
-        status: "COMPLETE",
-        link: "#"
+        id: 'fivem-1',
+        name: 'FiveM Resources',
+        tag: 'FIVEM · LUA',
+        description: 'A collection of custom FiveM server scripts and resources for GTA V multiplayer — including gameplay mechanics, UI systems, and server-side logic built in Lua.',
+        link: 'https://github.com/daneyyhh/fivem-resources',
+        accent: '#ff6b00',
+        category: 'SERVER SCRIPTS'
     }
 ];
 
-export const inventory = [
-    { category: "Weapons (Languages)", items: ["JavaScript (ES6+)", "TypeScript", "Python", "Rust"] },
-    { category: "Armor (Frameworks)", items: ["React.js", "Next.js", "Vue.js", "TailwindCSS"] },
-    { category: "Tools (DevOps)", items: ["Docker", "AWS", "Git", "Vercel"] },
-    { category: "Artifacts (Design)", items: ["Figma", "Blender", "Adobe CC"] }
+export const unityProjects = [
+    {
+        id: 'unity-1',
+        name: 'Haunted House',
+        tag: 'UNITY · C#',
+        description: 'A first-person survival horror experience built in Unity. Navigate through eerie corridors, solve puzzles, and survive the night in a haunted mansion.',
+        link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
+        accent: '#ccff00',
+        category: 'HORROR GAME'
+    },
+    {
+        id: 'unity-2',
+        name: 'SpriteFlight',
+        tag: 'UNITY · C#',
+        description: 'High-speed arcade flight game featuring responsive controls, dynamic obstacles, and a score attack system. Built for quick, satisfying sessions.',
+        link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
+        accent: '#00f0ff',
+        category: 'ARCADE GAME'
+    }
+];
+
+export const skills = [
+    { name: 'Unity / C#', level: 90 },
+    { name: 'FiveM / Lua', level: 95 },
+    { name: 'React / JS', level: 88 },
+    { name: 'Game Design', level: 85 },
+    { name: 'Node.js', level: 78 },
+];
+
+export const stats = [
+    { label: 'GAMING', value: '99%' },
+    { label: 'CODING', value: '95%' },
+    { label: 'UNITY', value: '90%' },
+    { label: 'FIVEM', value: '100%' },
 ];

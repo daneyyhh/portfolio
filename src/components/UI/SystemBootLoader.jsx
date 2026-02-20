@@ -1,83 +1,105 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SystemBootLoader = ({ onComplete }) => {
     const [progress, setProgress] = useState(0);
     const [logs, setLogs] = useState([]);
+    const [done, setDone] = useState(false);
 
     const bootLogs = [
-        "INITIALIZING KERNEL...",
-        "LOADING ASSETS...",
-        "MOUNTING DRIVERS...",
-        "CHECKING MEMORY...",
-        "ESTABLISHING UPLINK...",
-        "DECRYPTING DATA...",
-        "SYSTEM OPTIMAL."
+        'INIT KERNEL v4.0 ...',
+        'LOADING GAME ENGINE ...',
+        'MOUNTING ASSETS ...',
+        'CALIBRATING UI ...',
+        'ESTABLISHING UPLINK ...',
+        'DECRYPTING PORTFOLIO ...',
+        'ALL SYSTEMS OPTIMAL.',
     ];
 
     useEffect(() => {
-        let currentLog = 0;
-        const interval = setInterval(() => {
+        let logIdx = 0;
+        const tick = setInterval(() => {
             setProgress(prev => {
-                if (prev >= 100) {
-                    clearInterval(interval);
-                    setTimeout(onComplete, 800);
+                const next = prev + Math.random() * 4 + 1;
+                if (next >= 100) {
+                    clearInterval(tick);
+                    setDone(true);
+                    setTimeout(onComplete, 900);
                     return 100;
                 }
-                return prev + Math.random() * 5;
+                return next;
             });
-
-            if (currentLog < bootLogs.length && Math.random() > 0.7) {
-                setLogs(prev => [...prev.slice(-4), bootLogs[currentLog]]);
-                currentLog++;
+            if (logIdx < bootLogs.length && Math.random() > 0.55) {
+                const msg = bootLogs[logIdx++];
+                setLogs(p => [...p.slice(-5), msg]);
             }
-        }, 100);
-
-        return () => clearInterval(interval);
+        }, 90);
+        return () => clearInterval(tick);
     }, [onComplete]);
 
     return (
-        <motion.div
-            className="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center font-tech text-acid-lime p-8 cursor-wait"
-            exit={{ y: "-100%", transition: { duration: 0.8, ease: "anticipate" } }}
-        >
-            {/* Scanlines */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none z-10"></div>
+        <AnimatePresence>
+            {!done ? (
+                <motion.div
+                    key="loader"
+                    className="loader-screen"
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0, y: '-100%', transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
+                >
+                    {/* Scanline overlay */}
+                    <div className="scanlines" />
 
-            <div className="w-full max-w-md">
-                <div className="flex justify-between items-end mb-2">
-                    <span className="text-xl font-bold tracking-widest text-white">REUBEN<span className="text-acid-lime">OS</span> v4.0</span>
-                    <span className="text-acid-lime">{Math.min(100, Math.floor(progress))}%</span>
-                </div>
+                    {/* Corner decorators */}
+                    <div className="corner tl" />
+                    <div className="corner tr" />
+                    <div className="corner bl" />
+                    <div className="corner br" />
 
-                {/* Progress Bar */}
-                <div className="h-2 bg-steel w-full overflow-hidden mb-8">
-                    <motion.div
-                        className="h-full bg-acid-lime"
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
+                    <div className="loader-content">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="loader-logo"
+                        >
+                            <span className="logo-r">R</span>EUBEN
+                            <span className="logo-tag">PORTFOLIO</span>
+                        </motion.div>
 
-                {/* Terminal Logs */}
-                <div className="font-mono text-xs text-dust h-24 overflow-hidden border border-steel/50 p-2 bg-black/50">
-                    {logs.map((log, i) => (
-                        <div key={i} className="mb-1 text-acid-lime/80">
-                            <span className="text-acid-lime mr-2">{`>`}</span>
-                            {log}
+                        <div className="loader-bar-wrap">
+                            <div className="loader-bar-track">
+                                <motion.div
+                                    className="loader-bar-fill"
+                                    style={{ width: `${progress}%` }}
+                                />
+                                <div className="loader-bar-glow" style={{ left: `${progress}%` }} />
+                            </div>
+                            <div className="loader-pct">{Math.min(100, Math.floor(progress))}%</div>
                         </div>
-                    ))}
-                    <motion.div
-                        animate={{ opacity: [0, 1] }}
-                        transition={{ repeat: Infinity, duration: 0.5 }}
-                        className="inline-block w-2 h-4 bg-acid-lime align-middle"
-                    />
-                </div>
-            </div>
 
-            <div className="absolute bottom-8 text-center text-[10px] text-dust tracking-[0.5em] opacity-50">
-                COPYRIGHT 2024 NEXUS INDUSTRIES
-            </div>
-        </motion.div>
+                        <div className="loader-terminal">
+                            {logs.map((l, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -8 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="terminal-line"
+                                >
+                                    <span className="terminal-prompt">▶</span> {l}
+                                </motion.div>
+                            ))}
+                            <motion.span
+                                animate={{ opacity: [1, 0] }}
+                                transition={{ repeat: Infinity, duration: 0.6 }}
+                                className="terminal-cursor"
+                            >▮</motion.span>
+                        </div>
+
+                        <div className="loader-footer">© 2025 REUBEN · NEXUS CORE</div>
+                    </div>
+                </motion.div>
+            ) : null}
+        </AnimatePresence>
     );
 };
 

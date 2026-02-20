@@ -1,94 +1,138 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const navItems = [
+    { href: '#hero', label: 'Home' },
+    { href: '#about', label: 'About Me' },
+    { href: '#projects', label: 'Projects' },
+    { href: '#contact', label: 'Talk' },
+];
 
 const Header = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [active, setActive] = useState('#hero');
 
-    const navItems = [
-        { href: '#hero', label: 'Home' },
-        { href: '#about', label: 'About Me' },
-        { href: '#projects', label: 'Projects' },
-        { href: '#contact', label: 'Talk' }
-    ];
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 40);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) setActive('#' + e.target.id);
+                });
+            },
+            { threshold: 0.4 }
+        );
+        document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+        return () => observer.disconnect();
+    }, []);
+
+    const handleNav = (href) => {
+        setMenuOpen(false);
+        setActive(href);
+    };
 
     return (
-        <header className="header fixed top-0 inset-x-0 z-50 py-6 px-4 md:px-8 flex items-center justify-center pointer-events-none">
-            <div className="container mx-auto flex justify-between items-center pointer-events-auto">
-
-                {/* Left: Logo */}
-                <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    className="flex items-center gap-2"
+        <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
+            <div className="header-inner">
+                {/* Logo */}
+                <motion.a
+                    href="#hero"
+                    className="header-logo"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
                 >
-                    <span className="text-2xl md:text-3xl font-speed font-bold text-acid-lime tracking-widest flex items-center gap-2">
-                        <span className="text-white">REUBEN</span>
-                    </span>
-                </motion.div>
+                    <span className="logo-accent">R</span>EUBEN
+                </motion.a>
 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-12 bg-black/50 backdrop-blur-md px-8 py-2 rounded-full border border-white/5">
-                    {navItems.map((item) => (
-                        <a
+                <nav className="desktop-nav">
+                    {navItems.map((item, i) => (
+                        <motion.a
                             key={item.href}
                             href={item.href}
-                            className="text-sm font-tech text-white hover:text-acid-lime tracking-widest transition-colors"
+                            className={`nav-link ${active === item.href ? 'nav-active' : ''}`}
+                            onClick={() => handleNav(item.href)}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 * i + 0.2 }}
                         >
                             {item.label}
-                        </a>
+                            {active === item.href && (
+                                <motion.span
+                                    layoutId="nav-indicator"
+                                    className="nav-dot"
+                                />
+                            )}
+                        </motion.a>
                     ))}
                 </nav>
 
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden text-white hover:text-acid-lime transition-colors"
+                {/* CTA */}
+                <motion.a
+                    href="#contact"
+                    className="header-cta"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
                 >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                    Contact
+                </motion.a>
 
-                {/* Right: CTA - Hidden on mobile, shown in mobile menu */}
-                <motion.div
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    className="hidden md:block"
+                {/* Hamburger */}
+                <button
+                    className="burger"
+                    onClick={() => setMenuOpen(v => !v)}
+                    aria-label="Toggle menu"
+                    aria-expanded={menuOpen}
                 >
-                    <a href="#contact" className="px-6 py-2 border border-acid-lime text-acid-lime font-tech text-sm tracking-widest hover:bg-acid-lime hover:text-black transition-all uppercase">
-                        Talk
-                    </a>
-                </motion.div>
+                    <span className={`burger-line ${menuOpen ? 'open' : ''}`} />
+                    <span className={`burger-line ${menuOpen ? 'open' : ''}`} />
+                    <span className={`burger-line ${menuOpen ? 'open' : ''}`} />
+                </button>
             </div>
 
             {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md border-t border-white/10"
-                >
-                    <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
-                        {navItems.map((item) => (
-                            <a
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div
+                        className="mobile-menu"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    >
+                        {navItems.map((item, i) => (
+                            <motion.a
                                 key={item.href}
                                 href={item.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-white hover:text-acid-lime transition-colors font-tech tracking-widest"
+                                className={`mobile-nav-link ${active === item.href ? 'nav-active' : ''}`}
+                                onClick={() => handleNav(item.href)}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.05 * i }}
                             >
                                 {item.label}
-                            </a>
+                            </motion.a>
                         ))}
                         <a
                             href="#contact"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="px-6 py-2 border border-acid-lime text-acid-lime font-tech text-sm tracking-widest hover:bg-acid-lime hover:text-black transition-all uppercase text-center"
+                            className="mobile-cta"
+                            onClick={() => setMenuOpen(false)}
                         >
-                            Talk
+                            Talk to Me
                         </a>
-                    </div>
-                </motion.div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 };

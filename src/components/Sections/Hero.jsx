@@ -1,84 +1,142 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-80px' },
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay },
+});
+
 const Hero = () => {
     return (
-        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void pt-24 lg:pt-0">
+        <section id="hero" className="hero-section">
+            {/* Animated background grid */}
+            <div className="hero-grid" aria-hidden="true" />
 
-            {/* Background Texture - Clean Black */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] opacity-20"></div>
+            {/* Floating orbs */}
+            <div className="hero-orb hero-orb-1" aria-hidden="true" />
+            <div className="hero-orb hero-orb-2" aria-hidden="true" />
 
-            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-                {/* Left: Text Content */}
-                <div className="flex flex-col items-start text-left gap-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col gap-2"
-                    >
-                        <h1 className="text-6xl lg:text-8xl font-speed font-bold text-white leading-[0.9] tracking-wide uppercase">
-                            REUBEN
-                        </h1>
+            <div className="hero-inner">
+                {/* Left column */}
+                <div className="hero-left">
+                    <motion.div {...fadeUp(0)} className="hero-eyebrow">
+                        <span className="eyebrow-dot" />
+                        GAME DEVELOPER · BCA FINAL YEAR
                     </motion.div>
 
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="font-tech text-gray-400 text-sm lg:text-base max-w-md leading-relaxed"
-                    >
-                        A hardcore gamer and relentless game developer, grinding final-year BCA at Yenepoya University to craft addictive Unity worlds fueled by C# fury.
+                    <motion.h1 {...fadeUp(0.1)} className="hero-title">
+                        REUBEN<br />
+                        <span className="hero-title-accent">GAMER</span><br />
+                        &amp; CODER.
+                    </motion.h1>
 
-From Haripad's battlegrounds, I dominate with AI chess crushers, FiveM mayhem servers, and Discord bots that rule esports empires 24/7.
-
-Every raid in BGMI, Fortnite drop, or CoD clutch sharpens my code—I'm the raid boss scripting immersive chaos and glitchless 3D spectacles.
-
-Gaming isn't a hobby; it's my blood—obsessed with turning noob dreams into pro-level hits via endless dev marathons.
-
-Level up with me: hardcore collabs only for the next viral gaming apocalypse.
+                    <motion.p {...fadeUp(0.2)} className="hero-bio">
+                        A hardcore gamer turned game developer — crafting Unity worlds,
+                        FiveM servers, and Discord bots from Haripad's battlegrounds.
+                        BCA finalist at Yenepoya University, fueled by C# and endless caffeine.
                     </motion.p>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="flex gap-4"
-                    >
-                        <a href="#projects" className="bg-acid-lime text-black font-tech font-bold text-sm px-8 py-4 uppercase tracking-widest hover:bg-white transition-colors">
-                            GET STARTED
+                    <motion.div {...fadeUp(0.3)} className="hero-ctas">
+                        <a href="#projects" className="btn-primary">
+                            View Projects
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         </a>
-                        <button className="border border-acid-lime text-acid-lime font-tech font-bold text-sm px-8 py-4 uppercase tracking-widest hover:bg-acid-lime hover:text-black transition-colors">
-                            EXPLORE
-                        </button>
+                        <a href="#contact" className="btn-ghost">Let's Talk</a>
+                    </motion.div>
+
+                    {/* Mini stats */}
+                    <motion.div {...fadeUp(0.4)} className="hero-stats">
+                        {[
+                            { n: '3+', l: 'Years Dev' },
+                            { n: '10+', l: 'Projects' },
+                            { n: '100%', l: 'FiveM' },
+                        ].map(s => (
+                            <div key={s.l} className="hero-stat">
+                                <span className="stat-num">{s.n}</span>
+                                <span className="stat-lbl">{s.l}</span>
+                            </div>
+                        ))}
                     </motion.div>
                 </div>
 
-                {/* Right: Portal Image */}
-                <div className="relative flex items-center justify-center h-[50vh] lg:h-[80vh]">
-                    <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="relative w-full h-full"
-                    >
-                        {/* Portal Glow */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] bg-acid-lime/30 blur-[100px] rounded-full animate-pulse"></div>
+                {/* Right column — visual card */}
+                <motion.div
+                    className="hero-right"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+                >
+                    <div className="hero-card">
+                        {/* Card top bar */}
+                        <div className="card-topbar">
+                            <div className="topbar-dots">
+                                <span /><span /><span />
+                            </div>
+                            <span className="topbar-label">REUBEN.PORTFOLIO</span>
+                            <span className="topbar-status">ONLINE</span>
+                        </div>
 
-                        {/* Image Placeholder - Replaced with a Portal-like asset or CSS shape if image fails */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] border-[20px] border-acid-lime/20 rounded-full flex items-center justify-center relative bg-black">
-                                <div className="w-[90%] h-[90%] bg-[url('https://images.unsplash.com/photo-1614726365723-49cfae9e035d?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center rounded-full opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"></div>
+                        {/* Card body */}
+                        <div className="card-body">
+                            <div className="card-avatar">
+                                <div className="avatar-ring" />
+                                <div className="avatar-inner">
+                                    <img
+                                        src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Reuben&backgroundColor=1a1a2e"
+                                        alt="Reuben Avatar"
+                                        className="avatar-img"
+                                    />
+                                </div>
+                                <div className="avatar-badge">LVL 27</div>
+                            </div>
 
-                                {/* Floating Orbitals */}
-                                <div className="absolute inset-0 border border-acid-lime/50 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                                <div className="absolute inset-4 border border-dashed border-acid-lime/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            <div className="card-info">
+                                <div className="card-name">REUBX_DEV</div>
+                                <div className="card-class">Cyber-Architect</div>
+                            </div>
+
+                            {/* Skill bars */}
+                            <div className="card-skills">
+                                {[
+                                    { n: 'FiveM', v: 100, c: '#ff6b00' },
+                                    { n: 'Unity', v: 90, c: '#ccff00' },
+                                    { n: 'React', v: 88, c: '#00f0ff' },
+                                ].map(s => (
+                                    <div key={s.n} className="skill-row">
+                                        <span className="skill-name">{s.n}</span>
+                                        <div className="skill-track">
+                                            <motion.div
+                                                className="skill-fill"
+                                                style={{ background: s.c }}
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${s.v}%` }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+                                            />
+                                        </div>
+                                        <span className="skill-val">{s.v}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    </motion.div>
-                </div>
 
+                        {/* Card glow effect */}
+                        <div className="card-glow" />
+                    </div>
+                </motion.div>
             </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+                className="scroll-hint"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+            >
+                <div className="scroll-hint-line" />
+                <span>Scroll</span>
+            </motion.div>
         </section>
     );
 };
