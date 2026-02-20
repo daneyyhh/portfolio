@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Header = () => {
+const Header = ({ onOpenQuests, onOpenInventory }) => {
     return (
         <header className="fixed top-0 inset-x-0 z-50 py-6 px-4 md:px-8">
             <div className="container mx-auto flex justify-between items-center">
@@ -23,14 +23,21 @@ const Header = () => {
                 {/* Nav */}
                 <nav className="flex items-center gap-6">
                     <ul className="hidden md:flex gap-8">
-                        {['NEXUS', 'MISSIONS', 'DATA_LOG'].map((item) => (
-                            <li key={item}>
-                                <a href={`#${item.toLowerCase().split('_')[0] === 'missions' ? 'projects' : item.toLowerCase().split('_')[0] === 'data' ? 'about' : 'hero'}`}
-                                    className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
-                                    {item}
-                                </a>
-                            </li>
-                        ))}
+                        <li>
+                            <a href="#projects" className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                                NEXUS
+                            </a>
+                        </li>
+                        <li>
+                            <button onClick={onOpenQuests} className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                                MISSIONS
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={onOpenInventory} className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                                DATA_LOG
+                            </button>
+                        </li>
                     </ul>
 
                     {/* CTA Button */}
