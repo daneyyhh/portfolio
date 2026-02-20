@@ -11,50 +11,59 @@ const Hero = () => {
     return (
         <section id="hero" className="hero-section">
             <div className="hero-inner">
+                {/* ── TOP NAV ── */}
+                <motion.div {...fadeUp(0)} className="hero-top-nav">
+                    <div className="hero-nav-links">
+                        <a href="#about" className="nav-link-cyber">ABOUT</a>
+                        <span className="nav-separator">|</span>
+                        <a href="#blog" className="nav-link-cyber">BLOG</a>
+                        <span className="nav-separator">|</span>
+                        <a href="#play" className="nav-link-cyber">PLAY</a>
+                    </div>
+                </motion.div>
+
                 {/* ── LEFT: Text ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0)} className="hero-kicker">
-                        <span className="hero-kicker-bar" />
-                        Game Dev · Unity · FiveM
+                    <motion.div {...fadeUp(0.08)} className="hero-title-stack">
+                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
+                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
+                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
                     </motion.div>
 
-                    <motion.h1 {...fadeUp(0.08)} className="hero-title">
-                        REUBEN
-                    </motion.h1>
-
-                    <motion.div {...fadeUp(0.14)} className="hero-title-sub">
-                            NEON CODER
+                    <motion.div {...fadeUp(0.14)} className="hero-subtitle">
+                        <span className="subtitle-text">NEON CODER</span>
+                        <span className="subtitle-level">LVL 21</span>
+                        <div className="level-badge">↑</div>
                     </motion.div>
 
-                    <motion.p {...fadeUp(0.2)} className="hero-desc">
-                        It's time to level up. A hardcore gamer and relentless developer,
-                        I craft Unity worlds, dominate FiveM servers, and build tools that rule.
-                        Write your own story — one commit at a time.
+                    <motion.p {...fadeUp(0.2)} className="hero-tagline">
+                        Build your code, design your future yourself
                     </motion.p>
 
-                    <motion.div {...fadeUp(0.26)} className="hero-ctas">
-                        <a href="#projects" className="btn-yellow">
-                            View Projects
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        </a>
-                        <a href="#contact" className="btn-outline-dark">Start Now</a>
-                    </motion.div>
-
-                    <motion.div {...fadeUp(0.34)} className="hero-stats-row">
+                    <motion.div {...fadeUp(0.26)} className="hero-stats-cyber">
                         {[
-                            { n: '3+', l: 'Years Dev' },
-                            { n: '10+', l: 'Projects' },
-                            { n: '100%', l: 'FiveM' },
+                            { n: '3+', l: 'Projects' },
+                            { n: '12', l: 'Bots' },
+                            { n: '100%', l: 'Uptime' },
                         ].map(s => (
-                            <div key={s.l} className="hero-stat-item">
-                                <span className="stat-big">{s.n}</span>
-                                <span className="stat-tiny">{s.l}</span>
+                            <div key={s.l} className="stat-badge-cyber">
+                                <span className="stat-val-cyber">{s.n}</span>
+                                <span className="stat-label-cyber">{s.l}</span>
                             </div>
                         ))}
                     </motion.div>
+
+                    <motion.div {...fadeUp(0.34)} className="hero-ctas-cyber">
+                        <a href="#projects" className="btn-cyber-red">
+                            VIEW PORTFOLIO
+                        </a>
+                        <a href="#contact" className="btn-cyber-red">
+                            GET IN TOUCH
+                        </a>
+                    </motion.div>
                 </div>
 
-                {/* ── RIGHT: Character card ── */}
+                {/* ── RIGHT: Character ── */}
                 <div className="hero-right">
                     <motion.div
                         className="hero-char-wrap"
@@ -62,39 +71,31 @@ const Hero = () => {
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
                     >
-                        {/* Yellow glow splash behind image */}
-                        <div className="hero-ink-splash" aria-hidden="true" />
-
-                        {/* Character image */}
-                        <img
-                            src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
-                            alt="Reuben — Game Developer"
-                            className="hero-char-img"
-                            loading="eager"
-                        />
-
-                        {/* Grunge name overlay */}
-                        <div className="hero-grunge-text" aria-hidden="true">
-                            NEON CODER
+                        {/* Floating 3D Neon Coder helmet */}
+                        <div className="hero-helmet-3d">
+                            <img
+                                src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
+                                alt="Neon Coder Helmet"
+                                className="hero-char-img"
+                                loading="eager"
+                            />
                         </div>
 
-                        {/* Info card (top-right) */}
-                        <motion.div
-                            className="hero-info-card"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.7, delay: 0.6 }}
-                        >
-                            <div className="info-card-label">Status</div>
-                            <div className="info-card-val">LVL 27</div>
-                            <div className="info-card-badge">
-                                <span className="badge-dot" />
-                                ONLINE
-                            </div>
-                        </motion.div>
+                        {/* Anime mascot for PLAY */}
+                        <div className="play-mascot">
+                            <span className="mascot-emoji">🎮</span>
+                        </div>
+
+                        {/* Glitch typography overlay */}
+                        <div className="hero-glitch-text" aria-hidden="true">
+                            NEON CODER
+                        </div>
                     </motion.div>
                 </div>
             </div>
+
+            {/* Scanlines effect */}
+            <div className="scanlines" aria-hidden="true"></div>
 
             {/* Scroll hint */}
             <motion.div
