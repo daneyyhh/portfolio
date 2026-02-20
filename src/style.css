@@ -2353,10 +2353,17 @@ button {
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     color: #00ffff;
     animation: float-icon 4s ease-in-out infinite;
     border-radius: 4px;
+    text-align: center;
+}
+
+.modular-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #00ffff;
 }
 
 @keyframes float-icon {
