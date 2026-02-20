@@ -8,10 +8,10 @@ function App() {
 
     return (
         <>
-            <AnimatePresence>
+            {/* <AnimatePresence>
                 {isLoading && <SystemBootLoader onComplete={() => setIsLoading(false)} />}
-            </AnimatePresence>
-            {!isLoading && <DashboardLayout />}
+            </AnimatePresence> */}
+            <DashboardLayout />
         </>
     );
 }
