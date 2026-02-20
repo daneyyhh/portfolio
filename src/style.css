@@ -1051,8 +1051,6 @@ button {
     z-index: 1;
 }
 
-.about-content {}
-
 .about-bio {
     font-size: 0.95rem;
     color: var(--text-muted-light);
@@ -1712,4 +1710,119 @@ button {
     50% {
         transform: translateY(-18px);
     }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dots {
+    0% {
+        content: '';
+    }
+
+    33% {
+        content: '.';
+    }
+
+    66% {
+        content: '..';
+    }
+
+    100% {
+        content: '...';
+    }
+}
+
+.dots::after {
+    content: '';
+    animation: dots 1.2s steps(3, end) infinite;
+}
+
+/* Page entry fade */
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.portfolio-wrapper {
+    animation: page-in 0.6s ease both;
+}
+
+/* ============================================================
+   RESPONSIVE TWEAKS
+   ============================================================ */
+@media (max-width: 640px) {
+    .hero-title {
+        font-size: clamp(3.5rem, 18vw, 6rem);
+    }
+
+    .hero-grunge-text {
+        font-size: clamp(3.5rem, 18vw, 6rem);
+        bottom: -6px;
+        left: -10px;
+    }
+
+    .hero-info-card {
+        display: none;
+    }
+
+    .stat-big {
+        font-size: 1.5rem;
+    }
+
+    .hero-stats-row {
+        gap: 20px;
+    }
+
+    .about-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-dark-overlay {
+        clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/* ============================================================
+   SELECTION & SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--off-white);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--yellow-2);
+    border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--yellow-dark);
 }
