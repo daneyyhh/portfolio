@@ -24,7 +24,7 @@ const Hero = () => {
                         initial={{ x: -30, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-carbon border-l-4 border-neon-teal p-4 lg:p-6 clip-card"
+                        className="bg-carbon border-l-4 border-acid-lime p-4 lg:p-6 clip-card"
                     >
                         <h3 className="font-speed text-2xl lg:text-3xl text-white mb-2">FULL STACK DEV</h3>
                         <p className="font-tech text-dust text-xs lg:text-sm leading-relaxed">
@@ -38,7 +38,7 @@ const Hero = () => {
                         transition={{ delay: 0.4 }}
                         className="group hidden lg:block"
                     >
-                        <h2 className="text-4xl lg:text-6xl font-speed text-white italic group-hover:text-racing-orange transition-colors">
+                        <h2 className="text-4xl lg:text-6xl font-speed text-white italic group-hover:text-acid-lime transition-colors">
                             LVL <span className="text-transparent text-stroke">20</span>
                         </h2>
                         <div className="w-full h-2 bg-steel mt-2 skew-x-[-20deg]">
@@ -46,7 +46,7 @@ const Hero = () => {
                                 initial={{ width: 0 }}
                                 animate={{ width: "80%" }}
                                 transition={{ delay: 1, duration: 1.5, ease: "circOut" }}
-                                className="h-full bg-racing-orange shadow-[0_0_10px_#FF4D00]"
+                                className="h-full bg-acid-lime shadow-[0_0_10px_#ccff00]"
                             />
                         </div>
                     </motion.div>
@@ -61,7 +61,7 @@ const Hero = () => {
                         className="relative w-full h-full flex items-center justify-center"
                     >
                         {/* Glow Behind */}
-                        <div className="absolute w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] bg-racing-orange/20 blur-[60px] lg:blur-[100px] animate-pulse rounded-full"></div>
+                        <div className="absolute w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] bg-acid-lime/20 blur-[60px] lg:blur-[100px] animate-pulse rounded-full"></div>
 
                         {/* Robot Character Placeholder */}
                         <motion.img
@@ -77,7 +77,7 @@ const Hero = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1, x: [0, 5, 0] }}
                             transition={{ delay: 1, repeat: Infinity, duration: 0.2, repeatDelay: 5 }}
-                            className="absolute top-10 right-0 lg:right-10 bg-void/90 border border-neon-teal px-3 py-1 text-neon-teal font-tech text-[10px] tracking-widest z-20"
+                            className="absolute top-10 right-0 lg:right-10 bg-void/90 border border-acid-lime px-3 py-1 text-acid-lime font-tech text-[10px] tracking-widest z-20"
                         >
                             TARGET_LOCKED
                         </motion.div>
@@ -104,7 +104,7 @@ const Hero = () => {
                         href="#projects"
                         whileHover={{ scale: 1.05, skewX: -10 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-racing-orange text-black font-speed text-xl lg:text-2xl px-8 lg:px-10 py-3 skew-x-[-20deg] shadow-[0_0_20px_rgba(255,77,0,0.4)] hover:shadow-[0_0_40px_rgba(255,77,0,0.6)] transition-all"
+                        className="bg-acid-lime text-black font-speed text-xl lg:text-2xl px-8 lg:px-10 py-3 skew-x-[-20deg] shadow-[0_0_20px_rgba(204,255,0,0.4)] hover:shadow-[0_0_40px_rgba(204,255,0,0.6)] transition-all"
                     >
                         <span className="block skew-x-[20deg]">START GAME</span>
                     </motion.a>

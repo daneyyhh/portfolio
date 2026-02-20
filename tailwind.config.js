@@ -7,9 +7,9 @@ export default {
     theme: {
         extend: {
             colors: {
-                void: "#0a0a0a",
-                "racing-orange": "#FF4D00", // Hook Character Orange
-                "neon-teal": "#00FFFF", // Gamerlix Accent
+                void: "#050505", // Deep Black
+                "acid-lime": "#ccff00", // Gamefy Primary
+                "neon-blue": "#00f0ff", // Cyber Secondary
                 carbon: "#111111",
                 steel: "#222222",
                 ash: "#e5e5e5",

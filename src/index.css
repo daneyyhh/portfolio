@@ -7,7 +7,7 @@
 
 @layer base {
     body {
-        @apply bg-void text-ash font-tech selection:bg-racing-orange selection:text-black overflow-x-hidden;
+        @apply bg-void text-ash font-tech selection:bg-acid-lime selection:text-black overflow-x-hidden;
     }
 
     /* Custom Scrollbar for Chrome/Safari/Edge */
@@ -20,7 +20,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        @apply bg-racing-orange hover:bg-neon-teal rounded-none border-2 border-void;
+        @apply bg-acid-lime hover:bg-white rounded-none border-2 border-void;
     }
 }
 
@@ -44,8 +44,8 @@
 
     .danger-stripes {
         background-image: repeating-linear-gradient(45deg,
-                #FF4D00,
-                #FF4D00 10px,
+                #ccff00,
+                #ccff00 10px,
                 transparent 10px,
                 transparent 20px);
     }

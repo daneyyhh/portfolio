@@ -38,7 +38,7 @@ const SystemBootLoader = ({ onComplete }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center font-tech text-neon-teal p-8 cursor-wait"
+            className="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center font-tech text-acid-lime p-8 cursor-wait"
             exit={{ y: "-100%", transition: { duration: 0.8, ease: "anticipate" } }}
         >
             {/* Scanlines */}
@@ -46,14 +46,14 @@ const SystemBootLoader = ({ onComplete }) => {
 
             <div className="w-full max-w-md">
                 <div className="flex justify-between items-end mb-2">
-                    <span className="text-xl font-bold tracking-widest text-white">REUBEN<span className="text-racing-orange">OS</span> v4.0</span>
-                    <span className="text-racing-orange">{Math.min(100, Math.floor(progress))}%</span>
+                    <span className="text-xl font-bold tracking-widest text-white">REUBEN<span className="text-acid-lime">OS</span> v4.0</span>
+                    <span className="text-acid-lime">{Math.min(100, Math.floor(progress))}%</span>
                 </div>
 
                 {/* Progress Bar */}
                 <div className="h-2 bg-steel w-full overflow-hidden mb-8">
                     <motion.div
-                        className="h-full bg-racing-orange"
+                        className="h-full bg-acid-lime"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
@@ -61,15 +61,15 @@ const SystemBootLoader = ({ onComplete }) => {
                 {/* Terminal Logs */}
                 <div className="font-mono text-xs text-dust h-24 overflow-hidden border border-steel/50 p-2 bg-black/50">
                     {logs.map((log, i) => (
-                        <div key={i} className="mb-1 text-neon-teal/80">
-                            <span className="text-racing-orange mr-2">{`>`}</span>
+                        <div key={i} className="mb-1 text-acid-lime/80">
+                            <span className="text-acid-lime mr-2">{`>`}</span>
                             {log}
                         </div>
                     ))}
                     <motion.div
                         animate={{ opacity: [0, 1] }}
                         transition={{ repeat: Infinity, duration: 0.5 }}
-                        className="inline-block w-2 h-4 bg-racing-orange align-middle"
+                        className="inline-block w-2 h-4 bg-acid-lime align-middle"
                     />
                 </div>
             </div>

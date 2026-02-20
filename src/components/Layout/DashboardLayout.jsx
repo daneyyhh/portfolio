@@ -21,7 +21,7 @@ const DashboardLayout = () => {
     const closePanel = () => setActivePanel(null);
 
     return (
-        <div className="bg-void min-h-screen text-ash font-sans selection:bg-ember selection:text-white overflow-x-hidden">
+        <div className="bg-void min-h-screen text-ash font-sans selection:bg-ember selection:text-white">
             <Header onOpenQuests={toggleQuests} onOpenInventory={toggleInventory} />
 
             <main className="relative z-10">

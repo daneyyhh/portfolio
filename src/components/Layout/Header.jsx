@@ -13,9 +13,9 @@ const Header = ({ onOpenQuests, onOpenInventory }) => {
                     className="flex items-center gap-2"
                 >
                     <span className="text-4xl font-speed font-bold text-white tracking-widest">
-                        REUBEN<span className="text-racing-orange">X</span>
+                        REUBEN<span className="text-acid-lime">X</span>
                     </span>
-                    <span className="hidden md:block py-1 px-3 bg-steel/50 text-neon-teal font-tech text-xs tracking-widest rounded-sm border border-neon-teal/20">
+                    <span className="hidden md:block py-1 px-3 bg-steel/50 text-acid-lime font-tech text-xs tracking-widest rounded-sm border border-acid-lime/20">
                         SYSTEM_ONLINE
                     </span>
                 </motion.div>
@@ -24,17 +24,17 @@ const Header = ({ onOpenQuests, onOpenInventory }) => {
                 <nav className="flex items-center gap-6">
                     <ul className="hidden md:flex gap-8">
                         <li>
-                            <a href="#projects" className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                            <a href="#projects" className="text-white hover:text-acid-lime font-speed text-xl tracking-wider transition-colors">
                                 NEXUS
                             </a>
                         </li>
                         <li>
-                            <button onClick={onOpenQuests} className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                            <button onClick={onOpenQuests} className="text-white hover:text-acid-lime font-speed text-xl tracking-wider transition-colors">
                                 MISSIONS
                             </button>
                         </li>
                         <li>
-                            <button onClick={onOpenInventory} className="text-white hover:text-racing-orange font-speed text-xl tracking-wider transition-colors">
+                            <button onClick={onOpenInventory} className="text-white hover:text-acid-lime font-speed text-xl tracking-wider transition-colors">
                                 DATA_LOG
                             </button>
                         </li>
@@ -42,8 +42,8 @@ const Header = ({ onOpenQuests, onOpenInventory }) => {
 
                     {/* CTA Button */}
                     <a href="#contact" className="relative group">
-                        <div className="absolute inset-0 bg-neon-teal skew-x-[-20deg] blur-md opacity-20 group-hover:opacity-50 transition-opacity"></div>
-                        <div className="relative bg-void border border-neon-teal text-neon-teal px-6 py-2 skew-x-[-20deg] hover:bg-neon-teal hover:text-black transition-all">
+                        <div className="absolute inset-0 bg-acid-lime skew-x-[-20deg] blur-md opacity-20 group-hover:opacity-50 transition-opacity"></div>
+                        <div className="relative bg-void border border-acid-lime text-acid-lime px-6 py-2 skew-x-[-20deg] hover:bg-acid-lime hover:text-black transition-all">
                             <span className="block skew-x-[20deg] font-bold font-tech tracking-widest">
                                 INITIATE_CHAT
                             </span>

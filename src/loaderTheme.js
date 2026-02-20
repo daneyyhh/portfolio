@@ -105,5 +105,5 @@ export function initThemeLoader() {
         .to(fill, { width: '90%', duration: 0.8, ease: 'power1.inOut' })
         .to(statusLines[2], { opacity: 1, duration: 0.1 }, "-=0.2")
         .to(fill, { width: '100%', duration: 0.3, ease: 'power1.inOut' })
-        .to(text, { textContent: "SYSTEM READY", color: "#4ade80", duration: 0.1 }); // Green
+        .to(text, { textContent: "SYSTEM READY", color: "#ccff00", duration: 0.1 }); // Acid Lime
 }
