@@ -1,5 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+// Cyberpunk Hero Section - Updated with SVG icons and anime mascots
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 36 },
