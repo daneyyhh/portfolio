@@ -5,8 +5,8 @@ const Footer = () => (
         <div className="footer-logo">
             <span>R</span>EUBEN
         </div>
-        <div>© 2025 Reuben. All rights reserved.</div>
-        <div>Built with React &amp; ❤️</div>
+        <div className="footer-copy">© 2025 Reuben · All rights reserved</div>
+        <div className="footer-copy">Built with React &amp; ♥</div>
     </footer>
 );
 

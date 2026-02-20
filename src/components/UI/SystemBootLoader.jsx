@@ -7,29 +7,29 @@ const SystemBootLoader = ({ onComplete }) => {
     const [done, setDone] = useState(false);
 
     const bootLogs = [
-        'INIT KERNEL v4.0 ...',
+        'INIT SYSTEM v4.0 ...',
         'LOADING GAME ENGINE ...',
         'MOUNTING ASSETS ...',
-        'CALIBRATING UI ...',
+        'CALIBRATING INTERFACE ...',
         'ESTABLISHING UPLINK ...',
         'DECRYPTING PORTFOLIO ...',
-        'ALL SYSTEMS OPTIMAL.',
+        'ALL SYSTEMS NOMINAL.',
     ];
 
     useEffect(() => {
         let logIdx = 0;
         const tick = setInterval(() => {
             setProgress(prev => {
-                const next = prev + Math.random() * 4 + 1;
+                const next = prev + Math.random() * 4 + 1.2;
                 if (next >= 100) {
                     clearInterval(tick);
                     setDone(true);
-                    setTimeout(onComplete, 900);
+                    setTimeout(onComplete, 800);
                     return 100;
                 }
                 return next;
             });
-            if (logIdx < bootLogs.length && Math.random() > 0.55) {
+            if (logIdx < bootLogs.length && Math.random() > 0.52) {
                 const msg = bootLogs[logIdx++];
                 setLogs(p => [...p.slice(-5), msg]);
             }
@@ -39,21 +39,16 @@ const SystemBootLoader = ({ onComplete }) => {
 
     return (
         <AnimatePresence>
-            {!done ? (
+            {!done && (
                 <motion.div
                     key="loader"
                     className="loader-screen"
                     initial={{ opacity: 1 }}
-                    exit={{ opacity: 0, y: '-100%', transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
+                    exit={{ opacity: 0, y: '-100%', transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] } }}
                 >
-                    {/* Scanline overlay */}
                     <div className="scanlines" />
-
-                    {/* Corner decorators */}
-                    <div className="corner tl" />
-                    <div className="corner tr" />
-                    <div className="corner bl" />
-                    <div className="corner br" />
+                    <div className="corner tl" /><div className="corner tr" />
+                    <div className="corner bl" /><div className="corner br" />
 
                     <div className="loader-content">
                         <motion.div
@@ -95,10 +90,10 @@ const SystemBootLoader = ({ onComplete }) => {
                             >▮</motion.span>
                         </div>
 
-                        <div className="loader-footer">© 2025 REUBEN · NEXUS CORE</div>
+                        <div className="loader-footer">© 2025 REUBEN · ALL SYSTEMS ACTIVE</div>
                     </div>
                 </motion.div>
-            ) : null}
+            )}
         </AnimatePresence>
     );
 };

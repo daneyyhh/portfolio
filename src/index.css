@@ -1,7 +1,7 @@
-/* Tailwind base layers */
+/* Load Tailwind (for any utility classes still in use) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import the full design system */
+/* Import the Aftermath Fallout design system */
 @import './style.css';

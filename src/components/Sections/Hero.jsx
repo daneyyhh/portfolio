@@ -2,140 +2,115 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 40 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-80px' },
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay },
+    initial: { opacity: 0, y: 36 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay },
 });
 
 const Hero = () => {
     return (
         <section id="hero" className="hero-section">
-            {/* Animated background grid */}
-            <div className="hero-grid" aria-hidden="true" />
+            {/* Hexagon texture on white area */}
+            <div className="hero-hex-bg" aria-hidden="true" />
 
-            {/* Floating orbs */}
-            <div className="hero-orb hero-orb-1" aria-hidden="true" />
-            <div className="hero-orb hero-orb-2" aria-hidden="true" />
+            {/* Dark diagonal right half */}
+            <div className="hero-dark-overlay" aria-hidden="true" />
 
             <div className="hero-inner">
-                {/* Left column */}
+                {/* ── LEFT: Text ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0)} className="hero-eyebrow">
-                        <span className="eyebrow-dot" />
-                        GAME DEVELOPER · BCA FINAL YEAR
+                    <motion.div {...fadeUp(0)} className="hero-kicker">
+                        <span className="hero-kicker-bar" />
+                        Game Dev · Unity · FiveM
                     </motion.div>
 
-                    <motion.h1 {...fadeUp(0.1)} className="hero-title">
-                        REUBEN<br />
-                        <span className="hero-title-accent">GAMER</span><br />
-                        &amp; CODER.
+                    <motion.h1 {...fadeUp(0.08)} className="hero-title">
+                        REUBEN
                     </motion.h1>
 
-                    <motion.p {...fadeUp(0.2)} className="hero-bio">
-                        A hardcore gamer turned game developer — crafting Unity worlds,
-                        FiveM servers, and Discord bots from Haripad's battlegrounds.
-                        BCA finalist at Yenepoya University, fueled by C# and endless caffeine.
-                    </motion.p>
-
-                    <motion.div {...fadeUp(0.3)} className="hero-ctas">
-                        <a href="#projects" className="btn-primary">
-                            View Projects
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        </a>
-                        <a href="#contact" className="btn-ghost">Let's Talk</a>
+                    <motion.div {...fadeUp(0.14)} className="hero-title-sub">
+                        FUTURE&nbsp;FRONTIER
                     </motion.div>
 
-                    {/* Mini stats */}
-                    <motion.div {...fadeUp(0.4)} className="hero-stats">
+                    <motion.p {...fadeUp(0.2)} className="hero-desc">
+                        It's time to level up. A hardcore gamer and relentless developer,
+                        I craft Unity worlds, dominate FiveM servers, and build tools that rule.
+                        Write your own story — one commit at a time.
+                    </motion.p>
+
+                    <motion.div {...fadeUp(0.26)} className="hero-ctas">
+                        <a href="#projects" className="btn-yellow">
+                            View Projects
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </a>
+                        <a href="#contact" className="btn-outline-dark">Start Now</a>
+                    </motion.div>
+
+                    <motion.div {...fadeUp(0.34)} className="hero-stats-row">
                         {[
                             { n: '3+', l: 'Years Dev' },
                             { n: '10+', l: 'Projects' },
                             { n: '100%', l: 'FiveM' },
                         ].map(s => (
-                            <div key={s.l} className="hero-stat">
-                                <span className="stat-num">{s.n}</span>
-                                <span className="stat-lbl">{s.l}</span>
+                            <div key={s.l} className="hero-stat-item">
+                                <span className="stat-big">{s.n}</span>
+                                <span className="stat-tiny">{s.l}</span>
                             </div>
                         ))}
                     </motion.div>
                 </div>
 
-                {/* Right column — visual card */}
-                <motion.div
-                    className="hero-right"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-                >
-                    <div className="hero-card">
-                        {/* Card top bar */}
-                        <div className="card-topbar">
-                            <div className="topbar-dots">
-                                <span /><span /><span />
-                            </div>
-                            <span className="topbar-label">REUBEN.PORTFOLIO</span>
-                            <span className="topbar-status">ONLINE</span>
+                {/* ── RIGHT: Character card ── */}
+                <div className="hero-right">
+                    <motion.div
+                        className="hero-char-wrap"
+                        initial={{ opacity: 0, scale: 0.92, x: 30 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
+                    >
+                        {/* Ink splash glow */}
+                        <div className="hero-ink-splash" aria-hidden="true" />
+
+                        {/* Character image — gas mask / post-apocalyptic */}
+                        <img
+                            src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
+                            alt="Reuben — Game Developer"
+                            className="hero-char-img"
+                            loading="eager"
+                        />
+
+                        {/* Grunge title overlay */}
+                        <div className="hero-grunge-text" aria-hidden="true">
+                            REUBEN
                         </div>
 
-                        {/* Card body */}
-                        <div className="card-body">
-                            <div className="card-avatar">
-                                <div className="avatar-ring" />
-                                <div className="avatar-inner">
-                                    <img
-                                        src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Reuben&backgroundColor=1a1a2e"
-                                        alt="Reuben Avatar"
-                                        className="avatar-img"
-                                    />
-                                </div>
-                                <div className="avatar-badge">LVL 27</div>
+                        {/* Info card (top-right) */}
+                        <motion.div
+                            className="hero-info-card"
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.6 }}
+                        >
+                            <div className="info-card-label">Status</div>
+                            <div className="info-card-val">LVL 27</div>
+                            <div className="info-card-badge">
+                                <span className="badge-dot" />
+                                ONLINE
                             </div>
-
-                            <div className="card-info">
-                                <div className="card-name">REUBX_DEV</div>
-                                <div className="card-class">Cyber-Architect</div>
-                            </div>
-
-                            {/* Skill bars */}
-                            <div className="card-skills">
-                                {[
-                                    { n: 'FiveM', v: 100, c: '#ff6b00' },
-                                    { n: 'Unity', v: 90, c: '#ccff00' },
-                                    { n: 'React', v: 88, c: '#00f0ff' },
-                                ].map(s => (
-                                    <div key={s.n} className="skill-row">
-                                        <span className="skill-name">{s.n}</span>
-                                        <div className="skill-track">
-                                            <motion.div
-                                                className="skill-fill"
-                                                style={{ background: s.c }}
-                                                initial={{ width: 0 }}
-                                                whileInView={{ width: `${s.v}%` }}
-                                                viewport={{ once: true }}
-                                                transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
-                                            />
-                                        </div>
-                                        <span className="skill-val">{s.v}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Card glow effect */}
-                        <div className="card-glow" />
-                    </div>
-                </motion.div>
+                        </motion.div>
+                    </motion.div>
+                </div>
             </div>
 
-            {/* Scroll indicator */}
+            {/* Scroll hint */}
             <motion.div
                 className="scroll-hint"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2 }}
             >
                 <div className="scroll-hint-line" />
-                <span>Scroll</span>
+                Scroll Down
             </motion.div>
         </section>
     );

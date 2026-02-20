@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
     { href: '#hero', label: 'Home' },
-    { href: '#about', label: 'About Me' },
-    { href: '#projects', label: 'Projects' },
+    { href: '#about', label: 'About' },
+    { href: '#projects', label: 'Gallery' },
     { href: '#contact', label: 'Talk' },
 ];
 
@@ -21,21 +21,14 @@ const Header = () => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) setActive('#' + e.target.id);
-                });
-            },
+            entries => entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); }),
             { threshold: 0.4 }
         );
         document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
         return () => observer.disconnect();
     }, []);
 
-    const handleNav = (href) => {
-        setMenuOpen(false);
-        setActive(href);
-    };
+    const handleNav = (href) => { setMenuOpen(false); setActive(href); };
 
     return (
         <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
@@ -47,8 +40,10 @@ const Header = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
+                    onClick={() => handleNav('#hero')}
                 >
                     <span className="logo-accent">R</span>EUBEN
+                    <span className="logo-sub">Portfolio</span>
                 </motion.a>
 
                 {/* Desktop Nav */}
@@ -61,15 +56,9 @@ const Header = () => {
                             onClick={() => handleNav(item.href)}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 * i + 0.2 }}
+                            transition={{ delay: i * 0.08 + 0.2 }}
                         >
                             {item.label}
-                            {active === item.href && (
-                                <motion.span
-                                    layoutId="nav-indicator"
-                                    className="nav-dot"
-                                />
-                            )}
                         </motion.a>
                     ))}
                 </nav>
@@ -80,11 +69,13 @@ const Header = () => {
                     className="header-cta"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    whileHover={{ scale: 1.05 }}
+                    transition={{ delay: 0.5 }}
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
+                    onClick={() => handleNav('#contact')}
                 >
-                    Contact
+                    <span style={{ fontSize: '0.7rem' }}>⊙</span>
+                    Play Now
                 </motion.a>
 
                 {/* Hamburger */}
@@ -108,7 +99,7 @@ const Header = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        transition={{ duration: 0.3 }}
                     >
                         {navItems.map((item, i) => (
                             <motion.a
@@ -116,19 +107,15 @@ const Header = () => {
                                 href={item.href}
                                 className={`mobile-nav-link ${active === item.href ? 'nav-active' : ''}`}
                                 onClick={() => handleNav(item.href)}
-                                initial={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0, x: -16 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.05 * i }}
+                                transition={{ delay: 0.04 * i }}
                             >
                                 {item.label}
                             </motion.a>
                         ))}
-                        <a
-                            href="#contact"
-                            className="mobile-cta"
-                            onClick={() => setMenuOpen(false)}
-                        >
-                            Talk to Me
+                        <a href="#contact" className="mobile-cta" onClick={() => setMenuOpen(false)}>
+                            Play Now ⊙
                         </a>
                     </motion.div>
                 )}
