@@ -23,7 +23,7 @@ const Header = () => {
                     className="flex items-center gap-2"
                 >
                     <span className="text-2xl md:text-3xl font-speed font-bold text-acid-lime tracking-widest flex items-center gap-2">
-                        <span className="text-white">PORTFOLIO</span>
+                        <span className="text-white">REUBEN</span>
                     </span>
                 </motion.div>
 

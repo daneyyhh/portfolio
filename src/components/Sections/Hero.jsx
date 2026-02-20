@@ -18,9 +18,7 @@ const Hero = () => {
                         className="flex flex-col gap-2"
                     >
                         <h1 className="text-6xl lg:text-8xl font-speed font-bold text-white leading-[0.9] tracking-wide uppercase">
-                            DISCOVER <br />
-                            COLLECT <span className="text-acid-lime">GAME</span> <br />
-                            FROM US
+                            REUBEN
                         </h1>
                     </motion.div>
 
@@ -30,8 +28,15 @@ const Hero = () => {
                         transition={{ delay: 0.2 }}
                         className="font-tech text-gray-400 text-sm lg:text-base max-w-md leading-relaxed"
                     >
-                        Crafting immersive digital experiences.
-                        Minecraft received critical acclaim, winning several awards and later being cited as one of the greatest video games.
+                        A hardcore gamer and relentless game developer, grinding final-year BCA at Yenepoya University to craft addictive Unity worlds fueled by C# fury.
+
+From Haripad's battlegrounds, I dominate with AI chess crushers, FiveM mayhem servers, and Discord bots that rule esports empires 24/7.
+
+Every raid in BGMI, Fortnite drop, or CoD clutch sharpens my code—I'm the raid boss scripting immersive chaos and glitchless 3D spectacles.
+
+Gaming isn't a hobby; it's my blood—obsessed with turning noob dreams into pro-level hits via endless dev marathons.
+
+Level up with me: hardcore collabs only for the next viral gaming apocalypse.
                     </motion.p>
 
                     <motion.div

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Send, Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Send, Github, Mail } from 'lucide-react';
 
 const Contact = () => {
     return (
@@ -13,7 +13,7 @@ const Contact = () => {
                     {/* Left: Transmission Form */}
                     <div>
                         <h2 className="font-speed text-5xl text-white italic mb-8">
-                            ESTABLISH <span className="text-acid-lime">UPLINK</span>
+                            TALK <span className="text-acid-lime">TO ME</span>
                         </h2>
 
                         <form className="space-y-6">
@@ -60,11 +60,12 @@ const Contact = () => {
                             <div className="border border-acid-lime/20 bg-void/50 p-6 clip-card">
                                 <h3 className="text-acid-lime font-speed text-2xl mb-4">CONNECT_NODES</h3>
                                 <div className="flex gap-4">
-                                    {[Github, Linkedin, Twitter, Mail].map((Icon, i) => (
-                                        <a key={i} href="#" className="w-10 h-10 bg-steel flex items-center justify-center text-white hover:bg-acid-lime hover:text-black transition-colors clip-bento">
-                                            <Icon className="w-5 h-5" />
-                                        </a>
-                                    ))}
+                                    <a href="https://github.com/daneyyhh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-steel flex items-center justify-center text-white hover:bg-acid-lime hover:text-black transition-colors clip-bento">
+                                        <Github className="w-5 h-5" />
+                                    </a>
+                                    <a href="mailto:ftreuben1520@gmail.com" className="w-10 h-10 bg-steel flex items-center justify-center text-white hover:bg-acid-lime hover:text-black transition-colors clip-bento">
+                                        <Mail className="w-5 h-5" />
+                                    </a>
                                 </div>
                             </div>
                         </div>

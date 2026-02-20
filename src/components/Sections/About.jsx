@@ -13,15 +13,14 @@ const About = () => {
                     {/* Text Panel */}
                     <div className="flex-1">
                         <h2 className="font-speed text-6xl text-white italic mb-6">
-                            CODE <span className="text-acid-lime">RUNNER</span>
+                            ABOUT <span className="text-acid-lime">ME</span>
                         </h2>
                         <div className="bg-carbon border-l-4 border-acid-lime p-8 clip-angle-button">
                             <p className="font-tech text-ash text-lg mb-4">
-                                Navigating the bleeding edge of web development.
-                                I build responsive, high-performance applications that feel like modern gaming experiences.
+                                A hardcore gamer and relentless game developer, grinding final-year BCA at Yenepoya University to craft addictive Unity worlds fueled by C# fury.
                             </p>
                             <p className="font-tech text-dust">
-                                // CURRENT OBJECTIVE: DOMINATE THE STACK
+                                // CURRENT OBJECTIVE: LEVEL UP GAMING
                             </p>
                         </div>
                     </div>
@@ -30,10 +29,10 @@ const About = () => {
                     <div className="flex-1 w-full">
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { label: "SPEED", val: "98" },
-                                { label: "DESIGN", val: "94" },
-                                { label: "LOGIC", val: "90" },
-                                { label: "ARMOR", val: "100" }
+                                { label: "GAMING", val: "99" },
+                                { label: "CODING", val: "95" },
+                                { label: "UNITY", val: "90" },
+                                { label: "FIVEM", val: "100" }
                             ].map((stat) => (
                                 <motion.div
                                     key={stat.label}
