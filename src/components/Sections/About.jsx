@@ -30,11 +30,11 @@ const About = () => {
                     >
                         <div className="about-img-wrap">
                             <img
-                                src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80"
-                                alt="Gaming setup"
+                                src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=600&q=80"
+                                alt="Neon Coder - Cyberpunk AI Dev Mascot"
                             />
                             <div className="about-img-overlay" />
-                            <div className="about-img-badge">REUBEN · DEV</div>
+                            <div className="about-img-badge">NEON CODER</div>
                         </div>
                         <div className="about-hex-deco" aria-hidden="true" />
                     </motion.div>
@@ -78,8 +78,8 @@ const About = () => {
 
                         <motion.div {...fadeUp(0.2)} className="about-bio-block">
                             <p className="about-bio">
-                                A hardcore gamer and relentless game developer — grinding final-year BCA
-                                at <strong>Yenepoya University</strong> to craft addictive Unity worlds fueled by C# fury.
+                                Meet <strong>Neon Coder</strong>, my cyberpunk AI Dev mascot — a sleek futuristic helmet with glowing orange visor,
+                                tactical jacket, and relentless drive to build immersive game worlds.
                             </p>
                             <p className="about-bio">
                                 From Haripad's battlegrounds, I dominate with AI chess engines,
