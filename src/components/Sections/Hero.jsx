@@ -14,26 +14,25 @@ const Hero = () => {
                 {/* ── TOP NAV ── */}
                 <motion.div {...fadeUp(0)} className="hero-top-nav">
                     <div className="hero-nav-links">
-                        <a href="#about" className="nav-link-cyber">ABOUT</a>
+                        <a href="#portfolio" className="nav-link-cyber">PORT</a>
                         <span className="nav-separator">|</span>
-                        <a href="#blog" className="nav-link-cyber">BLOG</a>
+                        <a href="#build" className="nav-link-cyber">BUILD</a>
                         <span className="nav-separator">|</span>
                         <a href="#play" className="nav-link-cyber">PLAY</a>
+                    </div>
+                </motion.div>
+
+                {/* ── TOP-LEFT LOGO ── */}
+                <motion.div {...fadeUp(0.1)} className="hero-logo">
+                    <div className="logo-circle">
+                        <span className="logo-text">REUBEN</span>
                     </div>
                 </motion.div>
 
                 {/* ── LEFT: Text ── */}
                 <div className="hero-left">
                     <motion.div {...fadeUp(0.08)} className="hero-title-stack">
-                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
-                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
-                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
-                    </motion.div>
-
-                    <motion.div {...fadeUp(0.14)} className="hero-subtitle">
-                        <span className="subtitle-text">NEON CODER</span>
-                        <span className="subtitle-level">LVL 21</span>
-                        <div className="level-badge">↑</div>
+                        <h1 className="hero-title-cyber glitch hot-pink">REUBEN</h1>
                     </motion.div>
 
                     <motion.p {...fadeUp(0.2)} className="hero-tagline">
@@ -43,7 +42,7 @@ const Hero = () => {
                     <motion.div {...fadeUp(0.26)} className="hero-stats-cyber">
                         {[
                             { n: '3+', l: 'Projects' },
-                            { n: '12', l: 'Bots' },
+                            { n: '18', l: 'Bots' },
                             { n: '100%', l: 'Uptime' },
                         ].map(s => (
                             <div key={s.l} className="stat-badge-cyber">
@@ -65,6 +64,11 @@ const Hero = () => {
 
                 {/* ── RIGHT: Character ── */}
                 <div className="hero-right">
+                    <motion.div {...fadeUp(0.12)} className="hero-right-stack">
+                        <span className="stacked-neon-coder">NEON</span>
+                        <span className="stacked-neon-coder">CODER</span>
+                    </motion.div>
+
                     <motion.div
                         className="hero-char-wrap"
                         initial={{ opacity: 0, scale: 0.92, x: 30 }}
@@ -111,6 +115,24 @@ const Hero = () => {
                 </div>
                 */}
             </div>
+
+            {/* ── BOTTOM: Video Frame ── */}
+            <motion.div {...fadeUp(0.4)} className="hero-video-frame">
+                <video
+                    className="hero-video"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+                >
+                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+                <div className="video-overlay">
+                    <span className="video-label">PROFESSIONAL SHOWCASE</span>
+                </div>
+            </motion.div>
 
             {/* Scanlines effect */}
             <div className="scanlines" aria-hidden="true"></div>
