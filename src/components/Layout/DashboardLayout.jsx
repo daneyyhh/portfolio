@@ -11,6 +11,8 @@ import SystemTerminal from '../HUD/SystemTerminal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
+import StickyWrapper from './StickyWrapper';
+
 const DashboardLayout = () => {
     const [activePanel, setActivePanel] = React.useState(null); // 'quests' | 'inventory' | null
 
@@ -22,11 +24,13 @@ const DashboardLayout = () => {
         <div className="bg-void min-h-screen text-ash font-sans selection:bg-ember selection:text-white overflow-x-hidden">
             <Header onOpenQuests={toggleQuests} onOpenInventory={toggleInventory} />
 
-            <main className="flex flex-col relative z-10">
-                <Hero />
-                <About />
-                <Projects />
-                <Contact />
+            <main className="relative z-10">
+                <StickyWrapper>
+                    <Hero />
+                    <About />
+                    <Projects />
+                    <Contact />
+                </StickyWrapper>
             </main>
 
             <Footer />
