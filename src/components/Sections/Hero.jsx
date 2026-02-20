@@ -23,7 +23,7 @@ const Hero = () => {
                     </motion.h1>
 
                     <motion.div {...fadeUp(0.14)} className="hero-title-sub">
-                        FUTURE&nbsp;FRONTIER
+                            NEON CODER
                     </motion.div>
 
                     <motion.p {...fadeUp(0.2)} className="hero-desc">
@@ -75,7 +75,7 @@ const Hero = () => {
 
                         {/* Grunge name overlay */}
                         <div className="hero-grunge-text" aria-hidden="true">
-                            REUBEN
+                            NEON CODER
                         </div>
 
                         {/* Info card (top-right) */}
