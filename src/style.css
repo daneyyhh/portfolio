@@ -19,19 +19,28 @@
    VARIABLES
    ============================================================ */
 :root {
+    /* --- Grunge bg layers --- */
     --white: #f4f2ef;
     --off-white: #e8e4df;
     --black: #0a0a0a;
-    --dark: #111111;
-    --dark-2: #1a1a1a;
+    --dark: #0f0f0f;
+    --dark-2: #141414;
     --yellow: #FFE500;
     --yellow-2: #f5c518;
     --yellow-dark: #c4a800;
-    --text-dark: #111;
-    --text-muted-light: #555;
-    --text-muted-dark: #999;
-    --border-light: rgba(0, 0, 0, 0.1);
-    --border-dark: rgba(255, 255, 255, 0.1);
+
+    /* on the dark grunge bg, ALL text is white-based */
+    --text-dark: #ffffff;
+    --text-muted-light: rgba(255, 255, 255, 0.6);
+    --text-muted-dark: rgba(255, 255, 255, 0.4);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-dark: rgba(255, 255, 255, 0.08);
+
+    /* Section overlay tints (go over the grunge bg) */
+    --section-overlay-hero: rgba(0, 0, 0, 0.45);
+    --section-overlay-about: rgba(0, 0, 0, 0.72);
+    --section-overlay-projects: rgba(0, 0, 0, 0.78);
+    --section-overlay-contact: rgba(0, 0, 0, 0.72);
 
     --font-display: 'BrushGrunge', 'Barlow Condensed', sans-serif;
     --font-sub: 'Barlow Condensed', sans-serif;
@@ -65,10 +74,92 @@ html {
 
 body {
     font-family: var(--font-body);
-    background: var(--white);
+    background: var(--black);
     color: var(--text-dark);
     overflow-x: hidden;
     line-height: 1.6;
+    position: relative;
+}
+
+/* ── Global grunge background ── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background-color: #0a0a0a;
+
+    /* Build the yellow/black diagonal brushstroke texture in CSS layers */
+    background-image:
+        /* === Grain / noise overlay === */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E"),
+
+        /* === Splatter dots — paint drips === */
+        radial-gradient(ellipse 6px 18px at 28% 18%, var(--yellow) 100%, transparent 100%),
+        radial-gradient(ellipse 10px 10px at 12% 35%, var(--yellow) 100%, transparent 100%),
+        radial-gradient(ellipse 14px 8px at 18% 42%, var(--yellow) 100%, transparent 100%),
+        radial-gradient(ellipse 8px 14px at 72% 62%, rgba(255, 229, 0, 0.5) 100%, transparent 100%),
+        radial-gradient(ellipse 5px 5px at 82% 70%, rgba(255, 229, 0, 0.6) 100%, transparent 100%),
+        radial-gradient(ellipse 12px 6px at 88% 48%, rgba(255, 229, 0, 0.4) 100%, transparent 100%),
+
+        /* === Thin diagonal yellow streaks (upper-right) === */
+        linear-gradient(130deg,
+            transparent 54%,
+            rgba(255, 229, 0, 0.85) 54%, rgba(255, 229, 0, 0.85) 55.5%,
+            transparent 55.5%,
+            transparent 60%,
+            rgba(255, 229, 0, 0.55) 60%, rgba(255, 229, 0, 0.55) 61%,
+            transparent 61%,
+            transparent 66%,
+            rgba(255, 229, 0, 0.35) 66%, rgba(255, 229, 0, 0.35) 66.8%,
+            transparent 66.8%),
+
+        /* === Main wide yellow diagonal band (bottom-left) === */
+        linear-gradient(135deg,
+            var(--yellow) 0%,
+            var(--yellow) 22%,
+            rgba(255, 229, 0, 0.6) 22%,
+            rgba(255, 229, 0, 0.6) 24%,
+            rgba(255, 180, 0, 0.25) 24%,
+            rgba(255, 180, 0, 0.25) 26%,
+            transparent 26%),
+
+        /* === Dark grey mid-section texture === */
+        radial-gradient(ellipse 70% 50% at 62% 35%, rgba(40, 40, 40, 0.95) 30%, transparent 80%),
+        radial-gradient(ellipse 45% 40% at 30% 60%, rgba(30, 30, 30, 0.6) 30%, transparent 70%),
+
+        /* === Base black === */
+        linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+
+    background-size:
+        300px 300px,
+        /* grain */
+        1px 1px, 1px 1px, 1px 1px, 1px 1px, 1px 1px, 1px 1px,
+        /* splatter (full cover = stretch to correct) */
+        100% 100%,
+        /* streaks */
+        100% 100%,
+        /* main band */
+        100% 100%, 100% 100%,
+        /* dark patches */
+        100% 100%;
+    /* base */
+}
+
+/* Subtle diagonal scratch lines overlay */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(132deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255, 255, 255, 0.018) 3px,
+            rgba(255, 255, 255, 0.018) 4px);
 }
 
 a {
@@ -296,11 +387,11 @@ button {
 }
 
 .site-header.scrolled {
-    background: rgba(244, 242, 239, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-color: var(--border-light);
-    box-shadow: 0 1px 24px rgba(0, 0, 0, 0.08);
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(255, 229, 0, 0.15);
+    box-shadow: 0 1px 24px rgba(0, 0, 0, 0.4);
 }
 
 .header-inner {
@@ -316,12 +407,12 @@ button {
     font-family: var(--font-display);
     font-size: 1.8rem;
     letter-spacing: 0.06em;
-    color: var(--black);
+    color: #fff;
     display: flex;
     align-items: center;
     gap: 6px;
     flex-shrink: 0;
-    text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.12);
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 229, 0, 0.1);
 }
 
 .header-logo .logo-accent {
@@ -368,7 +459,7 @@ button {
 
 .nav-link:hover,
 .nav-link.nav-active {
-    color: var(--black);
+    color: var(--yellow);
 }
 
 .nav-link.nav-active::after {
@@ -644,67 +735,62 @@ button {
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--black);
+    color: rgba(255, 255, 255, 0.85);
     background: transparent;
     padding: 14px 30px;
     border-radius: var(--radius-pill);
-    border: 2px solid rgba(0, 0, 0, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.22);
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s, transform 0.2s;
 }
 
 .btn-outline-dark:hover {
-    border-color: var(--black);
-    background: var(--black);
+    border-color: var(--yellow);
+    background: rgba(255, 229, 0, 0.1);
     color: var(--yellow);
     transform: translateY(-2px);
 }
 
 /* ============================================================
-   HERO — SPLIT LAYOUT (White left | Dark right diagonal)
+   HERO — FULL SCREEN OVER GRUNGE BG
    ============================================================ */
 .hero-section {
     min-height: 100svh;
     position: relative;
     overflow: hidden;
-    background: var(--white);
+    background: transparent;
+    /* grunge shows through */
     display: flex;
     flex-direction: column;
 }
 
-/* === Hexagon background texture === */
-.hero-hex-bg {
+/* Dark overlay so hero text pops */
+.hero-section::before {
+    content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33L28 66zm0-2l26-15V19L28 3 2 19v30l26 15z' fill='rgba(0,0,0,0.045)'/%3E%3C/svg%3E");
+    background: var(--section-overlay-hero);
+    z-index: 1;
     pointer-events: none;
 }
 
-/* Dark diagonal overlay for right side */
+/* === Hexagon background texture === */
+.hero-hex-bg {
+    display: none;
+    /* global grunge bg replaces this */
+}
+
+
 .hero-dark-overlay {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 52%;
-    height: 100%;
-    background: var(--black);
-    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
-    pointer-events: none;
+    display: none;
+    /* replaced by section ::before overlay */
 }
 
-@media (max-width: 900px) {
-    .hero-dark-overlay {
-        width: 100%;
-        height: 45%;
-        clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
-        top: auto;
-        bottom: 0;
-    }
-}
 
 .hero-inner {
     position: relative;
-    z-index: 10;
+    z-index: 2;
+    /* above section ::before overlay (z:1) */
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
@@ -981,23 +1067,28 @@ button {
 }
 
 /* ============================================================
-   ABOUT SECTION — white bg, large image + text
+   ABOUT SECTION
    ============================================================ */
 .about-section {
     padding: var(--section-pad) 0;
-    background: var(--off-white);
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
 
+/* Dark overlay over grunge bg */
 .about-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+    inset: 0;
+    background: var(--section-overlay-about);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.about-section>* {
+    position: relative;
+    z-index: 1;
 }
 
 .about-grid {
@@ -1142,8 +1233,8 @@ button {
 }
 
 .stat-card-af {
-    background: var(--white);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius);
     padding: 24px 20px;
     display: flex;
@@ -1153,6 +1244,7 @@ button {
     position: relative;
     overflow: hidden;
     transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    backdrop-filter: blur(8px);
 }
 
 .stat-card-af::before {
@@ -1169,9 +1261,9 @@ button {
 }
 
 .stat-card-af:hover {
-    border-color: rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 229, 0, 0.3);
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(255, 229, 0, 0.1);
 }
 
 .stat-card-af:hover::before {
@@ -1181,8 +1273,9 @@ button {
 .stat-af-val {
     font-family: var(--font-display);
     font-size: 2.4rem;
-    color: var(--black);
+    color: #fff;
     line-height: 1;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .stat-af-lbl {
@@ -1231,22 +1324,23 @@ button {
 }
 
 /* ============================================================
-   PROJECTS SECTION — Dark background
+   PROJECTS SECTION
    ============================================================ */
 .projects-section {
     padding: var(--section-pad) 0;
-    background: var(--black);
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
 
-/* Hex texture on dark */
+/* Dark overlay over grunge bg */
 .projects-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33L28 66zm0-2l26-15V19L28 3 2 19v30l26 15z' fill='rgba(255,255,255,0.025)'/%3E%3C/svg%3E");
+    background: var(--section-overlay-projects);
     pointer-events: none;
+    z-index: 0;
 }
 
 .projects-header {
@@ -1424,22 +1518,27 @@ button {
 }
 
 /* ============================================================
-   CONTACT SECTION — white bg
+   CONTACT SECTION
    ============================================================ */
 .contact-section {
     padding: var(--section-pad) 0;
-    background: var(--white);
+    background: transparent;
     position: relative;
 }
 
+/* Dark overlay over grunge bg */
 .contact-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+    inset: 0;
+    background: var(--section-overlay-contact);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.contact-section>* {
+    position: relative;
+    z-index: 1;
 }
 
 .contact-grid {
@@ -1519,10 +1618,11 @@ button {
 
 /* Contact Form */
 .contact-right {
-    background: var(--off-white);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius);
     padding: clamp(24px, 4vw, 40px);
+    backdrop-filter: blur(12px);
 }
 
 .contact-form {
@@ -1560,21 +1660,22 @@ button {
 
 .form-group input,
 .form-group textarea {
-    background: var(--white);
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     font-family: var(--font-body);
     font-size: 0.88rem;
-    color: var(--black);
+    color: #fff;
     outline: none;
     resize: vertical;
     transition: border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(6px);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .form-group input:focus,
@@ -1639,7 +1740,7 @@ button {
 .form-success h3 {
     font-family: var(--font-display);
     font-size: 2rem;
-    color: var(--black);
+    color: #fff;
 }
 
 .form-success p {
@@ -1651,7 +1752,9 @@ button {
    FOOTER
    ============================================================ */
 .site-footer {
-    background: var(--black);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 229, 0, 0.12);
     padding: 32px clamp(20px, 5vw, 64px);
     display: flex;
     align-items: center;
