@@ -24,9 +24,7 @@ const Hero = () => {
 
                 {/* ── LEFT: Text ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0.08)} className="hero-title-stack">
-                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
-                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
+                    <motion.div {...fadeUp(0.08)} className="hero-title-cyber">
                         <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
                     </motion.div>
 
