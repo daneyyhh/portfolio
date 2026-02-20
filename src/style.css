@@ -4,7 +4,8 @@
            ink splash character, grunge typography
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.cdnfonts.com/css/brushgrunge');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@300;400;500;600&display=swap');
 
 @font-face {
     font-family: 'Neofolia';
@@ -32,7 +33,7 @@
     --border-light: rgba(0, 0, 0, 0.1);
     --border-dark: rgba(255, 255, 255, 0.1);
 
-    --font-display: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+    --font-display: 'BrushGrunge', 'Barlow Condensed', sans-serif;
     --font-sub: 'Barlow Condensed', sans-serif;
     --font-body: 'Inter', sans-serif;
 
@@ -160,12 +161,14 @@ button {
 .loader-logo {
     font-family: var(--font-display);
     font-size: clamp(3rem, 10vw, 5rem);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     color: #fff;
-    line-height: 1;
+    line-height: 1.1;
     display: flex;
     align-items: baseline;
     gap: 0;
+    /* BrushGrunge renders best with slight text-shadow for ink depth */
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6), 4px 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .logo-r {
@@ -311,13 +314,14 @@ button {
 
 .header-logo {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    letter-spacing: 0.12em;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
     color: var(--black);
     display: flex;
     align-items: center;
     gap: 6px;
     flex-shrink: 0;
+    text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
 .header-logo .logo-accent {
@@ -550,21 +554,24 @@ button {
 .section-title {
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 8vw, 7rem);
-    letter-spacing: 0.04em;
-    line-height: 0.92;
+    letter-spacing: 0.02em;
+    line-height: 1.0;
     text-transform: uppercase;
 }
 
 .section-title.on-light {
     color: var(--black);
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.12), 4px 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .section-title.on-dark {
     color: #fff;
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.5), 4px 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .title-yellow {
     color: var(--yellow);
+    text-shadow: 2px 3px 0 rgba(180, 140, 0, 0.3), 0 0 40px rgba(255, 229, 0, 0.15);
 }
 
 .title-outline-dark {
@@ -759,16 +766,18 @@ button {
     font-family: var(--font-display);
     font-size: clamp(5rem, 11vw, 9.5rem);
     letter-spacing: 0.02em;
-    line-height: 0.88;
+    line-height: 0.92;
     text-transform: uppercase;
     color: var(--black);
     margin-bottom: 4px;
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1), 6px 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .hero-title-sub {
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    letter-spacing: 0.06em;
+    font-family: var(--font-sub);
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.18em;
     line-height: 1;
     text-transform: uppercase;
     color: var(--text-muted-light);
@@ -866,14 +875,17 @@ button {
     position: absolute;
     bottom: -10px;
     left: -20px;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: clamp(5rem, 12vw, 9rem);
     color: var(--yellow);
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
     line-height: 1;
     z-index: 3;
-    opacity: 0.92;
-    text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    opacity: 0.95;
+    text-shadow:
+        3px 3px 0 rgba(180, 120, 0, 0.6),
+        6px 6px 0 rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(255, 229, 0, 0.2);
     user-select: none;
     transform: rotate(-2deg);
 }
