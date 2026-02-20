@@ -10,12 +10,6 @@ const fadeUp = (delay = 0) => ({
 const Hero = () => {
     return (
         <section id="hero" className="hero-section">
-            {/* Hexagon texture on white area */}
-            <div className="hero-hex-bg" aria-hidden="true" />
-
-            {/* Dark diagonal right half */}
-            <div className="hero-dark-overlay" aria-hidden="true" />
-
             <div className="hero-inner">
                 {/* ── LEFT: Text ── */}
                 <div className="hero-left">
@@ -68,10 +62,10 @@ const Hero = () => {
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
                     >
-                        {/* Ink splash glow */}
+                        {/* Yellow glow splash behind image */}
                         <div className="hero-ink-splash" aria-hidden="true" />
 
-                        {/* Character image — gas mask / post-apocalyptic */}
+                        {/* Character image */}
                         <img
                             src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
                             alt="Reuben — Game Developer"
@@ -79,7 +73,7 @@ const Hero = () => {
                             loading="eager"
                         />
 
-                        {/* Grunge title overlay */}
+                        {/* Grunge name overlay */}
                         <div className="hero-grunge-text" aria-hidden="true">
                             REUBEN
                         </div>

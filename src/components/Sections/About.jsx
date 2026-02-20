@@ -12,11 +12,11 @@ const fadeUp = (delay = 0) => ({
 const About = () => {
     return (
         <section id="about" className="about-section">
-            <div className="section-inner">
-                <motion.div {...fadeUp(0)} className="section-eyebrow dark">
-                    <span className="eyebrow-line dark" />
+            <div className="section-inner" style={{ position: 'relative', zIndex: 2 }}>
+                <motion.div {...fadeUp(0)} className="section-eyebrow light">
+                    <span className="eyebrow-line light" />
                     Chapter 02 — About
-                    <span className="eyebrow-line dark" />
+                    <span className="eyebrow-line light" />
                 </motion.div>
 
                 <div className="about-grid">
@@ -41,7 +41,7 @@ const About = () => {
 
                     {/* Right: Content */}
                     <div className="about-content">
-                        <motion.h2 {...fadeUp(0)} className="section-title on-light" style={{ marginBottom: '24px' }}>
+                        <motion.h2 {...fadeUp(0)} className="section-title on-dark" style={{ marginBottom: '24px' }}>
                             ABOUT<br />
                             <span className="title-yellow">ME</span>
                         </motion.h2>

@@ -21,17 +21,17 @@ const Contact = () => {
 
     return (
         <section id="contact" className="contact-section">
-            <div className="section-inner">
-                <motion.div {...fadeUp(0)} className="section-eyebrow dark">
-                    <span className="eyebrow-line dark" />
+            <div className="section-inner" style={{ position: 'relative', zIndex: 2 }}>
+                <motion.div {...fadeUp(0)} className="section-eyebrow light">
+                    <span className="eyebrow-line light" />
                     Chapter 04 — Talk
-                    <span className="eyebrow-line dark" />
+                    <span className="eyebrow-line light" />
                 </motion.div>
 
                 <div className="contact-grid">
                     {/* Left */}
                     <div>
-                        <motion.h2 {...fadeUp(0)} className="section-title on-light" style={{ marginBottom: 0 }}>
+                        <motion.h2 {...fadeUp(0)} className="section-title on-dark" style={{ marginBottom: 0 }}>
                             START<br />
                             <span className="title-yellow">NOW</span>
                         </motion.h2>

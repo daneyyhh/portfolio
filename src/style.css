@@ -854,9 +854,11 @@ button {
     letter-spacing: 0.02em;
     line-height: 0.92;
     text-transform: uppercase;
-    color: var(--black);
+    color: #fff;
     margin-bottom: 4px;
-    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1), 6px 8px 20px rgba(0, 0, 0, 0.08);
+    text-shadow:
+        3px 3px 0 rgba(0, 0, 0, 0.4),
+        6px 8px 30px rgba(255, 229, 0, 0.08);
 }
 
 .hero-title-sub {
@@ -904,8 +906,9 @@ button {
     font-family: var(--font-display);
     font-size: 2rem;
     letter-spacing: 0.04em;
-    color: var(--black);
+    color: #fff;
     line-height: 1;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .stat-tiny {
@@ -936,12 +939,12 @@ button {
 /* Ink splash / splatter effect using box-shadow + pseudo */
 .hero-ink-splash {
     position: absolute;
-    top: 10%;
-    left: 10%;
-    width: 80%;
-    height: 80%;
-    background: radial-gradient(ellipse at 40% 60%, rgba(0, 0, 0, 0.35) 0%, transparent 65%);
-    filter: blur(30px);
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 60%, rgba(255, 229, 0, 0.18) 0%, transparent 65%);
+    filter: blur(40px);
     pointer-events: none;
     z-index: 0;
 }
@@ -952,8 +955,7 @@ button {
     display: block;
     position: relative;
     z-index: 2;
-    filter: contrast(1.08) brightness(0.95);
-    mix-blend-mode: multiply;
+    filter: contrast(1.05) brightness(0.9) saturate(0.85);
 }
 
 /* Fallout grunge text overlay */
@@ -1211,17 +1213,17 @@ button {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-muted-light);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-sm);
     padding: 10px 18px;
     transition: all 0.2s;
 }
 
 .about-link-btn:hover {
-    border-color: var(--black);
-    color: var(--black);
-    background: rgba(0, 0, 0, 0.04);
+    border-color: var(--yellow);
+    color: var(--yellow);
+    background: rgba(255, 229, 0, 0.06);
 }
 
 /* Stat cards - About */
@@ -1578,17 +1580,17 @@ button {
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--text-muted-light);
+    color: rgba(255, 255, 255, 0.7);
     padding: 14px 20px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-sm);
     transition: all 0.2s;
 }
 
 .channel-btn:hover {
-    border-color: var(--yellow-2);
-    color: var(--black);
-    background: rgba(245, 197, 24, 0.06);
+    border-color: var(--yellow);
+    color: var(--yellow);
+    background: rgba(255, 229, 0, 0.06);
 }
 
 .contact-status-row {
