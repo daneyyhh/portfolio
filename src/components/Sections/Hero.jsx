@@ -112,6 +112,7 @@ const Hero = () => {
                 </div>
 
                 {/* Lower mascots */}
+                {/*
                 <div className="lower-mascots">
                     <div className="mascot-vega">
                         <span className="mascot-text">VEGA-GIS</span>
@@ -120,6 +121,7 @@ const Hero = () => {
                         <span className="mascot-emoji">👩‍💻</span>
                     </div>
                 </div>
+                */}
             </div>
 
             {/* Scanlines effect */}
