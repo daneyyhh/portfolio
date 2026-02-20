@@ -5,6 +5,7 @@
    ============================================================ */
 
 @import url('https://fonts.cdnfonts.com/css/brushgrunge');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@300;400;500;600&display=swap');
 
 @font-face {
@@ -25,9 +26,9 @@
     --black: #0a0a0a;
     --dark: #0f0f0f;
     --dark-2: #141414;
-    --yellow: #FFE500;
-    --yellow-2: #f5c518;
-    --yellow-dark: #c4a800;
+    --yellow: #ff0040;
+    --yellow-2: #cc0033;
+    --yellow-dark: #990026;
 
     /* on the dark grunge bg, ALL text is white-based */
     --text-dark: #ffffff;
@@ -42,7 +43,7 @@
     --section-overlay-projects: rgba(0, 0, 0, 0.78);
     --section-overlay-contact: rgba(0, 0, 0, 0.72);
 
-    --font-display: 'Neofolia', 'BrushGrunge', 'Barlow Condensed', sans-serif;
+    --font-display: 'Orbitron', 'BrushGrunge', 'Barlow Condensed', sans-serif;
     --font-sub: 'Barlow Condensed', sans-serif;
     --font-body: 'Inter', sans-serif;
 
