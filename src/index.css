@@ -8,6 +8,7 @@
 @layer base {
     body {
         @apply bg-void text-ash font-tech selection:bg-acid-lime selection:text-black overflow-x-hidden;
+        scroll-behavior: smooth;
     }
 
     /* Custom Scrollbar for Chrome/Safari/Edge */

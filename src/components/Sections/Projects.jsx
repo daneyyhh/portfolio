@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 const manualProjects = [
     {
         id: 'manual-1',
-        name: 'Haunted Game',
+        name: 'Haunted House',
         description: 'Survival horror experience in Unity.',
         language: 'UNITY',
         html_url: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
@@ -19,14 +19,6 @@ const manualProjects = [
         language: 'UNITY',
         html_url: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
         homepage: true
-    },
-    {
-        id: 'manual-3',
-        name: 'FiveM Resources',
-        description: 'Server scripts & assets.',
-        language: 'LUA',
-        html_url: 'https://github.com/daneyyhh',
-        homepage: false
     }
 ];
 
