@@ -30,7 +30,7 @@ const About = () => {
                     >
                         <div className="about-img-wrap">
                             <img
-                                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&q=80"
+                                src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=600&q=80"
                                 alt="Neon Coder - Cyberpunk AI Dev Mascot"
                             />
                             <div className="about-img-overlay" />

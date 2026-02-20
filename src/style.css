@@ -26,9 +26,9 @@
     --black: #0a0a0a;
     --dark: #0f0f0f;
     --dark-2: #141414;
-    --yellow: #FFE500;
-    --yellow-2: #f5c518;
-    --yellow-dark: #c4a800;
+    --yellow: #ff0040;
+    --yellow-2: #cc0033;
+    --yellow-dark: #990026;
 
     /* on the dark grunge bg, ALL text is white-based */
     --text-dark: #ffffff;
