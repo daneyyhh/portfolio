@@ -24,7 +24,9 @@ const Hero = () => {
 
                 {/* ── LEFT: Text ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0.08)} className="hero-title-cyber">
+                    <motion.div {...fadeUp(0.08)} className="hero-title-stack">
+                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
+                        <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
                         <h1 className="hero-title-cyber glitch" data-text="REUBEN">REUBEN</h1>
                     </motion.div>
 
@@ -79,9 +81,15 @@ const Hero = () => {
                             />
                         </div>
 
-                        {/* Anime mascot for PLAY */}
-                        <div className="play-mascot">
-                            <span className="mascot-emoji">🎮</span>
+                        {/* Floating modular icons grid */}
+                        <div className="modular-icons-grid">
+                            {[
+                                '⚡', '▲', '▶', '▼', '◀', '⚠', 'Δ', '04', 'Q1', 'MODULAR', 'NODE', 'V+HP', 'GRM734', 'PROMGEAR'
+                            ].map((icon, i) => (
+                                <div key={i} className="modular-icon" style={{ animationDelay: `${i * 0.2}s` }}>
+                                    {icon}
+                                </div>
+                            ))}
                         </div>
 
                         {/* Glitch typography overlay */}
@@ -89,6 +97,16 @@ const Hero = () => {
                             NEON CODER
                         </div>
                     </motion.div>
+                </div>
+
+                {/* Lower mascots */}
+                <div className="lower-mascots">
+                    <div className="mascot-vega">
+                        <span className="mascot-text">VEGA-GIS</span>
+                    </div>
+                    <div className="mascot-gamer">
+                        <span className="mascot-emoji">👩‍💻</span>
+                    </div>
                 </div>
             </div>
 
