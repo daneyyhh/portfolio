@@ -3,112 +3,76 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
     return (
-        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void pt-20 lg:pt-0">
+        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void pt-24 lg:pt-0">
 
-            {/* Background Texture/Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,77,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,77,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_90%)]"></div>
+            {/* Background Texture - Clean Black */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] opacity-20"></div>
 
-            {/* Giant Background Text */}
-            <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none z-0">
-                <h1 className="text-[20vw] lg:text-[25vw] font-speed font-bold text-transparent text-stroke opacity-10 italic tracking-tighter leading-none whitespace-nowrap">
-                    REUBEN
-                </h1>
-            </div>
+            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[80vh] items-center gap-8 lg:gap-0">
-
-                {/* Left UI Panel */}
-                <div className="lg:col-span-3 flex flex-col gap-8 order-2 lg:order-1">
+                {/* Left: Text Content */}
+                <div className="flex flex-col items-start text-left gap-8">
                     <motion.div
-                        initial={{ x: -30, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex flex-col gap-2"
+                    >
+                        <h1 className="text-6xl lg:text-8xl font-speed font-bold text-white leading-[0.9] tracking-wide uppercase">
+                            DISCOVER <br />
+                            COLLECT <span className="text-acid-lime">GAME</span> <br />
+                            FROM US
+                        </h1>
+                    </motion.div>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-carbon border-l-4 border-acid-lime p-4 lg:p-6 clip-card"
+                        className="font-tech text-gray-400 text-sm lg:text-base max-w-md leading-relaxed"
                     >
-                        <h3 className="font-speed text-2xl lg:text-3xl text-white mb-2">FULL STACK DEV</h3>
-                        <p className="font-tech text-dust text-xs lg:text-sm leading-relaxed">
-                            Specialized in high-performance web apps and game interfaces.
-                        </p>
-                    </motion.div>
+                        Crafting immersive digital experiences.
+                        Minecraft received critical acclaim, winning several awards and later being cited as one of the greatest video games.
+                    </motion.p>
 
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="group hidden lg:block"
+                        className="flex gap-4"
                     >
-                        <h2 className="text-4xl lg:text-6xl font-speed text-white italic group-hover:text-acid-lime transition-colors">
-                            LVL <span className="text-transparent text-stroke">20</span>
-                        </h2>
-                        <div className="w-full h-2 bg-steel mt-2 skew-x-[-20deg]">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: "80%" }}
-                                transition={{ delay: 1, duration: 1.5, ease: "circOut" }}
-                                className="h-full bg-acid-lime shadow-[0_0_10px_#ccff00]"
-                            />
-                        </div>
+                        <a href="#projects" className="bg-acid-lime text-black font-tech font-bold text-sm px-8 py-4 uppercase tracking-widest hover:bg-white transition-colors">
+                            GET STARTED
+                        </a>
+                        <button className="border border-acid-lime text-acid-lime font-tech font-bold text-sm px-8 py-4 uppercase tracking-widest hover:bg-acid-lime hover:text-black transition-colors">
+                            EXPLORE
+                        </button>
                     </motion.div>
                 </div>
 
-                {/* Center Character (Hook Placeholder) */}
-                <div className="lg:col-span-6 relative flex flex-col items-center justify-center order-1 lg:order-2 h-[40vh] lg:h-[80vh]">
+                {/* Right: Portal Image */}
+                <div className="relative flex items-center justify-center h-[50vh] lg:h-[80vh]">
                     <motion.div
-                        initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "backOut" }}
-                        className="relative w-full h-full flex items-center justify-center"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className="relative w-full h-full"
                     >
-                        {/* Glow Behind */}
-                        <div className="absolute w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] bg-acid-lime/20 blur-[60px] lg:blur-[100px] animate-pulse rounded-full"></div>
+                        {/* Portal Glow */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] bg-acid-lime/30 blur-[100px] rounded-full animate-pulse"></div>
 
-                        {/* Robot Character Placeholder */}
-                        <motion.img
-                            animate={{ y: [-10, 10, -10] }}
-                            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                            src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop"
-                            alt="Hook Character"
-                            className="h-full object-contain grayscale-[0.2] drop-shadow-[0_0_20px_rgba(255,77,0,0.5)] z-10"
-                        />
+                        {/* Image Placeholder - Replaced with a Portal-like asset or CSS shape if image fails */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] border-[20px] border-acid-lime/20 rounded-full flex items-center justify-center relative bg-black">
+                                <div className="w-[90%] h-[90%] bg-[url('https://images.unsplash.com/photo-1614726365723-49cfae9e035d?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center rounded-full opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"></div>
 
-                        {/* Floating HUD Elements */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1, x: [0, 5, 0] }}
-                            transition={{ delay: 1, repeat: Infinity, duration: 0.2, repeatDelay: 5 }}
-                            className="absolute top-10 right-0 lg:right-10 bg-void/90 border border-acid-lime px-3 py-1 text-acid-lime font-tech text-[10px] tracking-widest z-20"
-                        >
-                            TARGET_LOCKED
-                        </motion.div>
+                                {/* Floating Orbitals */}
+                                <div className="absolute inset-0 border border-acid-lime/50 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                                <div className="absolute inset-4 border border-dashed border-acid-lime/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
 
-                {/* Right UI Panel */}
-                <div className="lg:col-span-3 flex flex-col items-end gap-6 order-3">
-                    <motion.div
-                        initial={{ x: 30, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                        className="text-right"
-                    >
-                        <div className="font-speed text-6xl lg:text-9xl text-white leading-none italic">
-                            DEV
-                        </div>
-                        <div className="font-speed text-3xl lg:text-4xl text-transparent text-stroke -mt-2 lg:-mt-4 italic">
-                            OPS_MODE
-                        </div>
-                    </motion.div>
-
-                    <motion.a
-                        href="#projects"
-                        whileHover={{ scale: 1.05, skewX: -10 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-acid-lime text-black font-speed text-xl lg:text-2xl px-8 lg:px-10 py-3 skew-x-[-20deg] shadow-[0_0_20px_rgba(204,255,0,0.4)] hover:shadow-[0_0_40px_rgba(204,255,0,0.6)] transition-all"
-                    >
-                        <span className="block skew-x-[20deg]">START GAME</span>
-                    </motion.a>
-                </div>
             </div>
         </section>
     );
