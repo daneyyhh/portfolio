@@ -58,18 +58,6 @@ const Hero = () => {
                         </a>
                     </motion.div>
                 </div>
-                        ))}
-                    </motion.div>
-
-                    <motion.div {...fadeUp(0.34)} className="hero-ctas-cyber">
-                        <a href="#projects" className="btn-cyber-red">
-                            VIEW PORTFOLIO
-                        </a>
-                        <a href="#contact" className="btn-cyber-red">
-                            GET IN TOUCH
-                        </a>
-                    </motion.div>
-                </div>
 
                 {/* ── RIGHT: Character ── */}
                 <div className="hero-right">
@@ -111,18 +99,6 @@ const Hero = () => {
                         </div>
                     </motion.div>
                 </div>
-
-                {/* Lower mascots */}
-                {/*
-                <div className="lower-mascots">
-                    <div className="mascot-vega">
-                        <span className="mascot-text">VEGA-GIS</span>
-                    </div>
-                    <div className="mascot-gamer">
-                        <span className="mascot-emoji">👩‍💻</span>
-                    </div>
-                </div>
-                */}
             </div>
 
             {/* ── BOTTOM: Video Frame ── */}

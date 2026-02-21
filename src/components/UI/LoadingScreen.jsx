@@ -44,7 +44,7 @@ const LoadingScreen = ({ onComplete }) => {
             transition={{ duration: 0.8, ease: "easeInOut" }}
         >
             {/* Pulsing Glitch Effect Background */}
-            <div className="absolute inset-0 bg-[url('/grid.png')] opacity-10 pointer-events-none"></div>
+            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 0h1v40H0zM39 0h1v40h-1zM0 0h40v1H0zM0 39h40v1H0z' fill='%2306b6d4' opacity='0.5'/%3E%3C/svg%3E\")", backgroundSize: "40px 40px" }}></div>
 
             <div className="w-4/5 max-w-md relative">
                 {/* Text */}
