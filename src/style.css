@@ -345,20 +345,323 @@ body::after {
 }
 
 /* ============================================================
-   HEADER — Valorant-style nav
+   HEADER — Valorant Ignition Nav
+   Single bar, slides down on mount, red accent top line
    ============================================================ */
-.site-header {
+
+/* Wrapper — fixed, full width */
+.site-header,
+.val-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    height: var(--header-h);
+    /* Transparent by default; gains bg when scrolled */
+    background: transparent;
+    transition: background 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s;
+    /* Flex column so top-line sits above inner row */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrolled state — glass dark bg */
+.val-header.scrolled {
+    background: rgba(6, 10, 14, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 2px 40px rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 70, 85, 0.15);
+}
+
+/* Top red accent line (animated via Framer scaleX) */
+.header-top-line {
+    height: 2px;
+    background: var(--val-red);
+    transform-origin: left;
+    box-shadow: 0 0 16px rgba(255, 70, 85, 0.6);
+    flex-shrink: 0;
+}
+
+/* Inner row */
+.header-inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
+    gap: 16px;
     padding: 0 clamp(20px, 4vw, 56px);
-    transition: background 0.4s var(--ease), border-color 0.4s;
+    height: 62px;
 }
+
+/* ── Logo ── */
+.val-logo {
+    font-family: var(--font-val);
+    font-size: 1.25rem;
+    letter-spacing: 0.12em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+/* V-chevron SVG inside the logo */
+.logo-chevron {
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(255, 70, 85, 0.5));
+}
+
+.logo-text-val {
+    display: flex;
+    align-items: baseline;
+}
+
+.logo-r {
+    color: var(--val-red);
+    text-shadow: 0 0 12px rgba(255, 70, 85, 0.5);
+}
+
+.logo-tag-val {
+    font-family: var(--font-mono);
+    font-size: 0.42rem;
+    letter-spacing: 0.25em;
+    color: var(--val-faint);
+    border-left: 1px solid var(--val-border);
+    padding-left: 8px;
+    margin-left: 6px;
+    align-self: flex-end;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+/* ── Desktop Nav ── */
+.val-desktop-nav {
+    display: none;
+    align-items: center;
+    margin-left: auto;
+    gap: 0;
+}
+
+@media (min-width: 900px) {
+    .val-desktop-nav {
+        display: flex;
+    }
+}
+
+/* Nav link */
+.val-nav-link {
+    position: relative;
+    font-family: var(--font-sub);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 8px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    transition: color 0.2s;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.val-nav-link:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.val-nav-link:hover {
+    color: #fff;
+}
+
+.val-nav-active {
+    color: #fff !important;
+}
+
+/* Superscript number */
+.val-nav-sup {
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    color: var(--val-red);
+    vertical-align: super;
+    line-height: 1;
+    margin-right: 2px;
+}
+
+/* Shared sliding underline — layoutId="navUnderline" */
+.val-nav-underline {
+    position: absolute;
+    bottom: -1px;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--val-red);
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.7);
+    transform-origin: left;
+    border-radius: 1px;
+}
+
+/* ── CTA Button ── */
+.val-cta {
+    font-family: var(--font-sub);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--val-red);
+    padding: 10px 22px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    border: none;
+    cursor: none;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.val-cta:hover {
+    background: var(--val-red2);
+}
+
+@media (min-width: 900px) {
+    .val-cta {
+        display: flex;
+    }
+}
+
+/* Pulsing dot inside CTA */
+.cta-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #fff;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Burger ── */
+.val-burger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 8px;
+    margin-left: auto;
+    cursor: none;
+    /* Override body cursor:none just for this element visibility */
+}
+
+@media (min-width: 900px) {
+    .val-burger {
+        display: none;
+    }
+}
+
+/* Burger lines (Framer Motion handles animation in JSX) */
+.val-burger .burger-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 1px;
+    transform-origin: center;
+}
+
+/* ── Mobile Menu ── */
+.val-mobile-menu {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(6, 10, 14, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 2px solid var(--val-red);
+    padding: 16px clamp(20px, 4vw, 56px) 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.val-mobile-link {
+    position: relative;
+    font-family: var(--font-sub);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--val-border);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.val-mobile-link:hover {
+    color: #fff;
+}
+
+.val-mobile-link.nav-active {
+    color: #fff;
+}
+
+/* Active left indicator bar on mobile */
+.mobile-active-bar {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 28px;
+    background: var(--val-red);
+    box-shadow: 0 0 12px rgba(255, 70, 85, 0.6);
+    transform-origin: left;
+}
+
+.val-mobile-cta {
+    margin-top: 16px;
+    font-family: var(--font-sub);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    background: var(--val-red);
+    color: #fff;
+    padding: 16px;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.2s;
+    text-decoration: none;
+    display: block;
+}
+
+.val-mobile-cta:hover {
+    background: var(--val-red2);
+}
+
+/* Ensure hero section has padding-top so it's not hidden under header */
+.hero-ignition {
+    padding-top: 0 !important;
+    /* hero has its own full-screen height */
+}
+
+/* All OTHER sections need top padding for the fixed header */
+#about,
+#projects,
+#contact {
+    scroll-margin-top: 64px;
+}
+
 
 .site-header.scrolled {
     background: rgba(7, 13, 19, 0.95);

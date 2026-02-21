@@ -32,43 +32,6 @@ const Hero = () => (
         {/* ── Scanlines ── */}
         <div className="scanlines" aria-hidden="true" />
 
-        {/* ── Top nav bar ── */}
-        <header className="hero-nav-bar">
-            {/* Logo */}
-            <motion.a
-                href="#hero"
-                className="hero-nav-logo"
-                {...stagger(0)}
-            >
-                <span className="hero-nav-logo-icon">R</span>
-                <span>EUBEN</span>
-            </motion.a>
-
-            {/* Nav links */}
-            <motion.nav className="hero-nav-links-row" {...stagger(0.05)}>
-                {['HOME', 'ABOUT', 'PROJECTS', 'CONTACT'].map((l, i) => (
-                    <a
-                        key={l}
-                        href={`#${l.toLowerCase() === 'home' ? 'hero' : l.toLowerCase()}`}
-                        className="hero-nav-item"
-                    >
-                        <sup className="hero-nav-sup">0{i + 1}</sup>{l}
-                    </a>
-                ))}
-            </motion.nav>
-
-            {/* CTA */}
-            <motion.a
-                href="#contact"
-                className="hero-nav-cta"
-                {...stagger(0.1)}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-            >
-                HIRE ME
-            </motion.a>
-        </header>
-
         {/* ── Main hero grid ── */}
         <div className="hero-ignition-grid">
 
