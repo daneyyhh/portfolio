@@ -11,32 +11,51 @@ const Hero = () => {
     return (
         <section id="hero" className="hero-section">
             <div className="hero-inner">
-                {/* ── TOP NAV ── */}
+
+                {/* ── TOP BREADCRUMB ── */}
                 <motion.div {...fadeUp(0)} className="hero-top-nav">
                     <div className="hero-nav-links">
-                        <a href="#portfolio" className="nav-link-cyber">PORT</a>
+                        <a href="#about" className="nav-link-cyber">PORTFOLIO</a>
                         <span className="nav-separator">|</span>
-                        <a href="#build" className="nav-link-cyber">BUILD</a>
+                        <a href="#projects" className="nav-link-cyber">PROJECTS</a>
                         <span className="nav-separator">|</span>
-                        <a href="#play" className="nav-link-cyber">PLAY</a>
+                        <a href="#contact" className="nav-link-cyber">CONTACT</a>
                     </div>
+                    {/* Serial number detail */}
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.18em', color: 'var(--val-faint)', marginLeft: 'auto' }}>
+                        X139 // BUILD 2025
+                    </span>
                 </motion.div>
 
-                {/* ── TOP-LEFT LOGO ── */}
-                <motion.div {...fadeUp(0.1)} className="hero-logo">
+                {/* ── LOGO ── */}
+                <motion.div {...fadeUp(0.05)} className="hero-logo">
                     <div className="logo-circle">
-                        <span className="logo-text">REUBEN</span>
+                        <span className="logo-text">R</span>
                     </div>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.2em', color: 'var(--val-faint)', textTransform: 'uppercase' }}>
+                        Reuben · Dev Portfolio
+                    </span>
                 </motion.div>
 
-                {/* ── CENTERED TITLE ── */}
-                <motion.div {...fadeUp(0.08)} className="hero-centered-title">
-                    <h1 className="hero-title-cyber hot-pink">REUBEN</h1>
-                </motion.div>
+                {/* ── MAIN TITLE — left col ── */}
+                <div className="hero-centered-title">
+                    <motion.div {...fadeUp(0.08)} className="hero-eyebrow-label">
+                        EPISODE 01 // IGNITION
+                    </motion.div>
+                    <motion.h1
+                        className="hero-title-cyber"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+                    >
+                        REUBEN<br />
+                        <span style={{ color: 'var(--val-red)', textShadow: '0 0 60px rgba(255,70,85,0.4)' }}>CODES</span>
+                    </motion.h1>
+                </div>
 
-                {/* ── LEFT: Stats and CTAs ── */}
+                {/* ── LEFT: Stats + CTAs ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0.26)} className="hero-stats-cyber">
+                    <motion.div {...fadeUp(0.22)} className="hero-stats-cyber">
                         {[
                             { n: '3+', l: 'Projects' },
                             { n: '18', l: 'Bots' },
@@ -49,88 +68,106 @@ const Hero = () => {
                         ))}
                     </motion.div>
 
-                    <motion.div {...fadeUp(0.34)} className="hero-ctas-cyber">
-                        <a href="#projects" className="btn-cyber-red">
-                            VIEW PORTFOLIO
+                    <motion.div {...fadeUp(0.30)} className="hero-ctas-cyber">
+                        <a href="#projects" className="btn-red">
+                            VIEW WORK
                         </a>
-                        <a href="#contact" className="btn-cyber-red">
+                        <a href="#contact" className="btn-outline-dark">
                             GET IN TOUCH
                         </a>
                     </motion.div>
+
+                    {/* Sub­text below CTA */}
+                    <motion.p
+                        {...fadeUp(0.36)}
+                        style={{ fontFamily: 'var(--font-sub)', fontSize: '0.88rem', color: 'var(--val-muted)', lineHeight: 1.7, maxWidth: '400px' }}
+                    >
+                        FiveM Developer · Unity Game Creator · Discord Bot Engineer.
+                        Building immersive experiences from Haripad.
+                    </motion.p>
                 </div>
 
-                {/* ── RIGHT: Character ── */}
+                {/* ── RIGHT: Character art ── */}
                 <div className="hero-right">
-                    <motion.div {...fadeUp(0.12)} className="hero-right-stack">
-                        <span className="stacked-neon-coder">NEON</span>
-                        <span className="stacked-neon-coder">CODER</span>
-                    </motion.div>
+                    {/* Red dot decorations */}
+                    <div className="hero-red-dots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                        {[
+                            { top: '10%', left: '5%', delay: '0s' },
+                            { top: '25%', right: '8%', delay: '0.6s' },
+                            { bottom: '30%', left: '8%', delay: '1.2s' },
+                            { bottom: '15%', right: '12%', delay: '0.3s' },
+                            { top: '55%', left: '2%', delay: '1.8s' },
+                        ].map((pos, i) => (
+                            <span
+                                key={i}
+                                className="red-dot"
+                                style={{ ...pos, animationDelay: pos.delay }}
+                            />
+                        ))}
+                    </div>
 
                     <motion.div
                         className="hero-char-wrap"
-                        initial={{ opacity: 0, scale: 0.92, x: 30 }}
+                        initial={{ opacity: 0, scale: 0.94, x: 40 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
-                        transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
+                        transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
                     >
-                        {/* Floating 3D Neon Coder helmet */}
                         <div className="hero-helmet-3d">
                             <img
                                 src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
-                                alt="Neon Coder Helmet"
+                                alt="Developer"
                                 className="hero-char-img"
                                 loading="eager"
                             />
                         </div>
 
-                        {/* Floating modular icons grid */}
+                        {/* Tactical icon grid */}
                         <div className="modular-icons-grid">
-                            {[
-                                '⚡', '▲', '▶', '▼', '◀', '⚠', 'Δ', '04', 'Q1', 'MODULAR', 'NODE', 'V+HP', 'GRM734', 'PROMGEAR'
-                            ].map((icon, i) => (
-                                <div key={i} className="modular-icon" style={{ animationDelay: `${i * 0.2}s` }}>
+                            {['⚡', '▲', '▶', '▼', '◀', '⚠', 'Δ', '04', 'NODE'].map((icon, i) => (
+                                <div key={i} className="modular-icon" style={{ animationDelay: `${i * 0.22}s` }}>
                                     {icon}
                                 </div>
                             ))}
                         </div>
 
-                        {/* Glitch typography overlay */}
-                        <div className="hero-glitch-text" aria-hidden="true">
-                            NEON CODER
+                        {/* Glitch label */}
+                        <div className="hero-glitch-text">
+                            S/N 48-1508F ▶
                         </div>
                     </motion.div>
                 </div>
+
+                {/* ── BOTTOM: Video ── */}
+                <motion.div {...fadeUp(0.4)} className="hero-video-frame">
+                    <video
+                        className="hero-video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+                    >
+                        <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
+                    </video>
+                    <div className="video-overlay">
+                        <span className="video-label">NIGHT PERFORMANCE // LIVE SHOWCASE</span>
+                    </div>
+                </motion.div>
+
             </div>
 
-            {/* ── BOTTOM: Video Frame ── */}
-            <motion.div {...fadeUp(0.4)} className="hero-video-frame">
-                <video
-                    className="hero-video"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
-                >
-                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-                <div className="video-overlay">
-                    <span className="video-label">PROFESSIONAL SHOWCASE</span>
-                </div>
-            </motion.div>
-
-            {/* Scanlines effect */}
-            <div className="scanlines" aria-hidden="true"></div>
+            {/* Scanlines */}
+            <div className="scanlines" aria-hidden="true" />
 
             {/* Scroll hint */}
             <motion.div
                 className="scroll-hint"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
+                transition={{ delay: 1.4 }}
             >
                 <div className="scroll-hint-line" />
-                Scroll Down
+                Scroll
             </motion.div>
         </section>
     );
