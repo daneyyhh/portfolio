@@ -1,176 +1,179 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 36 },
+const stagger = (delay = 0) => ({
+    initial: { opacity: 0, y: 28 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay },
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay },
 });
 
-const Hero = () => {
-    return (
-        <section id="hero" className="hero-section">
-            <div className="hero-inner">
+/* Skills shown in the brand-logo grid (replacing sponsors) */
+const skills = [
+    { name: 'FiveM', icon: '🎮' },
+    { name: 'Lua', icon: '🔧' },
+    { name: 'Unity', icon: '🎯' },
+    { name: 'C#', icon: '⚡' },
+    { name: 'React', icon: '⚛️' },
+    { name: 'Node.js', icon: '🟢' },
+    { name: 'Discord', icon: '💬' },
+    { name: 'GitHub', icon: '🐙' },
+    { name: 'JS', icon: '🌐' },
+];
 
-                {/* ── TOP BREADCRUMB ── */}
-                <motion.div {...fadeUp(0)} className="hero-top-nav">
-                    <div className="hero-nav-links">
-                        <a href="#about" className="nav-link-cyber">PORTFOLIO</a>
-                        <span className="nav-separator">|</span>
-                        <a href="#projects" className="nav-link-cyber">PROJECTS</a>
-                        <span className="nav-separator">|</span>
-                        <a href="#contact" className="nav-link-cyber">CONTACT</a>
-                    </div>
-                    {/* Serial number detail */}
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.18em', color: 'var(--val-faint)', marginLeft: 'auto' }}>
-                        X139 // BUILD 2025
-                    </span>
+const Hero = () => (
+    <section id="hero" className="hero-section hero-ignition">
+
+        {/* ── Background white slash ── */}
+        <div className="hero-white-slash" aria-hidden="true" />
+
+        {/* ── Dot grid ── */}
+        <div className="hero-dot-grid" aria-hidden="true" />
+
+        {/* ── Scanlines ── */}
+        <div className="scanlines" aria-hidden="true" />
+
+        {/* ── Top nav bar ── */}
+        <header className="hero-nav-bar">
+            {/* Logo */}
+            <motion.a
+                href="#hero"
+                className="hero-nav-logo"
+                {...stagger(0)}
+            >
+                <span className="hero-nav-logo-icon">R</span>
+                <span>EUBEN</span>
+            </motion.a>
+
+            {/* Nav links */}
+            <motion.nav className="hero-nav-links-row" {...stagger(0.05)}>
+                {['HOME', 'ABOUT', 'PROJECTS', 'CONTACT'].map((l, i) => (
+                    <a
+                        key={l}
+                        href={`#${l.toLowerCase() === 'home' ? 'hero' : l.toLowerCase()}`}
+                        className="hero-nav-item"
+                    >
+                        <sup className="hero-nav-sup">0{i + 1}</sup>{l}
+                    </a>
+                ))}
+            </motion.nav>
+
+            {/* CTA */}
+            <motion.a
+                href="#contact"
+                className="hero-nav-cta"
+                {...stagger(0.1)}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+            >
+                HIRE ME
+            </motion.a>
+        </header>
+
+        {/* ── Main hero grid ── */}
+        <div className="hero-ignition-grid">
+
+            {/* LEFT: Character art bleeds off edge */}
+            <motion.div
+                className="hero-char-col"
+                initial={{ opacity: 0, x: -60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+            >
+                <img
+                    src="https://images.unsplash.com/photo-1535223289429-a8e95f0fd2ef?auto=format&fit=crop&w=800&q=90"
+                    alt="Developer"
+                    className="hero-char-full"
+                />
+                {/* Red glow behind character */}
+                <div className="hero-char-glow" />
+            </motion.div>
+
+            {/* CENTER: Branding + skill grid */}
+            <div className="hero-center-col">
+
+                {/* Top mini-title */}
+                <motion.div className="hero-mini-tag" {...stagger(0.2)}>
+                    <span className="hero-mini-slash">/</span>
+                    <span>DEV × CREATOR</span>
                 </motion.div>
 
-                {/* ── LOGO ── */}
-                <motion.div {...fadeUp(0.05)} className="hero-logo">
-                    <div className="logo-circle">
-                        <span className="logo-text">R</span>
+                {/* Main branding logo */}
+                <motion.div className="hero-brand-logo" {...stagger(0.28)}>
+                    <div className="hero-brand-icon">
+                        {/* V-chevron */}
+                        <svg viewBox="0 0 32 28" fill="none" width="32" height="28">
+                            <path d="M0 0L16 28L32 0H24L16 16L8 0H0Z" fill="#ff4655" />
+                        </svg>
                     </div>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.2em', color: 'var(--val-faint)', textTransform: 'uppercase' }}>
-                        Reuben · Dev Portfolio
-                    </span>
+                    <span className="hero-brand-name">REUBEN</span>
                 </motion.div>
 
-                {/* ── MAIN TITLE — left col ── */}
-                <div className="hero-centered-title">
-                    <motion.div {...fadeUp(0.08)} className="hero-eyebrow-label">
-                        EPISODE 01 // IGNITION
-                    </motion.div>
-                    <motion.h1
-                        className="hero-title-cyber"
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
-                    >
-                        REUBEN<br />
-                        <span style={{ color: 'var(--val-red)', textShadow: '0 0 60px rgba(255,70,85,0.4)' }}>CODES</span>
-                    </motion.h1>
-                </div>
-
-                {/* ── LEFT: Stats + CTAs ── */}
-                <div className="hero-left">
-                    <motion.div {...fadeUp(0.22)} className="hero-stats-cyber">
-                        {[
-                            { n: '3+', l: 'Projects' },
-                            { n: '18', l: 'Bots' },
-                            { n: '100%', l: 'Uptime' },
-                        ].map(s => (
-                            <div key={s.l} className="stat-badge-cyber">
-                                <span className="stat-val-cyber">{s.n}</span>
-                                <span className="stat-label-cyber">{s.l}</span>
-                            </div>
-                        ))}
-                    </motion.div>
-
-                    <motion.div {...fadeUp(0.30)} className="hero-ctas-cyber">
-                        <a href="#projects" className="btn-red">
-                            VIEW WORK
-                        </a>
-                        <a href="#contact" className="btn-outline-dark">
-                            GET IN TOUCH
-                        </a>
-                    </motion.div>
-
-                    {/* Sub­text below CTA */}
-                    <motion.p
-                        {...fadeUp(0.36)}
-                        style={{ fontFamily: 'var(--font-sub)', fontSize: '0.88rem', color: 'var(--val-muted)', lineHeight: 1.7, maxWidth: '400px' }}
-                    >
-                        FiveM Developer · Unity Game Creator · Discord Bot Engineer.
-                        Building immersive experiences from Haripad.
-                    </motion.p>
-                </div>
-
-                {/* ── RIGHT: Character art ── */}
-                <div className="hero-right">
-                    {/* Red dot decorations */}
-                    <div className="hero-red-dots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                        {[
-                            { top: '10%', left: '5%', delay: '0s' },
-                            { top: '25%', right: '8%', delay: '0.6s' },
-                            { bottom: '30%', left: '8%', delay: '1.2s' },
-                            { bottom: '15%', right: '12%', delay: '0.3s' },
-                            { top: '55%', left: '2%', delay: '1.8s' },
-                        ].map((pos, i) => (
-                            <span
-                                key={i}
-                                className="red-dot"
-                                style={{ ...pos, animationDelay: pos.delay }}
-                            />
-                        ))}
-                    </div>
-
-                    <motion.div
-                        className="hero-char-wrap"
-                        initial={{ opacity: 0, scale: 0.94, x: 40 }}
-                        animate={{ opacity: 1, scale: 1, x: 0 }}
-                        transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-                    >
-                        <div className="hero-helmet-3d">
-                            <img
-                                src="https://images.unsplash.com/photo-1624555130581-1d9cca783bc0?auto=format&fit=crop&w=800&q=85"
-                                alt="Developer"
-                                className="hero-char-img"
-                                loading="eager"
-                            />
-                        </div>
-
-                        {/* Tactical icon grid */}
-                        <div className="modular-icons-grid">
-                            {['⚡', '▲', '▶', '▼', '◀', '⚠', 'Δ', '04', 'NODE'].map((icon, i) => (
-                                <div key={i} className="modular-icon" style={{ animationDelay: `${i * 0.22}s` }}>
-                                    {icon}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Glitch label */}
-                        <div className="hero-glitch-text">
-                            S/N 48-1508F ▶
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* ── BOTTOM: Video ── */}
-                <motion.div {...fadeUp(0.4)} className="hero-video-frame">
-                    <video
-                        className="hero-video"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
-                    >
-                        <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
-                    </video>
-                    <div className="video-overlay">
-                        <span className="video-label">NIGHT PERFORMANCE // LIVE SHOWCASE</span>
-                    </div>
+                {/* Repeated tagline rows (like "100 THIEVES X DEFEAT" rows) */}
+                <motion.div className="hero-tagline-rows" {...stagger(0.34)}>
+                    {['REUBEN × FIVEM', 'REUBEN × UNITY', 'REUBEN × REACT'].map(t => (
+                        <div key={t} className="hero-tagline-row">{t}</div>
+                    ))}
                 </motion.div>
 
+                {/* Skill icon grid (like the sponsor logo grid) */}
+                <motion.div className="hero-skills-grid" {...stagger(0.42)}>
+                    {skills.map((s, i) => (
+                        <motion.div
+                            key={s.name}
+                            className="hero-skill-tile"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.44 + i * 0.045, duration: 0.4 }}
+                            whileHover={{ scale: 1.08, borderColor: 'rgba(255,70,85,0.6)' }}
+                        >
+                            <span className="hero-skill-icon">{s.icon}</span>
+                            <span className="hero-skill-name">{s.name}</span>
+                        </motion.div>
+                    ))}
+                </motion.div>
+
+                {/* CTA buttons */}
+                <motion.div className="hero-cta-row" {...stagger(0.52)}>
+                    <a href="#projects" className="btn-red">VIEW MISSIONS</a>
+                    <a href="#about" className="btn-outline-dark">ABOUT ME</a>
+                </motion.div>
             </div>
 
-            {/* Scanlines */}
-            <div className="scanlines" aria-hidden="true" />
-
-            {/* Scroll hint */}
+            {/* RIGHT: Giant vertical "REUBEN" text */}
             <motion.div
-                className="scroll-hint"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4 }}
+                className="hero-vertical-name-col"
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
+                aria-hidden="true"
             >
-                <div className="scroll-hint-line" />
-                Scroll
+                {'REUBEN'.split('').map((letter, i) => (
+                    <motion.span
+                        key={i}
+                        className="hero-vert-letter"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 + i * 0.07, duration: 0.5 }}
+                    >
+                        {letter}
+                    </motion.span>
+                ))}
             </motion.div>
-        </section>
-    );
-};
+
+        </div>
+
+        {/* Scroll hint */}
+        <motion.div
+            className="scroll-hint"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+        >
+            <div className="scroll-hint-line" />
+            SCROLL
+        </motion.div>
+
+    </section>
+);
 
 export default Hero;

@@ -2474,3 +2474,382 @@ main {
         display: none;
     }
 }
+
+/* ============================================================
+   HERO — 100 THIEVES / IGNITION STYLE
+   Character bleeds left · Giant vertical name right · Skill grid
+   ============================================================ */
+
+/* Override base hero section for this new layout */
+.hero-ignition {
+    min-height: 100svh;
+    background: #060a0e;
+    /* near-pure black */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── White angular slash behind character (key motif) ── */
+.hero-white-slash {
+    position: absolute;
+    top: -5%;
+    left: -2%;
+    width: 42%;
+    height: 110%;
+    background: rgba(255, 255, 255, 0.055);
+    clip-path: polygon(0 0, 78% 0, 92% 100%, 0 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ── Fine dot grid ── */
+.hero-dot-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+/* ── Top nav bar ── */
+.hero-nav-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 22px clamp(20px, 4vw, 48px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hero-nav-logo {
+    font-family: var(--font-val);
+    font-size: 1.3rem;
+    letter-spacing: 0.12em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+}
+
+.hero-nav-logo-icon {
+    color: var(--val-red);
+    text-shadow: 0 0 16px rgba(255, 70, 85, 0.6);
+}
+
+.hero-nav-links-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: auto;
+}
+
+.hero-nav-item {
+    font-family: var(--font-sub);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 6px 18px;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    transition: color 0.2s;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+}
+
+.hero-nav-item:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hero-nav-item:hover {
+    color: #fff;
+}
+
+.hero-nav-sup {
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    color: var(--val-red);
+    line-height: 1;
+    vertical-align: super;
+}
+
+.hero-nav-cta {
+    font-family: var(--font-sub);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--val-red);
+    padding: 10px 24px;
+    margin-left: 16px;
+    flex-shrink: 0;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.hero-nav-cta:hover {
+    background: var(--val-red2);
+    box-shadow: 0 0 24px rgba(255, 70, 85, 0.45);
+}
+
+@media (max-width: 900px) {
+    .hero-nav-links-row {
+        display: none;
+    }
+}
+
+/* ── Main 3-column grid ── */
+.hero-ignition-grid {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 38% 1fr auto;
+    grid-template-rows: 1fr;
+    min-height: 0;
+}
+
+/* ── LEFT: Full-height character art ── */
+.hero-char-col {
+    grid-column: 1;
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+    /* Bleed to left edge */
+    margin-left: -0px;
+}
+
+.hero-char-full {
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    height: 105%;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    object-position: top center;
+    /* Clip so character faces right and bleeds off left */
+    filter: drop-shadow(8px 0 40px rgba(255, 70, 85, 0.18));
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Red atmospheric glow under character */
+.hero-char-glow {
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 80%;
+    height: 60%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255, 70, 85, 0.22) 0%, transparent 70%);
+    pointer-events: none;
+    filter: blur(30px);
+}
+
+/* ── CENTER: Brand + skill grid ── */
+.hero-center-col {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px clamp(24px, 3vw, 48px);
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mini "DEV × CREATOR" tag */
+.hero-mini-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.hero-mini-slash {
+    font-family: var(--font-val);
+    font-size: 1.2rem;
+    color: var(--val-red);
+    line-height: 1;
+}
+
+/* Main brand logo — V chevron + REUBEN */
+.hero-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.hero-brand-icon {
+    flex-shrink: 0;
+}
+
+.hero-brand-name {
+    font-family: var(--font-val);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(255, 70, 85, 0.2);
+}
+
+/* Repeated tagline rows — like "100 THIEVES X DEFEAT" */
+.hero-tagline-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hero-tagline-row {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+}
+
+/* ── Skill icon grid — replaces sponsor logos ── */
+.hero-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 8px;
+}
+
+.hero-skill-tile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+}
+
+.hero-skill-tile:hover {
+    background: rgba(255, 70, 85, 0.06);
+    border-color: rgba(255, 70, 85, 0.3);
+}
+
+.hero-skill-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.hero-skill-name {
+    font-family: var(--font-sub);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.hero-skill-tile:hover .hero-skill-name {
+    color: #fff;
+}
+
+/* CTA row */
+.hero-cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* ── RIGHT: Giant vertical letters ── */
+.hero-vertical-name-col {
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    /* fixed width so letters don't wrap */
+    width: clamp(80px, 9vw, 130px);
+    align-items: center;
+}
+
+.hero-vert-letter {
+    display: block;
+    font-family: var(--font-val);
+    font-size: clamp(3.5rem, 7vw, 7.5rem);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--val-red);
+    text-shadow:
+        0 0 40px rgba(255, 70, 85, 0.5),
+        0 0 80px rgba(255, 70, 85, 0.2);
+    user-select: none;
+    transition: text-shadow 0.3s;
+}
+
+.hero-vert-letter:hover {
+    text-shadow: 0 0 20px #fff, 0 0 60px var(--val-red);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+    .hero-ignition-grid {
+        grid-template-columns: 36% 1fr auto;
+    }
+
+    .hero-vert-letter {
+        font-size: clamp(2.8rem, 5.5vw, 5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-ignition-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 280px auto;
+    }
+
+    .hero-char-col {
+        grid-column: 1;
+        grid-row: 1;
+        height: 280px;
+    }
+
+    .hero-char-full {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        object-fit: cover;
+    }
+
+    .hero-center-col {
+        grid-column: 1;
+        grid-row: 2;
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-vertical-name-col {
+        display: none;
+    }
+
+    .hero-skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
