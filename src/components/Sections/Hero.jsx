@@ -29,16 +29,13 @@ const Hero = () => {
                     </div>
                 </motion.div>
 
-                {/* ── LEFT: Text ── */}
+                {/* ── CENTERED TITLE ── */}
+                <motion.div {...fadeUp(0.08)} className="hero-centered-title">
+                    <h1 className="hero-title-cyber hot-pink">REUBEN</h1>
+                </motion.div>
+
+                {/* ── LEFT: Stats and CTAs ── */}
                 <div className="hero-left">
-                    <motion.div {...fadeUp(0.08)} className="hero-title-stack">
-                        <h1 className="hero-title-cyber glitch hot-pink">REUBEN</h1>
-                    </motion.div>
-
-                    <motion.p {...fadeUp(0.2)} className="hero-tagline">
-                        Build your code, design your future yourself
-                    </motion.p>
-
                     <motion.div {...fadeUp(0.26)} className="hero-stats-cyber">
                         {[
                             { n: '3+', l: 'Projects' },
@@ -49,6 +46,18 @@ const Hero = () => {
                                 <span className="stat-val-cyber">{s.n}</span>
                                 <span className="stat-label-cyber">{s.l}</span>
                             </div>
+                        ))}
+                    </motion.div>
+
+                    <motion.div {...fadeUp(0.34)} className="hero-ctas-cyber">
+                        <a href="#projects" className="btn-cyber-red">
+                            VIEW PORTFOLIO
+                        </a>
+                        <a href="#contact" className="btn-cyber-red">
+                            GET IN TOUCH
+                        </a>
+                    </motion.div>
+                </div>
                         ))}
                     </motion.div>
 

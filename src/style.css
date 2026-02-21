@@ -4,9 +4,8 @@
            ink splash character, grunge typography
    ============================================================ */
 
+@import url('https://fonts.cdnfonts.com/css/kateno');
 @import url('https://fonts.cdnfonts.com/css/brushgrunge');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@300;400;500;600&display=swap');
 
 @font-face {
     font-family: 'Neofolia';
@@ -43,9 +42,9 @@
     --section-overlay-projects: rgba(0, 0, 0, 0.78);
     --section-overlay-contact: rgba(0, 0, 0, 0.72);
 
-    --font-display: 'Orbitron', 'BrushGrunge', 'Barlow Condensed', sans-serif;
-    --font-sub: 'Barlow Condensed', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-display: 'Kateno', sans-serif;
+    --font-sub: 'Kateno', sans-serif;
+    --font-body: 'Kateno', sans-serif;
 
     --radius: 10px;
     --radius-sm: 6px;
@@ -1942,7 +1941,8 @@ button {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(139, 0, 0, 0.4); /* Maroon red overlay */
+    background: rgba(139, 0, 0, 0.4);
+    /* Maroon red overlay */
     z-index: 1;
     pointer-events: none;
 }
@@ -1958,8 +1958,13 @@ button {
 }
 
 @keyframes scanlines-move {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
 }
 
 /* Hero inner adjustments */
@@ -2071,17 +2076,41 @@ button {
 }
 
 @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, -2px);
+    }
+
+    60% {
+        transform: translate(2px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
 }
 
 @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
 }
 
 /* Subtitle with level */
@@ -2117,8 +2146,15 @@ button {
 }
 
 @keyframes level-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 /* Tagline */
@@ -2168,13 +2204,26 @@ button {
 }
 
 @keyframes stat-scan {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 @keyframes stat-glitch {
-    0%, 90%, 100% { transform: translateX(0); }
-    95% { transform: translateX(-2px); }
+
+    0%,
+    90%,
+    100% {
+        transform: translateX(0);
+    }
+
+    95% {
+        transform: translateX(-2px);
+    }
 }
 
 .stat-val-cyber {
@@ -2266,8 +2315,15 @@ button {
 }
 
 @keyframes float-3d {
-    0%, 100% { transform: translateY(0) rotateY(0deg); }
-    50% { transform: translateY(-20px) rotateY(10deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotateY(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotateY(10deg);
+    }
 }
 
 .hero-char-img {
@@ -2302,13 +2358,25 @@ button {
 }
 
 @keyframes mascot-bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 @keyframes emoji-glow {
-    0% { text-shadow: 0 0 5px #00ff00; }
-    100% { text-shadow: 0 0 15px #00ff00; }
+    0% {
+        text-shadow: 0 0 5px #00ff00;
+    }
+
+    100% {
+        text-shadow: 0 0 15px #00ff00;
+    }
 }
 
 .hero-glitch-text {
@@ -2329,8 +2397,16 @@ button {
 }
 
 @keyframes text-glitch {
-    0%, 90%, 100% { transform: rotate(-2deg) translateX(0); }
-    95% { transform: rotate(-2deg) translateX(-2px); }
+
+    0%,
+    90%,
+    100% {
+        transform: rotate(-2deg) translateX(0);
+    }
+
+    95% {
+        transform: rotate(-2deg) translateX(-2px);
+    }
 }
 
 /* Floating modular icons grid */
@@ -2360,10 +2436,23 @@ button {
 }
 
 @keyframes float-icon {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-5px) rotate(5deg); }
-    50% { transform: translateY(-10px) rotate(0deg); }
-    75% { transform: translateY(-5px) rotate(-5deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-5px) rotate(-5deg);
+    }
 }
 
 /* Lower mascots */
@@ -2417,20 +2506,33 @@ button {
 }
 
 @keyframes mascot-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 @keyframes emoji-flicker {
-    0% { opacity: 0.8; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* New cyberpunk hero updates */
 .hero-title-cyber.hot-pink {
     color: #ff0080;
     text-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080;
-    font-size: clamp(8rem, 18vw, 12rem); /* Massive */
+    font-size: clamp(8rem, 18vw, 12rem);
+    /* Massive */
 }
 
 .hero-right-stack {
@@ -2445,7 +2547,8 @@ button {
     font-size: 3rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #00ffff; /* Cyan */
+    color: #00ffff;
+    /* Cyan */
     text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
     line-height: 1;
 }
