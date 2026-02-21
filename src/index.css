@@ -1,11 +1,7 @@
-/* Font imports MUST come before all other statements */
-@import url('https://fonts.cdnfonts.com/css/kateno');
-@import url('https://fonts.cdnfonts.com/css/brushgrunge');
-
 /* Load Tailwind (for any utility classes still in use) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import the Aftermath Fallout design system */
+/* Import the Valorant tactical design system */
 @import './style.css';
