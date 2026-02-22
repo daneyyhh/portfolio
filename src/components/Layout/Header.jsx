@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
-    { href: '#hero', label: 'HOME', idx: '01' },
-    { href: '#about', label: 'ABOUT', idx: '02' },
-    { href: '#projects', label: 'PROJECTS', idx: '03' },
-    { href: '#contact', label: 'CONTACT', idx: '04' },
+    { href: '#hero', label: 'HOME' },
+    { href: '#about', label: 'THE OUTLAW' },
+    { href: '#projects', label: 'WANTED' },
+    { href: '#contact', label: 'TELEGRAPH' },
 ];
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [active, setActive] = useState('#hero');
-    const [hovered, setHovered] = useState(null);
 
-    /* ── Scroll detection ── */
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 60);
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    /* ── Active section via IntersectionObserver ── */
     useEffect(() => {
         const observer = new IntersectionObserver(
             entries => entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); }),
@@ -33,184 +30,70 @@ const Header = () => {
 
     const handleNav = (href) => { setMenuOpen(false); setActive(href); };
 
-    /* ── Animation variants ── */
-    const headerVars = {
-        hidden: { y: -80, opacity: 0 },
-        show: {
-            y: 0, opacity: 1,
-            transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }
-        }
-    };
-
-    const linkVars = {
-        hidden: { opacity: 0, y: -12 },
-        show: (i) => ({
-            opacity: 1, y: 0,
-            transition: { delay: 0.3 + i * 0.07, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }
-        })
-    };
-
     return (
         <motion.header
-            className={`site-header val-header ${scrolled ? 'scrolled' : ''}`}
-            variants={headerVars}
-            initial="hidden"
-            animate="show"
+            className={`val-header ${scrolled ? 'scrolled' : ''}`}
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            {/* ── Top red accent line – animates in ── */}
-            <motion.div
-                className="header-top-line"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-            />
-
             <div className="header-inner">
+                {/* Logo */}
+                <a href="#hero" className="val-logo" onClick={() => handleNav('#hero')}>
+                    <span style={{ fontSize: '1.8rem', color: '#fff', letterSpacing: '0.05em' }}>REUBEN</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--rdr-red)', marginLeft: '8px', border: '1px solid var(--rdr-red)', padding: '2px 6px' }}>OUTLAW</span>
+                </a>
 
-                {/* ── Logo ── */}
-                <motion.a
-                    href="#hero"
-                    className="header-logo val-logo"
-                    initial={{ opacity: 0, x: -24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    onClick={() => handleNav('#hero')}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                >
-                    {/* V-chevron SVG */}
-                    <svg className="logo-chevron" viewBox="0 0 20 18" fill="none" width="20" height="18">
-                        <path d="M0 0L10 18L20 0H15L10 10L5 0H0Z" fill="#ff4655" />
-                    </svg>
-                    <span className="logo-text-val">
-                        <span className="logo-r">R</span>EUBEN
-                    </span>
-                    <span className="logo-tag-val">DEV</span>
-                </motion.a>
-
-                {/* ── Desktop Nav ── */}
-                <nav className="desktop-nav val-desktop-nav">
-                    {navItems.map((item, i) => (
-                        <motion.a
+                {/* Desktop Nav */}
+                <nav className="desktop-nav">
+                    {navItems.map((item) => (
+                        <a
                             key={item.href}
                             href={item.href}
                             className={`val-nav-link ${active === item.href ? 'val-nav-active' : ''}`}
                             onClick={() => handleNav(item.href)}
-                            custom={i}
-                            variants={linkVars}
-                            initial="hidden"
-                            animate="show"
-                            onHoverStart={() => setHovered(item.href)}
-                            onHoverEnd={() => setHovered(null)}
                         >
-                            {/* Superscript number */}
-                            <span className="val-nav-sup">{item.idx}</span>
                             {item.label}
-
-                            {/* Animated red underline on active/hover */}
-                            <AnimatePresence>
-                                {(active === item.href || hovered === item.href) && (
-                                    <motion.span
-                                        className="val-nav-underline"
-                                        layoutId="navUnderline"
-                                        initial={{ scaleX: 0, opacity: 0 }}
-                                        animate={{ scaleX: 1, opacity: 1 }}
-                                        exit={{ scaleX: 0, opacity: 0 }}
-                                        transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-                                    />
-                                )}
-                            </AnimatePresence>
-                        </motion.a>
+                        </a>
                     ))}
                 </nav>
 
-                {/* ── CTA Button ── */}
-                <motion.a
-                    href="#contact"
-                    className="header-cta val-cta"
-                    initial={{ opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    whileHover={{ scale: 1.05, boxShadow: '0 0 28px rgba(255,70,85,0.5)' }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleNav('#contact')}
-                >
-                    <motion.span
-                        className="cta-dot"
-                        animate={{ scale: [1, 1.5, 1] }}
-                        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-                    />
-                    HIRE ME
-                </motion.a>
+                {/* CTA */}
+                <a href="#contact" className="val-cta" onClick={() => handleNav('#contact')}>
+                    JOBS
+                </a>
 
-                {/* ── Hamburger ── */}
-                <button
-                    className="burger val-burger"
-                    onClick={() => setMenuOpen(v => !v)}
-                    aria-label="Toggle menu"
-                    aria-expanded={menuOpen}
-                >
-                    {[0, 1, 2].map(i => (
-                        <motion.span
-                            key={i}
-                            className="burger-line"
-                            animate={menuOpen
-                                ? i === 0 ? { rotate: 45, y: 8 }
-                                    : i === 1 ? { opacity: 0, x: -8 }
-                                        : { rotate: -45, y: -8 }
-                                : { rotate: 0, y: 0, opacity: 1, x: 0 }
-                            }
-                            transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        />
-                    ))}
+                {/* Mobile Burger */}
+                <button className="val-burger" onClick={() => setMenuOpen(!menuOpen)}>
+                    <span className="burger-line" style={{ transform: menuOpen ? 'rotate(45deg) translateY(7px)' : 'none' }} />
+                    <span className="burger-line" style={{ opacity: menuOpen ? 0 : 1 }} />
+                    <span className="burger-line" style={{ transform: menuOpen ? 'rotate(-45deg) translateY(-7px)' : 'none' }} />
                 </button>
             </div>
 
-            {/* ── Mobile Menu ── */}
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div
-                        className="mobile-menu val-mobile-menu"
-                        key="mobile-menu"
-                        initial={{ opacity: 0, y: -20, height: 0 }}
-                        animate={{ opacity: 1, y: 0, height: 'auto' }}
-                        exit={{ opacity: 0, y: -20, height: 0 }}
-                        transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="val-mobile-menu"
+                        initial={{ opacity: 0, x: '100%' }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: '100%' }}
+                        transition={{ type: 'tween', duration: 0.4 }}
                     >
-                        {navItems.map((item, i) => (
-                            <motion.a
-                                key={item.href}
-                                href={item.href}
-                                className={`mobile-nav-link val-mobile-link ${active === item.href ? 'nav-active' : ''}`}
-                                onClick={() => handleNav(item.href)}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ delay: i * 0.06, duration: 0.3 }}
-                            >
-                                <span className="val-nav-sup" style={{ marginRight: '10px' }}>{item.idx}</span>
-                                {item.label}
-                                {active === item.href && (
-                                    <motion.span
-                                        className="mobile-active-bar"
-                                        layoutId="mobileBar"
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: 1 }}
-                                    />
-                                )}
-                            </motion.a>
-                        ))}
-                        <motion.a
-                            href="#contact"
-                            className="mobile-cta val-mobile-cta"
-                            onClick={() => handleNav('#contact')}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.28 }}
-                            whileTap={{ scale: 0.96 }}
-                        >
-                            HIRE ME ⊙
-                        </motion.a>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '100px 40px' }}>
+                            {navItems.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    className="val-mobile-link"
+                                    onClick={() => handleNav(item.href)}
+                                    style={{ fontSize: '3rem', fontFamily: 'var(--font-title)' }}
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

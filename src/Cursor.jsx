@@ -60,13 +60,12 @@ const Cursor = () => {
                     position: fixed;
                     top: 0; left: 0;
                     width: 12px; height: 12px;
-                    background: #FFE500;
+                    background: var(--rdr-red);
                     border-radius: 50%;
                     pointer-events: none;
                     z-index: 99999;
                     will-change: transform;
                     transition: width 0.2s, height 0.2s, background 0.2s;
-                    mix-blend-mode: difference;
                 }
                 .c-dot.cursor-hover {
                     width: 8px; height: 8px;
@@ -76,7 +75,7 @@ const Cursor = () => {
                     position: fixed;
                     top: 0; left: 0;
                     width: 40px; height: 40px;
-                    border: 1.5px solid rgba(255,229,0,0.6);
+                    border: 1.5px solid rgba(167,0,0,0.6);
                     border-radius: 50%;
                     pointer-events: none;
                     z-index: 99998;
@@ -85,7 +84,7 @@ const Cursor = () => {
                 }
                 .c-ring.cursor-hover {
                     width: 56px; height: 56px;
-                    border-color: rgba(255,229,0,0.9);
+                    border-color: rgba(167,0,0,0.9);
                     border-width: 2px;
                 }
                 @media (pointer: coarse) {

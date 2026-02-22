@@ -1,7 +1,9 @@
-/* Load Tailwind (for any utility classes still in use) */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&family=Newsreader:opsz,wght@6..72,300;400;600;800&family=Special+Elite&display=swap');
+
+/* Tailwind base utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import the Valorant tactical design system */
+/* Cyberpunk design system */
 @import './style.css';
