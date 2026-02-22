@@ -11,6 +11,7 @@ const navItems = [
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [active, setActive] = useState('#hero');
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 60);
@@ -20,29 +21,37 @@ const Header = () => {
 
     return (
         <motion.header
-            className="val-header"
+            className={`val-header ${scrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
         >
             <div className="header-inner">
-                <a href="#hero" className="val-logo">REUBEN.CHR</a>
+                <a href="#hero" className="val-logo" onClick={() => setMenuOpen(false)}>REUBEN.CHR</a>
 
-                <nav className="desktop-nav">
+                <nav className={`desktop-nav ${menuOpen ? 'show' : ''}`}>
                     {navItems.map((item) => (
                         <a
                             key={item.href}
                             href={item.href}
                             className={`val-nav-link ${active === item.href ? 'val-nav-active' : ''}`}
-                            onClick={() => setActive(item.href)}
+                            onClick={() => { setActive(item.href); setMenuOpen(false); }}
                         >
                             {item.label}
                         </a>
                     ))}
                 </nav>
 
-                <a href="#contact" className="btn-comic" style={{ fontSize: '0.8rem', padding: '5px 15px', boxShadow: '3px 3px 0px #000' }}>
-                    SOS
-                </a>
+                <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <a href="#contact" className="btn-comic" style={{ fontSize: '0.8rem', padding: '5px 15px', boxShadow: '3px 3px 0px #000' }}>
+                        SOS
+                    </a>
+
+                    <button className="comic-burger" onClick={() => setMenuOpen(!menuOpen)}>
+                        <div className="bar" />
+                        <div className="bar" />
+                        <div className="bar" />
+                    </button>
+                </div>
             </div>
         </motion.header>
     );

@@ -26,8 +26,8 @@ const Hero = () => {
                         Welcome to the chronicle of code.
                     </p>
                     <div style={{ display: 'flex', gap: '20px' }}>
-                        <button className="btn-comic comic-shake">READ MISSIONS</button>
-                        <button className="btn-comic comic-shake" style={{ background: '#fff' }}>THE STORY</button>
+                        <button className="btn-comic comic-shake comic-zap">READ MISSIONS</button>
+                        <button className="btn-comic comic-shake comic-zap" style={{ background: '#fff' }}>THE STORY</button>
                     </div>
                 </motion.div>
             </div>
