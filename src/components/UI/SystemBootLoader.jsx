@@ -1,85 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-const bootLogs = [
-    '> PREPARING THE HORSE ...',
-    '> LOADING THE CARBINE ...',
-    '> CHECKING THE BOUNTY LIST ...',
-    '> SADDLING UP ...',
-    '> RIDING TO VALENTINE ...',
-    '> ENTERING THE SALOON ...',
-    '> READY FOR THE DUEL ✓',
-];
-
-const SystemBootLoader = ({ onComplete }) => {
-    const [progress, setProgress] = useState(0);
-    const [logs, setLogs] = useState([]);
-    const [done, setDone] = useState(false);
-
-    useEffect(() => {
-        let logIdx = 0;
-        const tick = setInterval(() => {
-            setProgress(prev => {
-                const next = prev + Math.random() * 4 + 1.5;
-                if (next >= 100) {
-                    clearInterval(tick);
-                    setDone(true);
-                    setTimeout(onComplete, 900);
-                    return 100;
-                }
-                // Add a log entry every ~15%
-                const threshold = (logIdx + 1) * (100 / bootLogs.length);
-                if (next >= threshold && logIdx < bootLogs.length) {
-                    setLogs(l => [...l, bootLogs[logIdx]]);
-                    logIdx++;
-                }
-                return next;
-            });
-        }, 130);
-        return () => clearInterval(tick);
-    }, [onComplete]);
-
-    const pct = Math.min(Math.round(progress), 100);
-
+const SystemBootLoader = ({ pct }) => {
     return (
-        <AnimatePresence>
-            {!done && (
+        <motion.div
+            className="loader-screen"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            style={{ cursor: 'none', position: 'fixed', inset: 0, zIndex: 10000 }}
+        >
+            <div style={{ textAlign: 'center' }}>
                 <motion.div
-                    className="loader-screen"
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                    style={{ cursor: 'none' }}
+                    initial={{ scale: 0.5, rotate: -20, opacity: 0 }}
+                    animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                    transition={{ type: 'spring', damping: 10 }}
+                    style={{
+                        background: 'yellow',
+                        color: '#000',
+                        padding: '20px 60px',
+                        border: '6px solid #fff',
+                        boxShadow: '10px 10px 0px #fff',
+                        marginBottom: '40px'
+                    }}
                 >
-                    <div className="loader-silhouette" style={{ backgroundImage: `url('/rdr-silhouette.png')` }} />
-
-                    <div className="loader-content">
-                        <motion.div
-                            className="loader-logo"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1 }}
-                        >
-                            <span>REUBEN</span>
-                            <span className="logo-tag">OUTLAW OF CODE</span>
-                        </motion.div>
-
-                        <div className="loader-bar-wrap">
-                            <div className="loader-bar-track">
-                                <motion.div
-                                    className="loader-bar-fill"
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${pct}%` }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </div>
-                            <div className="loader-pct">{pct}%</div>
-                        </div>
-
-                        <p className="loader-footer">ESTABLISHED 1899 // PORTFOLIO v4.0</p>
-                    </div>
+                    <h1 style={{ fontFamily: 'var(--font-title)', fontSize: '5rem', lineHeight: 1 }}>BOOM!</h1>
                 </motion.div>
-            )}
-        </AnimatePresence>
+
+                <div className="loader-logo">
+                    <span style={{ color: '#fff' }}>REUBEN CHRONICLES</span>
+                </div>
+
+                <div className="loader-bar-wrap">
+                    <motion.div
+                        className="loader-bar-fill"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pct}%` }}
+                    />
+                </div>
+
+                <div style={{ marginTop: '20px', fontFamily: 'var(--font-accent)', fontSize: '1.2rem', color: 'yellow' }}>
+                    INKING PAGES: {pct}%
+                </div>
+            </div>
+        </motion.div>
     );
 };
 

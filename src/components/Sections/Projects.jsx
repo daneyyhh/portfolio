@@ -4,70 +4,66 @@ import { motion } from 'framer-motion';
 const projectData = [
     {
         id: 'fm-1',
-        name: 'FIVEM RESOURCES',
-        description: 'Advanced server systems, scripts, and custom frameworks for the FiveM frontier.',
-        category: 'LUA SYSTEMS',
-        link: 'https://github.com/daneyyhh/fivem-resources',
+        title: 'THE FIVE-M CHRONICLES',
+        desc: 'Advanced LUA systems for legendary servers.',
+        color: '#ffde00',
+        img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80'
     },
     {
         id: 'un-1',
-        name: 'HAUNTED HOUSE',
-        description: 'Survival horror experience in Unity. Navigate shadow and solve the void.',
-        category: 'UNITY ENGINE',
-        link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
+        title: 'HAUNTED CODE',
+        desc: 'A Unity horror experience written in C#.',
+        color: '#ff0000',
+        img: 'https://images.unsplash.com/photo-1604076913837-52ab5629fde9?auto=format&fit=crop&w=400&q=80'
     },
     {
         id: 'un-2',
-        name: 'SPRITE FLIGHT',
-        description: 'Fast-paced arcade action. Master the skies and claim your bounty.',
-        category: 'C# PROJECT',
-        link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
+        title: 'SPRITE ENGINE',
+        desc: 'High-octane arcade action systems.',
+        color: '#00ccff',
+        img: 'https://images.unsplash.com/photo-1519669556878-63bdad8a1a49?auto=format&fit=crop&w=400&q=80'
     },
     {
         id: 'dc-1',
-        name: 'DISCORD BOTS',
-        description: 'Automation and community management solutions for high-level operations.',
-        category: 'NODE JS',
-        link: 'https://github.com/daneyyhh',
-    },
+        title: 'BOT LEGACY',
+        desc: 'The ultimate Discord automation tool.',
+        color: '#ffffff',
+        img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=400&q=80'
+    }
 ];
 
-const QuestItem = ({ project, index }) => (
-    <motion.a
-        href={project.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="quest-item"
-        initial={{ opacity: 0, x: -30 }}
-        whileInView={{ opacity: 1, x: 0 }}
+const ProjectCard = ({ project, index }) => (
+    <motion.div
+        className="project-card"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: index * 0.1, duration: 0.8 }}
+        transition={{ delay: index * 0.1 }}
     >
-        <div className="quest-category">{project.category}</div>
-        <h3 className="quest-title">{project.name}</h3>
-        <p className="quest-desc">{project.description}</p>
-        <div className="quest-action" style={{ color: 'var(--tera-red)', fontSize: '1.2rem' }}>→</div>
-    </motion.a>
+        <div className="project-img-panel">
+            <img src={project.img} alt={project.title} />
+            <div className="caption-box" style={{ position: 'absolute', top: 5, left: 5, fontSize: '0.6rem', padding: '2px 8px' }}>
+                CASE #{index + 100}
+            </div>
+        </div>
+        <h3 style={{ fontFamily: 'var(--font-title)', fontSize: '1.2rem', marginBottom: '10px' }}>{project.title}</h3>
+        <p style={{ fontSize: '0.8rem', marginBottom: '20px', minHeight: '40px' }}>{project.desc}</p>
+        <button className="btn-comic" style={{ fontSize: '0.9rem', width: '100%', padding: '8px' }}>VIEW CASE</button>
+    </motion.div>
 );
 
 const Projects = () => {
     return (
         <section id="projects" className="projects-section">
-            <div className="section-inner">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                >
-                    <span className="section-label">CHAPTER III — MISSIONS</span>
-                    <h2 className="section-title">ACTIVE <span style={{ color: 'var(--tera-red)' }}>QUESTS</span></h2>
-                </motion.div>
+            <div style={{ marginBottom: '60px' }}>
+                <span className="caption-box">GALLERY OF WORK</span>
+                <h2 className="section-title" data-text="MISSIONS">MISSIONS</h2>
+            </div>
 
-                <div className="projects-grid">
-                    {projectData.map((project, i) => (
-                        <QuestItem key={project.id} project={project} index={i} />
-                    ))}
-                </div>
+            <div className="projects-grid">
+                {projectData.map((project, i) => (
+                    <ProjectCard key={project.id} project={project} index={i} />
+                ))}
             </div>
         </section>
     );
