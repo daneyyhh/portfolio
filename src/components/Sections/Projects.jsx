@@ -5,63 +5,49 @@ const projectData = [
     {
         id: 'fm-1',
         name: 'FIVEM RESOURCES',
-        description: 'A complete suite of custom FiveM server scripts — jobs, vehicles, HUD, gangs, events, and much more. Battle-tested on the trail.',
-        category: 'Lua · Systems',
+        description: 'Advanced server systems, scripts, and custom frameworks for the FiveM frontier.',
+        category: 'LUA SYSTEMS',
         link: 'https://github.com/daneyyhh/fivem-resources',
-        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 'un-1',
         name: 'HAUNTED HOUSE',
-        description: 'A survival horror experience built in Unity. Navigate dark corridors, solve puzzles, and survive the terror lurking in every shadow.',
-        category: 'Unity · C#',
+        description: 'Survival horror experience in Unity. Navigate shadow and solve the void.',
+        category: 'UNITY ENGINE',
         link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
-        image: 'https://images.unsplash.com/photo-1604076913837-52ab5629fde9?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 'un-2',
         name: 'SPRITE FLIGHT',
-        description: 'Arcade flight action built in Unity. Dodge incoming fire, master tight manoeuvres, and rack up the highest bounty possible.',
-        category: 'Unity · C#',
+        description: 'Fast-paced arcade action. Master the skies and claim your bounty.',
+        category: 'C# PROJECT',
         link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
-        image: 'https://images.unsplash.com/photo-1519669556878-63bdad8a1a49?auto=format&fit=crop&w=600&q=80',
     },
     {
         id: 'dc-1',
         name: 'DISCORD BOTS',
-        description: 'Full-featured Discord bots managing esports communities — moderation, stats tracking, and live game integrations.',
-        category: 'Node.js · JS',
+        description: 'Automation and community management solutions for high-level operations.',
+        category: 'NODE JS',
         link: 'https://github.com/daneyyhh',
-        image: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=600&q=80',
     },
 ];
 
-const ProjectCard = ({ project, index }) => (
-    <motion.div
-        className="rdr-project-card"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+const QuestItem = ({ project, index }) => (
+    <motion.a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="quest-item"
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: index * 0.1, duration: 0.6 }}
+        transition={{ delay: index * 0.1, duration: 0.8 }}
     >
-        <div
-            className="project-card-image"
-            style={{ backgroundImage: `url(${project.image})` }}
-        />
-        <div className="project-card-content">
-            <span className="rdr-label" style={{ fontSize: '0.7rem', marginBottom: '10px', display: 'block' }}>REWARD: {project.category}</span>
-            <h3 className="project-card-title">{project.name}</h3>
-            <p className="project-card-desc">{project.description}</p>
-            <div style={{ marginTop: '24px' }}>
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-outline-rdr" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
-                    VIEW MISSION
-                </a>
-            </div>
-        </div>
-        {/* Distressed corner decoration */}
-        <div className="hud-corner hud-tl" style={{ opacity: 0.3, width: 15, height: 15 }} />
-        <div className="hud-corner hud-br" style={{ opacity: 0.3, width: 15, height: 15 }} />
-    </motion.div>
+        <div className="quest-category">{project.category}</div>
+        <h3 className="quest-title">{project.name}</h3>
+        <p className="quest-desc">{project.description}</p>
+        <div className="quest-action" style={{ color: 'var(--tera-red)', fontSize: '1.2rem' }}>→</div>
+    </motion.a>
 );
 
 const Projects = () => {
@@ -69,18 +55,17 @@ const Projects = () => {
         <section id="projects" className="projects-section">
             <div className="section-inner">
                 <motion.div
-                    className="section-header"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                 >
-                    <span className="section-label">CHAPTER THREE</span>
-                    <h2 className="section-title">THE WANTED <span className="rdr-red">LIST</span></h2>
+                    <span className="section-label">CHAPTER III — MISSIONS</span>
+                    <h2 className="section-title">ACTIVE <span style={{ color: 'var(--tera-red)' }}>QUESTS</span></h2>
                 </motion.div>
 
                 <div className="projects-grid">
                     {projectData.map((project, i) => (
-                        <ProjectCard key={project.id} project={project} index={i} />
+                        <QuestItem key={project.id} project={project} index={i} />
                     ))}
                 </div>
             </div>
