@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const panels = [
-    { text: "ANOTHER BUG DETECTED!", action: "GASP!", img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80" },
+    { text: "ANOTHER BUG DETECTED!", action: "GASP!", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" },
     { text: "INJECTING CLEAN CODE...", action: "ZZAP!", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" },
     { text: "SYSTEM RESTORED!", action: "HUZZAH!", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" },
 ];

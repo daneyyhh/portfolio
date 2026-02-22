@@ -8,7 +8,7 @@ const projectData = [
         desc: 'Advanced LUA systems for legendary servers.',
         color: '#ffde00',
         link: 'https://github.com/daneyyhh/fivem-resources',
-        img: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'un-1',
@@ -16,7 +16,7 @@ const projectData = [
         desc: 'A Unity horror experience written in C#.',
         color: '#ff0000',
         link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
-        img: 'https://images.unsplash.com/photo-1505843513577-22bb7d21ef45?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'un-2',
@@ -24,7 +24,7 @@ const projectData = [
         desc: 'High-octane arcade action systems.',
         color: '#00ccff',
         link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
-        img: 'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'dc-1',
@@ -32,7 +32,7 @@ const projectData = [
         desc: 'The ultimate Discord automation tool.',
         color: '#ffffff',
         link: 'https://github.com/daneyyhh',
-        img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=600&q=80'
     }
 ];
 
