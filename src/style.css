@@ -41,7 +41,11 @@ body {
     color: var(--comic-ink);
     overflow-x: hidden;
     line-height: 1.6;
-    cursor: none;
+    cursor: none !important;
+}
+
+* {
+    cursor: none !important;
 }
 
 /* Halftone Pattern Overlay */
@@ -154,21 +158,29 @@ body::before {
 .val-header {
     position: fixed;
     top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 5%;
     width: 90%;
     max-width: 1200px;
     z-index: 1000;
-    border: 2px solid var(--comic-ink);
+    border: 3px solid var(--comic-ink);
     background: #fff;
     box-shadow: 6px 6px 0px var(--comic-ink);
     transition: all 0.3s var(--ease);
 }
 
+@media (min-width: 1334px) {
+    .val-header {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
 .val-header.scrolled {
     top: 0;
+    left: 0;
     width: 100%;
     max-width: none;
+    transform: none;
     box-shadow: 0 4px 0 var(--comic-ink);
 }
 

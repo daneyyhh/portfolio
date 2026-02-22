@@ -4,19 +4,26 @@ import { motion, useSpring, AnimatePresence } from 'framer-motion';
 const CLICK_WORDS = ["POW!", "WHAM!", "BOOM!", "ZAP!", "KABOOM!", "SLAM!"];
 
 const Cursor = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0, y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0 });
   const [isPointer, setIsPointer] = useState(false);
   const [clicks, setClicks] = useState([]);
 
+  const springConfig = { damping: 25, stiffness: 200 };
+  const cursorX = useSpring(mousePos.x, springConfig);
+  const cursorY = useSpring(mousePos.y, springConfig);
+
   const handleMouseMove = useCallback((e) => {
     setMousePos({ x: e.clientX, y: e.clientY });
+    cursorX.set(e.clientX);
+    cursorY.set(e.clientY);
+
     const target = e.target;
     setIsPointer(
       window.getComputedStyle(target).cursor === 'pointer' ||
       target.tagName.toLowerCase() === 'button' ||
       target.tagName.toLowerCase() === 'a'
     );
-  }, []);
+  }, [cursorX, cursorY]);
 
   const handleClick = useCallback((e) => {
     const word = CLICK_WORDS[Math.floor(Math.random() * CLICK_WORDS.length)];
@@ -35,10 +42,6 @@ const Cursor = () => {
       window.removeEventListener('mousedown', handleClick);
     };
   }, [handleMouseMove, handleClick]);
-
-  const springConfig = { damping: 20, stiffness: 250 };
-  const cursorX = useSpring(mousePos.x, springConfig);
-  const cursorY = useSpring(mousePos.y, springConfig);
 
   return (
     <>
