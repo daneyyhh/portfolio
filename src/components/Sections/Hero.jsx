@@ -53,7 +53,7 @@ const Hero = () => {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Action 1" />
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=800&q=80" alt="Action 1" />
                     <div className="caption-box" style={{ position: 'absolute', bottom: 10, right: 10, fontSize: '0.8rem' }}>HARIPAD — 10:42 PM</div>
                 </motion.div>
 
@@ -63,7 +63,7 @@ const Hero = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
                 >
-                    <img src="https://images.unsplash.com/photo-1604076913837-52ab5629fde9?auto=format&fit=crop&w=600&q=80" alt="Action 2" />
+                    <img src="https://images.unsplash.com/photo-1578632738908-45219321f693?auto=format&fit=crop&w=600&q=80" alt="Action 2" />
                     <div className="caption-box" style={{ position: 'absolute', top: 10, left: 10, fontSize: '0.6rem', background: '#fff' }}>CLICK!</div>
                 </motion.div>
 
@@ -73,7 +73,7 @@ const Hero = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
                 >
-                    <img src="https://images.unsplash.com/photo-1519669556878-63bdad8a1a49?auto=format&fit=crop&w=600&q=80" alt="Action 3" />
+                    <img src="https://images.unsplash.com/photo-1541873676947-9ac61f93455b?auto=format&fit=crop&w=600&q=80" alt="Action 3" />
                 </motion.div>
             </div>
         </section>

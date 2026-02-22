@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navItems = [
     { href: '#hero', label: 'STORY' },
     { href: '#about', label: 'PROFILE' },
+    { href: '#capabilities', label: 'POWERS' },
     { href: '#projects', label: 'MISSIONS' },
     { href: '#contact', label: 'SIGNAL' },
 ];
@@ -16,7 +17,29 @@ const Header = () => {
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 60);
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+
+        // Scroll spy logic
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActive(`#${entry.target.id}`);
+                }
+            });
+        }, observerOptions);
+
+        const sections = document.querySelectorAll('section[id]');
+        sections.forEach(section => observer.observe(section));
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            sections.forEach(section => observer.unobserve(section));
+        };
     }, []);
 
     return (
