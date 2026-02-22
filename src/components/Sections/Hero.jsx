@@ -10,8 +10,21 @@ const Hero = () => {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
+                    style={{ position: 'relative' }}
                 >
                     <div className="caption-box" style={{ marginBottom: '20px' }}>ISSUE #01 — THE DEVELOPER ORIGIN</div>
+
+                    {/* Speech Bubble Extra */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1 }}
+                        className="speech-bubble"
+                        style={{ position: 'absolute', top: '-100px', right: '-40px', zIndex: 10 }}
+                    >
+                        I BRING PROJECTS TO LIFE!
+                    </motion.div>
+
                     <h1 className="section-title" data-text="REUBEN">REUBEN</h1>
                     <p style={{
                         fontFamily: 'var(--font-body)',

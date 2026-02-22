@@ -126,6 +126,19 @@ body::before {
     color: var(--comic-ink);
 }
 
+.comic-click-effect {
+    font-family: var(--font-accent);
+    color: #000;
+    background: var(--comic-accent);
+    padding: 10px 20px;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    pointer-events: none;
+    transform-origin: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
 .caption-box {
     background: var(--comic-accent);
     border: 2px solid var(--comic-ink);
@@ -464,4 +477,40 @@ body::before {
 
 .comic-shake:hover {
     animation: shake 0.1s infinite;
+}
+
+/* Speech Bubble Extra */
+.speech-bubble {
+    position: relative;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 50px;
+    padding: 15px 25px;
+    font-family: var(--font-marker);
+    font-size: 1rem;
+    color: #000;
+    max-width: 200px;
+    text-align: center;
+    filter: drop-shadow(4px 4px 0px #000);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 40px;
+    border-width: 15px 15px 0 0;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 43px;
+    border-width: 12px 12px 0 0;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    z-index: 1;
 }

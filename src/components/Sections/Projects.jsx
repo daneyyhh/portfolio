@@ -14,7 +14,7 @@ const projectData = [
         title: 'HAUNTED CODE',
         desc: 'A Unity horror experience written in C#.',
         color: '#ff0000',
-        img: 'https://images.unsplash.com/photo-1505843513577-22bb7d21ef45?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'un-2',
