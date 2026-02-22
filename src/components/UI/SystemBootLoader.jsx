@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const comicLogs = [
     "DRAWING THE HERO...",
@@ -11,8 +11,27 @@ const comicLogs = [
     "PRINTING ISSUE #1..."
 ];
 
-const SystemBootLoader = ({ pct }) => {
+const SystemBootLoader = ({ onComplete }) => {
+    const [pct, setPct] = useState(0);
     const [currentLog, setCurrentLog] = useState(comicLogs[0]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPct(prev => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if (onComplete) onComplete();
+                    }, 500);
+                    return 100;
+                }
+                const next = prev + Math.floor(Math.random() * 15) + 5;
+                return next > 100 ? 100 : next;
+            });
+        }, 150);
+
+        return () => clearInterval(interval);
+    }, [onComplete]);
 
     useEffect(() => {
         const logIndex = Math.min(
@@ -165,7 +184,7 @@ const SystemBootLoader = ({ pct }) => {
                         fontSize: '1rem'
                     }}
                 >
-                    CLICK! TO START (SOON)
+                    INKING PAGES...
                 </motion.div>
             </div>
 
