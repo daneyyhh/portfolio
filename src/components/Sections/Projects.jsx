@@ -16,7 +16,7 @@ const projectData = [
         desc: 'A Unity horror experience written in C#.',
         color: '#ff0000',
         link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
-        img: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80'
+        img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'un-2',

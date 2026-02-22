@@ -23,7 +23,7 @@ const About = () => {
                     <div className="caption-box" style={{ position: 'absolute', top: -20, left: -20, zIndex: 10 }}>TOP SECRET FILE</div>
                     <div style={{ border: '4px solid #000', height: '100%', overflow: 'hidden', background: '#e0e0e0' }}>
                         <img
-                            src="https://images.unsplash.com/photo-1504194016628-9844f23b7260?auto=format&fit=crop&w=600&q=80"
+                            src="https://images.unsplash.com/photo-1604076913837-52ab5629fde9?auto=format&fit=crop&w=600&q=80"
                             alt="The Developer"
                             style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.5)' }}
                         />
