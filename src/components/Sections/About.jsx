@@ -52,10 +52,10 @@ const About = () => {
                         ))}
                     </div>
 
-                    <div style={{ marginTop: '40px', fontFamily: 'var(--font-body)', fontSize: '0.9rem' }}>
-                        <p><b>Name:</b> Reuben</p>
-                        <p><b>Base:</b> Haripad, India</p>
-                        <p><b>Alignment:</b> Creative Neutral</p>
+                    <div className="comic-bio-block" style={{ marginTop: '40px', fontFamily: 'var(--font-body)', fontSize: '0.9rem', border: '2px solid #000', padding: '15px', background: '#f0f0f0', boxShadow: '4px 4px 0px #000', transform: 'rotate(-0.5deg)' }}>
+                        <p style={{ marginBottom: '5px' }}><b>NAME:</b> <span style={{ fontFamily: 'var(--font-accent)', fontSize: '1.1rem' }}>REUBEN</span></p>
+                        <p style={{ marginBottom: '5px' }}><b>BASE:</b> <span style={{ fontFamily: 'var(--font-accent)', fontSize: '1.1rem' }}>KERALA, INDIA</span></p>
+                        <p><b>ALIGNMENT:</b> <span style={{ fontFamily: 'var(--font-accent)', fontSize: '1.1rem' }}>CREATIVE NEUTRAL</span></p>
                     </div>
                 </div>
             </motion.div>
