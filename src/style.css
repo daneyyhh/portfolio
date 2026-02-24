@@ -213,11 +213,114 @@ body::before {
     transition: opacity 0.2s;
 }
 
-.val-nav-link:hover,
+.val-nav-link:hover {
+    opacity: 1;
+}
+
 .val-nav-active {
     opacity: 1;
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
+    background: var(--comic-accent);
+    color: var(--comic-ink);
+    padding: 2px 8px;
+    transform: rotate(-1deg);
+    box-shadow: 2px 2px 0px var(--comic-ink);
+}
+
+.comic-clock {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--comic-accent);
+    border: 3px solid var(--comic-ink);
+    padding: 4px 15px;
+    box-shadow: 6px 6px 0px var(--comic-ink);
+    font-family: var(--font-accent);
+    transform: rotate(1deg);
+    user-select: none;
+    margin-right: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Halftone inside clock */
+.comic-clock::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+}
+
+.clock-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--comic-ink);
+    padding: 2px 8px;
+    margin-left: -15px;
+    transform: skewX(-10deg);
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #ff0000;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #ff0000;
+    animation: livePulse 1s infinite alternate;
+}
+
+@keyframes livePulse {
+    from {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.comic-clock .clock-label {
+    font-size: 0.8rem;
+    color: #fff;
+    letter-spacing: 1px;
+    line-height: 1;
+    font-family: var(--font-accent);
+}
+
+.clock-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--comic-ink);
+}
+
+.clock-date {
+    font-size: 0.9rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.clock-sep {
+    font-weight: bold;
+    opacity: 0.3;
+}
+
+.comic-clock .clock-time {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+}
+
+@media (max-width: 850px) {
+    .comic-clock {
+        display: none;
+    }
 }
 
 .comic-burger {

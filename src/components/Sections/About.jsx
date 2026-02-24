@@ -21,11 +21,11 @@ const About = () => {
                 {/* Left: Illustration */}
                 <div style={{ position: 'relative' }}>
                     <div className="caption-box" style={{ position: 'absolute', top: -20, left: -20, zIndex: 10 }}>TOP SECRET FILE</div>
-                    <div style={{ border: '4px solid #000', height: '100%', overflow: 'hidden', background: '#e0e0e0' }}>
+                    <div style={{ border: '4px solid #000', height: '100%', overflow: 'hidden', background: '#000' }}>
                         <img
-                            src="https://images.unsplash.com/photo-1604076913837-52ab5629fde9?auto=format&fit=crop&w=600&q=80"
-                            alt="The Developer"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.5)' }}
+                            src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80"
+                            alt="Miles Morales"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.2)' }}
                         />
                     </div>
                 </div>

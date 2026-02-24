@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import RealTimeClock from '../UI/RealTimeClock';
+
 const navItems = [
     { href: '#hero', label: 'STORY' },
     { href: '#about', label: 'PROFILE' },
@@ -65,6 +67,7 @@ const Header = () => {
                 </nav>
 
                 <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <RealTimeClock />
                     <a href="#contact" className="btn-comic" style={{ fontSize: '0.8rem', padding: '5px 15px', boxShadow: '3px 3px 0px #000' }}>
                         SOS
                     </a>
