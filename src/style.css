@@ -42,10 +42,23 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     cursor: none !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.8s var(--ease);
 }
 
 * {
     cursor: none !important;
+}
+
+input,
+textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 /* Halftone Pattern Overlay */

@@ -58,7 +58,7 @@ const Header = () => {
                         <a
                             key={item.href}
                             href={item.href}
-                            className={`val-nav-link ${active === item.href ? 'val-nav-active' : ''}`}
+                            className={`val-nav-link magnetic ${active === item.href ? 'val-nav-active' : ''}`}
                             onClick={() => { setActive(item.href); setMenuOpen(false); }}
                         >
                             {item.label}

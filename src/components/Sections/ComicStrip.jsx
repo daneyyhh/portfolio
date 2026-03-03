@@ -14,14 +14,14 @@ const ComicStrip = () => {
                 {panels.map((panel, i) => (
                     <motion.div
                         key={i}
-                        className="comic-panel"
+                        className="comic-panel magnetic"
                         initial={{ rotate: i % 2 === 0 ? -2 : 2, opacity: 0, y: 30 }}
                         whileInView={{ rotate: 0, opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.2 }}
                         style={{ height: '400px', position: 'relative', background: '#fff' }}
                     >
-                        <img src={panel.img} alt="Battle" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.2)' }} />
+                        <img src={panel.img} alt="Battle" className="parallax-img" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.2)' }} />
                         <div className="caption-box" style={{ position: 'absolute', top: 20, left: 20, maxWidth: '80%' }}>
                             {panel.text}
                         </div>

@@ -38,14 +38,14 @@ const projectData = [
 
 const ProjectCard = ({ project, index }) => (
     <motion.div
-        className="project-card"
+        className="project-card magnetic"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: index * 0.1 }}
     >
         <div className="project-img-panel">
-            <img src={project.img} alt={project.title} />
+            <img src={project.img} alt={project.title} className="parallax-img" />
             <div className="caption-box" style={{ position: 'absolute', top: 5, left: 5, fontSize: '0.6rem', padding: '2px 8px' }}>
                 CASE #{index + 100}
             </div>
@@ -89,7 +89,7 @@ const ProjectCard = ({ project, index }) => (
 
 const Projects = () => {
     return (
-        <section id="projects" className="projects-section">
+        <section id="projects" className="projects-section" data-bg="#ffffff">
             <div style={{ marginBottom: '60px' }}>
                 <span className="caption-box">GALLERY OF WORK</span>
                 <h2 className="section-title" data-text="MISSIONS">MISSIONS</h2>

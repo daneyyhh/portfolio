@@ -10,7 +10,7 @@ const abilities = [
 
 const About = () => {
     return (
-        <section id="about" className="about-section" style={{ padding: '100px 20px' }}>
+        <section id="about" className="about-section" style={{ padding: '100px 20px' }} data-bg="#000000">
             <motion.div
                 className="about-page"
                 initial={{ rotate: -2, y: 50, opacity: 0 }}
@@ -25,6 +25,7 @@ const About = () => {
                         <img
                             src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80"
                             alt="Miles Morales"
+                            className="parallax-img"
                             style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.2)' }}
                         />
                     </div>
@@ -32,7 +33,7 @@ const About = () => {
 
                 {/* Right: Data */}
                 <div>
-                    <h2 className="section-title" data-text="PROFILE" style={{ fontSize: '4rem', marginBottom: '30px' }}>PROFILE</h2>
+                    <h2 className="section-title reveal-text" data-text="PROFILE" style={{ fontSize: '4rem', marginBottom: '30px' }}>PROFILE</h2>
                     <p style={{ fontFamily: 'var(--font-marker)', fontSize: '1.2rem', marginBottom: '30px', background: 'yellow', padding: '10px' }}>
                         "I've been building digital worlds since Issue #1..."
                     </p>

@@ -8,11 +8,14 @@ import ComicStrip from '../Sections/ComicStrip';
 import ComicBurst from '../Sections/ComicBurst';
 import Projects from '../Sections/Projects';
 import Contact from '../Sections/Contact';
+import ComicBackground from '../Three/ComicBackground';
 
 const DashboardLayout = () => {
     return (
         <div className="portfolio-wrapper">
+            <ComicBackground />
             <Header />
+
             <main>
                 <Hero />
                 <About />
