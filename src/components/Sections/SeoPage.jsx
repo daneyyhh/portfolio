@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import '../style.css';
+import '../../style.css';
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 30 },
