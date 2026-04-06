@@ -176,7 +176,7 @@ export default function TransitionCtaSection() {
         <div className="absolute inset-0 z-40 pointer-events-none flex flex-col items-center justify-center overflow-hidden">
           <div className="absolute inset-0 halftone-overlay opacity-20 mix-blend-overlay"></div>
           <div ref={subtitleRef} className="font-mono text-spider-yellow font-bold tracking-widest text-xs md:text-lg opacity-0 mb-6 text-center px-4 max-w-3xl leading-relaxed">
-            And in this portfolio, you don't need a radioactive spider bite to build something this cool.
+            And in this portfolio, you don&apos;t need a radioactive spider bite to build something this cool.
           </div>
           <div ref={mainTitleRef} className="font-bangers leading-[1.1] text-spider-white text-center opacity-0 drop-shadow-[5px_5px_0px_#E8272A] mb-12 px-4" style={{ fontSize: "clamp(1.75rem, 9vw, 7.5rem)" }}>
             LET&apos;S BUILD <br /> <span className="text-spider-yellow drop-shadow-[4px_4px_0px_#F5F0E8] mt-2 inline-block">SOMETHING EPIC</span>
