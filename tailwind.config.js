@@ -24,6 +24,7 @@ export default {
                 sans: ['Inter', 'sans-serif'],
                 bangers: ['Bangers', 'cursive'],
                 mono: ['Space Mono', 'monospace'],
+                outfit: ['Outfit', 'sans-serif'],
             },
             backgroundImage: {
                 'speed-lines': "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 77, 0, 0.05) 10px, rgba(255, 77, 0, 0.05) 20px)",
