@@ -1,33 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import DashboardLayout from './components/Layout/DashboardLayout';
-import SystemBootLoader from './components/UI/SystemBootLoader';
+import HeroReveal from './components/Sections/HeroReveal';
+import OriginSection from './components/Sections/OriginSection';
+import ComicScrollSection from './components/Sections/ComicScrollSection';
+import FaceOffSection from './components/Sections/FaceOffSection';
+import TransitionCtaSection from './components/Sections/TransitionCtaSection';
+import SeoPage from './components/Sections/SeoPage';
 import NotFound from './components/Sections/NotFound';
-import Cursor from './Cursor';
-
-import { useAnimations } from './hooks/useAnimations';
 
 function App() {
-    useAnimations();
-    const isHome = window.location.pathname === '/' || window.location.pathname === '/index.html';
-    const [isLoading, setIsLoading] = useState(isHome);
-
     return (
         <Router>
-            <Cursor />
-            <AnimatePresence>
-                {isLoading && isHome && (
-                    <SystemBootLoader onComplete={() => setIsLoading(false)} />
-                )}
-            </AnimatePresence>
-
-            {(!isLoading || !isHome) && (
-                <Routes>
-                    <Route path="/" element={<DashboardLayout />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            )}
+            <Routes>
+                <Route path="/" element={
+                    <>
+                        <HeroReveal />
+                        <OriginSection />
+                        <ComicScrollSection />
+                        <FaceOffSection />
+                        <TransitionCtaSection />
+                    </>
+                } />
+                <Route path="/seo" element={<SeoPage />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </Router>
     );
 }

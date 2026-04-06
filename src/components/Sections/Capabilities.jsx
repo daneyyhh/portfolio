@@ -2,37 +2,61 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const skills = [
-    { title: 'FRONTEND', desc: 'React, Tailwind, Framer Motion', icon: '⚡' },
-    { title: 'BACKEND', desc: 'Node.js, Express, MongoDB', icon: '🛠️' },
-    { title: 'GAME DEV', desc: 'Unity, C#, Lua scripts', icon: '🎮' },
-    { title: 'DESIGN', desc: 'UI/UX, Comic Art style', icon: '🎨' },
+    { title: 'Frontend Ecosystem', desc: 'React, Next.js, Framer Motion, Tailwind, GSAP', level: 95 },
+    { title: 'Backend Architecture', desc: 'Node.js, Express, PostgreSQL, MongoDB, Redis', level: 88 },
+    { title: 'Game Engineering', desc: 'Unity, C#, LUA, FiveM Systems', level: 90 },
+    { title: 'Design & UI/UX', desc: 'Figma, Glassmorphism, Premium Aesthetics', level: 85 },
 ];
 
 const Capabilities = () => {
     return (
-        <section id="capabilities" className="capabilities-section" style={{ padding: '100px 40px', background: '#fff' }} data-bg="#ffffff">
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                <div style={{ marginBottom: '60px', textAlign: 'center' }}>
-                    <span className="caption-box" style={{ background: '#000', color: '#fff' }}>POWERS & ABILITIES</span>
-                    <h2 className="section-title reveal-text" data-text="CAPABILITIES" style={{ fontSize: '4rem', color: '#000' }}>CAPABILITIES</h2>
+        <section id="capabilities" className="py-24 px-6 sm:px-12 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-sm text-purple-400 font-semibold tracking-widest uppercase mb-3">Capabilities</h2>
+                        <h3 className="text-4xl md:text-5xl font-outfit font-bold text-white">Technical Arsenal</h3>
+                    </motion.div>
+                    
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-gray-400 max-w-md md:text-right"
+                    >
+                        Tools and languages are just a means to an end. My true capability is delivering scalable, elite products.
+                    </motion.p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                     {skills.map((skill, i) => (
                         <motion.div
                             key={skill.title}
-                            className="comic-panel magnetic"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            style={{ padding: '30px', textAlign: 'center' }}
                         >
-                            <div style={{ fontSize: '3rem', marginBottom: '10px' }}>{skill.icon}</div>
-                            <h3 style={{ fontFamily: 'var(--font-title)', fontSize: '1.5rem', marginBottom: '10px' }}>{skill.title}</h3>
-                            <p style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', color: '#666' }}>{skill.desc}</p>
-
-                            <div style={{ marginTop: '20px', fontSize: '0.8rem', fontFamily: 'var(--font-accent)', background: 'var(--comic-accent)', padding: '5px' }}>
-                                UNLOCKED!
+                            <div className="flex justify-between items-end mb-3">
+                                <div>
+                                    <h4 className="text-xl font-outfit font-semibold text-gray-100">{skill.title}</h4>
+                                    <p className="text-xs text-gray-500 mt-1">{skill.desc}</p>
+                                </div>
+                                <span className="text-sm text-indigo-400 font-medium font-outfit">{skill.level}%</span>
+                            </div>
+                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
+                                <motion.div 
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: `${skill.level}%` }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 1, delay: 0.3 + (i * 0.1), ease: "easeOut" }}
+                                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                                />
                             </div>
                         </motion.div>
                     ))}

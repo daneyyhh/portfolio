@@ -3,79 +3,42 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
     return (
-        <section id="hero" className="hero-section" data-bg="#ffffff">
-            {/* Left: Text & Story */}
-            <div className="hero-left">
+        <section id="hero" className="min-h-[90vh] flex flex-col items-center justify-center relative overflow-hidden px-6 sm:px-12">
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-5 mix-blend-luminosity"></div>
+            
+            <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="z-10 text-center max-w-4xl mx-auto"
+            >
                 <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    style={{ position: 'relative' }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="inline-flex py-1 px-3 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold tracking-widest uppercase mb-8 backdrop-blur-md"
                 >
-                    <div className="caption-box" style={{ marginBottom: '20px' }}>ISSUE #01 — THE DEVELOPER ORIGIN</div>
-
-                    {/* Speech Bubble Extra */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1 }}
-                        className="speech-bubble"
-                        style={{ position: 'absolute', top: '-100px', right: '-40px', zIndex: 10 }}
-                    >
-                        I BRING PROJECTS TO LIFE!
-                    </motion.div>
-
-                    <h1 className="section-title reveal-text" data-text="REUBEN">REUBEN</h1>
-                    <p style={{
-                        fontFamily: 'var(--font-body)',
-                        fontSize: '1.2rem',
-                        maxWidth: '500px',
-                        marginBottom: '40px',
-                        borderLeft: '4px solid var(--comic-ink)',
-                        paddingLeft: '20px'
-                    }}>
-                        By day, a software engineer. By night... also a software engineer.
-                        Master of <b>FiveM</b>, <b>Unity</b>, and the arcane arts of <b>React</b>.
-                        Welcome to the chronicle of code.
-                    </p>
-                    <div style={{ display: 'flex', gap: '20px' }}>
-                        <button className="btn-comic comic-shake comic-zap magnetic">READ MISSIONS</button>
-                        <button className="btn-comic comic-shake comic-zap magnetic" style={{ background: '#fff' }}>THE STORY</button>
-                    </div>
+                    Available for Work
                 </motion.div>
-            </div>
-
-            {/* Right: Comic Grid panels */}
-            <div className="hero-right">
-                <motion.div
-                    className="hero-panel wide"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                >
-                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80" alt="Action 1" className="parallax-img" />
-                    <div className="caption-box" style={{ position: 'absolute', bottom: 10, right: 10, fontSize: '0.8rem' }}>HARIPAD — 10:42 PM</div>
-                </motion.div>
-
-                <motion.div
-                    className="hero-panel"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                >
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="Action 2" className="parallax-img" />
-                    <div className="caption-box" style={{ position: 'absolute', top: 10, left: 10, fontSize: '0.6rem', background: '#fff' }}>CLICK!</div>
-                </motion.div>
-
-                <motion.div
-                    className="hero-panel"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                >
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Action 3" className="parallax-img" />
-                </motion.div>
-            </div>
+                
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black font-outfit tracking-tighter leading-tight mb-6">
+                    Building the <span className="text-gradient">Future</span> <br /> of Interfaces.
+                </h1>
+                
+                <p className="text-gray-400 text-lg md:text-xl font-inter max-w-2xl mx-auto mb-10">
+                    I'm Reuben, a creative engineer crafting ultra-modern, high-performance web applications and systems that leave a lasting impression.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#projects" className="w-full sm:w-auto px-8 py-3 rounded-full bg-white text-gray-900 font-semibold font-outfit hover:bg-indigo-50 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        Explore Work
+                    </a>
+                    <a href="#contact" className="w-full sm:w-auto px-8 py-3 rounded-full glass-card text-white font-medium font-outfit flex items-center justify-center gap-2 group">
+                        Let's Talk
+                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </motion.div>
         </section>
     );
 };

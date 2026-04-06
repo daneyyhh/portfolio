@@ -1,9 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Archivo+Black&family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-/* Tailwind base utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Comic Design System */
-@import './style.css';
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #030712; /* gray-950 */
+  }
+  body {
+    @apply bg-spider-red text-spider-black font-mono antialiased overflow-x-hidden;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  ::selection {
+    @apply bg-indigo-500/30 text-indigo-200;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-2xl;
+  }
+  .glass-card {
+    @apply bg-white/[0.02] backdrop-blur-lg border border-white/[0.05] hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-300;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
+  }
+  .btn-primary {
+    @apply px-8 py-3 rounded-full font-outfit font-medium text-white bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-md;
+  }
+}
+
+/* Subtle background noise/grid */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.gradient-blob {
+  position: absolute;
+  filter: blur(100px);
+  z-index: 0;
+  opacity: 0.4;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Spidey Utilities */
+.halftone-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background-image: radial-gradient(#0A0A0A 1px, transparent 1px);
+  background-size: 6px 6px;
+  opacity: 0.07;
+}
+
+/* Marquee animation — moved from inline <style> for better performance */
+@keyframes shadowMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Respect user motion preferences — disable heavy animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

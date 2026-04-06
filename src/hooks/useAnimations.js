@@ -127,46 +127,61 @@ export const useAnimations = () => {
                 onEnterBack: () => gsap.to('body', { backgroundColor: bgColor, duration: 1 }),
             });
 
-            // Generic section entrance animation
+            // Generic section entrance animation (3D Effect)
             if (section.id !== 'hero') {
-                gsap.from(section, {
-                    opacity: 0,
-                    y: 100,
-                    filter: "blur(10px)",
-                    duration: 1.2,
-                    ease: "power4.out",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
+                gsap.fromTo(section, 
+                    {
+                        opacity: 0,
+                        rotateX: -15, // 3D rotation
+                        scale: 0.9,
+                        y: 100,
+                        transformPerspective: 1200,
+                        transformOrigin: 'top center'
+                    },
+                    {
+                        opacity: 1,
+                        rotateX: 0,
+                        scale: 1,
+                        y: 0,
+                        duration: 1.5,
+                        ease: "power4.out",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 85%",
+                            end: "top 20%",
+                            scrub: 1, // Smooth tie to scroll position for 3D feel
+                        }
                     }
-                });
+                );
             }
         });
 
-        // 5. VELOCITY-BASED SKEW (Refined)
+        // 5. VELOCITY-BASED 3D TILT
         const main = document.querySelector('main');
         if (main) {
-            let proxy = { skew: 0 },
-                skewSetter = gsap.quickSetter(main, "skewY", "deg"),
-                clamp = gsap.utils.clamp(-15, 15);
+            let proxy = { rotateX: 0, rotateY: 0 },
+                rotateXSetter = gsap.quickSetter(main, "rotateX", "deg"),
+                rotateYSetter = gsap.quickSetter(main, "rotateY", "deg"),
+                clamp = gsap.utils.clamp(-10, 10); // clamp for 3d rotation bounds
 
             ScrollTrigger.create({
                 onUpdate: (self) => {
-                    let skew = clamp(self.getVelocity() / -400);
-                    if (Math.abs(skew) > Math.abs(proxy.skew)) {
-                        proxy.skew = skew;
+                    let velocity = self.getVelocity();
+                    let rotateX = clamp(velocity / -250); // Calculate 3D tilt based on scroll speed
+                    
+                    if (Math.abs(rotateX) > Math.abs(proxy.rotateX)) {
+                        proxy.rotateX = rotateX;
                         gsap.to(proxy, {
-                            skew: 0,
+                            rotateX: 0,
                             duration: 0.8,
                             ease: "power3",
                             overwrite: true,
-                            onUpdate: () => skewSetter(proxy.skew)
+                            onUpdate: () => rotateXSetter(proxy.rotateX)
                         });
                     }
                 }
             });
-            gsap.set(main, { transformOrigin: "center center", force3D: true });
+            gsap.set(main, { transformOrigin: "center center", force3D: true, transformPerspective: 1500 });
         }
 
         // 6. STICKY PROJECT CARDS (Optional staggered entrance)

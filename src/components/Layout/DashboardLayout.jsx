@@ -4,24 +4,20 @@ import Footer from './Footer';
 import Hero from '../Sections/Hero';
 import About from '../Sections/About';
 import Capabilities from '../Sections/Capabilities';
-import ComicStrip from '../Sections/ComicStrip';
-import ComicBurst from '../Sections/ComicBurst';
 import Projects from '../Sections/Projects';
 import Contact from '../Sections/Contact';
-import ComicBackground from '../Three/ComicBackground';
+import { useAnimations } from '../../hooks/useAnimations';
 
 const DashboardLayout = () => {
-    return (
-        <div className="portfolio-wrapper">
-            <ComicBackground />
-            <Header />
+    useAnimations();
 
-            <main>
+    return (
+        <div className="relative z-10 flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow pt-24">
                 <Hero />
                 <About />
                 <Capabilities />
-                <ComicStrip />
-                <ComicBurst />
                 <Projects />
                 <Contact />
             </main>

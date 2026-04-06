@@ -13,11 +13,17 @@ export default {
                 carbon: "#111111",
                 steel: "#222222",
                 ash: "#e5e5e5",
+                "spider-red": "#E8272A",
+                "spider-black": "#0A0A0A",
+                "spider-white": "#F5F0E8",
+                "spider-yellow": "#FFD600",
             },
             fontFamily: {
                 speed: ['Teko', 'sans-serif'], // Primary Headlines
                 tech: ['Rajdhani', 'sans-serif'], // UI Text
                 sans: ['Inter', 'sans-serif'],
+                bangers: ['Bangers', 'cursive'],
+                mono: ['Space Mono', 'monospace'],
             },
             backgroundImage: {
                 'speed-lines': "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 77, 0, 0.05) 10px, rgba(255, 77, 0, 0.05) 20px)",

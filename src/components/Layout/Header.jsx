@@ -1,82 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-import RealTimeClock from '../UI/RealTimeClock';
+import { motion } from 'framer-motion';
 
 const navItems = [
-    { href: '#hero', label: 'STORY' },
-    { href: '#about', label: 'PROFILE' },
-    { href: '#capabilities', label: 'POWERS' },
-    { href: '#projects', label: 'MISSIONS' },
-    { href: '#contact', label: 'SIGNAL' },
+    { href: '#hero', label: 'Home' },
+    { href: '#about', label: 'About' },
+    { href: '#capabilities', label: 'Expertise' },
+    { href: '#projects', label: 'Work' },
+    { href: '#contact', label: 'Contact' },
 ];
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [active, setActive] = useState('#hero');
-    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 60);
+        const onScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', onScroll, { passive: true });
-
-        // Scroll spy logic
-        const observerOptions = {
-            root: null,
-            rootMargin: '-20% 0px -70% 0px',
-            threshold: 0
-        };
-
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setActive(`#${entry.target.id}`);
-                }
+                if (entry.isIntersecting) setActive(`#${entry.target.id}`);
             });
-        }, observerOptions);
+        }, { rootMargin: '-20% 0px -70% 0px' });
 
-        const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => observer.observe(section));
-
+        document.querySelectorAll('section[id]').forEach(sec => observer.observe(sec));
         return () => {
             window.removeEventListener('scroll', onScroll);
-            sections.forEach(section => observer.unobserve(section));
+            document.querySelectorAll('section[id]').forEach(sec => observer.unobserve(sec));
         };
     }, []);
 
     return (
         <motion.header
-            className={`val-header ${scrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}
+            className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-4 glass-panel border-b border-white/10' : 'py-6 bg-transparent'}`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
         >
-            <div className="header-inner">
-                <a href="#hero" className="val-logo" onClick={() => setMenuOpen(false)}>REUBEN.CHR</a>
+            <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
+                <a href="#hero" className="font-outfit font-bold text-2xl tracking-tight flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center text-white text-sm">R</span>
+                    <span className="text-white hidden sm:block delay-150">Reuben<span className="text-indigo-400">.dev</span></span>
+                </a>
 
-                <nav className={`desktop-nav ${menuOpen ? 'show' : ''}`}>
+                <nav className="hidden md:flex items-center gap-8 glass-panel px-8 py-3 rounded-full">
                     {navItems.map((item) => (
                         <a
                             key={item.href}
                             href={item.href}
-                            className={`val-nav-link magnetic ${active === item.href ? 'val-nav-active' : ''}`}
-                            onClick={() => { setActive(item.href); setMenuOpen(false); }}
+                            className={`text-sm font-medium transition-colors ${active === item.href ? 'text-indigo-400' : 'text-gray-400 hover:text-white'}`}
                         >
                             {item.label}
                         </a>
                     ))}
                 </nav>
 
-                <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <RealTimeClock />
-                    <a href="#contact" className="btn-comic" style={{ fontSize: '0.8rem', padding: '5px 15px', boxShadow: '3px 3px 0px #000' }}>
-                        SOS
+                <div className="flex items-center gap-4">
+                    <a href="#contact" className="btn-primary text-sm py-2 px-6">
+                        Let's Talk
                     </a>
-
-                    <button className="comic-burger" onClick={() => setMenuOpen(!menuOpen)}>
-                        <div className="bar" />
-                        <div className="bar" />
-                        <div className="bar" />
-                    </button>
                 </div>
             </div>
         </motion.header>
