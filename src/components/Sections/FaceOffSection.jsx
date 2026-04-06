@@ -94,7 +94,7 @@ export default function FaceOffSection() {
              </div>
              <div className="flex flex-col items-center md:items-end space-y-2 md:space-y-3 font-mono tracking-widest uppercase text-spider-black" style={{ fontSize: "clamp(0.85rem, 2vw, 1.1rem)" }}>
                <span className="font-bold">Node.js Architecture</span>
-               <span className="font-bold">React & Next.js</span>
+               <span className="font-bold">React &amp; Next.js</span>
                <span className="font-bold">Three.js / GLSL</span>
                <div className="mt-4 md:mt-6 pt-4 border-t border-spider-black/20 w-48 flex justify-center md:justify-end">
                  <span className="text-xs text-spider-black/50 tracking-[0.2em] font-bold">EXPERTISE / ELITE</span>
