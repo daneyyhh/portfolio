@@ -52,3 +52,5 @@ This project uses `.npmrc` with `legacy-peer-deps=true` to resolve conflicts bet
 <!-- badge -->
 
 <!-- update 2 -->
+
+<!-- co-author update -->
