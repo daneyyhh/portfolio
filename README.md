@@ -48,3 +48,5 @@ This project uses `.npmrc` with `legacy-peer-deps=true` to resolve conflicts bet
 
 ---
 *Built by [daneyyhh](https://github.com/daneyyhh)*
+
+<!-- badge -->
