@@ -42,106 +42,76 @@ const projectData = [
 
 const ProjectCard = ({ project, index, activeIndex, setActiveIndex }) => {
     const isActive = activeIndex === index;
+    const rotate = index % 2 === 0 ? -2 : 2;
     
     return (
         <motion.div
-            className={`relative group cursor-pointer transition-all duration-500 ${isActive ? 'z-50 scale-105' : 'z-10 opacity-50 grayscale'}`}
+            className={`relative transition-all duration-700 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
-            initial={{ opacity: 0, y: 50, rotate: index % 2 === 0 ? -5 : 5 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ 
-                rotate: isActive ? 0 : (index % 2 === 0 ? -2 : 2),
-                marginBottom: index % 2 === 0 ? '4rem' : '0'
-            }}
+            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100, rotate: rotate * 3 }}
+            whileInView={{ opacity: 1, x: 0, rotate: rotate }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ type: "spring", damping: 15, stiffness: 60 }}
         >
-            {/* Speed Lines / Impact Background (Visible only when active) */}
-            <AnimatePresence>
-                {isActive && (
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1.2 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="absolute inset-0 -z-20 pointer-events-none"
-                    >
-                        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(232,39,42,0.2)_0%,transparent_70%)] blur-2xl"></div>
-                        <svg viewBox="0 0 100 100" className="w-full h-full opacity-30">
-                            {[...Array(12)].map((_, i) => (
-                                <line 
-                                    key={i} 
-                                    x1="50" y1="50" 
-                                    x2={50 + 50 * Math.cos(i * 30 * Math.PI / 180)} 
-                                    y2={50 + 50 * Math.sin(i * 30 * Math.PI / 180)} 
-                                    stroke="#E8272A" 
-                                    strokeWidth="0.5" 
-                                />
-                            ))}
-                        </svg>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Comic Panel Shadow */}
-            <div className={`absolute inset-0 transition-all duration-300 -z-10 ${isActive ? 'bg-spider-yellow translate-x-6 translate-y-6' : 'bg-spider-black translate-x-3 translate-y-3'}`}></div>
-            
-            {/* Main Panel */}
-            <div className={`bg-spider-white border-4 border-spider-black overflow-hidden relative shadow-[8px_8px_0px_#0A0A0A] transition-colors ${isActive ? 'border-spider-red' : 'border-spider-black'}`}>
-                {/* Image Section */}
-                <div className="relative h-[300px] md:h-[400px] overflow-hidden border-b-4 border-spider-black">
+            <div className={`relative transition-all ${isActive ? 'duration-200 scale-100 opacity-100 blur-0' : 'duration-300 scale-[0.98] opacity-90 blur-[1px]'}`}>
+                {/* Panel Image (ComicScroll Style) */}
+                <div
+                    className="relative shadow-[12px_12px_0px_#0A0A0A] border-4 border-spider-black bg-spider-yellow overflow-hidden z-10"
+                    style={{ width: "clamp(280px, 40vw, 550px)", height: "clamp(200px, 45vh, 400px)", transform: `rotate(${rotate}deg)` }}
+                >
                     <img 
                         src={project.img} 
                         alt={project.title} 
-                        className={`w-full h-full object-cover transition-all duration-700 ${isActive ? 'scale-110 contrast-125 saturate-150' : 'scale-100 contrast-100 saturate-50'}`}
+                        className={`w-full h-full object-cover filter contrast-[1.15] saturate-[1.2] transition-transform duration-700 ${isActive ? 'scale-110' : 'scale-100'}`} 
                     />
-                    
-                    {/* Halftone & Scanlines */}
                     <div className="absolute inset-0 halftone-overlay opacity-20 pointer-events-none"></div>
-                    <div className={`absolute inset-0 spider-scanline-move transition-opacity ${isActive ? 'opacity-40' : 'opacity-10'}`}></div>
-
-                    {/* Graffiti Tags (Bottom left of image) */}
-                    <div className="absolute bottom-2 left-2 flex gap-1 items-end pointer-events-none">
-                        <span className="font-bangers text-spider-red text-6xl opacity-20 -rotate-12 select-none">MILES</span>
-                    </div>
+                    <div className={`absolute inset-0 spider-scanline-move opacity-30 transition-opacity ${isActive ? 'opacity-50' : 'opacity-20'}`}></div>
                 </div>
-                
-                {/* Content Overlay (Slide up on active) */}
-                <motion.div 
-                    className="p-6 bg-spider-white border-t-4 border-spider-black relative overflow-hidden"
-                    animate={{ backgroundColor: isActive ? '#FFD600' : '#F5F0E8' }}
+
+                {/* Caption Box (Exactly matching ComicScrollSection) */}
+                <div
+                    className="absolute z-20 bg-spider-white border-[3px] border-spider-black shadow-[6px_6px_0px_#E8272A] p-4 md:p-6 flex flex-col gap-2 transition-transform duration-300"
+                    style={{ 
+                        width: "clamp(180px, 28vw, 380px)", 
+                        bottom: "-4vh", 
+                        ...(index % 2 === 0 ? { right: "-5vw" } : { left: "-5vw" }), 
+                        transform: `rotate(${-rotate * 1.5}deg) ${isActive ? 'scale(1.05)' : 'scale(1)'}` 
+                    }}
                 >
-                    <div className="relative z-10">
-                        <h3 className="font-bangers text-4xl md:text-5xl text-spider-black mb-2 tracking-wide leading-none miles-glitch" data-text={project.title}>
+                    <div className="flex justify-between items-start">
+                        <h3 className="font-bangers text-2xl md:text-4xl leading-[0.9] text-spider-black tracking-wide">
                             {project.title}
                         </h3>
-                        <p className={`font-mono text-[10px] md:text-xs font-bold text-spider-black transition-opacity ${isActive ? 'opacity-100' : 'opacity-60'}`}>
-                            {project.desc}
-                        </p>
-                        
-                        <div className="mt-4 flex flex-wrap gap-2">
-                            {project.tags.map(tag => (
-                                <span key={tag} className="bg-spider-black text-spider-yellow px-2 py-0.5 text-[8px] font-bold uppercase">
-                                    {tag}
-                                </span>
-                            ))}
+                        <div className="bg-spider-black text-spider-yellow font-mono text-[0.5rem] tracking-widest px-2 py-0.5 font-bold uppercase rotate-[-5deg]">
+                            PROJECT_{String(index + 1).padStart(2, '0')}
                         </div>
+                    </div>
+                    
+                    <div className="w-10 h-1 bg-spider-yellow" />
+                    
+                    <p className="font-mono text-[0.6rem] md:text-xs font-bold text-spider-black/90 leading-tight">
+                        {project.desc}
+                    </p>
 
-                        <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`mt-6 inline-flex items-center gap-2 font-bangers text-xl text-spider-white bg-spider-red border-2 border-spider-black px-4 py-2 shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            ACCESS_DATA //
-                        </a>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                        {project.tags.map(tag => (
+                            <span key={tag} className="text-[8px] font-bold text-spider-red border-b border-spider-black/20 uppercase tracking-tighter">
+                                #{tag}
+                            </span>
+                        ))}
                     </div>
 
-                    {/* Background number watermark */}
-                    <div className="absolute top-2 right-4 font-bangers text-8xl text-spider-black/5 select-none pointer-events-none">
-                        {index + 1}
-                    </div>
-                </motion.div>
+                    <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-2 font-bangers text-lg text-spider-black hover:text-spider-red transition-colors group"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        LAUNCH_DEPLOYMENT <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                    </a>
+                </div>
             </div>
         </motion.div>
     );
@@ -151,54 +121,56 @@ const Projects = () => {
     const [activeIndex, setActiveIndex] = React.useState(null);
 
     return (
-        <section id="projects" className="py-40 px-6 sm:px-12 relative bg-spider-black overflow-hidden">
-            {/* Background Texture: Graffiti & Vibe */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none select-none">
-                <div className="absolute top-20 left-10 text-9xl font-bangers text-spider-white -rotate-12">BROOKLYN</div>
-                <div className="absolute bottom-20 right-10 text-9xl font-bangers text-spider-red rotate-6">MULTIVERSE</div>
-                <div className="absolute inset-0 bg-grid opacity-30"></div>
+        <section id="projects" className="py-48 px-6 sm:px-12 relative bg-spider-red halftone-overlay overflow-hidden">
+            {/* HUD / Background Watermark */}
+            <div className="absolute top-20 right-10 z-0 opacity-10 pointer-events-none select-none hidden md:block">
+                <div className="flex flex-col items-end">
+                    <h4 className="font-bangers text-4xl text-spider-white tracking-widest leading-none mb-1">
+                        PROJECT DOSSIER
+                    </h4>
+                    <p className="font-mono text-[10px] text-spider-yellow uppercase font-bold tracking-[0.3em]">
+                        CLASSIFIED DEPLOYMENTS
+                    </p>
+                </div>
             </div>
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="mb-32 flex flex-col items-center">
+                <div className="mb-40 flex flex-col items-center text-center">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="bg-spider-yellow border-2 border-spider-black px-4 py-1 mb-6 rotate-[-1deg] shadow-[4px_4px_0px_#E8272A]"
+                        className="bg-spider-yellow border-2 border-spider-black px-6 py-2 mb-8 rotate-[-2deg] shadow-[8px_8px_0px_#0A0A0A]"
                     >
-                        <span className="font-mono text-xs font-bold text-spider-black tracking-[0.3em] uppercase">
-                            Deployments // Subject_42
+                        <span className="font-mono text-sm font-bold text-spider-black tracking-[0.4em] uppercase">
+                            Visual evidence // System_Archive
                         </span>
                     </motion.div>
                     
-                    <h2 className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#E8272A] leading-none text-center">
-                        THE <span className="text-spider-yellow">COLLECTION</span>
+                    <h2 className="font-bangers text-8xl md:text-[10rem] text-spider-white drop-shadow-[10px_10px_0px_#0A0A0A] leading-none">
+                        THE <span className="text-spider-yellow">PROJECTS</span>
                     </h2>
                 </div>
 
-                {/* Storyboard Layout */}
-                <div className="flex flex-col gap-12 md:gap-0 max-w-4xl mx-auto">
+                <div className="flex flex-col gap-32 md:gap-48">
                     {projectData.map((project, i) => (
                         <div key={project.id} className={`flex ${i % 2 === 0 ? 'justify-start' : 'justify-end'} w-full`}>
-                            <div className="w-full md:w-[70%]">
-                                <ProjectCard 
-                                    project={project} 
-                                    index={i} 
-                                    activeIndex={activeIndex}
-                                    setActiveIndex={setActiveIndex}
-                                />
-                            </div>
+                            <ProjectCard 
+                                project={project} 
+                                index={i} 
+                                activeIndex={activeIndex}
+                                setActiveIndex={setActiveIndex}
+                            />
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Bottom Border */}
-            <div className="absolute bottom-0 left-0 w-full h-2 bg-spider-red halftone-overlay"></div>
+            {/* Bottom Transition */}
+            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-spider-black to-transparent z-20"></div>
         </section>
     );
 };
+
 
 
 
