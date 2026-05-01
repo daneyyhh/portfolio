@@ -4,6 +4,8 @@
    Fonts: Bangers (Captions) · Archivo Black (Titles) · Montserrat (Body)
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
 :root {
     --comic-bg: #ffffff;
     --comic-ink: #000000;
@@ -673,7 +675,7 @@ body::before {
 /* ============================================================
    HERO SECTION V2 - CYBERPUNK PORTFOLIO
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
 
 .hero-section-v2 {
     position: relative;
