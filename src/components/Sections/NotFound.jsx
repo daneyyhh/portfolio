@@ -4,96 +4,18 @@ import { Link } from 'react-router-dom';
 
 const NotFound = () => {
     return (
-        <div className="not-found-page" style={{
-            minHeight: '100vh',
-            background: 'var(--comic-bg)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-            position: 'relative',
-            overflow: 'hidden'
-        }}>
-            {/* Background Halftone - Heavy */}
-            <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'radial-gradient(var(--comic-gray) 2px, transparent 2px)',
-                backgroundSize: '10px 10px',
-                opacity: 0.3
-            }} />
-
-            {/* Speed Lines */}
-            <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(0,0,0,0.03) 100px, rgba(0,0,0,0.03) 200px)',
-                pointerEvents: 'none'
-            }} />
-
-            <div className="content-wrapper" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
-
+        <div className="not-found-page bg-spider-black bg-grid halftone-overlay flex items-center justify-center min-h-screen p-5 relative overflow-hidden">
+            <div className="content-wrapper relative z-10 text-center">
                 {/* 404 Burst */}
                 <motion.div
                     initial={{ scale: 0, rotate: -45 }}
                     animate={{ scale: 1, rotate: -5 }}
                     transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-                    style={{
-                        background: '#ff0000',
-                        color: '#fff',
-                        padding: '40px 80px',
-                        border: '8px solid #000',
-                        boxShadow: '20px 20px 0px #000',
-                        display: 'inline-block',
-                        marginBottom: '40px',
-                        position: 'relative'
-                    }}
+                    className="bg-spider-red border-8 border-spider-black px-10 py-6 md:px-20 md:py-10 shadow-[20px_20px_0px_#0A0A0A] relative mb-12"
                 >
-                    <h1 style={{
-                        fontFamily: 'var(--font-title)',
-                        fontSize: 'clamp(5rem, 15vw, 12rem)',
-                        margin: 0,
-                        lineHeight: 0.8,
-                        textTransform: 'uppercase',
-                        WebkitTextStroke: '3px #000'
-                    }}>
+                    <h1 className="font-bangers text-8xl md:text-[12rem] text-spider-white leading-none uppercase drop-shadow-[5px_5px_0px_#000]">
                         404!
                     </h1>
-                </motion.div>
-
-                {/* Speech Bubbles */}
-                <motion.div
-                    initial={{ x: -100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="speech-bubble"
-                    style={{
-                        position: 'absolute',
-                        top: '-60px',
-                        left: '-100px',
-                        transform: 'rotate(-15deg)',
-                        background: '#fff',
-                        fontSize: '1.2rem'
-                    }}
-                >
-                    GADZOOKS! THE PAGE IS GONE!
-                </motion.div>
-
-                <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.7 }}
-                    className="speech-bubble comic-shake"
-                    style={{
-                        position: 'absolute',
-                        bottom: '20px',
-                        right: '-80px',
-                        transform: 'rotate(10deg)',
-                        background: 'var(--comic-accent)',
-                        fontSize: '1.1rem'
-                    }}
-                >
-                    CRITICAL ERROR IN THE MULTIVERSE!
                 </motion.div>
 
                 {/* Subtext */}
@@ -101,43 +23,30 @@ const NotFound = () => {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 1 }}
+                    className="max-w-2xl mx-auto"
                 >
-                    <p style={{
-                        fontFamily: 'var(--font-marker)',
-                        fontSize: '2rem',
-                        marginBottom: '40px',
-                        maxWidth: '600px',
-                        margin: '0 auto 40px'
-                    }}>
-                        It looks like this panel was never drawn, or a villain deleted it from reality!
+                    <p className="font-bangers text-3xl md:text-5xl text-spider-yellow mb-8 leading-tight drop-shadow-[2px_2px_0px_#000]">
+                        GADZOOKS! THIS PANEL WAS NEVER DRAWN!
+                    </p>
+                    
+                    <p className="font-mono text-sm font-bold text-spider-white/70 mb-12 uppercase tracking-widest">
+                        It looks like a villain deleted this page from the multiverse.
                     </p>
 
                     <Link
                         to="/"
-                        className="btn-comic"
-                        style={{
-                            fontSize: '2rem',
-                            textDecoration: 'none',
-                            display: 'inline-block'
-                        }}
+                        className="relative group inline-block"
                     >
-                        RETURN TO ISSUE #1
+                        <div className="absolute inset-0 bg-spider-black translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-all"></div>
+                        <div className="relative bg-spider-yellow border-4 border-spider-black px-12 py-4 font-bangers text-3xl text-spider-black group-hover:bg-spider-red group-hover:text-spider-white transition-all">
+                            RETURN TO ISSUE #1
+                        </div>
                     </Link>
                 </motion.div>
             </div>
-
-            {/* Background Decorative Bursts */}
-            <div style={{
-                position: 'absolute',
-                top: '10%',
-                right: '10%',
-                width: '150px',
-                height: '150px',
-                background: '#ffde00',
-                clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-                zIndex: 1,
-                opacity: 0.5
-            }} />
+            
+            {/* Speed Lines Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-10 bg-[repeating-linear-gradient(45deg,transparent,transparent_100px,rgba(255,255,255,0.05)_100px,rgba(255,255,255,0.05)_200px)]"></div>
         </div>
     );
 };

@@ -10,9 +10,9 @@ const dossierItems = [
 
 const About = () => {
     return (
-        <section id="about" className="py-32 px-6 sm:px-12 relative bg-spider-white overflow-hidden">
-            {/* Background Halftone */}
-            <div className="absolute inset-0 halftone-overlay opacity-10 pointer-events-none"></div>
+        <section id="about" className="py-32 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
+            {/* Background Texture Accents */}
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-spider-red/5 to-transparent pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="flex flex-col lg:flex-row gap-16 items-start">
@@ -65,15 +65,15 @@ const About = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.1 * i }}
-                                    className="bg-spider-white border-4 border-spider-black p-6 relative group hover:bg-spider-yellow transition-colors"
+                                    className="bg-spider-black border-4 border-spider-yellow p-6 relative group hover:bg-spider-red transition-colors"
                                 >
-                                    <div className="absolute -top-3 -left-3 bg-spider-black text-spider-white w-10 h-10 flex items-center justify-center border-2 border-spider-yellow font-bangers text-xl">
+                                    <div className="absolute -top-3 -left-3 bg-spider-yellow text-spider-black w-10 h-10 flex items-center justify-center border-2 border-spider-black font-bangers text-xl">
                                         {i + 1}
                                     </div>
                                     <div className="mt-4">
-                                        <h5 className="font-bangers text-3xl text-spider-black mb-1">{item.title}</h5>
-                                        <div className="h-0.5 w-full bg-spider-black/10 mb-2"></div>
-                                        <p className="font-mono text-[10px] font-bold text-spider-black uppercase tracking-tighter">
+                                        <h5 className="font-bangers text-3xl text-spider-white mb-1 group-hover:text-spider-white transition-colors">{item.title}</h5>
+                                        <div className="h-0.5 w-full bg-spider-white/10 mb-2"></div>
+                                        <p className="font-mono text-[10px] font-bold text-spider-yellow uppercase tracking-tighter">
                                             {item.desc}
                                         </p>
                                     </div>

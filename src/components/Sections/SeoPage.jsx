@@ -10,7 +10,7 @@ const fadeUp = (delay = 0) => ({
 
 const SeoPage = () => {
     return (
-        <div className="seo-page">
+        <div className="seo-page bg-spider-black bg-grid halftone-overlay">
             {/* ── HERO SECTION ── */}
             <section className="seo-hero">
                 <div className="seo-hero-bg"></div>

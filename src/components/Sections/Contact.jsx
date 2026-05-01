@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Contact = () => {
     return (
-        <section id="contact" className="py-32 px-6 sm:px-12 relative bg-spider-black overflow-hidden">
+        <section id="contact" className="py-32 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
             {/* Background Spidey Signal Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-spider-red/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
             
@@ -30,7 +30,7 @@ const Contact = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="bg-spider-white border-4 border-spider-black p-8 md:p-12 relative shadow-[12px_12px_0px_#E8272A]"
+                    className="bg-spider-black border-4 border-spider-yellow p-8 md:p-12 relative shadow-[12px_12px_0px_#E8272A]"
                 >
                     {/* Comic Panel Header */}
                     <div className="absolute -top-5 left-8 bg-spider-black px-4 py-1 border-2 border-spider-yellow">
@@ -39,29 +39,29 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div className="flex flex-col gap-3">
-                            <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">NAME / CODENAME</label>
+                            <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">NAME / CODENAME</label>
                             <input
                                 type="text" 
                                 placeholder="PETER_PARKER"
-                                className="bg-transparent border-b-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20"
+                                className="bg-transparent border-b-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20"
                             />
                         </div>
                         <div className="flex flex-col gap-3">
-                            <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">SECURE_CHANNEL (EMAIL)</label>
+                            <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">SECURE_CHANNEL (EMAIL)</label>
                             <input
                                 type="email" 
                                 placeholder="STARK_INDUSTRIES@NET"
-                                className="bg-transparent border-b-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20"
+                                className="bg-transparent border-b-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20"
                             />
                         </div>
                     </div>
                     
                     <div className="flex flex-col gap-3 mb-10">
-                        <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">TRANSMISSION_DETAILS</label>
+                        <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">TRANSMISSION_DETAILS</label>
                         <textarea
                             placeholder="TELL ME ABOUT YOUR MISSION..." 
                             rows="4"
-                            className="bg-spider-black/5 border-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20 resize-none"
+                            className="bg-spider-white/5 border-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20 resize-none"
                         />
                     </div>
                     
