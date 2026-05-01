@@ -121,11 +121,11 @@ const Projects = () => {
     const [activeIndex, setActiveIndex] = React.useState(null);
 
     return (
-        <section id="projects" className="py-48 px-6 sm:px-12 relative bg-spider-red halftone-overlay overflow-hidden">
+        <section id="projects" className="py-48 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
             {/* HUD / Background Watermark */}
-            <div className="absolute top-20 right-10 z-0 opacity-10 pointer-events-none select-none hidden md:block">
-                <div className="flex flex-col items-end">
-                    <h4 className="font-bangers text-4xl text-spider-white tracking-widest leading-none mb-1">
+            <div className="absolute top-20 right-10 z-0 opacity-20 pointer-events-none select-none hidden md:block">
+                <div className="flex flex-col items-end text-spider-white">
+                    <h4 className="font-bangers text-4xl tracking-widest leading-none mb-1">
                         PROJECT DOSSIER
                     </h4>
                     <p className="font-mono text-[10px] text-spider-yellow uppercase font-bold tracking-[0.3em]">
@@ -139,14 +139,14 @@ const Projects = () => {
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="bg-spider-yellow border-2 border-spider-black px-6 py-2 mb-8 rotate-[-2deg] shadow-[8px_8px_0px_#0A0A0A]"
+                        className="bg-spider-red border-2 border-spider-black px-6 py-2 mb-8 rotate-[-2deg] shadow-[8px_8px_0px_#FFD600]"
                     >
-                        <span className="font-mono text-sm font-bold text-spider-black tracking-[0.4em] uppercase">
+                        <span className="font-mono text-sm font-bold text-spider-white tracking-[0.4em] uppercase">
                             Visual evidence // System_Archive
                         </span>
                     </motion.div>
                     
-                    <h2 className="font-bangers text-8xl md:text-[10rem] text-spider-white drop-shadow-[10px_10px_0px_#0A0A0A] leading-none">
+                    <h2 className="font-bangers text-8xl md:text-[10rem] text-spider-white drop-shadow-[10px_10px_0px_#E8272A] leading-none">
                         THE <span className="text-spider-yellow">PROJECTS</span>
                     </h2>
                 </div>
@@ -166,10 +166,11 @@ const Projects = () => {
             </div>
 
             {/* Bottom Transition */}
-            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-spider-black to-transparent z-20"></div>
+            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-spider-red to-transparent z-20 opacity-30"></div>
         </section>
     );
 };
+
 
 
 
