@@ -43,22 +43,28 @@ const projectData = [
 const ProjectCard = ({ project, index }) => (
     <motion.div
         className="relative group cursor-pointer"
-        initial={{ opacity: 0, y: 50, rotate: project.rotate * 2 }}
-        whileInView={{ opacity: 1, y: 0, rotate: project.rotate }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 0.8, rotate: index % 2 === 0 ? -10 : 10, y: 100 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: project.rotate, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ 
+            type: "spring",
+            damping: 15,
+            stiffness: 100,
+            delay: index * 0.1,
+            duration: 0.8 
+        }}
     >
         {/* Comic Panel Shadow */}
-        <div className="absolute inset-0 bg-spider-black translate-x-3 translate-y-3 -z-10"></div>
+        <div className="absolute inset-0 bg-spider-red translate-x-4 translate-y-4 -z-10 opacity-80 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform"></div>
         
         {/* Main Panel */}
-        <div className="bg-spider-white border-4 border-spider-black overflow-hidden relative">
+        <div className="bg-spider-white border-4 border-spider-black overflow-hidden relative shadow-[10px_10px_0px_#0A0A0A]">
             {/* Image Section */}
-            <div className="relative h-64 overflow-hidden border-b-4 border-spider-black spider-scanline">
+            <div className="relative h-72 overflow-hidden border-b-4 border-spider-black spider-scanline">
                 <img 
                     src={project.img} 
                     alt={project.title} 
-                    className="w-full h-full object-cover filter contrast-125 saturate-150 grayscale-0.5 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500"
+                    className="w-full h-full object-cover filter contrast-125 saturate-150 grayscale-0.5 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                 />
                 <div className="absolute inset-0 halftone-overlay opacity-20 pointer-events-none"></div>
                 <div className="absolute inset-0 spider-scanline-move opacity-30 pointer-events-none"></div>
@@ -66,23 +72,32 @@ const ProjectCard = ({ project, index }) => (
                 {/* Tag Overlay */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
                     {project.tags.map(tag => (
-                        <span key={tag} className="bg-spider-yellow border-2 border-spider-black px-2 py-0.5 font-mono text-[10px] font-bold text-spider-black shadow-[2px_2px_0px_#0A0A0A] uppercase">
+                        <motion.span 
+                            key={tag} 
+                            whileHover={{ scale: 1.1, rotate: -5 }}
+                            className="bg-spider-yellow border-2 border-spider-black px-2 py-0.5 font-mono text-[10px] font-bold text-spider-black shadow-[2px_2px_0px_#0A0A0A] uppercase"
+                        >
                             {tag}
-                        </span>
+                        </motion.span>
                     ))}
                 </div>
             </div>
             
             {/* Content Section */}
-            <div className="p-6 bg-spider-white">
+            <div className="p-8 bg-spider-white relative">
+                {/* Decorative corner accent inside content */}
+                <div className="absolute top-0 right-0 w-12 h-12 bg-spider-red border-b-4 border-l-4 border-spider-black -translate-y-px translate-x-px flex items-center justify-center rotate-3">
+                    <span className="text-spider-white font-bangers text-sm">DEV</span>
+                </div>
+
                 <h3 
-                    className="font-bangers text-4xl text-spider-black mb-3 tracking-wide leading-none group-hover:text-spider-red transition-colors miles-glitch"
+                    className="font-bangers text-5xl text-spider-black mb-4 tracking-wide leading-none group-hover:text-spider-red transition-colors miles-glitch"
                     data-text={project.title}
                 >
                     {project.title}
                 </h3>
-                <div className="w-10 h-1 bg-spider-yellow mb-4"></div>
-                <p className="font-mono text-xs font-bold text-spider-black/80 leading-snug mb-6">
+                <div className="w-16 h-1.5 bg-spider-yellow mb-6"></div>
+                <p className="font-mono text-xs font-bold text-spider-black/80 leading-relaxed mb-8 max-w-md">
                     {project.desc}
                 </p>
                 
@@ -90,16 +105,16 @@ const ProjectCard = ({ project, index }) => (
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-bangers text-xl text-spider-black bg-spider-yellow border-2 border-spider-black px-4 py-2 shadow-[4px_4px_0px_#0A0A0A] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                    className="inline-flex items-center gap-2 font-bangers text-2xl text-spider-black bg-spider-yellow border-4 border-spider-black px-6 py-3 shadow-[6px_6px_0px_#0A0A0A] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all active:scale-95"
                     onClick={(e) => e.stopPropagation()}
                 >
                     ACCESS_FILE //
                 </a>
             </div>
 
-            {/* Corner Accent */}
-            <div className="absolute bottom-0 right-0 w-8 h-8 bg-spider-red border-t-4 border-l-4 border-spider-black flex items-center justify-center">
-                <span className="text-spider-white font-bold text-[10px]">R</span>
+            {/* Hidden technical specs revealed on hover */}
+            <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity font-mono text-[8px] font-bold text-spider-black pointer-events-none">
+                ENCRYPTION: 256-BIT // PORTFOLIO_V3
             </div>
         </div>
     </motion.div>
@@ -107,36 +122,36 @@ const ProjectCard = ({ project, index }) => (
 
 const Projects = () => {
     return (
-        <section id="projects" className="py-32 px-6 sm:px-12 relative bg-spider-red halftone-overlay overflow-hidden">
+        <section id="projects" className="py-40 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
             {/* Background Watermark */}
-            <div className="absolute top-20 left-0 w-full text-center pointer-events-none select-none z-0">
-                <h2 className="font-bangers text-[20vw] text-spider-black opacity-[0.05] leading-none">
-                    DEPLOYMENTS
+            <div className="absolute top-40 left-0 w-full text-center pointer-events-none select-none z-0">
+                <h2 className="font-bangers text-[25vw] text-spider-red opacity-[0.1] leading-none select-none">
+                    ARCHIVE
                 </h2>
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="mb-24 flex flex-col items-center text-center">
+                <div className="mb-32 flex flex-col items-center text-center">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="bg-spider-black border-2 border-spider-yellow px-4 py-1 mb-6 rotate-[-2deg] shadow-[6px_6px_0px_#FFD600]"
+                        className="bg-spider-red border-2 border-spider-black px-6 py-2 mb-8 rotate-[-2deg] shadow-[8px_8px_0px_#FFD600]"
                     >
-                        <span className="font-mono text-xs font-bold text-spider-yellow tracking-[0.3em] uppercase">
-                            Visual evidence // Archive_04
+                        <span className="font-mono text-sm font-bold text-spider-white tracking-[0.4em] uppercase">
+                            Visual evidence // System_Archive
                         </span>
                     </motion.div>
                     
                     <h2 
-                        className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#0A0A0A] leading-none miles-glitch"
+                        className="font-bangers text-8xl md:text-[10rem] text-spider-white drop-shadow-[10px_10px_0px_#E8272A] leading-none miles-glitch"
                         data-text="FEATURED PROJECTS"
                     >
                         FEATURED <span className="text-spider-yellow">PROJECTS</span>
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-20 lg:gap-32">
                     {projectData.map((project, i) => (
                         <ProjectCard key={project.id} project={project} index={i} />
                     ))}
@@ -144,10 +159,11 @@ const Projects = () => {
             </div>
 
             {/* Bottom Accent */}
-            <div className="absolute bottom-0 left-0 w-full h-2 bg-spider-black shadow-[0_-4px_10px_rgba(0,0,0,0.3)]"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-spider-yellow shadow-[0_-4px_15px_#FFD600]"></div>
         </section>
     );
 };
+
 
 export default Projects;
 
