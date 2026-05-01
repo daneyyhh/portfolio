@@ -75,33 +75,6 @@ body::before {
     opacity: 0.15;
 }
 
-/* ── Custom Cursor ── */
-.c-dot {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    background: var(--comic-ink);
-    border: 2px solid #fff;
-    border-radius: 2px;
-    pointer-events: none;
-    z-index: 99999;
-}
-
-.c-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--comic-ink);
-    border-radius: 4px;
-    pointer-events: none;
-    z-index: 99998;
-    transition: width 0.2s, height 0.2s, transform 0.1s;
-}
-
 /* ── Global Comic Elements ── */
 .comic-panel {
     border: var(--border-w) solid var(--comic-ink);

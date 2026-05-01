@@ -3,20 +3,25 @@ import { motion } from 'framer-motion';
 
 const Contact = () => {
     return (
-        <section id="contact" className="py-32 px-6 sm:px-12 relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <section id="contact" className="py-32 px-6 sm:px-12 relative bg-spider-black overflow-hidden">
+            {/* Background Spidey Signal Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-spider-red/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
             
             <div className="max-w-4xl mx-auto relative z-10">
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-20"
                 >
-                    <span className="text-sm text-indigo-400 font-semibold tracking-widest uppercase mb-3 block">Start A Project</span>
-                    <h2 className="text-4xl md:text-6xl font-outfit font-bold text-white mb-6">Let's Build <span className="text-gradient">Together</span></h2>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                        Whether it's a new scalable application, a web3 platform, or an immersive 3D experience. I'm available for freelance and full-time opportunities.
+                    <div className="bg-spider-yellow text-spider-black font-bangers text-xl px-6 py-1 inline-block mb-6 rotate-[-1deg] border-2 border-spider-black shadow-[4px_4px_0px_#E8272A]">
+                        URGENT // TRANSMISSION_REQUIRED
+                    </div>
+                    <h2 className="text-6xl md:text-8xl font-bangers text-spider-white drop-shadow-[6px_6px_0px_#E8272A] mb-8 leading-none">
+                        SEND A <span className="text-spider-yellow">SIGNAL</span>
+                    </h2>
+                    <p className="font-mono text-xs font-bold text-spider-white/60 max-w-2xl mx-auto uppercase tracking-widest">
+                        Whether it's a new scalable application or an immersive experience. I'm available for high-priority missions.
                     </p>
                 </motion.div>
 
@@ -25,39 +30,54 @@ const Contact = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="glass-panel p-8 md:p-12 rounded-3xl grid grid-cols-1 gap-6"
+                    className="bg-spider-white border-4 border-spider-black p-8 md:p-12 relative shadow-[12px_12px_0px_#E8272A]"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="flex flex-col gap-2">
-                            <label className="text-sm text-gray-400 font-medium">Name</label>
+                    {/* Comic Panel Header */}
+                    <div className="absolute -top-5 left-8 bg-spider-black px-4 py-1 border-2 border-spider-yellow">
+                        <span className="font-mono text-[10px] font-bold text-spider-yellow uppercase">Identity_Verification</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div className="flex flex-col gap-3">
+                            <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">NAME / CODENAME</label>
                             <input
                                 type="text" 
-                                placeholder="John Doe"
-                                className="bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all placeholder:text-gray-600"
+                                placeholder="PETER_PARKER"
+                                className="bg-transparent border-b-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20"
                             />
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <label className="text-sm text-gray-400 font-medium">Email</label>
+                        <div className="flex flex-col gap-3">
+                            <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">SECURE_CHANNEL (EMAIL)</label>
                             <input
                                 type="email" 
-                                placeholder="john@example.com"
-                                className="bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all placeholder:text-gray-600"
+                                placeholder="STARK_INDUSTRIES@NET"
+                                className="bg-transparent border-b-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20"
                             />
                         </div>
                     </div>
                     
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm text-gray-400 font-medium">Project Details</label>
+                    <div className="flex flex-col gap-3 mb-10">
+                        <label className="font-bangers text-2xl text-spider-black uppercase tracking-wide">TRANSMISSION_DETAILS</label>
                         <textarea
-                            placeholder="Tell me about your vision..." 
-                            rows="5"
-                            className="bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-indigo-500/50 focus:bg-white/10 transition-all placeholder:text-gray-600 resize-none"
+                            placeholder="TELL ME ABOUT YOUR MISSION..." 
+                            rows="4"
+                            className="bg-spider-black/5 border-4 border-spider-black p-4 font-mono text-sm font-bold text-spider-black focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-black/20 resize-none"
                         />
                     </div>
                     
-                    <button className="btn-primary mt-4 py-4 w-full md:w-auto md:px-12 md:mx-auto">
-                        Send Message
-                    </button>
+                    <div className="flex justify-center">
+                        <button className="relative group">
+                            <div className="absolute inset-0 bg-spider-black translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-all"></div>
+                            <div className="relative bg-spider-yellow border-4 border-spider-black px-12 py-4 font-bangers text-4xl text-spider-black group-hover:bg-spider-red group-hover:text-spider-white transition-all">
+                                SEND SIGNAL_
+                            </div>
+                        </button>
+                    </div>
+
+                    {/* Decorative Corner */}
+                    <div className="absolute bottom-4 right-4 opacity-10 font-mono text-[8px] font-bold text-spider-black">
+                        SECURE_TRANS_V2.0
+                    </div>
                 </motion.form>
             </div>
         </section>
@@ -65,3 +85,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
