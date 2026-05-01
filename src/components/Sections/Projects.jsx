@@ -50,79 +50,118 @@ const ProjectPanel = ({ project, index, activeIndex, setActiveIndex }) => {
     
     return (
         <motion.div
-            className={`relative w-full max-w-4xl mx-auto mb-[-4rem] md:mb-[-6rem] transition-all duration-500 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
+            className={`relative w-full max-w-5xl mx-auto mb-[-8rem] md:mb-[-12rem] transition-all duration-700 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
-            initial={{ opacity: 0, x: isEven ? -100 : 100, rotate: isEven ? -5 : 5 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 50, rotate: isEven ? -2 : 2 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
         >
-            <div className={`relative transition-all duration-500 ${isActive ? 'grayscale-0 brightness-110' : 'grayscale brightness-[0.3]'}`}>
-                {/* Comic Shape (Irregular using Clip Path) */}
+            {/* Background Action Lines (Visible only when active) */}
+            <AnimatePresence>
+                {isActive && (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 0.4, scale: 1.5 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute inset-0 z-0 pointer-events-none overflow-visible"
+                    >
+                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                            {[...Array(36)].map((_, i) => (
+                                <line 
+                                    key={i} 
+                                    x1="50" y1="50" 
+                                    x2={50 + 200 * Math.cos(i * 10 * Math.PI / 180)} 
+                                    y2={50 + 200 * Math.sin(i * 10 * Math.PI / 180)} 
+                                    stroke="white" 
+                                    strokeWidth="0.2" 
+                                    strokeDasharray="2,4"
+                                />
+                            ))}
+                        </svg>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div className={`relative transition-all duration-700 ${isActive ? 'grayscale-0 brightness-110' : 'grayscale brightness-[0.2]'}`}>
+                {/* Comic Shape (Aggressive Skew) */}
                 <div 
-                    className="relative border-4 border-spider-black shadow-[15px_15px_0px_#0A0A0A] overflow-hidden bg-spider-black"
+                    className="relative border-[6px] border-spider-black shadow-[20px_20px_0px_#0A0A0A] overflow-hidden bg-spider-black"
                     style={{ 
-                        clipPath: isEven ? 'polygon(0% 5%, 100% 0%, 95% 100%, 5% 95%)' : 'polygon(5% 0%, 95% 5%, 100% 95%, 0% 100%)',
-                        height: 'clamp(300px, 50vh, 500px)'
+                        clipPath: isEven ? 'polygon(0% 10%, 100% 0%, 90% 100%, 10% 90%)' : 'polygon(10% 0%, 100% 10%, 90% 90%, 0% 100%)',
+                        height: 'clamp(400px, 60vh, 600px)'
                     }}
                 >
                     <img 
                         src={project.img} 
                         alt={project.title} 
-                        className={`w-full h-full object-cover transition-transform duration-1000 ${isActive ? 'scale-110' : 'scale-100'}`}
+                        className={`w-full h-full object-cover transition-transform duration-[2000ms] ease-out ${isActive ? 'scale-125' : 'scale-100'}`}
                     />
                     
-                    {/* Halftone & Scanlines */}
-                    <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none"></div>
-                    <div className={`absolute inset-0 spider-scanline-move transition-opacity ${isActive ? 'opacity-40' : 'opacity-10'}`}></div>
+                    {/* Comic Effects Overlay */}
+                    <div className="absolute inset-0 halftone-overlay opacity-40 mix-blend-soft-light pointer-events-none"></div>
+                    <div className={`absolute inset-0 spider-scanline-move transition-opacity duration-700 ${isActive ? 'opacity-50' : 'opacity-10'}`}></div>
 
-                    {/* Accent Splash (Visible only when active) */}
+                    {/* Active VFX (Glitch Particles) */}
+                    {isActive && (
+                        <div className="absolute inset-0 z-20 pointer-events-none">
+                            {[...Array(12)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ y: -50, x: Math.random() * 100 + "%", opacity: 0 }}
+                                    animate={{ y: 600, opacity: [0, 1, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                                    className="absolute w-2 h-8 bg-spider-yellow/40 blur-[1px]"
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Accent Badge */}
                     <AnimatePresence>
                         {isActive && (
                             <motion.div 
-                                initial={{ scale: 0, opacity: 0, rotate: -20 }}
-                                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                exit={{ scale: 0, opacity: 0 }}
-                                className="absolute top-10 left-10 z-20 pointer-events-none"
+                                initial={{ x: -100, opacity: 0, rotate: -20 }}
+                                animate={{ x: 20, opacity: 1, rotate: -5 }}
+                                exit={{ x: -100, opacity: 0 }}
+                                className="absolute top-12 left-0 z-30 pointer-events-none"
                             >
-                                <div 
-                                    className="px-4 py-1 font-bangers text-2xl text-spider-black shadow-[4px_4px_0px_#0A0A0A] -rotate-6"
-                                    style={{ backgroundColor: project.color }}
-                                >
-                                    {project.accent}!
+                                <div className="bg-spider-red border-4 border-spider-black px-6 py-2 shadow-[8px_8px_0px_#0A0A0A]">
+                                    <span className="font-bangers text-3xl text-spider-white tracking-widest">{project.accent}</span>
                                 </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
 
-                {/* Content Overlay (Story style) */}
+                {/* Content Box (Pop Style) */}
                 <motion.div
-                    className="absolute z-30 flex flex-col pointer-events-none"
+                    className="absolute z-40 flex flex-col pointer-events-none"
                     style={{ 
                         top: '50%', 
-                        ...(isEven ? { left: '10%' } : { right: '10%' }),
+                        ...(isEven ? { right: '15%' } : { left: '15%' }),
                         transform: 'translateY(-50%)',
-                        maxWidth: '300px'
+                        maxWidth: '350px'
                     }}
                 >
                     <motion.div
-                        className="bg-spider-white border-2 border-spider-black p-4 shadow-[8px_8px_0px_#E8272A] pointer-events-auto"
+                        className="bg-spider-white border-4 border-spider-black p-6 shadow-[12px_12px_0px_#FFD600] pointer-events-auto"
                         animate={{ 
-                            x: isActive ? (isEven ? 20 : -20) : 0,
-                            rotate: isActive ? (isEven ? 2 : -2) : 0
+                            x: isActive ? (isEven ? -40 : 40) : 0,
+                            scale: isActive ? 1.1 : 1,
+                            rotate: isActive ? (isEven ? -2 : 2) : 0
                         }}
                     >
-                        <h3 className="font-bangers text-3xl md:text-5xl text-spider-black leading-none mb-2">
+                        <h3 className="font-bangers text-4xl md:text-6xl text-spider-black leading-none mb-3">
                             {project.title}
                         </h3>
-                        <p className="font-mono text-[10px] font-bold text-spider-black/80 leading-tight mb-4">
+                        <p className="font-mono text-xs font-bold text-spider-black/90 leading-tight mb-6 uppercase tracking-tight">
                             {project.desc}
                         </p>
                         
-                        <div className="flex flex-wrap gap-1 mb-4">
+                        <div className="flex flex-wrap gap-2 mb-6">
                             {project.tags.map(tag => (
-                                <span key={tag} className="text-[8px] font-bold bg-spider-black text-spider-white px-1 uppercase tracking-tighter">
+                                <span key={tag} className="text-[10px] font-black bg-spider-red text-spider-white px-2 py-0.5 uppercase">
                                     {tag}
                                 </span>
                             ))}
@@ -132,32 +171,16 @@ const ProjectPanel = ({ project, index, activeIndex, setActiveIndex }) => {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block font-bangers text-xl text-spider-red hover:text-spider-black transition-colors"
+                            className="inline-flex items-center gap-2 font-bangers text-2xl text-spider-red hover:text-spider-black transition-colors"
                         >
-                            ACCESS_LINK //
+                            LAUNCH_MODULE // <span className="text-sm">→</span>
                         </a>
                     </motion.div>
                 </motion.div>
-
-                {/* Impact Lines (Visible only when active) */}
-                {isActive && (
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                        <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
-                            {[...Array(8)].map((_, i) => (
-                                <line 
-                                    key={i} 
-                                    x1="50" y1="50" 
-                                    x2={50 + 100 * Math.cos(i * 45 * Math.PI / 180)} 
-                                    y2={50 + 100 * Math.sin(i * 45 * Math.PI / 180)} 
-                                    stroke="white" 
-                                    strokeWidth="0.5" 
-                                />
-                            ))}
-                        </svg>
-                    </div>
-                )}
             </div>
         </motion.div>
+    );
+};
     );
 };
 
