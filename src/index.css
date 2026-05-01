@@ -14,7 +14,7 @@
   html {
     scroll-behavior: smooth;
     background-color: #030712; /* gray-950 */
-    /* cursor: none !important; */
+    cursor: none !important;
   }
   
   body {
@@ -22,11 +22,11 @@
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;  
     scrollbar-width: none;  
-    /* cursor: none !important; */
+    cursor: none !important;
   }
 
   a, button, [role="button"], input, select, textarea, .cursor-pointer, .hover\:cursor-pointer:hover {
-    /* cursor: none !important; */
+    cursor: none !important;
   }
 
   
