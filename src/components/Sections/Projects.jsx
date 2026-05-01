@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const projectData = [
     {
@@ -9,7 +9,8 @@ const projectData = [
         tags: ['Lua', 'Node.js', 'SQL'],
         link: 'https://github.com/daneyyhh/fivem-resources',
         img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80',
-        rotate: -2
+        color: '#E8272A', // Miles Red
+        accent: 'CRITICAL_DATA'
     },
     {
         id: 'un-1',
@@ -18,7 +19,8 @@ const projectData = [
         tags: ['Unity', 'C#', '3D'],
         link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
         img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-        rotate: 3
+        color: '#FFD600', // Miles Yellow
+        accent: 'THREAT_DETECTED'
     },
     {
         id: 'un-2',
@@ -27,7 +29,8 @@ const projectData = [
         tags: ['Unity', 'C#'],
         link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
         img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
-        rotate: -1
+        color: '#00ffff', // Glitch Cyan
+        accent: 'SYSTEM_UPGRADE'
     },
     {
         id: 'dc-1',
@@ -36,82 +39,123 @@ const projectData = [
         tags: ['Discord.js', 'Redis', 'Express'],
         link: 'https://github.com/daneyyhh',
         img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80',
-        rotate: 2
+        color: '#E8272A',
+        accent: 'ENCRYPTION_KEY'
     }
 ];
 
-const ProjectCard = ({ project, index, activeIndex, setActiveIndex }) => {
+const ProjectPanel = ({ project, index, activeIndex, setActiveIndex }) => {
     const isActive = activeIndex === index;
-    const rotate = index % 2 === 0 ? -2 : 2;
+    const isEven = index % 2 === 0;
     
     return (
         <motion.div
-            className={`relative transition-all duration-700 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
+            className={`relative w-full max-w-4xl mx-auto mb-[-4rem] md:mb-[-6rem] transition-all duration-500 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
-            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100, rotate: rotate * 3 }}
-            whileInView={{ opacity: 1, x: 0, rotate: rotate }}
+            initial={{ opacity: 0, x: isEven ? -100 : 100, rotate: isEven ? -5 : 5 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ type: "spring", damping: 15, stiffness: 60 }}
         >
-            <div className={`relative transition-all ${isActive ? 'duration-200 scale-100 opacity-100 blur-0' : 'duration-300 scale-[0.98] opacity-90 blur-[1px]'}`}>
-                {/* Panel Image (ComicScroll Style) */}
-                <div
-                    className="relative shadow-[12px_12px_0px_#0A0A0A] border-4 border-spider-black bg-spider-yellow overflow-hidden z-10"
-                    style={{ width: "clamp(280px, 40vw, 550px)", height: "clamp(200px, 45vh, 400px)", transform: `rotate(${rotate}deg)` }}
+            <div className={`relative transition-all duration-500 ${isActive ? 'grayscale-0 brightness-110' : 'grayscale brightness-[0.3]'}`}>
+                {/* Comic Shape (Irregular using Clip Path) */}
+                <div 
+                    className="relative border-4 border-spider-black shadow-[15px_15px_0px_#0A0A0A] overflow-hidden bg-spider-black"
+                    style={{ 
+                        clipPath: isEven ? 'polygon(0% 5%, 100% 0%, 95% 100%, 5% 95%)' : 'polygon(5% 0%, 95% 5%, 100% 95%, 0% 100%)',
+                        height: 'clamp(300px, 50vh, 500px)'
+                    }}
                 >
                     <img 
                         src={project.img} 
                         alt={project.title} 
-                        className={`w-full h-full object-cover filter contrast-[1.15] saturate-[1.2] transition-transform duration-700 ${isActive ? 'scale-110' : 'scale-100'}`} 
+                        className={`w-full h-full object-cover transition-transform duration-1000 ${isActive ? 'scale-110' : 'scale-100'}`}
                     />
-                    <div className="absolute inset-0 halftone-overlay opacity-20 pointer-events-none"></div>
-                    <div className={`absolute inset-0 spider-scanline-move opacity-30 transition-opacity ${isActive ? 'opacity-50' : 'opacity-20'}`}></div>
+                    
+                    {/* Halftone & Scanlines */}
+                    <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none"></div>
+                    <div className={`absolute inset-0 spider-scanline-move transition-opacity ${isActive ? 'opacity-40' : 'opacity-10'}`}></div>
+
+                    {/* Accent Splash (Visible only when active) */}
+                    <AnimatePresence>
+                        {isActive && (
+                            <motion.div 
+                                initial={{ scale: 0, opacity: 0, rotate: -20 }}
+                                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                exit={{ scale: 0, opacity: 0 }}
+                                className="absolute top-10 left-10 z-20 pointer-events-none"
+                            >
+                                <div 
+                                    className="px-4 py-1 font-bangers text-2xl text-spider-black shadow-[4px_4px_0px_#0A0A0A] -rotate-6"
+                                    style={{ backgroundColor: project.color }}
+                                >
+                                    {project.accent}!
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
-                {/* Caption Box (Exactly matching ComicScrollSection) */}
-                <div
-                    className="absolute z-20 bg-spider-white border-[3px] border-spider-black shadow-[6px_6px_0px_#E8272A] p-4 md:p-6 flex flex-col gap-2 transition-transform duration-300"
+                {/* Content Overlay (Story style) */}
+                <motion.div
+                    className="absolute z-30 flex flex-col pointer-events-none"
                     style={{ 
-                        width: "clamp(180px, 28vw, 380px)", 
-                        bottom: "-4vh", 
-                        ...(index % 2 === 0 ? { right: "-5vw" } : { left: "-5vw" }), 
-                        transform: `rotate(${-rotate * 1.5}deg) ${isActive ? 'scale(1.05)' : 'scale(1)'}` 
+                        top: '50%', 
+                        ...(isEven ? { left: '10%' } : { right: '10%' }),
+                        transform: 'translateY(-50%)',
+                        maxWidth: '300px'
                     }}
                 >
-                    <div className="flex justify-between items-start">
-                        <h3 className="font-bangers text-2xl md:text-4xl leading-[0.9] text-spider-black tracking-wide">
+                    <motion.div
+                        className="bg-spider-white border-2 border-spider-black p-4 shadow-[8px_8px_0px_#E8272A] pointer-events-auto"
+                        animate={{ 
+                            x: isActive ? (isEven ? 20 : -20) : 0,
+                            rotate: isActive ? (isEven ? 2 : -2) : 0
+                        }}
+                    >
+                        <h3 className="font-bangers text-3xl md:text-5xl text-spider-black leading-none mb-2">
                             {project.title}
                         </h3>
-                        <div className="bg-spider-black text-spider-yellow font-mono text-[0.5rem] tracking-widest px-2 py-0.5 font-bold uppercase rotate-[-5deg]">
-                            PROJECT_{String(index + 1).padStart(2, '0')}
+                        <p className="font-mono text-[10px] font-bold text-spider-black/80 leading-tight mb-4">
+                            {project.desc}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-1 mb-4">
+                            {project.tags.map(tag => (
+                                <span key={tag} className="text-[8px] font-bold bg-spider-black text-spider-white px-1 uppercase tracking-tighter">
+                                    {tag}
+                                </span>
+                            ))}
                         </div>
-                    </div>
-                    
-                    <div className="w-10 h-1 bg-spider-yellow" />
-                    
-                    <p className="font-mono text-[0.6rem] md:text-xs font-bold text-spider-black/90 leading-tight">
-                        {project.desc}
-                    </p>
 
-                    <div className="mt-2 flex flex-wrap gap-1">
-                        {project.tags.map(tag => (
-                            <span key={tag} className="text-[8px] font-bold text-spider-red border-b border-spider-black/20 uppercase tracking-tighter">
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block font-bangers text-xl text-spider-red hover:text-spider-black transition-colors"
+                        >
+                            ACCESS_LINK //
+                        </a>
+                    </motion.div>
+                </motion.div>
 
-                    <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-2 font-bangers text-lg text-spider-black hover:text-spider-red transition-colors group"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        LAUNCH_DEPLOYMENT <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-                    </a>
-                </div>
+                {/* Impact Lines (Visible only when active) */}
+                {isActive && (
+                    <div className="absolute inset-0 pointer-events-none z-0">
+                        <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
+                            {[...Array(8)].map((_, i) => (
+                                <line 
+                                    key={i} 
+                                    x1="50" y1="50" 
+                                    x2={50 + 100 * Math.cos(i * 45 * Math.PI / 180)} 
+                                    y2={50 + 100 * Math.sin(i * 45 * Math.PI / 180)} 
+                                    stroke="white" 
+                                    strokeWidth="0.5" 
+                                />
+                            ))}
+                        </svg>
+                    </div>
+                )}
             </div>
         </motion.div>
     );
@@ -121,59 +165,51 @@ const Projects = () => {
     const [activeIndex, setActiveIndex] = React.useState(null);
 
     return (
-        <section id="projects" className="py-48 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
-            {/* HUD / Background Watermark */}
-            <div className="absolute top-20 right-10 z-0 opacity-20 pointer-events-none select-none hidden md:block">
-                <div className="flex flex-col items-end text-spider-white">
-                    <h4 className="font-bangers text-4xl tracking-widest leading-none mb-1">
-                        PROJECT DOSSIER
-                    </h4>
-                    <p className="font-mono text-[10px] text-spider-yellow uppercase font-bold tracking-[0.3em]">
-                        CLASSIFIED DEPLOYMENTS
-                    </p>
-                </div>
-            </div>
-
-            <div className="max-w-6xl mx-auto relative z-10">
-                <div className="mb-40 flex flex-col items-center text-center">
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="bg-spider-red border-2 border-spider-black px-6 py-2 mb-8 rotate-[-2deg] shadow-[8px_8px_0px_#FFD600]"
-                    >
-                        <span className="font-mono text-sm font-bold text-spider-white tracking-[0.4em] uppercase">
-                            Visual evidence // System_Archive
-                        </span>
-                    </motion.div>
-                    
-                    <h2 className="font-bangers text-8xl md:text-[10rem] text-spider-white drop-shadow-[10px_10px_0px_#E8272A] leading-none">
-                        THE <span className="text-spider-yellow">PROJECTS</span>
-                    </h2>
-                </div>
-
-                <div className="flex flex-col gap-32 md:gap-48">
-                    {projectData.map((project, i) => (
-                        <div key={project.id} className={`flex ${i % 2 === 0 ? 'justify-start' : 'justify-end'} w-full`}>
-                            <ProjectCard 
-                                project={project} 
-                                index={i} 
-                                activeIndex={activeIndex}
-                                setActiveIndex={setActiveIndex}
-                            />
-                        </div>
+        <section id="projects" className="py-60 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
+            {/* Background Texture: Multi-Panel Effect */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none select-none">
+                <div className="absolute top-0 left-0 w-full h-full flex flex-wrap gap-4 p-4">
+                    {[...Array(12)].map((_, i) => (
+                        <div key={i} className="w-[30%] h-[20%] border-2 border-white/20 rotate-12"></div>
                     ))}
                 </div>
             </div>
 
-            {/* Bottom Transition */}
-            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-spider-red to-transparent z-20 opacity-30"></div>
+            <div className="max-w-6xl mx-auto relative z-10">
+                <div className="mb-40 flex flex-col items-center">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="bg-spider-yellow border-2 border-spider-black px-4 py-1 mb-6 rotate-[-1deg] shadow-[4px_4px_0px_#E8272A]"
+                    >
+                        <span className="font-mono text-xs font-bold text-spider-black tracking-[0.3em] uppercase">
+                            Visual Evidence // Archive_42
+                        </span>
+                    </motion.div>
+                    
+                    <h2 className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#E8272A] leading-none text-center">
+                        THE <span className="text-spider-yellow">PROJECTS</span>
+                    </h2>
+                </div>
+
+                {/* Comic Storyboard Layout */}
+                <div className="flex flex-col py-20">
+                    {projectData.map((project, i) => (
+                        <ProjectPanel 
+                            key={project.id} 
+                            project={project} 
+                            index={i} 
+                            activeIndex={activeIndex}
+                            setActiveIndex={setActiveIndex}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Bottom Border */}
+            <div className="absolute bottom-0 left-0 w-full h-4 bg-spider-red halftone-overlay"></div>
         </section>
     );
 };
 
-
-
-
-
 export default Projects;
-
