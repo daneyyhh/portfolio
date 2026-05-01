@@ -24,11 +24,9 @@ function App() {
                         <ComicScrollSection />
                         <FaceOffSection />
                         <TransitionCtaSection />
-                        <div className="bg-gray-950">
-                            <About />
-                            <Projects />
-                            <Contact />
-                        </div>
+                        <About />
+                        <Projects />
+                        <Contact />
                     </>
                 } />
                 <Route path="/seo" element={<SeoPage />} />
@@ -37,7 +35,5 @@ function App() {
         </Router>
     );
 }
-
-
 
 export default App;
