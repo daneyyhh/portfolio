@@ -54,13 +54,14 @@ const ProjectCard = ({ project, index }) => (
         {/* Main Panel */}
         <div className="bg-spider-white border-4 border-spider-black overflow-hidden relative">
             {/* Image Section */}
-            <div className="relative h-64 overflow-hidden border-b-4 border-spider-black">
+            <div className="relative h-64 overflow-hidden border-b-4 border-spider-black spider-scanline">
                 <img 
                     src={project.img} 
                     alt={project.title} 
                     className="w-full h-full object-cover filter contrast-125 saturate-150 grayscale-0.5 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500"
                 />
                 <div className="absolute inset-0 halftone-overlay opacity-20 pointer-events-none"></div>
+                <div className="absolute inset-0 spider-scanline-move opacity-30 pointer-events-none"></div>
                 
                 {/* Tag Overlay */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
@@ -74,7 +75,10 @@ const ProjectCard = ({ project, index }) => (
             
             {/* Content Section */}
             <div className="p-6 bg-spider-white">
-                <h3 className="font-bangers text-4xl text-spider-black mb-3 tracking-wide leading-none group-hover:text-spider-red transition-colors">
+                <h3 
+                    className="font-bangers text-4xl text-spider-black mb-3 tracking-wide leading-none group-hover:text-spider-red transition-colors miles-glitch"
+                    data-text={project.title}
+                >
                     {project.title}
                 </h3>
                 <div className="w-10 h-1 bg-spider-yellow mb-4"></div>
@@ -124,7 +128,10 @@ const Projects = () => {
                         </span>
                     </motion.div>
                     
-                    <h2 className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#0A0A0A] leading-none">
+                    <h2 
+                        className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#0A0A0A] leading-none miles-glitch"
+                        data-text="FEATURED PROJECTS"
+                    >
                         FEATURED <span className="text-spider-yellow">PROJECTS</span>
                     </h2>
                 </div>

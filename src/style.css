@@ -161,6 +161,107 @@ body::before {
     box-shadow: 4px 4px 0px var(--comic-ink);
 }
 
+/* ── Miles Morales / Spider-Verse Animations ── */
+@keyframes glitch-anim {
+    0% { clip: rect(24px, 9999px, 94px, 0); transform: skew(0.85deg); }
+    5% { clip: rect(54px, 9999px, 83px, 0); transform: skew(0.5deg); }
+    10% { clip: rect(72px, 9999px, 12px, 0); transform: skew(0.2deg); }
+    15% { clip: rect(32px, 9999px, 96px, 0); transform: skew(0.1deg); }
+    20% { clip: rect(56px, 9999px, 32px, 0); transform: skew(0.65deg); }
+    25% { clip: rect(20px, 9999px, 50px, 0); transform: skew(0.1deg); }
+    30% { clip: rect(80px, 9999px, 20px, 0); transform: skew(0.3deg); }
+    35% { clip: rect(10px, 9999px, 90px, 0); transform: skew(0.9deg); }
+    40% { clip: rect(40px, 9999px, 40px, 0); transform: skew(0.5deg); }
+    45% { clip: rect(60px, 9999px, 70px, 0); transform: skew(0.2deg); }
+    50% { clip: rect(30px, 9999px, 10px, 0); transform: skew(0.1deg); }
+    55% { clip: rect(15px, 9999px, 65px, 0); transform: skew(0.8deg); }
+    60% { clip: rect(90px, 9999px, 30px, 0); transform: skew(0.4deg); }
+    65% { clip: rect(45px, 9999px, 55px, 0); transform: skew(0.7deg); }
+    70% { clip: rect(5px, 9999px, 85px, 0); transform: skew(0.3deg); }
+    75% { clip: rect(75px, 9999px, 25px, 0); transform: skew(0.1deg); }
+    80% { clip: rect(25px, 9999px, 75px, 0); transform: skew(0.5deg); }
+    85% { clip: rect(35px, 9999px, 15px, 0); transform: skew(0.9deg); }
+    90% { clip: rect(65px, 9999px, 45px, 0); transform: skew(0.2deg); }
+    95% { clip: rect(55px, 9999px, 5px, 0); transform: skew(0.6deg); }
+    100% { clip: rect(10px, 9999px, 95px, 0); transform: skew(0.1deg); }
+}
+
+.miles-glitch {
+    position: relative;
+    display: inline-block;
+}
+
+.miles-glitch::before,
+.miles-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.miles-glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff003c;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.miles-glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00ffff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.spider-scanline {
+    position: relative;
+    overflow: hidden;
+}
+
+.spider-scanline::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(255, 0, 60, 0.05) 51%,
+        transparent 51%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.spider-scanline-move::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 0, 60, 0.1),
+        transparent
+    );
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+    z-index: 11;
+}
+
+@keyframes scanline {
+    0% { top: -100%; }
+    100% { top: 100%; }
+}
+
 /* ── Navbar ── */
 .val-header {
     position: fixed;
