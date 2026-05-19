@@ -1,238 +1,297 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
-const projectData = [
-    {
-        id: 'fm-1',
-        title: 'FiveM Chronicles',
-        desc: 'Advanced LUA systems and optimizations for legendary roleplay servers.',
-        tags: ['Lua', 'Node.js', 'SQL'],
-        link: 'https://github.com/daneyyhh/fivem-resources',
-        img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80',
-        color: '#E8272A', // Miles Red
-        accent: 'CRITICAL_DATA'
-    },
-    {
-        id: 'un-1',
-        title: 'Haunted Code',
-        desc: 'A Unity horror experience written in C# with dynamic lighting.',
-        tags: ['Unity', 'C#', '3D'],
-        link: 'https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house',
-        img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-        color: '#FFD600', // Miles Yellow
-        accent: 'THREAT_DETECTED'
-    },
-    {
-        id: 'un-2',
-        title: 'Sprite Engine',
-        desc: 'High-octane arcade action systems and particle effects.',
-        tags: ['Unity', 'C#'],
-        link: 'https://play.unity.com/en/games/4d7cb2d6-141d-4a92-84f9-56f8f69d4bcf/spriteflight',
-        img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
-        color: '#00ffff', // Glitch Cyan
-        accent: 'SYSTEM_UPGRADE'
-    },
-    {
-        id: 'dc-1',
-        title: 'Bot Legacy',
-        desc: 'The ultimate Discord automation tool with advanced permissions routing.',
-        tags: ['Discord.js', 'Redis', 'Express'],
-        link: 'https://github.com/daneyyhh',
-        img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80',
-        color: '#E8272A',
-        accent: 'ENCRYPTION_KEY'
-    }
-];
+const categorizedData = {
+    projects: [
+        {
+            id: '01',
+            title: 'FIVEM CHRONICLES',
+            desc: 'Advanced LUA systems and optimizations for legendary roleplay servers.',
+            tags: ['LUA', 'SQL'],
+            img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80',
+            type: 'SYSTEM_ARCHITECT'
+        },
+        {
+            id: '02',
+            title: 'ERP SYSTEM',
+            desc: 'Custom enterprise resource planning system with modular admissions and transport management.',
+            tags: ['REACT', 'POSTGRES'],
+            img: 'https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg',
+            type: 'ENTERPRISE_LOGIC'
+        },
+        {
+            id: '03',
+            title: 'HAUNTED CODE',
+            desc: 'A Unity horror experience written in C# with dynamic lighting systems.',
+            tags: ['UNITY', 'C#'],
+            img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+            type: 'IMMERSIVE_VFX'
+        },
+        {
+            id: '04',
+            title: 'BOT LEGACY',
+            desc: 'The ultimate Discord automation tool with advanced permissions routing.',
+            tags: ['NODE.JS', 'REDIS'],
+            img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=1200&q=80',
+            type: 'AUTOMATION_CORE'
+        },
+        {
+            id: '05',
+            title: 'ECHOSPHERE',
+            desc: 'Premium music streaming platform with immersive UI/UX systems.',
+            tags: ['NEXT.JS', 'FRAMER'],
+            img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=1200&q=80',
+            type: 'UX_ARCHITECTURE'
+        }
+    ],
+    certificates: [
+        {
+            id: '01',
+            title: 'ANDROID UI DESIGN',
+            desc: 'Create the User Interface in Android Studio by Meta.',
+            tags: ['META', 'ANDROID'],
+            img: 'https://images.unsplash.com/photo-1607252656733-fd742268db41?auto=format&fit=crop&w=1200&q=80',
+            type: 'COURSERA'
+        },
+        {
+            id: '02',
+            title: 'SCIKIT-LEARN ML',
+            desc: 'Scikit-Learn For Machine Learning Classification Problems.',
+            tags: ['ML', 'PYTHON'],
+            img: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=1200&q=80',
+            type: 'COURSERA_PROJECT'
+        },
+        {
+            id: '03',
+            title: 'LEARN UI DESIGN',
+            desc: 'UI Design methodologies and implementation by Scrimba.',
+            tags: ['UI', 'DESIGN'],
+            img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80',
+            type: 'SCRIMBA'
+        },
+        {
+            id: '04',
+            title: 'JAVA PROGRAMMING',
+            desc: 'Fundamentals of Java Programming by Board Infinity.',
+            tags: ['JAVA', 'CORE'],
+            img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80',
+            type: 'BOARD_INFINITY'
+        },
+        {
+            id: '05',
+            title: 'PROFESSIONAL SUCCESS',
+            desc: 'Collaborate Effectively for Professional Success by IBM.',
+            tags: ['IBM', 'SOFT_SKILLS'],
+            img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
+            type: 'IBM'
+        }
+    ],
+    tools: [
+        {
+            id: '01',
+            title: 'REACT & NEXT.JS',
+            desc: 'Modern frontend frameworks for high-performance interfaces.',
+            tags: ['UI', 'UX'],
+            img: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=80',
+            type: 'FRONTEND'
+        },
+        {
+            id: '02',
+            title: 'NODE & PYTHON',
+            desc: 'Backend architectures, REST APIs, and automation scripting.',
+            tags: ['BACKEND', 'SCRIPTS'],
+            img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
+            type: 'BACKEND'
+        },
+        {
+            id: '03',
+            title: 'UNITY & C#',
+            desc: 'Game engine logic and immersive 3D experiences.',
+            tags: ['GAME', '3D'],
+            img: 'https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=1200&q=80',
+            type: 'GAME_DEV'
+        },
+        {
+            id: '04',
+            title: 'TAILWIND & GSAP',
+            desc: 'Advanced styling, animations, and premium aesthetic systems.',
+            tags: ['CSS', 'ANIMATION'],
+            img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80',
+            type: 'STYLING'
+        },
+        {
+            id: '05',
+            title: 'FIGMA',
+            desc: 'Glassmorphism UI, vector layouts, and high-fidelity prototyping.',
+            tags: ['DESIGN', 'PROTOTYPE'],
+            img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
+            type: 'UI_UX'
+        }
+    ]
+};
 
-const ProjectPanel = ({ project, index, activeIndex, setActiveIndex }) => {
-    const isActive = activeIndex === index;
-    const isEven = index % 2 === 0;
-    
+const HorizontalProjectCard = ({ project }) => {
     return (
-        <motion.div
-            className={`relative w-full max-w-5xl mx-auto mb-[-8rem] md:mb-[-12rem] transition-all duration-700 ${isActive ? 'z-50 scale-105' : 'z-10'}`}
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
-            initial={{ opacity: 0, y: 50, rotate: isEven ? -2 : 2 }}
+        <motion.div 
+            className="relative flex-shrink-0 w-[80vw] md:w-[60vw] h-[60vh] md:h-[70vh] mr-20 group"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            exit={{ opacity: 0, y: -20 }}
+            viewport={{ once: true }}
         >
-            {/* Background Action Lines (Visible only when active) */}
-            <AnimatePresence>
-                {isActive && (
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 0.4, scale: 1.5 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute inset-0 z-0 pointer-events-none overflow-visible"
-                    >
-                        <svg viewBox="0 0 100 100" className="w-full h-full">
-                            {[...Array(36)].map((_, i) => (
-                                <line 
-                                    key={i} 
-                                    x1="50" y1="50" 
-                                    x2={50 + 200 * Math.cos(i * 10 * Math.PI / 180)} 
-                                    y2={50 + 200 * Math.sin(i * 10 * Math.PI / 180)} 
-                                    stroke="white" 
-                                    strokeWidth="0.2" 
-                                    strokeDasharray="2,4"
-                                />
-                            ))}
-                        </svg>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Project Number (Architect Style) */}
+            <div className="absolute -top-20 left-0">
+                <span className="font-bangers text-[8vw] text-spider-black/5 group-hover:text-spider-red/10 transition-colors duration-700">
+                    {project.id}
+                </span>
+            </div>
 
-            <div className={`relative transition-all duration-700 ${isActive ? 'grayscale-0 brightness-110' : 'grayscale brightness-[0.2]'}`}>
-                {/* Comic Shape (Aggressive Skew) */}
-                <div 
-                    className="relative border-[6px] border-spider-black shadow-[20px_20px_0px_#0A0A0A] overflow-hidden bg-spider-black"
-                    style={{ 
-                        clipPath: isEven ? 'polygon(0% 10%, 100% 0%, 90% 100%, 10% 90%)' : 'polygon(10% 0%, 100% 10%, 90% 90%, 0% 100%)',
-                        height: 'clamp(400px, 60vh, 600px)'
-                    }}
-                >
-                    <img 
-                        src={project.img} 
-                        alt={project.title} 
-                        className={`w-full h-full object-cover transition-transform duration-[2000ms] ease-out ${isActive ? 'scale-125' : 'scale-100'}`}
-                    />
-                    
-                    {/* Comic Effects Overlay */}
-                    <div className="absolute inset-0 halftone-overlay opacity-40 mix-blend-soft-light pointer-events-none"></div>
-                    <div className={`absolute inset-0 spider-scanline-move transition-opacity duration-700 ${isActive ? 'opacity-50' : 'opacity-10'}`}></div>
+            {/* Main Card Frame */}
+            <div className="w-full h-full border border-spider-black/10 overflow-hidden relative bg-white">
+                <div className="absolute inset-0 bg-spider-black opacity-0 group-hover:opacity-10 transition-opacity duration-700 z-10" />
+                
+                <img 
+                    src={project.img} 
+                    alt={project.title}
+                    className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-110 transition-all duration-1000 scale-105 group-hover:scale-100"
+                />
 
-                    {/* Active VFX (Glitch Particles) */}
-                    {isActive && (
-                        <div className="absolute inset-0 z-20 pointer-events-none">
-                            {[...Array(12)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ y: -50, x: Math.random() * 100 + "%", opacity: 0 }}
-                                    animate={{ y: 600, opacity: [0, 1, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                                    className="absolute w-2 h-8 bg-spider-yellow/40 blur-[1px]"
-                                />
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Accent Badge */}
-                    <AnimatePresence>
-                        {isActive && (
-                            <motion.div 
-                                initial={{ x: -100, opacity: 0, rotate: -20 }}
-                                animate={{ x: 20, opacity: 1, rotate: -5 }}
-                                exit={{ x: -100, opacity: 0 }}
-                                className="absolute top-12 left-0 z-30 pointer-events-none"
-                            >
-                                <div className="bg-spider-red border-4 border-spider-black px-6 py-2 shadow-[8px_8px_0px_#0A0A0A]">
-                                    <span className="font-bangers text-3xl text-spider-white tracking-widest">{project.accent}</span>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                {/* Technical Overlay */}
+                <div className="absolute inset-4 border border-white/20 z-20 pointer-events-none" />
+                <div className="absolute top-8 left-8 z-30">
+                    <div className="bg-spider-red text-spider-white px-3 py-1 font-mono text-[10px] font-black tracking-widest mb-2">
+                        {project.type}
+                    </div>
                 </div>
+            </div>
 
-                {/* Content Box (Pop Style) */}
-                <motion.div
-                    className="absolute z-40 flex flex-col pointer-events-none"
-                    style={{ 
-                        top: '50%', 
-                        ...(isEven ? { right: '15%' } : { left: '15%' }),
-                        transform: 'translateY(-50%)',
-                        maxWidth: '350px'
-                    }}
-                >
-                    <motion.div
-                        className="bg-spider-white border-4 border-spider-black p-6 shadow-[12px_12px_0px_#FFD600] pointer-events-auto"
-                        animate={{ 
-                            x: isActive ? (isEven ? -40 : 40) : 0,
-                            scale: isActive ? 1.1 : 1,
-                            rotate: isActive ? (isEven ? -2 : 2) : 0
-                        }}
-                    >
-                        <h3 className="font-bangers text-4xl md:text-6xl text-spider-black leading-none mb-3">
-                            {project.title}
-                        </h3>
-                        <p className="font-mono text-xs font-bold text-spider-black/90 leading-tight mb-6 uppercase tracking-tight">
-                            {project.desc}
-                        </p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            {project.tags.map(tag => (
-                                <span key={tag} className="text-[10px] font-black bg-spider-red text-spider-white px-2 py-0.5 uppercase">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-
-                        <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-bangers text-2xl text-spider-red hover:text-spider-black transition-colors"
-                        >
-                            LAUNCH_MODULE // <span className="text-sm">→</span>
-                        </a>
-                    </motion.div>
-                </motion.div>
+            {/* Content Bottom */}
+            <div className="mt-8 flex flex-col md:flex-row justify-between items-start gap-4">
+                <div className="max-w-md">
+                    <h3 className="font-bangers text-4xl md:text-6xl text-spider-black leading-none mb-4 group-hover:text-spider-red transition-colors">
+                        {project.title}
+                    </h3>
+                    <p className="font-mono text-xs text-spider-black/60 leading-relaxed uppercase tracking-tighter">
+                        {project.desc}
+                    </p>
+                </div>
+                
+                <div className="flex flex-wrap gap-2">
+                    {project.tags.map(tag => (
+                        <span key={tag} className="font-mono text-[10px] font-black text-spider-black border border-spider-black/20 px-3 py-1">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
             </div>
         </motion.div>
     );
 };
-    );
-};
 
 const Projects = () => {
-    const [activeIndex, setActiveIndex] = React.useState(null);
+    const targetRef = useRef(null);
+    const [activeCategory, setActiveCategory] = useState('projects');
+    const currentData = categorizedData[activeCategory];
+
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+    });
+
+    // Dynamically calculate scroll end based on number of items
+    // If 5 items -> -75%, If 3 items -> -66%, If 4 items -> -70%
+    const getScrollEnd = (length) => {
+        if (length <= 1) return "0%";
+        if (length === 2) return "-50%";
+        if (length === 3) return "-65%";
+        if (length === 4) return "-72%";
+        return "-75%";
+    };
+
+    const xEnd = getScrollEnd(currentData.length);
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", xEnd]);
+
+    const handleCategoryClick = (category) => {
+        setActiveCategory(category);
+        // Optional: Scroll back to the start of the section smoothly when changing categories
+        if (targetRef.current) {
+            window.scrollTo({
+                top: targetRef.current.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     return (
-        <section id="projects" className="py-60 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
-            {/* Background Texture: Multi-Panel Effect */}
-            <div className="absolute inset-0 opacity-5 pointer-events-none select-none">
-                <div className="absolute top-0 left-0 w-full h-full flex flex-wrap gap-4 p-4">
-                    {[...Array(12)].map((_, i) => (
-                        <div key={i} className="w-[30%] h-[20%] border-2 border-white/20 rotate-12"></div>
-                    ))}
+        <section id="projects" ref={targetRef} className="relative h-[400vh] bg-[#fcfcfc] overflow-visible">
+            {/* Sticky Container */}
+            <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+                {/* Background Blueprint Grid */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
+                    <div className="absolute inset-0 bg-grid" />
+                    <div className="absolute top-1/4 left-0 w-full h-px bg-spider-red" />
+                    <div className="absolute top-3/4 left-0 w-full h-px bg-spider-red" />
+                    <div className="absolute left-1/4 top-0 w-px h-full bg-spider-red" />
+                    <div className="absolute left-3/4 top-0 w-px h-full bg-spider-red" />
                 </div>
-            </div>
 
-            <div className="max-w-6xl mx-auto relative z-10">
-                <div className="mb-40 flex flex-col items-center">
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="bg-spider-yellow border-2 border-spider-black px-4 py-1 mb-6 rotate-[-1deg] shadow-[4px_4px_0px_#E8272A]"
-                    >
-                        <span className="font-mono text-xs font-bold text-spider-black tracking-[0.3em] uppercase">
-                            Visual Evidence // Archive_42
+                {/* Section Header */}
+                <div className="absolute top-20 left-6 md:left-16 z-30">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-px bg-spider-red" />
+                        <span className="font-mono text-[10px] font-black tracking-[0.5em] text-spider-red uppercase">
+                            Architecture_Archive_2024
                         </span>
-                    </motion.div>
+                    </div>
                     
-                    <h2 className="font-bangers text-7xl md:text-9xl text-spider-white drop-shadow-[8px_8px_0px_#E8272A] leading-none text-center">
-                        THE <span className="text-spider-yellow">PROJECTS</span>
+                    <h2 className="font-bangers text-7xl md:text-[10rem] text-spider-black leading-[0.8] uppercase select-none">
+                        {activeCategory === 'projects' && <>PROJ<br /><span className="text-spider-red">ECTS</span></>}
+                        {activeCategory === 'certificates' && <>CERT<br /><span className="text-spider-red">IFICATES</span></>}
+                        {activeCategory === 'tools' && <>TOO<br /><span className="text-spider-red">LS</span></>}
                     </h2>
+
+                    {/* Category Tabs */}
+                    <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-4">
+                        {['projects', 'certificates', 'tools'].map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => handleCategoryClick(cat)}
+                                className={`font-mono text-[10px] md:text-xs font-black px-4 py-2 border transition-all duration-300 uppercase tracking-widest ${
+                                    activeCategory === cat 
+                                    ? 'bg-spider-red text-white border-spider-red' 
+                                    : 'bg-white/80 backdrop-blur-sm text-spider-black border-spider-black/20 hover:border-spider-black cursor-pointer'
+                                }`}
+                            >
+                                {cat.replace('-', ' ')}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Comic Storyboard Layout */}
-                <div className="flex flex-col py-20">
-                    {projectData.map((project, i) => (
-                        <ProjectPanel 
-                            key={project.id} 
-                            project={project} 
-                            index={i} 
-                            activeIndex={activeIndex}
-                            setActiveIndex={setActiveIndex}
-                        />
-                    ))}
+                {/* Side Progress Text */}
+                <div className="absolute right-12 bottom-12 z-20 hidden md:flex items-center gap-4 rotate-90 origin-right">
+                    <span className="font-mono text-[10px] font-black text-spider-black/40 tracking-widest uppercase">
+                        SCROLL_TO_EXPLORE_DATA_SET
+                    </span>
+                    <div className="w-16 h-[1px] bg-spider-black/20" />
                 </div>
+
+                {/* Horizontal Scroll Track */}
+                <div className="relative z-10 px-6 md:px-16 mt-48 md:mt-0 pt-[20vh] md:pt-0">
+                    <motion.div style={{ x }} className="flex">
+                        <AnimatePresence mode="popLayout">
+                            {currentData.map((project) => (
+                                <HorizontalProjectCard key={`${activeCategory}-${project.id}`} project={project} />
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
+                </div>
+
+                {/* Bottom Border Accent */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-spider-black/5" />
             </div>
-
-            {/* Bottom Border */}
-            <div className="absolute bottom-0 left-0 w-full h-4 bg-spider-red halftone-overlay"></div>
         </section>
     );
 };
 
 export default Projects;
+

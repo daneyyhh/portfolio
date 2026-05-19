@@ -11,10 +11,12 @@ import Projects from './components/Sections/Projects';
 import Contact from './components/Sections/Contact';
 import SeoPage from './components/Sections/SeoPage';
 import NotFound from './components/Sections/NotFound';
+import SmoothScroll from './components/UI/SmoothScroll';
 
 function App() {
     return (
         <Router>
+            <SmoothScroll />
             <Cursor />
             <Routes>
                 <Route path="/" element={
