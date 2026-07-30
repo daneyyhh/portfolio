@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Cursor from './Cursor';
 import HeroReveal from './components/Sections/HeroReveal';
 import OriginSection from './components/Sections/OriginSection';
 import ComicScrollSection from './components/Sections/ComicScrollSection';
@@ -17,7 +16,6 @@ function App() {
     return (
         <Router>
             <SmoothScroll />
-            <Cursor />
             <Routes>
                 <Route path="/" element={
                     <>

@@ -1,56 +1,49 @@
-# Gamer/Dev 2D Portfolio
+# Cinematic Architecture & Spider-Verse Portfolio
 
-> "Gamer by passion, Developer by craft."
+> "Awwwards-grade digital storytelling experience blending cinematic architecture, Spider-Verse aesthetics, and high-performance engineering."
 
-A futuristic, high-fidelity portfolio website featuring a 2D cyber-aesthetic, game-inspired UI, and live GitHub project integration.
+An immersive, futuristic digital portfolio built to showcase development projects, technical certifications, and design capabilities. The experience seamlessly integrates a premium "Bone White and Charcoal" minimal aesthetic with advanced GSAP-driven scroll animations, glitchy tech-HUD elements, and a custom radioactive spider cursor.
 
-## 🌟 Features
+## 🌟 Key Features
 
-- **Game Loading Screen**: Immersive boot-up sequence with randomized loading text.
-- **Neon 2D Aesthetic**: Dark charcoal theme with high-contrast Cyan/Purple accents and glassmorphism.
-- **Live GitHub Projects**: Automatically fetches and displays repositories from GitHub (`daneyyhh`).
-- **Interactive UI**: Hover effects, Framer Motion animations, and "Game Cartridge" style cards.
-- **Responsive**: Fully optimized for Desktop and Mobile.
+- **Cinematic Storytelling**: Fluid, high-performance scroll-based storytelling powered by Lenis and GSAP.
+- **Spider-Verse Aesthetics**: Immersive comic-book bursts, glitch-heavy text, and a highly responsive radioactive spider custom cursor.
+- **Architecture Archive**: A dynamically rendered, tabbed horizontal scrolling system categorized into Projects, Certificates, and Tools featuring real-world credentials.
+- **Premium UI/UX**: Glassmorphism, tailored typography (Bangers, Monospace), and mathematically-generated blueprint grid backgrounds.
+- **High-Performance**: Fully optimized component rendering with Vite, React, and Framer Motion.
 
 ## 🛠 Tech Stack
 
-- **Framework**: React 19 (Vite)
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Deployment**: Vercel
+- **Core Framework**: React (Vite)
+- **Styling**: Tailwind CSS, Vanilla CSS (Custom Keyframes)
+- **Animation Engine**: Framer Motion, GSAP
+- **Scroll Hijacking**: Lenis (Smooth Scroll)
+- **Icons & Assets**: Lucide React, Devicons
 
 ## 🚀 Getting Started
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/daneyyhh/portfolio.git
-    cd portfolio
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/daneyyhh/portfolio.git
+   cd portfolio
+   ```
 
-2.  **Install dependencies:**
-    ```bash
-    npm install --legacy-peer-deps
-    ```
+2. **Install dependencies:**
+   ```bash
+   npm install --legacy-peer-deps
+   ```
 
-3.  **Run locally:**
-    ```bash
-    npm run dev
-    ```
+3. **Run the local development server:**
+   ```bash
+   npm run dev
+   ```
 
 ## 📦 Deployment
 
-This project is configured for **Vercel**.
-Pushes to the `main` branch trigger automatic deployments.
+This project is optimized for deployment on **Vercel**. 
+Pushes to the `main` branch will automatically trigger production deployments. 
 
-**Note on Peer Dependencies:**
-This project uses `.npmrc` with `legacy-peer-deps=true` to resolve conflicts between React 19 and certain UI libraries.
+*(Note: The project utilizes `.npmrc` with `legacy-peer-deps=true` to handle React 19 compatibility across advanced animation libraries.)*
 
 ---
-*Built by [daneyyhh](https://github.com/daneyyhh)*
-
-<!-- badge -->
-
-<!-- update 2 -->
-
-<!-- co-author update -->
+*Architected and Built by [daneyyhh](https://github.com/daneyyhh)*

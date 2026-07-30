@@ -50,40 +50,45 @@ const categorizedData = {
             title: 'ANDROID UI DESIGN',
             desc: 'Create the User Interface in Android Studio by Meta.',
             tags: ['META', 'ANDROID'],
-            img: 'https://images.unsplash.com/photo-1607252656733-fd742268db41?auto=format&fit=crop&w=1200&q=80',
-            type: 'COURSERA'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg',
+            type: 'COURSERA',
+            isLogo: true
         },
         {
             id: '02',
             title: 'SCIKIT-LEARN ML',
             desc: 'Scikit-Learn For Machine Learning Classification Problems.',
             tags: ['ML', 'PYTHON'],
-            img: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=1200&q=80',
-            type: 'COURSERA_PROJECT'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg',
+            type: 'COURSERA_PROJECT',
+            isLogo: true
         },
         {
             id: '03',
             title: 'LEARN UI DESIGN',
             desc: 'UI Design methodologies and implementation by Scrimba.',
             tags: ['UI', 'DESIGN'],
-            img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80',
-            type: 'SCRIMBA'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
+            type: 'SCRIMBA',
+            isLogo: true
         },
         {
             id: '04',
             title: 'JAVA PROGRAMMING',
             desc: 'Fundamentals of Java Programming by Board Infinity.',
             tags: ['JAVA', 'CORE'],
-            img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80',
-            type: 'BOARD_INFINITY'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+            type: 'BOARD_INFINITY',
+            isLogo: true
         },
         {
             id: '05',
             title: 'PROFESSIONAL SUCCESS',
             desc: 'Collaborate Effectively for Professional Success by IBM.',
             tags: ['IBM', 'SOFT_SKILLS'],
-            img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
-            type: 'IBM'
+            img: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
+            type: 'IBM',
+            isLogo: true
         }
     ],
     tools: [
@@ -92,40 +97,45 @@ const categorizedData = {
             title: 'REACT & NEXT.JS',
             desc: 'Modern frontend frameworks for high-performance interfaces.',
             tags: ['UI', 'UX'],
-            img: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=80',
-            type: 'FRONTEND'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg',
+            type: 'FRONTEND',
+            isLogo: true
         },
         {
             id: '02',
             title: 'NODE & PYTHON',
             desc: 'Backend architectures, REST APIs, and automation scripting.',
             tags: ['BACKEND', 'SCRIPTS'],
-            img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
-            type: 'BACKEND'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
+            type: 'BACKEND',
+            isLogo: true
         },
         {
             id: '03',
             title: 'UNITY & C#',
             desc: 'Game engine logic and immersive 3D experiences.',
             tags: ['GAME', '3D'],
-            img: 'https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=1200&q=80',
-            type: 'GAME_DEV'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg',
+            type: 'GAME_DEV',
+            isLogo: true
         },
         {
             id: '04',
             title: 'TAILWIND & GSAP',
             desc: 'Advanced styling, animations, and premium aesthetic systems.',
             tags: ['CSS', 'ANIMATION'],
-            img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80',
-            type: 'STYLING'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
+            type: 'STYLING',
+            isLogo: true
         },
         {
             id: '05',
             title: 'FIGMA',
             desc: 'Glassmorphism UI, vector layouts, and high-fidelity prototyping.',
             tags: ['DESIGN', 'PROTOTYPE'],
-            img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
-            type: 'UI_UX'
+            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
+            type: 'UI_UX',
+            isLogo: true
         }
     ]
 };
@@ -153,7 +163,11 @@ const HorizontalProjectCard = ({ project }) => {
                 <img 
                     src={project.img} 
                     alt={project.title}
-                    className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-110 transition-all duration-1000 scale-105 group-hover:scale-100"
+                    className={`w-full h-full transition-all duration-1000 scale-105 group-hover:scale-100 ${
+                        project.isLogo 
+                        ? 'object-contain p-12 md:p-24 bg-white/5 grayscale-0' 
+                        : 'object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-110'
+                    }`}
                 />
 
                 {/* Technical Overlay */}
@@ -224,7 +238,7 @@ const Projects = () => {
     return (
         <section id="projects" ref={targetRef} className="relative h-[400vh] bg-[#fcfcfc] overflow-visible">
             {/* Sticky Container */}
-            <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+            <div className="sticky top-0 h-screen flex flex-col pt-24 md:pt-32 pb-12 overflow-hidden">
                 {/* Background Blueprint Grid */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
                     <div className="absolute inset-0 bg-grid" />
@@ -235,7 +249,7 @@ const Projects = () => {
                 </div>
 
                 {/* Section Header */}
-                <div className="absolute top-20 left-6 md:left-16 z-30">
+                <div className="relative z-30 px-6 md:px-16 shrink-0">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-px bg-spider-red" />
                         <span className="font-mono text-[10px] font-black tracking-[0.5em] text-spider-red uppercase">
@@ -243,14 +257,14 @@ const Projects = () => {
                         </span>
                     </div>
                     
-                    <h2 className="font-bangers text-7xl md:text-[10rem] text-spider-black leading-[0.8] uppercase select-none">
-                        {activeCategory === 'projects' && <>PROJ<br /><span className="text-spider-red">ECTS</span></>}
-                        {activeCategory === 'certificates' && <>CERT<br /><span className="text-spider-red">IFICATES</span></>}
-                        {activeCategory === 'tools' && <>TOO<br /><span className="text-spider-red">LS</span></>}
+                    <h2 className="font-bangers text-5xl md:text-7xl lg:text-[8rem] text-spider-black leading-none uppercase select-none whitespace-nowrap tracking-wide">
+                        {activeCategory === 'projects' && <>PROJECTS<span className="text-spider-red">.</span></>}
+                        {activeCategory === 'certificates' && <>CERTIFICATES<span className="text-spider-red">.</span></>}
+                        {activeCategory === 'tools' && <>TOOLS<span className="text-spider-red">.</span></>}
                     </h2>
 
                     {/* Category Tabs */}
-                    <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-4">
+                    <div className="mt-6 flex flex-wrap gap-2 md:gap-4">
                         {['projects', 'certificates', 'tools'].map((cat) => (
                             <button
                                 key={cat}
@@ -276,7 +290,7 @@ const Projects = () => {
                 </div>
 
                 {/* Horizontal Scroll Track */}
-                <div className="relative z-10 px-6 md:px-16 mt-48 md:mt-0 pt-[20vh] md:pt-0">
+                <div className="relative z-10 px-6 md:px-16 flex-1 flex items-center overflow-visible mt-12 md:mt-0">
                     <motion.div style={{ x }} className="flex">
                         <AnimatePresence mode="popLayout">
                             {currentData.map((project) => (

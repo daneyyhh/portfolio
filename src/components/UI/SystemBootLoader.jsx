@@ -47,7 +47,6 @@ const SystemBootLoader = ({ onComplete }) => {
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 0.6, ease: "circIn" }}
             style={{
-                cursor: 'none',
                 position: 'fixed',
                 inset: 0,
                 zIndex: 10000,
