@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
 
 export default function ProcessSection() {
@@ -16,34 +15,34 @@ export default function ProcessSection() {
       id: "01",
       name: "DISCOVER",
       icon: Search,
-      desc: "Understand the problem, users and business context before deciding what to build.",
+      desc: "Understand the problem before building the solution.",
       deliverables: ["USER RESEARCH", "PROBLEM ANALYSIS", "COMPETITOR RESEARCH", "GOAL ALIGNMENT"],
-      output: "Clear problem statement + project direction.",
-      codeSnippet: "// 01. DISCOVER PHASE\nconst discovery = {\n  research: 'user interviews',\n  problem: 'defined',\n  roadmap: 'aligned'\n};"
+      output: "Clear problem definition + project direction.",
+      codeSnippet: "// 01. DISCOVER PHASE\nconst discovery = {\n  research: 'user needs & pain points',\n  problem: 'core definition established',\n  roadmap: 'aligned with goals'\n};"
     },
     {
       id: "02",
       name: "DEFINE",
       icon: Target,
-      desc: "Turn research into a clear product scope and technical plan.",
+      desc: "Convert research into a structured technical direction.",
       deliverables: ["REQUIREMENTS", "USER FLOWS", "INFORMATION ARCHITECTURE", "FEATURE PRIORITIZATION", "TECHNICAL PLANNING"],
-      output: "Defined scope + technical roadmap.",
-      codeSnippet: "// 02. DEFINE PHASE\nconst scope = {\n  architecture: 'modular',\n  userFlows: 'mapped',\n  stack: 'React / Node / Postgres'\n};"
+      output: "Defined scope and roadmap.",
+      codeSnippet: "// 02. DEFINE PHASE\nconst scope = {\n  functionalRequirements: 'specified',\n  userFlows: 'mapped',\n  stack: 'React / Node / Postgres'\n};"
     },
     {
       id: "03",
       name: "DESIGN",
       icon: Layout,
-      desc: "Create an intuitive visual system and experience before development begins.",
-      deliverables: ["WIREFRAMES", "UI / UX", "DESIGN SYSTEM", "RESPONSIVE DESIGN", "PROTOTYPING"],
-      output: "Validated interface + design system.",
-      codeSnippet: "// 03. DESIGN PHASE\nconst designSystem = {\n  palette: ['#F1F0EB', '#0A0A0A', '#8B6DFF'],\n  typography: 'Syne & JetBrains Mono'\n};"
+      desc: "Create the experience before writing production code.",
+      deliverables: ["WIREFRAMES", "UI / UX", "DESIGN SYSTEM", "RESPONSIVE LAYOUTS", "PROTOTYPING"],
+      output: "Validated interface and design system.",
+      codeSnippet: "// 03. DESIGN PHASE\nconst designSystem = {\n  palette: ['#F1F0EB', '#0A0A0A', '#8B6DFF'],\n  typography: 'Syne & JetBrains Mono',\n  components: 'reusable'\n};"
     },
     {
       id: "04",
       name: "BUILD",
       icon: Code2,
-      desc: "Transform the validated design into scalable production-ready software.",
+      desc: "Turn the design into a functional product.",
       deliverables: ["FRONTEND", "BACKEND", "DATABASE", "API INTEGRATION", "3D / INTERACTION"],
       output: "Working application.",
       codeSnippet: "// 04. BUILD PHASE\nconst app = createFullStackApp({\n  frontend: 'React / Next.js',\n  backend: 'Node.js / Express',\n  db: 'PostgreSQL'\n});"
@@ -52,27 +51,27 @@ export default function ProcessSection() {
       id: "05",
       name: "DEPLOY",
       icon: Rocket,
-      desc: "Move the application from development into a reliable production environment.",
+      desc: "Move the application into production.",
       deliverables: ["PRODUCTION SETUP", "CI/CD", "HOSTING", "ENVIRONMENT CONFIGURATION", "MONITORING"],
-      output: "Live production application.",
-      codeSnippet: "# 05. DEPLOY PHASE\n$ git push origin main\n-> GitHub Actions -> Vercel Production Build\n-> [200 OK Live on reubg.in]"
+      output: "Live production system.",
+      codeSnippet: "# 05. DEPLOY PHASE\n$ git push origin main\n-> GitHub Actions CI/CD Pipeline\n-> Vercel Production Deployment [200 OK Live on reubg.in]"
     },
     {
       id: "06",
       name: "TEST",
       icon: ShieldCheck,
-      desc: "Validate functionality, performance, responsiveness and security.",
+      desc: "Validate the product before and after release.",
       deliverables: ["FUNCTIONAL TESTING", "RESPONSIVE TESTING", "PERFORMANCE", "SECURITY", "USER FEEDBACK"],
-      output: "Stable and validated product.",
-      codeSnippet: "// 06. TEST PHASE\nrunTestSuite({\n  functional: 'passed',\n  lighthouse: 98,\n  security: 'passed'\n});"
+      output: "Stable production-ready product.",
+      codeSnippet: "// 06. TEST PHASE\nrunTestSuite({\n  functional: 'passed',\n  responsiveness: 'verified',\n  lighthouse: 98\n});"
     },
     {
       id: "07",
       name: "ITERATE",
       icon: RefreshCw,
-      desc: "Continuously improve the product using real-world data and feedback.",
+      desc: "Improve the product using real-world feedback.",
       deliverables: ["ANALYTICS", "FEEDBACK", "BUG FIXES", "FEATURE IMPROVEMENTS", "OPTIMIZATION"],
-      output: "Continuous product improvement.",
+      output: "Continuous improvement.",
       codeSnippet: "// 07. ITERATE PHASE\nconst cycle = {\n  analytics: 'monitored',\n  optimization: 'ongoing',\n  feedback: 'integrated'\n};"
     }
   ];
@@ -177,7 +176,7 @@ export default function ProcessSection() {
           </div>
 
           <div className="text-xs text-slate-400 font-mono hidden sm:block">
-            "A structured approach that turns ideas into powerful, scalable solutions."
+            "A structured engineering approach from concept to continuous optimization."
           </div>
         </div>
 
@@ -206,11 +205,11 @@ export default function ProcessSection() {
               </p>
             </div>
 
-            {/* Key Deliverables & Scope */}
+            {/* Key Activities / Scope */}
             <div className="space-y-2 pt-2 border-t border-white/10">
               <div className="text-[11px] font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
                 <Activity size={13} className="animate-spin" />
-                <span>KEY DELIVERABLES & SCOPE:</span>
+                <span>KEY ACTIVITIES & SCOPE:</span>
               </div>
 
               <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
@@ -223,7 +222,7 @@ export default function ProcessSection() {
               </div>
             </div>
 
-            {/* Expected Stage Output */}
+            {/* Stage Output Result */}
             <div className="bg-[#141414] border border-[#8B6DFF]/30 p-3 text-xs text-[#8B6DFF]">
               <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">STAGE OUTPUT:</div>
               <div className="text-white font-bold text-xs">{activeStage.output}</div>
