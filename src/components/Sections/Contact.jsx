@@ -33,7 +33,7 @@ export default function Contact({ engineerMode }) {
               LET'S CONNECT
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-4">
               <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
                 LET'S BUILD<br />
                 SOMETHING AMAZING<span className="text-[#8B6DFF]">.</span>

@@ -29,7 +29,7 @@ export default function Hero({ engineerMode, onOpenResume }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-2"
+            className="space-y-4"
           >
             <h1 className="font-syne text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#111111]">
               I BUILD<br />
@@ -37,9 +37,9 @@ export default function Hero({ engineerMode, onOpenResume }) {
               WORLDS<span className="text-[#8B6DFF]">.</span>
             </h1>
             
-            {/* Exact Approved reubg Logo Asset as Signature Mark */}
+            {/* Approved reubg Logo Asset as Signature Mark */}
             <div className="pt-2">
-              <ReubgLogo className="w-[180px] sm:w-[240px] h-auto filter invert mix-blend-difference" />
+              <ReubgLogo className="w-[180px] sm:w-[240px] h-auto" />
             </div>
           </motion.div>
 
