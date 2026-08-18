@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
-import CustomCursor from './components/UI/CustomCursor';
 import CaseStudyModal from './components/UI/CaseStudyModal';
 import EasterEggs from './components/UI/EasterEggs';
 
@@ -45,7 +44,7 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-[#F1F0EB] text-[#111111] font-sans ${engineerMode ? 'engineer-mode-active' : ''}`}>
       
-      {/* Full-Screen Mandatory Pre-loader */}
+      {/* Mandatory Pre-loader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
       {/* Main Portfolio Content — Rendered after pre-loader transition */}
@@ -53,9 +52,6 @@ export default function App() {
         
         {/* Persistent Three.js WebGL Canvas Journey */}
         <PersistentCanvas />
-
-        {/* Custom Precision Pointer */}
-        <CustomCursor />
 
         {/* Easter Egg Event Listener */}
         <EasterEggs />
@@ -67,7 +63,7 @@ export default function App() {
           onOpenResume={() => setResumeOpen(true)}
         />
 
-        {/* Main Page Flow Matching Reference Image media_1787062891685.jpg */}
+        {/* Main Editorial Page Flow */}
         <main className="relative z-10">
           <Hero
             engineerMode={engineerMode}

@@ -26,16 +26,12 @@ export default function HeroCanvas({ engineerMode }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    // Lighting (Strict Palette: Subtle #8B6DFF Purple and Warm Lights)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const neonLimeLight = new THREE.PointLight(0xccff00, 3, 20);
-    neonLimeLight.position.set(3, 4, 5);
-    scene.add(neonLimeLight);
-
-    const purpleLight = new THREE.PointLight(0xa855f7, 4, 20);
-    purpleLight.position.set(-4, -3, 3);
+    const purpleLight = new THREE.PointLight(0x8B6DFF, 3, 20);
+    purpleLight.position.set(3, 4, 5);
     scene.add(purpleLight);
 
     // Group for Centerpiece
@@ -45,10 +41,8 @@ export default function HeroCanvas({ engineerMode }) {
     // 1. Outer Wireframe Polyhedron
     const outerGeo = new THREE.IcosahedronGeometry(2, 1);
     const outerMat = new THREE.MeshStandardMaterial({
-      color: 0xccff00,
+      color: 0x111111,
       wireframe: true,
-      emissive: 0xccff00,
-      emissiveIntensity: 0.2,
       roughness: 0.2,
       metalness: 0.8
     });
@@ -58,9 +52,9 @@ export default function HeroCanvas({ engineerMode }) {
     // 2. Inner Glowing Core Polyhedron
     const innerGeo = new THREE.OctahedronGeometry(1.1, 0);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0xa855f7,
-      emissive: 0xa855f7,
-      emissiveIntensity: 0.8,
+      color: 0x8B6DFF,
+      emissive: 0x8B6DFF,
+      emissiveIntensity: 0.5,
       roughness: 0.1,
       metalness: 0.9
     });
@@ -68,7 +62,7 @@ export default function HeroCanvas({ engineerMode }) {
     mainGroup.add(innerMesh);
 
     // 3. Orbiting Particle Ring
-    const particleCount = 200;
+    const particleCount = 150;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
@@ -82,10 +76,10 @@ export default function HeroCanvas({ engineerMode }) {
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
-      size: 0.04,
-      color: 0xccff00,
+      size: 0.03,
+      color: 0x8B6DFF,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.7
     });
     const particleRing = new THREE.Points(particleGeo, particleMat);
     mainGroup.add(particleRing);
@@ -149,8 +143,8 @@ export default function HeroCanvas({ engineerMode }) {
     <div className="relative w-full h-full min-h-[350px]">
       <div ref={mountRef} className="w-full h-full absolute inset-0" />
       {engineerMode && (
-        <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-[#ccff00] bg-black/80 border border-[#ccff00]/30 px-3 py-1.5 rounded-sm">
-          <span>WEBGL 3D // 60 FPS // THREE.JS SHADER CORE</span>
+        <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-[#8B6DFF] bg-[#0A0A0A] border border-[#8B6DFF]/30 px-3 py-1.5">
+          <span>WEBGL 3D // THREE.JS SHADER ENGINE</span>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Monitor, Cpu, ShieldCheck, Database, ArrowRight, Activity, Server } from 'lucide-react';
+import { Monitor, Cpu, Server, Database, ArrowRight, Activity } from 'lucide-react';
 
 export default function Architecture({ engineerMode }) {
   const [activeNode, setActiveNode] = useState(0);
@@ -45,24 +45,22 @@ export default function Architecture({ engineerMode }) {
   ];
 
   return (
-    <section id="architecture" className="py-24 px-6 md:px-12 bg-[#050507] relative overflow-hidden border-t border-white/10">
-      <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none" />
-
+    <section id="architecture" className="py-24 px-6 md:px-12 bg-[#0A0A0A] text-white relative overflow-hidden border-t border-white/10 font-mono">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#ccff00] tracking-widest uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
+            <div className="flex items-center gap-2 text-xs text-[#8B6DFF] tracking-widest uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
               <span>LIVE SYSTEM DIAGRAM</span>
             </div>
             <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-white uppercase tracking-tight">
               LIVE ARCHITECTURE
             </h2>
           </div>
-          <p className="font-mono text-xs text-slate-400 max-w-md">
-            Interactive system architecture pipeline showcasing data packet flow across client, API gateway, server backend, and database nodes.
+          <p className="text-xs text-slate-400 max-w-md">
+            System architecture pipeline showcasing data packet flow across client, API gateway, server backend, and database nodes.
           </p>
         </div>
 
@@ -74,38 +72,35 @@ export default function Architecture({ engineerMode }) {
 
             return (
               <div key={node.id} className="relative group">
-                {/* Node Box */}
                 <motion.div
                   onMouseEnter={() => setActiveNode(index)}
-                  className={`p-6 rounded-sm border transition-all duration-300 cursor-pointer h-full flex flex-col justify-between ${
+                  className={`p-6 border transition-all duration-300 cursor-pointer h-full flex flex-col justify-between ${
                     isActive
-                      ? 'bg-[#0f0f13] border-[#ccff00] shadow-[0_0_20px_rgba(204,255,0,0.2)]'
-                      : 'bg-[#09090b] border-white/10 hover:border-white/30'
+                      ? 'bg-[#141414] border-[#8B6DFF] shadow-lg'
+                      : 'bg-[#0A0A0A] border-white/10 hover:border-white/30'
                   }`}
-                  data-cursor="INSPECT"
                 >
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <div className={`p-3 rounded-sm border ${isActive ? 'bg-[#ccff00] text-black border-[#ccff00]' : 'bg-white/5 text-slate-300 border-white/10'}`}>
+                      <div className={`p-3 border ${isActive ? 'bg-[#8B6DFF] text-white border-[#8B6DFF]' : 'bg-white/5 text-slate-300 border-white/10'}`}>
                         <Icon size={22} />
                       </div>
-                      <span className="font-mono text-xs text-[#ccff00]">0{index + 1}</span>
+                      <span className="font-mono text-xs text-[#8B6DFF]">0{index + 1}</span>
                     </div>
 
                     <div>
                       <h3 className="font-syne font-bold text-lg text-white uppercase tracking-tight">
                         {node.title}
                       </h3>
-                      <div className="font-mono text-xs text-purple-400 mt-0.5">
+                      <div className="font-mono text-xs text-[#8B6DFF] mt-0.5">
                         {node.tech}
                       </div>
                     </div>
                   </div>
 
-                  {/* Flow Arrow for Desktop */}
                   {index < nodes.length - 1 && (
-                    <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-[#ccff00]">
-                      <ArrowRight size={18} className="animate-pulse" />
+                    <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-[#8B6DFF]">
+                      <ArrowRight size={18} />
                     </div>
                   )}
                 </motion.div>
@@ -120,19 +115,19 @@ export default function Architecture({ engineerMode }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-[#0f0f13] border border-white/15 p-8 rounded-sm font-mono space-y-4"
+          className="bg-[#141414] border border-white/15 p-8 space-y-4"
         >
           <div className="flex flex-wrap justify-between items-center border-b border-white/10 pb-4">
             <div className="flex items-center gap-3">
-              <Activity className="text-[#ccff00] animate-spin" size={18} />
+              <Activity className="text-[#8B6DFF] animate-spin" size={18} />
               <span className="text-white font-bold text-sm uppercase">
                 NODE INSPECTION // {nodes[activeNode].title}
               </span>
             </div>
 
             <div className="flex gap-4 text-xs text-slate-400">
-              <span>LATENCY: <strong className="text-[#ccff00]">{nodes[activeNode].latency}</strong></span>
-              <span>THROUGHPUT: <strong className="text-purple-400">{nodes[activeNode].throughput}</strong></span>
+              <span>LATENCY: <strong className="text-[#8B6DFF]">{nodes[activeNode].latency}</strong></span>
+              <span>THROUGHPUT: <strong className="text-white">{nodes[activeNode].throughput}</strong></span>
             </div>
           </div>
 
@@ -141,9 +136,9 @@ export default function Architecture({ engineerMode }) {
           </p>
 
           {engineerMode && (
-            <div className="bg-[#050507] border border-[#ccff00]/30 p-3 rounded-sm text-xs text-[#ccff00] overflow-x-auto">
+            <div className="bg-[#0A0A0A] border border-[#8B6DFF]/30 p-3 text-xs text-[#8B6DFF] overflow-x-auto">
               <code>
-                {`[PIPELINE OK] Packet received at Node_0${activeNode + 1} (${nodes[activeNode].title}) | Status: 200 OK | Heap: 42MB`}
+                {`[PIPELINE OK] Packet received at Node_0${activeNode + 1} (${nodes[activeNode].title}) | Status: 200 OK`}
               </code>
             </div>
           )}
