@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { Layers, Cpu, Server, Database, Cloud, Bot, Box, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
 
 export default function Architecture() {
-  const [smoothProgress, setSmoothProgress] = useState(0); // 0.00 to 6.00 continuous float
+  const [activeLayerIndex, setActiveLayerIndex] = useState(0);
+  
   const sectionRef = useRef(null);
-  const targetProgressRef = useRef(0);
-  const animFrameRef = useRef(null);
+  const cardRefs = useRef([]);
+  const ballRef = useRef(null);
+  const progressPercentRef = useRef(null);
+  const layerNumRef = useRef(null);
 
   const layers = [
     {
@@ -88,9 +90,12 @@ export default function Architecture() {
     }
   ];
 
-  // Smooth lerp animation loop linking scroll target -> smooth floating float 0.00 -> 6.00
+  // Direct DOM Manipulation on native scroll — NO React re-renders on scroll frames!
   useEffect(() => {
-    const handleScroll = () => {
+    let lastActiveIdx = -1;
+    let ticking = false;
+
+    const updateScrollAnimation = () => {
       const el = sectionRef.current;
       if (!el) return;
 
@@ -101,42 +106,75 @@ export default function Architecture() {
 
       const currentScroll = Math.max(0, -rect.top);
       const normalizedRatio = Math.min(1, Math.max(0, currentScroll / totalScrollableHeight));
+      const floatProgress = normalizedRatio * 6.0;
 
-      // Target index from 0.00 -> 6.00
-      targetProgressRef.current = normalizedRatio * 6.0;
+      // 1. Direct GPU Transform Updates for 3D Stack Cards (Zero React re-render)
+      cardRefs.current.forEach((cardEl, idx) => {
+        if (!cardEl) return;
+        const offset = idx - floatProgress;
+        const absOffset = Math.abs(offset);
+
+        const translateZ = 60 - absOffset * 65;
+        const translateY = offset * 45;
+        const scale = Math.max(0.78, 1 - absOffset * 0.07);
+        const opacity = Math.max(0.15, 1 - absOffset * 0.4);
+        const isPrimary = Math.abs(idx - Math.round(floatProgress)) < 0.5;
+
+        cardEl.style.transform = `translate3d(0px, ${translateY}px, ${translateZ}px) scale(${scale})`;
+        cardEl.style.opacity = opacity.toFixed(3);
+        
+        if (isPrimary) {
+          cardEl.style.borderColor = '#8B6DFF';
+          cardEl.style.boxShadow = '0 0 25px rgba(139,109,255,0.35)';
+        } else {
+          cardEl.style.borderColor = 'rgba(255,255,255,0.1)';
+          cardEl.style.boxShadow = 'none';
+        }
+      });
+
+      // 2. Direct DOM update for vertical progress indicator ball & text
+      if (ballRef.current) {
+        ballRef.current.style.top = `${(floatProgress / 6) * 100}%`;
+      }
+      if (progressPercentRef.current) {
+        progressPercentRef.current.innerText = `${Math.round(normalizedRatio * 100)}%`;
+      }
+
+      // 3. Update React active layer index ONLY when discrete index changes!
+      const discreteIdx = Math.min(6, Math.max(0, Math.round(floatProgress)));
+      if (discreteIdx !== lastActiveIdx) {
+        lastActiveIdx = discreteIdx;
+        setActiveLayerIndex(discreteIdx);
+        if (layerNumRef.current) {
+          layerNumRef.current.innerText = `0${discreteIdx + 1}/07`;
+        }
+      }
+
+      ticking = false;
     };
 
-    let currentProgress = 0;
-    const lerp = (start, end, factor) => start + (end - start) * factor;
-
-    const updateSmoothLoop = () => {
-      currentProgress = lerp(currentProgress, targetProgressRef.current, 0.1);
-      setSmoothProgress(currentProgress);
-      animFrameRef.current = requestAnimationFrame(updateSmoothLoop);
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollAnimation);
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    animFrameRef.current = requestAnimationFrame(updateSmoothLoop);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateScrollAnimation(); // Initial render setup
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Compute active layer index for primary focus
-  const activeFloatIndex = Math.min(6, Math.max(0, smoothProgress));
-  const primaryIndex = Math.min(6, Math.max(0, Math.round(activeFloatIndex)));
-  const primaryLayer = layers[primaryIndex];
+  const activeLayer = layers[activeLayerIndex];
 
   return (
     <section
       id="architecture"
       ref={sectionRef}
-      className="relative min-h-[500vh] bg-[#0A0A0A] text-white border-t border-white/10 font-mono"
+      className="relative min-h-[350vh] bg-[#0A0A0A] text-white border-t border-white/10 font-mono"
     >
-      {/* Sticky Viewport Frame */}
+      {/* Sticky Pinned Viewport Frame */}
       <div className="sticky top-0 h-screen flex flex-col justify-between p-6 md:p-12 overflow-hidden z-10">
         
         {/* Section Header */}
@@ -144,7 +182,7 @@ export default function Architecture() {
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-1">
               <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
-              <span>SYSTEM / 01 — SCROLL STORYTELLING</span>
+              <span>SYSTEM / 01 — NATIVE RESPONSIVE SCROLL</span>
             </div>
             <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
               LIVE ARCHITECTURE
@@ -156,45 +194,45 @@ export default function Architecture() {
           </div>
         </div>
 
-        {/* Main 3D Composition Workspace */}
+        {/* Main Viewport Content Workspace */}
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-2 flex-1 relative">
           
-          {/* Left Column: Continuous Scroll-Interpolated Text & Flow Specs */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="space-y-4">
+          {/* Left Column: Topic Info & Code Inspector */}
+          <div className="lg:col-span-5 space-y-5">
+            <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">
-                  {primaryLayer.id}
+                  {activeLayer.id}
                 </span>
                 <div>
-                  <h3 className="font-syne text-3xl font-extrabold text-white uppercase tracking-tight transition-all duration-200">
-                    {primaryLayer.title}
+                  <h3 className="font-syne text-2xl md:text-3xl font-extrabold text-white uppercase tracking-tight">
+                    {activeLayer.title}
                   </h3>
                   <div className="text-xs font-mono text-slate-400 uppercase tracking-widest">
-                    {primaryLayer.subtitle}
+                    {activeLayer.subtitle}
                   </div>
                 </div>
               </div>
 
-              <p className="font-sans text-slate-300 text-sm md:text-base leading-relaxed">
-                "{primaryLayer.description}"
+              <p className="font-sans text-slate-300 text-xs md:text-sm leading-relaxed">
+                "{activeLayer.description}"
               </p>
             </div>
 
             {/* System Execution Flow */}
-            <div className="space-y-3 pt-3 border-t border-white/10">
-              <div className="text-xs font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
-                <Activity size={14} className="animate-spin" />
+            <div className="space-y-2 pt-2 border-t border-white/10">
+              <div className="text-[11px] font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
+                <Activity size={13} className="animate-spin" />
                 <span>SYSTEM EXECUTION FLOW:</span>
               </div>
 
               <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                {primaryLayer.flow.map((step, idx) => (
+                {activeLayer.flow.map((step, idx) => (
                   <React.Fragment key={idx}>
-                    <span className="bg-[#141414] border border-white/15 text-white px-2.5 py-1 font-bold">
+                    <span className="bg-[#141414] border border-white/15 text-white px-2 py-0.5 font-bold">
                       {step}
                     </span>
-                    {idx < primaryLayer.flow.length - 1 && (
+                    {idx < activeLayer.flow.length - 1 && (
                       <ArrowRight size={12} className="text-[#8B6DFF]" />
                     )}
                   </React.Fragment>
@@ -202,16 +240,16 @@ export default function Architecture() {
               </div>
             </div>
 
-            {/* Tech Stack Logos & Badges */}
-            <div className="space-y-2 pt-2">
-              <div className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+            {/* Recognized Technology Logos & Badges */}
+            <div className="space-y-1.5 pt-1">
+              <div className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
                 RECOGNIZED TECH STACK:
               </div>
-              <div className="flex flex-wrap gap-2">
-                {primaryLayer.logos.map((logo) => (
+              <div className="flex flex-wrap gap-1.5">
+                {activeLayer.logos.map((logo) => (
                   <span
                     key={logo}
-                    className="bg-[#141414] border border-[#8B6DFF]/40 text-white font-mono text-xs px-3 py-1 font-bold flex items-center gap-1.5"
+                    className="bg-[#141414] border border-[#8B6DFF]/40 text-white font-mono text-xs px-2.5 py-0.5 font-bold flex items-center gap-1.5"
                   >
                     <CheckCircle2 size={12} className="text-[#8B6DFF]" />
                     <span>{logo}</span>
@@ -220,108 +258,84 @@ export default function Architecture() {
               </div>
             </div>
 
-            {/* Architecture Code Inspector (Continuous Code Interpolation) */}
-            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-3.5 text-xs text-[#8B6DFF] shadow-2xl rounded-none">
-              <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-1.5 mb-2">
-                <span>INSPECTOR // LAYER {primaryLayer.id}</span>
-                <span className="text-[#8B6DFF] uppercase font-bold">{primaryLayer.title}</span>
+            {/* Code Inspector Panel */}
+            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-3 text-xs text-[#8B6DFF] rounded-none">
+              <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-1 mb-1.5">
+                <span>INSPECTOR // LAYER {activeLayer.id}</span>
+                <span className="text-[#8B6DFF] uppercase font-bold">{activeLayer.title}</span>
               </div>
               <pre className="text-slate-200 text-[11px] leading-relaxed overflow-x-auto">
-                <code>{primaryLayer.codeSnippet}</code>
+                <code>{activeLayer.codeSnippet}</code>
               </pre>
             </div>
           </div>
 
           {/* Center Column: The HERO 3D Physical Architecture Layer Stack */}
-          <div className="lg:col-span-6 relative flex flex-col items-center justify-center min-h-[420px] py-4 [perspective:1000px]">
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center min-h-[400px] py-2 [perspective:1000px]">
             
-            <div className="w-full space-y-2 relative [transform-style:preserve-3d]">
-              {layers.map((layer, idx) => {
-                // Continuous distance offset from current smooth float progress index
-                const offset = idx - activeFloatIndex;
-                const absOffset = Math.abs(offset);
-
-                // Continuous mathematical transformations
-                const translateZ = 60 - absOffset * 70; // Active comes forward +60px, inactive recedes
-                const translateY = offset * 50; // Continuous vertical spacing
-                const scale = Math.max(0.78, 1 - absOffset * 0.07); // Smooth scaling
-                const opacity = Math.max(0.15, 1 - absOffset * 0.42); // Smooth opacity falloff
-                const blurPx = Math.min(6, absOffset * 1.8); // Subtle depth of field blur
-                const isPrimary = primaryIndex === idx;
-
-                return (
-                  <div
-                    key={layer.id}
-                    style={{
-                      transform: `translate3d(0px, ${translateY}px, ${translateZ}px) scale(${scale})`,
-                      opacity: opacity,
-                      filter: `blur(${blurPx}px)`,
-                      zIndex: Math.round(100 - absOffset * 10)
-                    }}
-                    className={`p-4 border font-mono transition-all duration-75 rounded-none flex items-center justify-between shadow-2xl ${
-                      isPrimary
-                        ? 'bg-[#141414] text-white border-2 border-[#8B6DFF] shadow-[0_0_30px_rgba(139,109,255,0.4)]'
-                        : 'bg-[#0A0A0A] text-slate-400 border-white/10'
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className={`font-mono text-xs font-bold ${isPrimary ? 'text-[#8B6DFF]' : 'text-slate-600'}`}>
-                        {layer.id}
-                      </span>
-                      <div className="font-syne font-extrabold text-sm text-white uppercase tracking-wider">
-                        {layer.title}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
-                        {layer.technologies.slice(0, 3).join(' • ')}
-                      </span>
-                      <div className={`w-2.5 h-2.5 rounded-full ${isPrimary ? 'bg-[#8B6DFF] animate-pulse' : 'bg-white/20'}`} />
+            <div className="w-full space-y-1.5 relative [transform-style:preserve-3d]">
+              {layers.map((layer, idx) => (
+                <div
+                  key={layer.id}
+                  ref={(el) => (cardRefs.current[idx] = el)}
+                  style={{ willChange: 'transform, opacity' }}
+                  className="p-3.5 border font-mono rounded-none flex items-center justify-between shadow-2xl bg-[#141414] text-white border-white/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs font-bold text-[#8B6DFF]">
+                      {layer.id}
+                    </span>
+                    <div className="font-syne font-extrabold text-xs md:text-sm text-white uppercase tracking-wider">
+                      {layer.title}
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
+                      {layer.technologies.slice(0, 3).join(' • ')}
+                    </span>
+                    <div className="w-2 h-2 rounded-full bg-[#8B6DFF]" />
+                  </div>
+                </div>
+              ))}
             </div>
 
           </div>
 
           {/* Right Column: Continuous Vertical Progress Line Indicator (01 -> 07) */}
           <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center h-full relative py-6">
-            
-            {/* Track Line */}
-            <div className="w-[2px] h-64 bg-white/10 relative flex flex-col justify-between items-center py-2">
+            <div className="w-[2px] h-60 bg-white/10 relative flex flex-col justify-between items-center py-2">
               
-              {/* Floating Active Node Ball moving continuously */}
+              {/* Floating Active Ball moving directly via DOM ref */}
               <div
-                style={{ top: `${(activeFloatIndex / 6) * 100}%` }}
-                className="absolute w-3 h-3 rounded-full bg-[#8B6DFF] -translate-x-[5px] -translate-y-1.5 shadow-[0_0_12px_#8B6DFF] transition-all duration-75"
+                ref={ballRef}
+                className="absolute w-3 h-3 rounded-full bg-[#8B6DFF] -translate-x-[5px] -translate-y-1.5 shadow-[0_0_12px_#8B6DFF]"
               />
 
               {layers.map((l, i) => (
                 <div
                   key={l.id}
                   className={`w-1.5 h-1.5 rounded-full z-10 transition-colors ${
-                    primaryIndex === i ? 'bg-[#8B6DFF]' : 'bg-white/30'
+                    activeLayerIndex === i ? 'bg-[#8B6DFF]' : 'bg-white/30'
                   }`}
                 />
               ))}
             </div>
 
-            <div className="mt-4 font-mono text-[10px] text-[#8B6DFF] font-bold">
-              0{primaryIndex + 1}/07
+            <div ref={layerNumRef} className="mt-3 font-mono text-[10px] text-[#8B6DFF] font-bold">
+              01/07
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Continuous Status Bar */}
+        {/* Bottom Status Bar */}
         <div className="max-w-7xl mx-auto w-full border-t border-white/10 pt-3 flex justify-between items-center text-xs text-slate-400 font-mono shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
-            <span>CONTINUOUS SCROLL ENGINE // LAYER 0{primaryIndex + 1} OF 07 ACTIVE</span>
+            <span>NATIVE SCROLL ARCHITECTURE // LAYER 0{activeLayerIndex + 1} OF 07 ACTIVE</span>
           </div>
-          <div>SCROLL POSITION: {Math.round((smoothProgress / 6) * 100)}%</div>
+          <div>SCROLL POSITION: <span ref={progressPercentRef}>0%</span></div>
         </div>
 
       </div>
