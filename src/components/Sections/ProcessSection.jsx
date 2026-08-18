@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw } from 'lucide-react';
 
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
@@ -108,8 +108,8 @@ export default function ProcessSection() {
 
           if (isPrimary) {
             cardEl.style.borderColor = '#8B6DFF';
-            cardEl.style.backgroundColor = 'rgba(139, 109, 255, 0.1)';
-            cardEl.style.boxShadow = '0 0 15px rgba(139, 109, 255, 0.25)';
+            cardEl.style.backgroundColor = 'rgba(139, 109, 255, 0.12)';
+            cardEl.style.boxShadow = '0 0 20px rgba(139, 109, 255, 0.3)';
           } else {
             cardEl.style.borderColor = 'rgba(255, 255, 255, 0.1)';
             cardEl.style.backgroundColor = '#111111';
@@ -155,7 +155,7 @@ export default function ProcessSection() {
     <section
       id="process"
       ref={sectionRef}
-      className="relative min-h-[450vh] bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono"
+      className="relative min-h-[700vh] bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono"
     >
       {/* Sticky Pinned Viewport Container */}
       <div className="sticky top-0 h-screen flex flex-col justify-between p-6 md:p-10 overflow-hidden z-10">
@@ -234,8 +234,8 @@ export default function ProcessSection() {
 
           </div>
 
-          {/* CENTER COLUMN: SPACIOUS RECTANGULAR PROCESS STACK (7 FLAT RECTANGULAR PANELS WITH INCREASED VERTICAL SPACING) */}
-          <div className="lg:col-span-5 space-y-3 relative flex flex-col justify-center py-2">
+          {/* CENTER COLUMN: SPACIOUS RECTANGULAR PROCESS STACK (7 FLAT RECTANGULAR PANELS WITH SUBSTANTIAL VERTICAL BREATHING ROOM) */}
+          <div className="lg:col-span-5 space-y-3.5 relative flex flex-col justify-center py-2">
             {stages.map((stg, idx) => {
               const Icon = stg.icon;
               const isActive = activeStageIndex === idx;
@@ -273,8 +273,8 @@ export default function ProcessSection() {
             })}
           </div>
 
-          {/* RIGHT COLUMN: SPACIOUS PROCESS TIMELINE (ENGINEERING PROGRESS RAIL WITH INCREASED VERTICAL SPACING) */}
-          <div className="lg:col-span-3 hidden lg:flex flex-col justify-between items-start h-[400px] pl-8 relative font-mono text-xs border-l border-white/10">
+          {/* RIGHT COLUMN: TALL PROCESS TIMELINE (ENGINEERING PROGRESS RAIL WITH SPANNING VERTICAL SPACING) */}
+          <div className="lg:col-span-3 hidden lg:flex flex-col justify-between items-start h-[450px] pl-8 relative font-mono text-xs border-l border-white/10">
             
             {/* Base Continuous Track */}
             <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#555555]/30">
@@ -287,7 +287,7 @@ export default function ProcessSection() {
             </div>
 
             {/* Stage Nodes & Aligned Stage Names */}
-            <div className="space-y-4 font-mono w-full">
+            <div className="space-y-5 font-mono w-full">
               {stages.map((s, i) => {
                 const isActive = activeStageIndex === i;
 
