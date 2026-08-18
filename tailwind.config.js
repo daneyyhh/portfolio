@@ -4,44 +4,52 @@ export default {
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
+    darkMode: 'class',
     theme: {
         extend: {
             colors: {
-                void: "#050505", // Deep Black
-                "acid-lime": "#ccff00", // Gamefy Primary
-                "neon-blue": "#00f0ff", // Cyber Secondary
-                carbon: "#111111",
-                steel: "#222222",
-                ash: "#e5e5e5",
-                "spider-red": "#E8272A",
-                "spider-black": "#0A0A0A",
-                "spider-white": "#F5F0E8",
-                "spider-yellow": "#FFD600",
+                dark: {
+                    950: "#050507",
+                    900: "#09090b",
+                    850: "#0f0f13",
+                    800: "#141419",
+                    700: "#1e1e24",
+                    border: "rgba(255, 255, 255, 0.08)",
+                    borderHover: "rgba(204, 255, 0, 0.3)",
+                },
+                lime: {
+                    accent: "#ccff00", // Signature Acid/Neon Lime
+                    bright: "#b8ff00",
+                    glow: "rgba(204, 255, 0, 0.15)",
+                },
+                purple: {
+                    glow: "rgba(168, 85, 247, 0.2)",
+                    accent: "#a855f7",
+                },
             },
             fontFamily: {
-                speed: ['Teko', 'sans-serif'], // Primary Headlines
-                tech: ['Rajdhani', 'sans-serif'], // UI Text
                 sans: ['Inter', 'sans-serif'],
-                bangers: ['Bangers', 'cursive'],
-                mono: ['Space Mono', 'monospace'],
-                outfit: ['Outfit', 'sans-serif'],
+                display: ['Space Grotesk', 'sans-serif'],
+                mono: ['JetBrains Mono', 'monospace'],
+                syne: ['Syne', 'sans-serif'],
             },
             backgroundImage: {
-                'speed-lines': "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 77, 0, 0.05) 10px, rgba(255, 77, 0, 0.05) 20px)",
-                'grid-pattern': "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
+                'grid-pattern': "linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
+                'dots-pattern': "radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)",
             },
             animation: {
-                "flicker": "flicker 3s linear infinite",
-                "drift": "drift 20s linear infinite",
+                "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                "float": "float 6s ease-in-out infinite",
+                "glow": "glow 2s ease-in-out infinite alternate",
             },
             keyframes: {
-                flicker: {
-                    "0%, 100%": { opacity: 1 },
-                    "50%": { opacity: 0.8 },
+                float: {
+                    "0%, 100%": { transform: "translateY(0px)" },
+                    "50%": { transform: "translateY(-10px)" },
                 },
-                drift: {
-                    "0%": { backgroundPosition: "0% 0%" },
-                    "100%": { backgroundPosition: "100% 100%" },
+                glow: {
+                    "0%": { boxShadow: "0 0 10px rgba(204, 255, 0, 0.2)" },
+                    "100%": { boxShadow: "0 0 25px rgba(204, 255, 0, 0.6)" },
                 }
             }
         },

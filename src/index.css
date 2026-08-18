@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,83 +6,100 @@
 
 @layer base {
   :root {
-    --spider-cursor: none;
-    --spider-pointer: none;
+    --bg-dark: #09090b;
+    --accent-lime: #ccff00;
+    --accent-purple: #a855f7;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #030712; /* gray-950 */
+    background-color: var(--bg-dark);
+    color: #f1f5f9;
   }
   
   body {
-    @apply bg-spider-red text-spider-black font-mono antialiased overflow-x-hidden;
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
+    @apply bg-[#09090b] text-slate-100 font-sans antialiased selection:bg-[#ccff00] selection:text-black overflow-x-hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  body::-webkit-scrollbar {
-    display: none;
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
   }
-  
-  ::selection {
-    @apply bg-indigo-500/30 text-indigo-200;
+  ::-webkit-scrollbar-track {
+    background: #09090b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e1e24;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccff00;
   }
 }
 
 @layer components {
-  .glass-panel {
-    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-2xl;
-  }
   .glass-card {
-    @apply bg-white/[0.02] backdrop-blur-lg border border-white/[0.05] hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-300;
+    @apply bg-[#0f0f13]/80 backdrop-blur-md border border-white/10 hover:border-[#ccff00]/40 transition-all duration-300 shadow-lg;
   }
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
+  
+  .glass-card-purple {
+    @apply bg-[#0f0f13]/80 backdrop-blur-md border border-white/10 hover:border-purple-500/40 transition-all duration-300 shadow-lg;
   }
-  .btn-primary {
-    @apply px-8 py-3 rounded-full font-outfit font-medium text-white bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-md;
+
+  .text-glow-lime {
+    text-shadow: 0 0 15px rgba(204, 255, 0, 0.4);
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+  }
+
+  .btn-lime {
+    @apply bg-[#ccff00] text-black font-mono font-bold px-6 py-3 rounded-none hover:bg-[#b8ff00] hover:shadow-[0_0_20px_rgba(204,255,0,0.5)] transition-all duration-300 active:scale-95;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-white font-mono font-medium px-6 py-3 border border-white/20 hover:border-[#ccff00] hover:text-[#ccff00] transition-all duration-300 active:scale-95;
+  }
+
+  .engineer-tag {
+    @apply font-mono text-[10px] tracking-widest uppercase bg-lime-400/10 text-[#ccff00] border border-[#ccff00]/30 px-2 py-0.5 rounded-sm;
   }
 }
 
-/* Subtle background noise/grid */
+/* Background Grids & Ambient Lighting */
 .bg-grid {
-  background-size: 40px 40px;
+  background-size: 36px 36px;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-.gradient-blob {
-  position: absolute;
-  filter: blur(100px);
-  z-index: 0;
-  opacity: 0.4;
-  border-radius: 50%;
-  pointer-events: none;
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(204, 255, 0, 0.08) 0%, rgba(168, 85, 247, 0.03) 35%, transparent 70%);
 }
 
-/* Spidey Utilities */
-.halftone-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  background-image: radial-gradient(#0A0A0A 1px, transparent 1px);
-  background-size: 6px 6px;
-  opacity: 0.07;
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
 }
 
-/* Marquee animation — moved from inline <style> for better performance */
-@keyframes shadowMarquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
 }
 
-/* Respect user motion preferences — disable heavy animations */
+.animate-pulse-glow {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

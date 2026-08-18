@@ -1,311 +1,146 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Github, ArrowUpRight, Layers } from 'lucide-react';
+import { projectsData } from '../../data/portfolioData';
 
-const categorizedData = {
-    projects: [
-        {
-            id: '01',
-            title: 'FIVEM CHRONICLES',
-            desc: 'Advanced LUA systems and optimizations for legendary roleplay servers.',
-            tags: ['LUA', 'SQL'],
-            img: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80',
-            type: 'SYSTEM_ARCHITECT'
-        },
-        {
-            id: '02',
-            title: 'ERP SYSTEM',
-            desc: 'Custom enterprise resource planning system with modular admissions and transport management.',
-            tags: ['REACT', 'POSTGRES'],
-            img: 'https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg',
-            type: 'ENTERPRISE_LOGIC'
-        },
-        {
-            id: '03',
-            title: 'HAUNTED CODE',
-            desc: 'A Unity horror experience written in C# with dynamic lighting systems.',
-            tags: ['UNITY', 'C#'],
-            img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
-            type: 'IMMERSIVE_VFX'
-        },
-        {
-            id: '04',
-            title: 'BOT LEGACY',
-            desc: 'The ultimate Discord automation tool with advanced permissions routing.',
-            tags: ['NODE.JS', 'REDIS'],
-            img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=1200&q=80',
-            type: 'AUTOMATION_CORE'
-        },
-        {
-            id: '05',
-            title: 'ECHOSPHERE',
-            desc: 'Premium music streaming platform with immersive UI/UX systems.',
-            tags: ['NEXT.JS', 'FRAMER'],
-            img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=1200&q=80',
-            type: 'UX_ARCHITECTURE'
-        }
-    ],
-    certificates: [
-        {
-            id: '01',
-            title: 'ANDROID UI DESIGN',
-            desc: 'Create the User Interface in Android Studio by Meta.',
-            tags: ['META', 'ANDROID'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg',
-            type: 'COURSERA',
-            isLogo: true
-        },
-        {
-            id: '02',
-            title: 'SCIKIT-LEARN ML',
-            desc: 'Scikit-Learn For Machine Learning Classification Problems.',
-            tags: ['ML', 'PYTHON'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg',
-            type: 'COURSERA_PROJECT',
-            isLogo: true
-        },
-        {
-            id: '03',
-            title: 'LEARN UI DESIGN',
-            desc: 'UI Design methodologies and implementation by Scrimba.',
-            tags: ['UI', 'DESIGN'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
-            type: 'SCRIMBA',
-            isLogo: true
-        },
-        {
-            id: '04',
-            title: 'JAVA PROGRAMMING',
-            desc: 'Fundamentals of Java Programming by Board Infinity.',
-            tags: ['JAVA', 'CORE'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
-            type: 'BOARD_INFINITY',
-            isLogo: true
-        },
-        {
-            id: '05',
-            title: 'PROFESSIONAL SUCCESS',
-            desc: 'Collaborate Effectively for Professional Success by IBM.',
-            tags: ['IBM', 'SOFT_SKILLS'],
-            img: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
-            type: 'IBM',
-            isLogo: true
-        }
-    ],
-    tools: [
-        {
-            id: '01',
-            title: 'REACT & NEXT.JS',
-            desc: 'Modern frontend frameworks for high-performance interfaces.',
-            tags: ['UI', 'UX'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg',
-            type: 'FRONTEND',
-            isLogo: true
-        },
-        {
-            id: '02',
-            title: 'NODE & PYTHON',
-            desc: 'Backend architectures, REST APIs, and automation scripting.',
-            tags: ['BACKEND', 'SCRIPTS'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
-            type: 'BACKEND',
-            isLogo: true
-        },
-        {
-            id: '03',
-            title: 'UNITY & C#',
-            desc: 'Game engine logic and immersive 3D experiences.',
-            tags: ['GAME', '3D'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg',
-            type: 'GAME_DEV',
-            isLogo: true
-        },
-        {
-            id: '04',
-            title: 'TAILWIND & GSAP',
-            desc: 'Advanced styling, animations, and premium aesthetic systems.',
-            tags: ['CSS', 'ANIMATION'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
-            type: 'STYLING',
-            isLogo: true
-        },
-        {
-            id: '05',
-            title: 'FIGMA',
-            desc: 'Glassmorphism UI, vector layouts, and high-fidelity prototyping.',
-            tags: ['DESIGN', 'PROTOTYPE'],
-            img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg',
-            type: 'UI_UX',
-            isLogo: true
-        }
-    ]
-};
+export default function Projects({ onSelectProject }) {
+  const [filter, setFilter] = useState('ALL');
 
-const HorizontalProjectCard = ({ project }) => {
-    return (
-        <motion.div 
-            className="relative flex-shrink-0 w-[80vw] md:w-[60vw] h-[60vh] md:h-[70vh] mr-20 group"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            viewport={{ once: true }}
-        >
-            {/* Project Number (Architect Style) */}
-            <div className="absolute -top-20 left-0">
-                <span className="font-bangers text-[8vw] text-spider-black/5 group-hover:text-spider-red/10 transition-colors duration-700">
-                    {project.id}
-                </span>
+  const categories = ['ALL', 'Full-Stack Web App', 'Game Systems & LUA', 'Full-Stack Web System', 'Game Development', 'AI / Machine Learning', 'UI/UX & Web Frontend'];
+
+  const filteredProjects = filter === 'ALL'
+    ? projectsData
+    : projectsData.filter(p => p.category === filter);
+
+  return (
+    <section id="projects" className="py-24 px-6 md:px-12 bg-[#09090b] relative overflow-hidden border-t border-white/10">
+      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#ccff00] tracking-widest uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#ccff00]"></span>
+              <span>AUTHENTIC PORTFOLIO WORKS</span>
             </div>
+            <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-white uppercase tracking-tight">
+              SELECTED WORK
+            </h2>
+          </div>
 
-            {/* Main Card Frame */}
-            <div className="w-full h-full border border-spider-black/10 overflow-hidden relative bg-white">
-                <div className="absolute inset-0 bg-spider-black opacity-0 group-hover:opacity-10 transition-opacity duration-700 z-10" />
-                
-                <img 
-                    src={project.img} 
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`font-mono text-xs px-3 py-1.5 rounded-sm border transition-all ${
+                  filter === cat
+                    ? 'bg-[#ccff00] text-black border-[#ccff00] font-bold'
+                    : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/30'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Project Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="bg-[#0f0f13] border border-white/15 rounded-sm overflow-hidden group hover:border-[#ccff00]/50 transition-all duration-300 flex flex-col justify-between"
+              data-cursor="VIEW CASE"
+            >
+              <div>
+                {/* Project Image Banner */}
+                <div
+                  onClick={() => onSelectProject(project)}
+                  className="relative h-56 overflow-hidden cursor-pointer bg-black/40"
+                >
+                  <img
+                    src={project.img}
                     alt={project.title}
-                    className={`w-full h-full transition-all duration-1000 scale-105 group-hover:scale-100 ${
-                        project.isLogo 
-                        ? 'object-contain p-12 md:p-24 bg-white/5 grayscale-0' 
-                        : 'object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-110'
-                    }`}
-                />
-
-                {/* Technical Overlay */}
-                <div className="absolute inset-4 border border-white/20 z-20 pointer-events-none" />
-                <div className="absolute top-8 left-8 z-30">
-                    <div className="bg-spider-red text-spider-white px-3 py-1 font-mono text-[10px] font-black tracking-widest mb-2">
-                        {project.type}
-                    </div>
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f13] via-transparent to-transparent opacity-80" />
+                  
+                  {/* Category Pill */}
+                  <div className="absolute top-4 left-4 z-10 bg-black/80 backdrop-blur-md border border-white/20 text-[#ccff00] text-[10px] font-mono font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider">
+                    {project.category}
+                  </div>
                 </div>
-            </div>
 
-            {/* Content Bottom */}
-            <div className="mt-8 flex flex-col md:flex-row justify-between items-start gap-4">
-                <div className="max-w-md">
-                    <h3 className="font-bangers text-4xl md:text-6xl text-spider-black leading-none mb-4 group-hover:text-spider-red transition-colors">
-                        {project.title}
+                {/* Card Content */}
+                <div className="p-6 space-y-4">
+                  <div className="flex justify-between items-start">
+                    <h3
+                      onClick={() => onSelectProject(project)}
+                      className="font-syne text-2xl font-bold text-white uppercase tracking-tight group-hover:text-[#ccff00] transition-colors cursor-pointer"
+                    >
+                      {project.title}
                     </h3>
-                    <p className="font-mono text-xs text-spider-black/60 leading-relaxed uppercase tracking-tighter">
-                        {project.desc}
-                    </p>
-                </div>
-                
-                <div className="flex flex-wrap gap-2">
-                    {project.tags.map(tag => (
-                        <span key={tag} className="font-mono text-[10px] font-black text-spider-black border border-spider-black/20 px-3 py-1">
-                            {tag}
-                        </span>
+                    <button
+                      onClick={() => onSelectProject(project)}
+                      className="text-slate-400 group-hover:text-[#ccff00] transition-colors"
+                      title="Open Interactive Case Study"
+                    >
+                      <ArrowUpRight size={22} />
+                    </button>
+                  </div>
+
+                  <p className="font-sans text-sm text-slate-300 leading-relaxed line-clamp-3">
+                    {project.shortDesc}
+                  </p>
+
+                  {/* Tech Tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.technologies.map(tech => (
+                      <span
+                        key={tech}
+                        className="bg-white/5 border border-white/10 text-slate-400 font-mono text-[11px] px-2 py-0.5 rounded-sm"
+                      >
+                        {tech}
+                      </span>
                     ))}
+                  </div>
                 </div>
-            </div>
-        </motion.div>
-    );
-};
+              </div>
 
-const Projects = () => {
-    const targetRef = useRef(null);
-    const [activeCategory, setActiveCategory] = useState('projects');
-    const currentData = categorizedData[activeCategory];
+              {/* Bottom Card Footer */}
+              <div className="p-6 pt-0 border-t border-white/10 flex items-center justify-between font-mono text-xs text-slate-400 mt-4">
+                <button
+                  onClick={() => onSelectProject(project)}
+                  className="flex items-center gap-1.5 text-[#ccff00] font-bold hover:underline"
+                >
+                  <Layers size={14} />
+                  <span>CASE STUDY & ARCHITECTURE</span>
+                </button>
 
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-    });
-
-    // Dynamically calculate scroll end based on number of items
-    // If 5 items -> -75%, If 3 items -> -66%, If 4 items -> -70%
-    const getScrollEnd = (length) => {
-        if (length <= 1) return "0%";
-        if (length === 2) return "-50%";
-        if (length === 3) return "-65%";
-        if (length === 4) return "-72%";
-        return "-75%";
-    };
-
-    const xEnd = getScrollEnd(currentData.length);
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", xEnd]);
-
-    const handleCategoryClick = (category) => {
-        setActiveCategory(category);
-        // Optional: Scroll back to the start of the section smoothly when changing categories
-        if (targetRef.current) {
-            window.scrollTo({
-                top: targetRef.current.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    };
-
-    return (
-        <section id="projects" ref={targetRef} className="relative h-[400vh] bg-[#fcfcfc] overflow-visible">
-            {/* Sticky Container */}
-            <div className="sticky top-0 h-screen flex flex-col pt-24 md:pt-32 pb-12 overflow-hidden">
-                {/* Background Blueprint Grid */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
-                    <div className="absolute inset-0 bg-grid" />
-                    <div className="absolute top-1/4 left-0 w-full h-px bg-spider-red" />
-                    <div className="absolute top-3/4 left-0 w-full h-px bg-spider-red" />
-                    <div className="absolute left-1/4 top-0 w-px h-full bg-spider-red" />
-                    <div className="absolute left-3/4 top-0 w-px h-full bg-spider-red" />
+                <div className="flex items-center gap-3">
+                  {project.githubLink && (
+                    <a href={project.githubLink} target="_blank" rel="noreferrer" className="hover:text-white" title="GitHub Repo">
+                      <Github size={16} />
+                    </a>
+                  )}
+                  {project.demoLink && (
+                    <a href={project.demoLink} target="_blank" rel="noreferrer" className="hover:text-[#ccff00]" title="Live Website">
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
                 </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-                {/* Section Header */}
-                <div className="relative z-30 px-6 md:px-16 shrink-0">
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-px bg-spider-red" />
-                        <span className="font-mono text-[10px] font-black tracking-[0.5em] text-spider-red uppercase">
-                            Architecture_Archive_2024
-                        </span>
-                    </div>
-                    
-                    <h2 className="font-bangers text-5xl md:text-7xl lg:text-[8rem] text-spider-black leading-none uppercase select-none whitespace-nowrap tracking-wide">
-                        {activeCategory === 'projects' && <>PROJECTS<span className="text-spider-red">.</span></>}
-                        {activeCategory === 'certificates' && <>CERTIFICATES<span className="text-spider-red">.</span></>}
-                        {activeCategory === 'tools' && <>TOOLS<span className="text-spider-red">.</span></>}
-                    </h2>
-
-                    {/* Category Tabs */}
-                    <div className="mt-6 flex flex-wrap gap-2 md:gap-4">
-                        {['projects', 'certificates', 'tools'].map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => handleCategoryClick(cat)}
-                                className={`font-mono text-[10px] md:text-xs font-black px-4 py-2 border transition-all duration-300 uppercase tracking-widest ${
-                                    activeCategory === cat 
-                                    ? 'bg-spider-red text-white border-spider-red' 
-                                    : 'bg-white/80 backdrop-blur-sm text-spider-black border-spider-black/20 hover:border-spider-black cursor-pointer'
-                                }`}
-                            >
-                                {cat.replace('-', ' ')}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Side Progress Text */}
-                <div className="absolute right-12 bottom-12 z-20 hidden md:flex items-center gap-4 rotate-90 origin-right">
-                    <span className="font-mono text-[10px] font-black text-spider-black/40 tracking-widest uppercase">
-                        SCROLL_TO_EXPLORE_DATA_SET
-                    </span>
-                    <div className="w-16 h-[1px] bg-spider-black/20" />
-                </div>
-
-                {/* Horizontal Scroll Track */}
-                <div className="relative z-10 px-6 md:px-16 flex-1 flex items-center overflow-visible mt-12 md:mt-0">
-                    <motion.div style={{ x }} className="flex">
-                        <AnimatePresence mode="popLayout">
-                            {currentData.map((project) => (
-                                <HorizontalProjectCard key={`${activeCategory}-${project.id}`} project={project} />
-                            ))}
-                        </AnimatePresence>
-                    </motion.div>
-                </div>
-
-                {/* Bottom Border Accent */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-spider-black/5" />
-            </div>
-        </section>
-    );
-};
-
-export default Projects;
-
+      </div>
+    </section>
+  );
+}

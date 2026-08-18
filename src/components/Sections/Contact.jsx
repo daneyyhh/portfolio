@@ -1,88 +1,193 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Mail, Github, Linkedin, MapPin, Send, CheckCircle2, Globe } from 'lucide-react';
+import { personalData } from '../../data/portfolioData';
 
-const Contact = () => {
-    return (
-        <section id="contact" className="py-32 px-6 sm:px-12 relative bg-spider-black bg-grid halftone-overlay overflow-hidden">
-            {/* Background Spidey Signal Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-spider-red/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
-            
-            <div className="max-w-4xl mx-auto relative z-10">
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-20"
-                >
-                    <div className="bg-spider-yellow text-spider-black font-bangers text-xl px-6 py-1 inline-block mb-6 rotate-[-1deg] border-2 border-spider-black shadow-[4px_4px_0px_#E8272A]">
-                        URGENT // TRANSMISSION_REQUIRED
-                    </div>
-                    <h2 className="text-6xl md:text-8xl font-bangers text-spider-white drop-shadow-[6px_6px_0px_#E8272A] mb-8 leading-none">
-                        SEND A <span className="text-spider-yellow">SIGNAL</span>
-                    </h2>
-                    <p className="font-mono text-xs font-bold text-spider-white/60 max-w-2xl mx-auto uppercase tracking-widest">
-                        Whether it's a new scalable application or an immersive experience. I'm available for high-priority missions.
-                    </p>
-                </motion.div>
+export default function Contact({ engineerMode }) {
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
-                <motion.form 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-spider-black border-4 border-spider-yellow p-8 md:p-12 relative shadow-[12px_12px_0px_#E8272A]"
-                >
-                    {/* Comic Panel Header */}
-                    <div className="absolute -top-5 left-8 bg-spider-black px-4 py-1 border-2 border-spider-yellow">
-                        <span className="font-mono text-[10px] font-bold text-spider-yellow uppercase">Identity_Verification</span>
-                    </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formState.name || !formState.email || !formState.message) return;
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormState({ name: '', email: '', message: '' });
+    }, 4000);
+  };
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div className="flex flex-col gap-3">
-                            <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">NAME / CODENAME</label>
-                            <input
-                                type="text" 
-                                placeholder="PETER_PARKER"
-                                className="bg-transparent border-b-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20"
-                            />
-                        </div>
-                        <div className="flex flex-col gap-3">
-                            <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">SECURE_CHANNEL (EMAIL)</label>
-                            <input
-                                type="email" 
-                                placeholder="STARK_INDUSTRIES@NET"
-                                className="bg-transparent border-b-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20"
-                            />
-                        </div>
-                    </div>
-                    
-                    <div className="flex flex-col gap-3 mb-10">
-                        <label className="font-bangers text-2xl text-spider-yellow uppercase tracking-wide">TRANSMISSION_DETAILS</label>
-                        <textarea
-                            placeholder="TELL ME ABOUT YOUR MISSION..." 
-                            rows="4"
-                            className="bg-spider-white/5 border-4 border-spider-yellow p-4 font-mono text-sm font-bold text-spider-white focus:outline-none focus:border-spider-red transition-all placeholder:text-spider-white/20 resize-none"
-                        />
-                    </div>
-                    
-                    <div className="flex justify-center">
-                        <button className="relative group">
-                            <div className="absolute inset-0 bg-spider-black translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-all"></div>
-                            <div className="relative bg-spider-yellow border-4 border-spider-black px-12 py-4 font-bangers text-4xl text-spider-black group-hover:bg-spider-red group-hover:text-spider-white transition-all">
-                                SEND SIGNAL_
-                            </div>
-                        </button>
-                    </div>
+  return (
+    <section id="contact" className="py-24 px-6 md:px-12 bg-[#050507] relative overflow-hidden border-t border-white/10 font-mono">
+      {/* Background Glow */}
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
-                    {/* Decorative Corner */}
-                    <div className="absolute bottom-4 right-4 opacity-10 font-mono text-[8px] font-bold text-spider-black">
-                        SECURE_TRANS_V2.0
-                    </div>
-                </motion.form>
+      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
+        
+        {/* Cinematic Headline CTA */}
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00] text-xs tracking-widest uppercase rounded-sm">
+            <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
+            <span>AVAILABLE FOR OPPORTUNITIES</span>
+          </div>
+
+          <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-tight">
+            LET'S BUILD SOMETHING <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ccff00] to-purple-400">
+              EXTRAORDINARY.
+            </span>
+          </h2>
+        </div>
+
+        {/* Contact Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Left Column: Direct Info */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-4">
+              <h3 className="font-syne text-2xl font-bold text-white uppercase">CONNECT DIRECTLY</h3>
+              <p className="font-sans text-sm text-slate-300 leading-relaxed">
+                Whether you have a full-stack project, an AI/ML initiative, a 3D interactive application, or an engineering role, feel free to reach out.
+              </p>
             </div>
-        </section>
-    );
-};
 
-export default Contact;
+            <div className="space-y-4 text-xs">
+              {/* Email */}
+              <a
+                href={`mailto:${personalData.email}`}
+                className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm hover:border-[#ccff00] transition-colors group"
+              >
+                <div className="p-2.5 bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00] rounded-sm group-hover:bg-[#ccff00] group-hover:text-black transition-colors">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <div className="text-slate-400">PRIMARY EMAIL:</div>
+                  <div className="text-white font-bold text-sm group-hover:text-[#ccff00]">{personalData.email}</div>
+                </div>
+              </a>
 
+              {/* Alt Email */}
+              <a
+                href={`mailto:${personalData.altEmail}`}
+                className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm hover:border-purple-500 transition-colors group"
+              >
+                <div className="p-2.5 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-sm group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <div className="text-slate-400">DIRECT EMAIL:</div>
+                  <div className="text-white font-bold text-sm group-hover:text-purple-300">{personalData.altEmail}</div>
+                </div>
+              </a>
+
+              {/* Location & Domain */}
+              <div className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm">
+                <div className="p-2.5 bg-white/5 border border-white/10 text-slate-300 rounded-sm">
+                  <MapPin size={18} />
+                </div>
+                <div>
+                  <div className="text-slate-400">LOCATION & DOMAIN:</div>
+                  <div className="text-white font-bold text-sm">{personalData.location} // <span className="text-[#ccff00]">{personalData.domain}</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex gap-4 pt-2">
+              <a
+                href={personalData.github}
+                target="_blank"
+                rel="noreferrer"
+                className="p-3 bg-[#0f0f13] border border-white/15 text-white hover:border-[#ccff00] hover:text-[#ccff00] rounded-sm transition-colors"
+                title="GitHub"
+              >
+                <Github size={20} />
+              </a>
+
+              <a
+                href={personalData.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="p-3 bg-[#0f0f13] border border-white/15 text-white hover:border-purple-400 hover:text-purple-400 rounded-sm transition-colors"
+                title="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className="lg:col-span-7 bg-[#0f0f13] border border-white/15 p-8 rounded-sm">
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+                <CheckCircle2 size={48} className="text-[#ccff00] animate-bounce" />
+                <h3 className="font-syne text-2xl font-bold text-white uppercase">MESSAGE RECEIVED</h3>
+                <p className="text-xs text-slate-300 max-w-sm">
+                  Thank you for reaching out! Reuben will review your inquiry and get back to you shortly.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6 text-xs">
+                <div className="border-b border-white/10 pb-4">
+                  <h3 className="font-syne text-xl font-bold text-white uppercase">SEND A DIRECT TRANSMISSION</h3>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-slate-300 block">YOUR NAME:</label>
+                  <input
+                    type="text"
+                    required
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                    placeholder="e.g. Alex Morgan"
+                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-slate-300 block">YOUR EMAIL:</label>
+                  <input
+                    type="email"
+                    required
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    placeholder="e.g. alex@company.com"
+                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-slate-300 block">PROJECT / INQUIRY DETAILS:</label>
+                  <textarea
+                    rows="4"
+                    required
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    placeholder="Tell me about your project, timeline, or engineering opportunity..."
+                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn-lime w-full flex items-center justify-center gap-2"
+                >
+                  <Send size={16} />
+                  <span>TRANSMIT MESSAGE</span>
+                </button>
+              </form>
+            )}
+          </div>
+
+        </div>
+
+        {/* Footer Copyright */}
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+          <div>© {new Date().getFullYear()} REUBEN BINU GEORGE. ALL RIGHTS RESERVED.</div>
+          <div className="text-[#ccff00]">DOMAIN: REUBG.IN</div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
