@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Eye, Terminal, FileText } from 'lucide-react';
+import { Menu, X, Eye, Terminal } from 'lucide-react';
+import ReubgLogo from './ReubgLogo';
 
 export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
@@ -36,14 +37,12 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/90 backdrop-blur-md border-b border-[#C9C7C0] py-4' : 'bg-transparent py-6'}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md border-b border-[#C9C7C0] py-3 shadow-sm' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
         
-        {/* Brand Logo */}
+        {/* Brand Logo - Exact User Image */}
         <a href="#hero" className="flex items-center gap-2 group">
-          <span className="font-syne font-extrabold text-2xl tracking-tighter text-[#111111] group-hover:text-[#8B6DFF] transition-colors uppercase">
-            reub<span className="text-[#8B6DFF]">g</span>
-          </span>
+          <ReubgLogo className="h-8 md:h-9 w-auto filter invert mix-blend-difference" />
         </a>
 
         {/* Desktop Editorial Navigation Links */}

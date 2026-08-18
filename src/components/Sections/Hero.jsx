@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
+import ReubgLogo from '../UI/ReubgLogo';
 
 export default function Hero({ engineerMode, onOpenResume }) {
   return (
@@ -10,7 +11,7 @@ export default function Hero({ engineerMode, onOpenResume }) {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 my-auto">
         
-        {/* Left Column: Huge Editorial Hero Typography */}
+        {/* Left Column: Editorial Hero Typography */}
         <div className="lg:col-span-8 space-y-6">
           
           {/* Top Sub-Header */}
@@ -28,7 +29,7 @@ export default function Hero({ engineerMode, onOpenResume }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-0"
+            className="space-y-2"
           >
             <h1 className="font-syne text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#111111]">
               I BUILD<br />
@@ -36,9 +37,9 @@ export default function Hero({ engineerMode, onOpenResume }) {
               WORLDS<span className="text-[#8B6DFF]">.</span>
             </h1>
             
-            {/* Script signature reubg matching reference */}
-            <div className="font-syne italic text-3xl sm:text-5xl text-[#8B6DFF] font-bold tracking-tight pt-2">
-              reubg
+            {/* Exact User Uploaded reubg Logo */}
+            <div className="pt-2">
+              <ReubgLogo className="h-10 sm:h-14 md:h-16 w-auto filter invert mix-blend-difference" />
             </div>
           </motion.div>
 
@@ -77,12 +78,12 @@ export default function Hero({ engineerMode, onOpenResume }) {
           </motion.div>
         </div>
 
-        {/* Right Column: Empty space for Persistent 3D centerpiece */}
+        {/* Right Column: Space for 3D persistent centerpiece */}
         <div className="lg:col-span-4 min-h-[300px] pointer-events-none" />
 
       </div>
 
-      {/* Bottom Info Row (Matching Reference) */}
+      {/* Bottom Info Row */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex flex-col sm:flex-row justify-between items-center text-xs font-mono text-[#555555] uppercase tracking-widest border-t border-[#C9C7C0] pt-6 relative z-10 gap-4">
         <div className="flex items-center gap-2">
           <ArrowDown size={14} className="animate-bounce text-[#8B6DFF]" />

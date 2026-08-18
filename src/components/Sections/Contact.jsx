@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
+import ReubgLogo from '../UI/ReubgLogo';
 
 export default function Contact({ engineerMode }) {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -21,7 +22,7 @@ export default function Contact({ engineerMode }) {
     <section id="contact" className="py-28 px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono">
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
         
-        {/* Editorial Contact Header (Matching Reference Image) */}
+        {/* Editorial Contact Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="hidden lg:flex lg:col-span-1">
             <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">10</span>
@@ -32,13 +33,14 @@ export default function Contact({ engineerMode }) {
               LET'S CONNECT
             </div>
 
-            <div className="space-y-0">
+            <div className="space-y-2">
               <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
                 LET'S BUILD<br />
                 SOMETHING AMAZING<span className="text-[#8B6DFF]">.</span>
               </h2>
-              <div className="font-syne italic text-3xl text-[#8B6DFF] font-bold tracking-tight pt-2">
-                reubg
+
+              <div className="pt-2">
+                <ReubgLogo className="h-10 md:h-12 w-auto filter drop-shadow-[0_0_15px_rgba(139,109,255,0.4)]" />
               </div>
             </div>
 
@@ -163,9 +165,9 @@ export default function Contact({ engineerMode }) {
 
         </div>
 
-        {/* Footer (Matching Reference Image) */}
+        {/* Footer */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <div className="font-syne font-bold text-white text-lg">reubg</div>
+          <ReubgLogo className="h-7 w-auto filter drop-shadow-[0_0_10px_rgba(139,109,255,0.3)]" />
           <div>© {new Date().getFullYear()} REUBEN BINU GEORGE. ALL RIGHTS RESERVED.</div>
           <a href="#hero" className="hover:text-white uppercase font-bold">BACK TO TOP ↑</a>
         </div>

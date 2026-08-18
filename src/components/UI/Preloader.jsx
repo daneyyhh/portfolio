@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import ReubgLogo from './ReubgLogo';
 
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
@@ -36,16 +37,15 @@ export default function Preloader({ onComplete }) {
 
       {/* Center reubg logo and progress bar */}
       <div className="flex flex-col items-center justify-center z-10 my-auto text-center space-y-6">
-        <h1 className="font-syne text-7xl md:text-9xl font-extrabold tracking-tighter text-white uppercase select-none">
-          reub<span className="text-[#8B6DFF]">g</span>
-        </h1>
+        {/* Exact User Uploaded Logo Image */}
+        <ReubgLogo className="h-16 sm:h-24 md:h-32 lg:h-36 w-auto filter drop-shadow-[0_0_20px_rgba(139,109,255,0.4)]" />
 
-        <div className="text-xs md:text-sm text-slate-300 tracking-[0.3em] uppercase">
+        <div className="text-xs md:text-sm text-slate-300 tracking-[0.3em] uppercase pt-2">
           FULL-STACK DEVELOPER
         </div>
 
         {/* Progress Bar & Percentage */}
-        <div className="w-64 md:w-80 space-y-2 pt-4">
+        <div className="w-64 md:w-80 space-y-2 pt-2">
           <div className="h-1 w-full bg-white/10 rounded-none overflow-hidden">
             <motion.div
               className="h-full bg-[#8B6DFF]"
