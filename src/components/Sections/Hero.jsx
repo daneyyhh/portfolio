@@ -14,40 +14,44 @@ export default function Hero({ engineerMode, onOpenResume }) {
         {/* Left Column: Editorial Hero Typography */}
         <div className="lg:col-span-8 space-y-6">
           
-          {/* Top Sub-Header */}
+          {/* 1. REUBG LOGO BRAND MARK */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+          >
+            <ReubgLogo variant="light" className="w-[180px] sm:w-[230px] h-auto" />
+          </motion.div>
+
+          {/* 2. FULL-STACK DEVELOPER / CREATIVE ENGINEER */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="font-mono text-xs text-[#555555] uppercase tracking-[0.25em] font-bold"
           >
             FULL-STACK DEVELOPER / CREATIVE ENGINEER
           </motion.div>
 
-          {/* Headline Matching Reference Image */}
+          {/* 3. MAIN HEADLINE */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-4"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-2"
           >
             <h1 className="font-syne text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#111111]">
               I BUILD<br />
               DIGITAL<br />
               WORLDS<span className="text-[#8B6DFF]">.</span>
             </h1>
-            
-            {/* Approved reubg Logo Asset as Signature Mark */}
-            <div className="pt-2">
-              <ReubgLogo className="w-[180px] sm:w-[240px] h-auto" />
-            </div>
           </motion.div>
 
           {/* Subtitle Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="font-sans text-slate-700 text-base sm:text-lg max-w-xl leading-relaxed pt-2"
           >
             I create immersive digital experiences that blend code, design and creativity to solve real-world problems.
@@ -57,7 +61,7 @@ export default function Hero({ engineerMode, onOpenResume }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-wrap items-center gap-4 pt-4"
           >
             <a

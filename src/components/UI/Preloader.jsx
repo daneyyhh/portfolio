@@ -34,7 +34,7 @@ export default function Preloader({ onComplete }) {
       exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] } }}
       className="fixed inset-0 z-[999] bg-[#0A0A0A] text-white flex flex-col justify-center items-center p-6 md:p-12 font-mono overflow-hidden selection:bg-[#8B6DFF] selection:text-white"
     >
-      {/* Centered Hierarchy */}
+      {/* Centered Pre-loader Hierarchy */}
       <div className="flex flex-col items-center justify-center text-center space-y-8 w-full max-w-2xl my-auto z-10">
         
         {/* 1. LARGE REUBG LOGO (420px–500px on Desktop, Clean sitting on #0A0A0A without any glow box) */}
@@ -43,7 +43,7 @@ export default function Preloader({ onComplete }) {
           transition={{ duration: 0.4 }}
           className="flex justify-center w-full"
         >
-          <ReubgLogo className="w-[clamp(240px,75vw,360px)] md:w-[clamp(320px,35vw,500px)] h-auto" />
+          <ReubgLogo variant="dark" className="w-[clamp(240px,75vw,360px)] md:w-[clamp(320px,35vw,500px)] h-auto" />
         </motion.div>
 
         {/* 2. FULL-STACK DEVELOPER */}
