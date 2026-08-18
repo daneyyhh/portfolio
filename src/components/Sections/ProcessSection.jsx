@@ -1,379 +1,313 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
 
 export default function ProcessSection() {
-  const [activeStage, setActiveStage] = useState(0);
+  const [activeStageIndex, setActiveStageIndex] = useState(0);
+  
+  const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
+  const ballRef = useRef(null);
+  const progressPercentRef = useRef(null);
+  const stageNumRef = useRef(null);
 
-  const processData = [
+  const stages = [
     {
-      num: "01",
+      id: "01",
       name: "DISCOVER",
       icon: Search,
-      desc: "We start by deeply understanding the problem, the users, and the business context.",
-      keyActivities: [
-        "User research & interviews",
-        "Market & competitor analysis",
-        "Problem identification",
-        "Goal alignment",
-        "Project roadmap"
-      ],
-      items: [
-        {
-          title: "USER RESEARCH",
-          detail: "Understand user needs, pain points, behaviors and expectations before defining the solution."
-        },
-        {
-          title: "COMPETITOR ANALYSIS",
-          detail: "Study existing products, identify gaps and opportunities, and understand the competitive landscape."
-        },
-        {
-          title: "PROBLEM IDENTIFICATION",
-          detail: "Define the core problem worth solving and turn ambiguity into a clear problem statement."
-        },
-        {
-          title: "GOAL ALIGNMENT",
-          detail: "Align business objectives with user needs, technical constraints and measurable outcomes."
-        },
-        {
-          title: "PROJECT ROADMAP",
-          detail: "Establish priorities, milestones, scope and success criteria before development begins."
-        }
-      ]
+      desc: "Understand the problem, users and business context before deciding what to build.",
+      deliverables: ["USER RESEARCH", "PROBLEM ANALYSIS", "COMPETITOR RESEARCH", "GOAL ALIGNMENT"],
+      output: "Clear problem statement + project direction.",
+      codeSnippet: "// 01. DISCOVER PHASE\nconst discovery = {\n  research: 'user interviews',\n  problem: 'defined',\n  roadmap: 'aligned'\n};"
     },
     {
-      num: "02",
+      id: "02",
       name: "DEFINE",
       icon: Target,
-      desc: "Turn research into a clear product direction, technical scope and execution plan.",
-      keyActivities: [
-        "Requirements gathering",
-        "User flows",
-        "Information architecture",
-        "Feature prioritization",
-        "Technical planning"
-      ],
-      items: [
-        {
-          title: "REQUIREMENTS",
-          detail: "Translate research into clear functional and technical requirements."
-        },
-        {
-          title: "USER FLOWS",
-          detail: "Map how users move through the product and identify the critical interactions."
-        },
-        {
-          title: "INFORMATION ARCHITECTURE",
-          detail: "Organize content, features and navigation into an intuitive structure."
-        },
-        {
-          title: "FEATURE PRIORITIZATION",
-          detail: "Separate essential functionality from secondary features using impact, effort and project goals."
-        },
-        {
-          title: "TECHNICAL PLANNING",
-          detail: "Choose the architecture, APIs, database strategy and technologies required for the build."
-        }
-      ]
+      desc: "Turn research into a clear product scope and technical plan.",
+      deliverables: ["REQUIREMENTS", "USER FLOWS", "INFORMATION ARCHITECTURE", "FEATURE PRIORITIZATION", "TECHNICAL PLANNING"],
+      output: "Defined scope + technical roadmap.",
+      codeSnippet: "// 02. DEFINE PHASE\nconst scope = {\n  architecture: 'modular',\n  userFlows: 'mapped',\n  stack: 'React / Node / Postgres'\n};"
     },
     {
-      num: "03",
+      id: "03",
       name: "DESIGN",
       icon: Layout,
-      desc: "Create a visual system and user experience that balances usability, clarity and personality.",
-      keyActivities: [
-        "Wireframes",
-        "UI/UX design",
-        "Design system",
-        "Responsive layouts",
-        "Interactive prototypes"
-      ],
-      items: [
-        {
-          title: "WIREFRAMES",
-          detail: "Create low-fidelity structures to validate layout and user flow before visual design."
-        },
-        {
-          title: "UI/UX DESIGN",
-          detail: "Design polished interfaces that are intuitive, accessible and aligned with the product goals."
-        },
-        {
-          title: "DESIGN SYSTEM",
-          detail: "Establish reusable components, typography, spacing and visual rules for consistency."
-        },
-        {
-          title: "RESPONSIVE DESIGN",
-          detail: "Design experiences that adapt naturally across desktop, tablet and mobile."
-        },
-        {
-          title: "PROTOTYPING",
-          detail: "Turn static designs into interactive prototypes to validate interactions and user journeys."
-        }
-      ]
+      desc: "Create an intuitive visual system and experience before development begins.",
+      deliverables: ["WIREFRAMES", "UI / UX", "DESIGN SYSTEM", "RESPONSIVE DESIGN", "PROTOTYPING"],
+      output: "Validated interface + design system.",
+      codeSnippet: "// 03. DESIGN PHASE\nconst designSystem = {\n  palette: ['#F1F0EB', '#0A0A0A', '#8B6DFF'],\n  typography: 'Syne & JetBrains Mono'\n};"
     },
     {
-      num: "04",
+      id: "04",
       name: "BUILD",
       icon: Code2,
-      desc: "Turn validated designs into scalable, performant and production-ready software.",
-      keyActivities: [
-        "Frontend development",
-        "Backend development",
-        "Database integration",
-        "API development",
-        "3D / interactive experiences"
-      ],
-      items: [
-        {
-          title: "FRONTEND",
-          detail: "Build responsive interfaces with clean component architecture and smooth interactions."
-        },
-        {
-          title: "BACKEND",
-          detail: "Develop secure server-side logic, authentication, business logic and application services."
-        },
-        {
-          title: "DATABASE",
-          detail: "Design and integrate reliable data models and persistence layers."
-        },
-        {
-          title: "APIs",
-          detail: "Build and integrate APIs that connect frontend experiences with backend services."
-        },
-        {
-          title: "INTERACTIVE EXPERIENCES",
-          detail: "Implement advanced interactions, animations and Three.js-powered 3D experiences where appropriate."
-        }
-      ]
+      desc: "Transform the validated design into scalable production-ready software.",
+      deliverables: ["FRONTEND", "BACKEND", "DATABASE", "API INTEGRATION", "3D / INTERACTION"],
+      output: "Working application.",
+      codeSnippet: "// 04. BUILD PHASE\nconst app = createFullStackApp({\n  frontend: 'React / Next.js',\n  backend: 'Node.js / Express',\n  db: 'PostgreSQL'\n});"
     },
     {
-      num: "05",
+      id: "05",
       name: "DEPLOY",
       icon: Rocket,
-      desc: "Move the finished product from development into a reliable production environment.",
-      keyActivities: [
-        "Production setup",
-        "CI/CD",
-        "Environment configuration",
-        "Hosting",
-        "Monitoring"
-      ],
-      items: [
-        {
-          title: "PRODUCTION SETUP",
-          detail: "Configure the application and infrastructure for real-world production use."
-        },
-        {
-          title: "CI/CD",
-          detail: "Automate testing, builds and deployments to make releases faster and safer."
-        },
-        {
-          title: "ENVIRONMENT CONFIGURATION",
-          detail: "Manage environment variables, secrets and production-specific configuration."
-        },
-        {
-          title: "HOSTING",
-          detail: "Deploy the application using suitable cloud or hosting infrastructure."
-        },
-        {
-          title: "MONITORING",
-          detail: "Track performance, errors and availability after launch."
-        }
-      ]
+      desc: "Move the application from development into a reliable production environment.",
+      deliverables: ["PRODUCTION SETUP", "CI/CD", "HOSTING", "ENVIRONMENT CONFIGURATION", "MONITORING"],
+      output: "Live production application.",
+      codeSnippet: "# 05. DEPLOY PHASE\n$ git push origin main\n-> GitHub Actions -> Vercel Production Build\n-> [200 OK Live on reubg.in]"
     },
     {
-      num: "06",
+      id: "06",
       name: "TEST",
       icon: ShieldCheck,
-      desc: "Validate functionality, performance and usability before and after release.",
-      keyActivities: [
-        "Functional testing",
-        "Responsive testing",
-        "Performance testing",
-        "Security checks",
-        "User feedback"
-      ],
-      items: [
-        {
-          title: "FUNCTIONAL TESTING",
-          detail: "Verify that features behave correctly across expected use cases."
-        },
-        {
-          title: "RESPONSIVE TESTING",
-          detail: "Test layouts and interactions across different screen sizes and devices."
-        },
-        {
-          title: "PERFORMANCE",
-          detail: "Identify bottlenecks and optimize loading, rendering and runtime performance."
-        },
-        {
-          title: "SECURITY",
-          detail: "Review authentication, data handling, APIs and common security risks."
-        },
-        {
-          title: "USER FEEDBACK",
-          detail: "Collect real-world feedback and identify areas that need refinement."
-        }
-      ]
+      desc: "Validate functionality, performance, responsiveness and security.",
+      deliverables: ["FUNCTIONAL TESTING", "RESPONSIVE TESTING", "PERFORMANCE", "SECURITY", "USER FEEDBACK"],
+      output: "Stable and validated product.",
+      codeSnippet: "// 06. TEST PHASE\nrunTestSuite({\n  functional: 'passed',\n  lighthouse: 98,\n  security: 'passed'\n});"
     },
     {
-      num: "07",
+      id: "07",
       name: "ITERATE",
       icon: RefreshCw,
-      desc: "Launch is not the end. We continuously improve the product using data, feedback and new requirements.",
-      keyActivities: [
-        "Analytics",
-        "Feedback loops",
-        "Bug fixes",
-        "Feature improvements",
-        "Continuous optimization"
-      ],
-      items: [
-        {
-          title: "ANALYTICS",
-          detail: "Use real usage data to understand what works and where users struggle."
-        },
-        {
-          title: "FEEDBACK LOOP",
-          detail: "Turn user and stakeholder feedback into actionable improvements."
-        },
-        {
-          title: "BUG FIXES",
-          detail: "Identify, prioritize and resolve issues discovered after release."
-        },
-        {
-          title: "FEATURE EVOLUTION",
-          detail: "Improve existing features and introduce new capabilities based on real needs."
-        },
-        {
-          title: "OPTIMIZATION",
-          detail: "Continuously improve usability, performance, accessibility and reliability."
-        }
-      ]
+      desc: "Continuously improve the product using real-world data and feedback.",
+      deliverables: ["ANALYTICS", "FEEDBACK", "BUG FIXES", "FEATURE IMPROVEMENTS", "OPTIMIZATION"],
+      output: "Continuous product improvement.",
+      codeSnippet: "// 07. ITERATE PHASE\nconst cycle = {\n  analytics: 'monitored',\n  optimization: 'ongoing',\n  feedback: 'integrated'\n};"
     }
   ];
 
-  const activeData = processData[activeStage];
+  // Direct GPU Transform updates on native scroll — ZERO React re-renders on scroll frames!
+  useEffect(() => {
+    let lastActiveIdx = -1;
+    let ticking = false;
+
+    const updateScrollAnimation = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const totalScrollableHeight = rect.height - window.innerHeight;
+
+      if (totalScrollableHeight <= 0) return;
+
+      const currentScroll = Math.max(0, -rect.top);
+      const normalizedRatio = Math.min(1, Math.max(0, currentScroll / totalScrollableHeight));
+      const floatProgress = normalizedRatio * 6.0;
+
+      // 1. Direct GPU Transform Updates for 3D Stack Cards
+      cardRefs.current.forEach((cardEl, idx) => {
+        if (!cardEl) return;
+        const offset = idx - floatProgress;
+        const absOffset = Math.abs(offset);
+
+        const translateZ = 60 - absOffset * 65;
+        const translateY = offset * 45;
+        const scale = Math.max(0.78, 1 - absOffset * 0.07);
+        const opacity = Math.max(0.15, 1 - absOffset * 0.4);
+        const isPrimary = Math.abs(idx - Math.round(floatProgress)) < 0.5;
+
+        cardEl.style.transform = `translate3d(0px, ${translateY}px, ${translateZ}px) scale(${scale})`;
+        cardEl.style.opacity = opacity.toFixed(3);
+        
+        if (isPrimary) {
+          cardEl.style.borderColor = '#8B6DFF';
+          cardEl.style.boxShadow = '0 0 25px rgba(139,109,255,0.35)';
+        } else {
+          cardEl.style.borderColor = 'rgba(255,255,255,0.1)';
+          cardEl.style.boxShadow = 'none';
+        }
+      });
+
+      // 2. Direct DOM update for vertical progress indicator ball & text
+      if (ballRef.current) {
+        ballRef.current.style.top = `${(floatProgress / 6) * 100}%`;
+      }
+      if (progressPercentRef.current) {
+        progressPercentRef.current.innerText = `${Math.round(normalizedRatio * 100)}%`;
+      }
+
+      // 3. Update React active stage index ONLY when discrete index changes!
+      const discreteIdx = Math.min(6, Math.max(0, Math.round(floatProgress)));
+      if (discreteIdx !== lastActiveIdx) {
+        lastActiveIdx = discreteIdx;
+        setActiveStageIndex(discreteIdx);
+        if (stageNumRef.current) {
+          stageNumRef.current.innerText = `0${discreteIdx + 1}/07`;
+        }
+      }
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollAnimation);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateScrollAnimation(); // Initial setup
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const activeStage = stages[activeStageIndex];
 
   return (
-    <section id="process" className="py-28 px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono">
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+    <section
+      id="process"
+      ref={sectionRef}
+      className="relative min-h-[350vh] bg-[#0A0A0A] text-white border-t border-white/10 font-mono"
+    >
+      {/* Sticky Pinned Viewport Container */}
+      <div className="sticky top-0 h-screen flex flex-col justify-between p-6 md:p-12 overflow-hidden z-10">
         
         {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#C9C7C0] pb-8">
-          <div className="hidden lg:flex lg:col-span-1">
-            <span className="font-mono text-4xl font-extrabold text-[#111111]">03</span>
-          </div>
-
-          <div className="lg:col-span-11 space-y-1">
-            <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
-              ENGINEERING METHODOLOGY
+        <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4 shrink-0">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-1">
+              <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
+              <span>ENGINEERING METHODOLOGY // 03</span>
             </div>
-            <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">
+            <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
               MY PROCESS
             </h2>
-            <p className="font-sans text-slate-700 text-sm md:text-base mt-2 max-w-xl leading-relaxed">
-              A structured approach that turns ideas into powerful, scalable and user-centric digital solutions.
-            </p>
+          </div>
+
+          <div className="text-xs text-slate-400 font-mono hidden sm:block">
+            "A structured approach that turns ideas into powerful, scalable solutions."
           </div>
         </div>
 
-        {/* Seven Stage Navigation Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-          {processData.map((stage, idx) => {
-            const Icon = stage.icon;
-            const isActive = activeStage === idx;
-
-            return (
-              <button
-                key={stage.num}
-                onClick={() => setActiveStage(idx)}
-                className={`p-4 border text-left transition-all duration-300 rounded-none flex flex-col justify-between h-28 ${
-                  isActive
-                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] shadow-xl'
-                    : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#8B6DFF]'
-                }`}
-              >
-                <div className="flex justify-between items-center text-xs">
-                  <span className={`font-bold ${isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'}`}>{stage.num}</span>
-                  <Icon size={16} className={isActive ? 'text-[#8B6DFF]' : 'text-[#111111]'} />
-                </div>
-                <div className="font-syne font-bold text-xs uppercase tracking-tight">
-                  {stage.name}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Detailed Process Content Panel */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeStage}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="bg-[#FAF9F5] border-2 border-[#111111] p-8 md:p-12 shadow-2xl rounded-none grid grid-cols-1 lg:grid-cols-12 gap-10"
-          >
-            {/* Left Column: Stage Info & Key Activities */}
-            <div className="lg:col-span-5 space-y-6 lg:border-r border-[#C9C7C0] lg:pr-8">
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">
-                    {activeData.num}
-                  </span>
-                  <h3 className="font-syne text-3xl font-extrabold text-[#111111] uppercase tracking-tight">
-                    {activeData.name}
+        {/* Main Viewport Content Workspace */}
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-2 flex-1 relative">
+          
+          {/* Left Column: Topic Info & Process Inspector */}
+          <div className="lg:col-span-5 space-y-5">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">
+                  {activeStage.id}
+                </span>
+                <div>
+                  <h3 className="font-syne text-2xl md:text-3xl font-extrabold text-white uppercase tracking-tight">
+                    {activeStage.name}
                   </h3>
+                  <div className="text-xs font-mono text-[#8B6DFF] uppercase tracking-widest">
+                    STAGE 0{activeStageIndex + 1} OF 07
+                  </div>
                 </div>
-                <p className="font-sans text-slate-800 text-base leading-relaxed pt-2">
-                  "{activeData.desc}"
-                </p>
               </div>
 
-              {/* Key Activities List */}
-              <div className="space-y-3 pt-4 border-t border-[#C9C7C0]">
-                <div className="text-xs font-mono text-[#8B6DFF] font-bold uppercase tracking-widest">
-                  KEY DELIVERABLES & SCOPE:
-                </div>
-                <div className="space-y-2">
-                  {activeData.keyActivities.map((act, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-mono text-[#111111]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]"></span>
-                      <span>{act}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <p className="font-sans text-slate-300 text-xs md:text-sm leading-relaxed">
+                "{activeStage.desc}"
+              </p>
             </div>
 
-            {/* Right Column: Detailed Breakdown Items */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="text-xs font-mono text-[#555555] font-bold uppercase tracking-widest">
-                WORKFLOW EXECUTIONS:
+            {/* Key Deliverables & Scope */}
+            <div className="space-y-2 pt-2 border-t border-white/10">
+              <div className="text-[11px] font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
+                <Activity size={13} className="animate-spin" />
+                <span>KEY DELIVERABLES & SCOPE:</span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {activeData.items.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-[#E4E2DC] border border-[#C9C7C0] p-5 rounded-none space-y-2 hover:border-[#8B6DFF] transition-colors"
-                  >
-                    <div className="font-syne font-bold text-sm text-[#111111] uppercase tracking-tight flex items-center gap-2">
-                      <span className="text-xs font-mono text-[#8B6DFF]">0{idx + 1}.</span>
-                      <span>{item.title}</span>
-                    </div>
-                    <p className="font-sans text-xs text-slate-700 leading-relaxed">
-                      "{item.detail}"
-                    </p>
-                  </div>
+              <div className="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                {activeStage.deliverables.map((deliv, idx) => (
+                  <span key={idx} className="bg-[#141414] border border-white/15 text-white px-2.5 py-1 font-bold flex items-center gap-1.5">
+                    <CheckCircle2 size={12} className="text-[#8B6DFF]" />
+                    <span>{deliv}</span>
+                  </span>
                 ))}
               </div>
             </div>
 
-          </motion.div>
-        </AnimatePresence>
+            {/* Expected Stage Output */}
+            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-3 text-xs text-[#8B6DFF]">
+              <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">STAGE OUTPUT:</div>
+              <div className="text-white font-bold text-xs">{activeStage.output}</div>
+            </div>
+
+            {/* Process Inspector Panel */}
+            <div className="bg-[#141414] border border-white/10 p-3 text-xs text-[#8B6DFF] rounded-none">
+              <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-1 mb-1.5">
+                <span>PROCESS INSPECTOR // STAGE {activeStage.id}</span>
+                <span className="text-[#8B6DFF] uppercase font-bold">{activeStage.name}</span>
+              </div>
+              <pre className="text-slate-200 text-[11px] leading-relaxed overflow-x-auto">
+                <code>{activeStage.codeSnippet}</code>
+              </pre>
+            </div>
+          </div>
+
+          {/* Center Column: HERO 3D Physical Process Layer Stack */}
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center min-h-[400px] py-2 [perspective:1000px]">
+            
+            <div className="w-full space-y-1.5 relative [transform-style:preserve-3d]">
+              {stages.map((stg, idx) => (
+                <div
+                  key={stg.id}
+                  ref={(el) => (cardRefs.current[idx] = el)}
+                  style={{ willChange: 'transform, opacity' }}
+                  className="p-3.5 border font-mono rounded-none flex items-center justify-between shadow-2xl bg-[#141414] text-white border-white/10"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs font-bold text-[#8B6DFF]">
+                      {stg.id}
+                    </span>
+                    <div className="font-syne font-extrabold text-xs md:text-sm text-white uppercase tracking-wider">
+                      {stg.name}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
+                      {stg.deliverables.slice(0, 2).join(' • ')}
+                    </span>
+                    <div className="w-2 h-2 rounded-full bg-[#8B6DFF]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+
+          {/* Right Column: Vertical Scroll Progress Line Indicator (01 -> 07) */}
+          <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center h-full relative py-6">
+            <div className="w-[2px] h-60 bg-white/10 relative flex flex-col justify-between items-center py-2">
+              
+              {/* Floating Active Ball moving directly via DOM ref */}
+              <div
+                ref={ballRef}
+                className="absolute w-3 h-3 rounded-full bg-[#8B6DFF] -translate-x-[5px] -translate-y-1.5 shadow-[0_0_12px_#8B6DFF]"
+              />
+
+              {stages.map((s, i) => (
+                <div
+                  key={s.id}
+                  className={`w-1.5 h-1.5 rounded-full z-10 transition-colors ${
+                    activeStageIndex === i ? 'bg-[#8B6DFF]' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div ref={stageNumRef} className="mt-3 font-mono text-[10px] text-[#8B6DFF] font-bold">
+              01/07
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Status Bar */}
+        <div className="max-w-7xl mx-auto w-full border-t border-white/10 pt-3 flex justify-between items-center text-xs text-slate-400 font-mono shrink-0">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
+            <span>CINEMATIC PROCESS ENGINE // STAGE 0{activeStageIndex + 1} OF 07 ACTIVE</span>
+          </div>
+          <div>SCROLL PROGRESS: <span ref={progressPercentRef}>0%</span></div>
+        </div>
 
       </div>
     </section>
