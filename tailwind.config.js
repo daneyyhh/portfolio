@@ -29,10 +29,6 @@ export default {
                 sans: ['Inter', 'sans-serif'],
                 mono: ['JetBrains Mono', 'monospace'],
             },
-            backgroundImage: {
-                'grid-editorial': "linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px)",
-                'grid-dark': "linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
-            },
         },
     },
     plugins: [],

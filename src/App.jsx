@@ -47,7 +47,7 @@ export default function App() {
       {/* Mandatory Pre-loader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* Main Portfolio Content — Rendered after pre-loader transition */}
+      {/* Main Portfolio Content — Flat #F1F0EB background */}
       <div className={loading ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-700'}>
         
         {/* Persistent Three.js WebGL Canvas Journey */}
@@ -56,14 +56,14 @@ export default function App() {
         {/* Easter Egg Event Listener */}
         <EasterEggs />
 
-        {/* Sticky Editorial Header */}
+        {/* Fixed Editorial Header — Always Visible */}
         <Navbar
           engineerMode={engineerMode}
           setEngineerMode={setEngineerMode}
           onOpenResume={() => setResumeOpen(true)}
         />
 
-        {/* Main Editorial Page Flow */}
+        {/* Main Editorial Flow */}
         <main className="relative z-10">
           <Hero
             engineerMode={engineerMode}

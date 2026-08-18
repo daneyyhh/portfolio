@@ -65,18 +65,7 @@
   }
 }
 
-/* Background Grids */
-.bg-grid-editorial {
-  background-size: 40px 40px;
-  background-image: linear-gradient(to right, rgba(17, 17, 17, 0.04) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
-}
-
-.bg-grid-dark {
-  background-size: 40px 40px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
+/* NO GRIDS, NO TEXTURES, NO NOISE — FLAT SOLID #F1F0EB BACKGROUND */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

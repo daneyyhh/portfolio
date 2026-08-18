@@ -7,8 +7,6 @@ import ReubgLogo from '../UI/ReubgLogo';
 export default function Hero({ engineerMode, onOpenResume }) {
   return (
     <section id="hero" className="relative min-h-screen pt-32 pb-20 flex flex-col justify-between overflow-hidden bg-[#F1F0EB] text-[#111111]">
-      <div className="absolute inset-0 bg-grid-editorial pointer-events-none opacity-40"></div>
-
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 my-auto">
         
         {/* Left Column: Editorial Hero Typography */}

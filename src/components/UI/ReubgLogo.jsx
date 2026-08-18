@@ -1,7 +1,9 @@
 import React from 'react';
 
 export default function ReubgLogo({ variant = "light", className = "w-[135px] h-auto" }) {
-  const logoSrc = variant === "dark" ? "/brand/reubg-logo-dark.png" : "/brand/reubg-logo-light.png";
+  const logoSrc = variant === "dark"
+    ? "/brand/reubg-logo-dark-transparent.png"
+    : "/brand/reubg-logo-transparent.png";
 
   return (
     <img
