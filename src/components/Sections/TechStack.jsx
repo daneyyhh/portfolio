@@ -1,119 +1,76 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, CheckCircle2, Sparkles, Filter } from 'lucide-react';
 import { skillMatrix, projectsData } from '../../data/portfolioData';
 
 export default function TechStack({ onSelectProject }) {
   const [selectedSkill, setSelectedSkill] = useState(null);
-  const [activeDomainFilter, setActiveDomainFilter] = useState('ALL');
-
-  const domains = ['ALL', 'Frontend', 'Backend', 'Database', 'AI / ML', 'Game Dev', 'Design', 'Tools'];
-
-  const filteredSkills = activeDomainFilter === 'ALL'
-    ? skillMatrix
-    : skillMatrix.filter(s => s.domain === activeDomainFilter);
-
-  const highlightedProjects = selectedSkill
-    ? projectsData.filter(p => selectedSkill.projects.includes(p.id))
-    : [];
 
   return (
-    <section id="skills" className="py-24 px-6 md:px-12 bg-[#050507] relative overflow-hidden border-t border-white/10">
+    <section id="skills" className="py-28 px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#ccff00] tracking-widest uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#ccff00]"></span>
-              <span>VERIFIED TECH ECOSYSTEM</span>
-            </div>
-            <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-white uppercase tracking-tight">
-              INTERACTIVE SKILL MATRIX
-            </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#C9C7C0] pb-8">
+          <div className="hidden lg:flex lg:col-span-1">
+            <span className="font-mono text-4xl font-extrabold text-[#111111]">06</span>
           </div>
 
-          <p className="font-mono text-xs text-slate-400 max-w-md">
-            Click any technology skill to highlight the exact projects where that skill was practically implemented.
-          </p>
+          <div className="lg:col-span-7">
+            <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest mb-1">
+              TOOLING & STACK
+            </div>
+            <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">
+              TECHNOLOGIES
+            </h2>
+            <p className="font-sans text-slate-700 text-sm mt-2 max-w-lg">
+              Tools and technologies I work with across web, AI, design, and 3D engine development.
+            </p>
+          </div>
         </div>
 
-        {/* Domain Filter Pills */}
-        <div className="flex flex-wrap gap-2">
-          {domains.map((dom) => (
-            <button
-              key={dom}
-              onClick={() => {
-                setActiveDomainFilter(dom);
-                setSelectedSkill(null);
-              }}
-              className={`font-mono text-xs px-3.5 py-1.5 rounded-sm border transition-all ${
-                activeDomainFilter === dom
-                  ? 'bg-[#ccff00] text-black border-[#ccff00] font-bold'
-                  : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/30'
-              }`}
-            >
-              {dom}
-            </button>
-          ))}
-        </div>
-
-        {/* Interactive Skill Matrix Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSkills.map((item, idx) => {
+        {/* Orbiting Ecosystem Representation Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {skillMatrix.map((item) => {
             const isSelected = selectedSkill?.name === item.name;
 
             return (
-              <motion.div
+              <button
                 key={item.name}
                 onClick={() => setSelectedSkill(isSelected ? null : item)}
-                className={`p-5 rounded-sm border font-mono transition-all duration-200 cursor-pointer flex justify-between items-center ${
+                className={`p-4 border text-left transition-all duration-300 ${
                   isSelected
-                    ? 'bg-[#ccff00] text-black border-[#ccff00] font-bold shadow-[0_0_20px_rgba(204,255,0,0.4)]'
-                    : 'bg-[#0f0f13] border-white/10 hover:border-[#ccff00]/40 text-slate-200'
+                    ? 'bg-[#111111] text-white border-[#111111] shadow-lg'
+                    : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#8B6DFF]'
                 }`}
-                data-cursor="HIGHLIGHT"
               >
-                <div>
-                  <span className="text-[10px] text-purple-400 uppercase tracking-widest block font-normal">
-                    [{item.domain}]
-                  </span>
-                  <span className="text-sm font-bold uppercase">{item.name}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono opacity-80">
-                    {item.projects.length} {item.projects.length === 1 ? 'PROJ' : 'PROJS'}
-                  </span>
-                  <CheckCircle2 size={16} className={isSelected ? 'text-black' : 'text-[#ccff00]'} />
-                </div>
-              </motion.div>
+                <div className="text-[10px] text-[#8B6DFF] uppercase font-bold">{item.domain}</div>
+                <div className="font-syne font-bold text-sm uppercase mt-1">{item.name}</div>
+                <div className="text-[10px] text-[#555555] mt-2">{item.projects.length} PROJECTS</div>
+              </button>
             );
           })}
         </div>
 
-        {/* Highlighted Associated Projects Box */}
+        {/* Selected Skill Associated Projects Box */}
         {selectedSkill && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[#0f0f13] border-2 border-[#ccff00] p-6 rounded-sm space-y-4"
+            className="bg-[#FAF9F5] border-2 border-[#111111] p-6 rounded-none space-y-4"
           >
-            <div className="flex items-center gap-2 text-xs font-mono text-[#ccff00] tracking-widest uppercase">
-              <Sparkles size={16} />
-              <span>PROJECTS UTILIZING {selectedSkill.name.toUpperCase()}</span>
+            <div className="text-xs font-bold text-[#8B6DFF] uppercase">
+              PROJECTS UTILIZING {selectedSkill.name.toUpperCase()}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {highlightedProjects.map(proj => (
+              {projectsData.filter(p => selectedSkill.projects.includes(p.id)).map(proj => (
                 <div
                   key={proj.id}
                   onClick={() => onSelectProject(proj)}
-                  className="bg-[#050507] border border-white/10 p-4 rounded-sm hover:border-[#ccff00] transition-colors cursor-pointer"
+                  className="bg-[#E4E2DC] border border-[#C9C7C0] p-4 cursor-pointer hover:border-[#8B6DFF]"
                 >
-                  <div className="text-[10px] font-mono text-purple-400 uppercase">{proj.category}</div>
-                  <div className="font-syne font-bold text-white uppercase text-base">{proj.title}</div>
-                  <p className="font-sans text-xs text-slate-400 line-clamp-2 mt-1">{proj.shortDesc}</p>
+                  <div className="text-[10px] text-[#555555] uppercase">{proj.category}</div>
+                  <div className="font-syne font-bold text-[#111111] uppercase text-sm">{proj.title}</div>
                 </div>
               ))}
             </div>

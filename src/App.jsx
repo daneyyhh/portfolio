@@ -6,19 +6,17 @@ import CustomCursor from './components/UI/CustomCursor';
 import CaseStudyModal from './components/UI/CaseStudyModal';
 import EasterEggs from './components/UI/EasterEggs';
 
+import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
-import EngineeringProfile from './components/Sections/EngineeringProfile';
+import Introduction from './components/Sections/Introduction';
+import AboutResume from './components/Sections/AboutResume';
+import ProcessSection from './components/Sections/ProcessSection';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
-import Journey from './components/Sections/Journey';
 import TechStack from './components/Sections/TechStack';
-import AiAssistant from './components/Sections/AiAssistant';
-import Playground from './components/Sections/Playground';
-import Performance from './components/Sections/Performance';
+import GameLab from './components/Sections/GameLab';
+import AiLab from './components/Sections/AiLab';
 import Experience from './components/Sections/Experience';
-import EducationCertifications from './components/Sections/EducationCertifications';
-import AboutResume from './components/Sections/AboutResume';
-import GithubSection from './components/Sections/GithubSection';
 import Contact from './components/Sections/Contact';
 
 export default function App() {
@@ -28,7 +26,7 @@ export default function App() {
   const [resumeOpen, setResumeOpen] = useState(false);
 
   useEffect(() => {
-    // Lenis Smooth Scroll Initialization
+    // Lenis Smooth Scroll Setup
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -45,50 +43,35 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#09090b] text-slate-100 font-sans ${engineerMode ? 'engineer-mode-active' : ''}`}>
+    <div className={`min-h-screen bg-[#F1F0EB] text-[#111111] font-sans ${engineerMode ? 'engineer-mode-active' : ''}`}>
       
-      {/* Pre-loader overlay */}
+      {/* Pre-loader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* Custom Precision Cursor */}
+      {/* Persistent Three.js WebGL Canvas Journey */}
+      <PersistentCanvas />
+
+      {/* Custom Precision Pointer */}
       <CustomCursor />
 
       {/* Easter Egg Event Listener */}
       <EasterEggs />
 
-      {/* Top Navbar */}
+      {/* Sticky Editorial Header */}
       <Navbar
         engineerMode={engineerMode}
         setEngineerMode={setEngineerMode}
         onOpenResume={() => setResumeOpen(true)}
       />
 
-      {/* Main Page Content */}
-      <main className="relative">
+      {/* Main Page Flow Matching Reference Image media_1787062891685.jpg */}
+      <main className="relative z-10">
         <Hero
           engineerMode={engineerMode}
           onOpenResume={() => setResumeOpen(true)}
         />
         
-        <EngineeringProfile engineerMode={engineerMode} />
-        
-        <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
-        
-        <Architecture engineerMode={engineerMode} />
-        
-        <Journey engineerMode={engineerMode} />
-        
-        <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
-        
-        <AiAssistant />
-        
-        <Playground />
-        
-        <Performance engineerMode={engineerMode} />
-        
-        <Experience engineerMode={engineerMode} />
-        
-        <EducationCertifications engineerMode={engineerMode} />
+        <Introduction />
         
         <AboutResume
           engineerMode={engineerMode}
@@ -96,12 +79,24 @@ export default function App() {
           setResumeOpen={setResumeOpen}
         />
         
-        <GithubSection engineerMode={engineerMode} />
+        <ProcessSection />
+        
+        <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
+        
+        <Architecture engineerMode={engineerMode} />
+        
+        <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
+        
+        <GameLab />
+        
+        <AiLab />
+        
+        <Experience engineerMode={engineerMode} />
         
         <Contact engineerMode={engineerMode} />
       </main>
 
-      {/* Interactive Case Study Full-Screen Modal */}
+      {/* Interactive Case Study Modal */}
       {selectedProject && (
         <CaseStudyModal
           project={selectedProject}

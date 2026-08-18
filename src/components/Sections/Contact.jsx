@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, MapPin, Send, CheckCircle2, Globe } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
 
 export default function Contact({ engineerMode }) {
@@ -18,162 +18,144 @@ export default function Contact({ engineerMode }) {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12 bg-[#050507] relative overflow-hidden border-t border-white/10 font-mono">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="contact" className="py-28 px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono">
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
         
-        {/* Cinematic Headline CTA */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00] text-xs tracking-widest uppercase rounded-sm">
-            <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
-            <span>AVAILABLE FOR OPPORTUNITIES</span>
+        {/* Editorial Contact Header (Matching Reference Image) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="hidden lg:flex lg:col-span-1">
+            <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">10</span>
           </div>
 
-          <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-tight">
-            LET'S BUILD SOMETHING <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ccff00] to-purple-400">
-              EXTRAORDINARY.
-            </span>
-          </h2>
+          <div className="lg:col-span-11 space-y-2">
+            <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
+              LET'S CONNECT
+            </div>
+
+            <div className="space-y-0">
+              <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
+                LET'S BUILD<br />
+                SOMETHING AMAZING<span className="text-[#8B6DFF]">.</span>
+              </h2>
+              <div className="font-syne italic text-3xl text-[#8B6DFF] font-bold tracking-tight pt-2">
+                reubg
+              </div>
+            </div>
+
+            <p className="font-sans text-slate-300 text-base max-w-lg pt-2">
+              Have a project in mind or just want to say hi? Let's connect!
+            </p>
+          </div>
         </div>
 
         {/* Contact Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-4">
           
-          {/* Left Column: Direct Info */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="space-y-4">
-              <h3 className="font-syne text-2xl font-bold text-white uppercase">CONNECT DIRECTLY</h3>
-              <p className="font-sans text-sm text-slate-300 leading-relaxed">
-                Whether you have a full-stack project, an AI/ML initiative, a 3D interactive application, or an engineering role, feel free to reach out.
-              </p>
-            </div>
-
+          {/* Left Info Column */}
+          <div className="lg:col-span-5 space-y-6">
             <div className="space-y-4 text-xs">
-              {/* Email */}
               <a
                 href={`mailto:${personalData.email}`}
-                className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm hover:border-[#ccff00] transition-colors group"
+                className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group"
               >
-                <div className="p-2.5 bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00] rounded-sm group-hover:bg-[#ccff00] group-hover:text-black transition-colors">
+                <div className="p-3 bg-[#8B6DFF]/10 text-[#8B6DFF] border border-[#8B6DFF]/30">
                   <Mail size={18} />
                 </div>
                 <div>
                   <div className="text-slate-400">PRIMARY EMAIL:</div>
-                  <div className="text-white font-bold text-sm group-hover:text-[#ccff00]">{personalData.email}</div>
+                  <div className="text-white font-bold text-sm group-hover:text-[#8B6DFF]">{personalData.email}</div>
                 </div>
               </a>
 
-              {/* Alt Email */}
               <a
                 href={`mailto:${personalData.altEmail}`}
-                className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm hover:border-purple-500 transition-colors group"
+                className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group"
               >
-                <div className="p-2.5 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-sm group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                <div className="p-3 bg-white/5 text-slate-300 border border-white/10">
                   <Mail size={18} />
                 </div>
                 <div>
                   <div className="text-slate-400">DIRECT EMAIL:</div>
-                  <div className="text-white font-bold text-sm group-hover:text-purple-300">{personalData.altEmail}</div>
+                  <div className="text-white font-bold text-sm group-hover:text-[#8B6DFF]">{personalData.altEmail}</div>
                 </div>
               </a>
 
-              {/* Location & Domain */}
-              <div className="flex items-center gap-4 p-4 bg-[#0f0f13] border border-white/10 rounded-sm">
-                <div className="p-2.5 bg-white/5 border border-white/10 text-slate-300 rounded-sm">
+              <div className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10">
+                <div className="p-3 bg-white/5 text-slate-300 border border-white/10">
                   <MapPin size={18} />
                 </div>
                 <div>
                   <div className="text-slate-400">LOCATION & DOMAIN:</div>
-                  <div className="text-white font-bold text-sm">{personalData.location} // <span className="text-[#ccff00]">{personalData.domain}</span></div>
+                  <div className="text-white font-bold text-sm">{personalData.location} // <span className="text-[#8B6DFF]">REUBG.IN</span></div>
                 </div>
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="flex gap-4 pt-2">
-              <a
-                href={personalData.github}
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 bg-[#0f0f13] border border-white/15 text-white hover:border-[#ccff00] hover:text-[#ccff00] rounded-sm transition-colors"
-                title="GitHub"
-              >
+              <a href={personalData.github} target="_blank" rel="noreferrer" className="p-3 bg-[#141414] border border-white/15 text-white hover:border-[#8B6DFF] hover:text-[#8B6DFF]">
                 <Github size={20} />
               </a>
-
-              <a
-                href={personalData.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 bg-[#0f0f13] border border-white/15 text-white hover:border-purple-400 hover:text-purple-400 rounded-sm transition-colors"
-                title="LinkedIn"
-              >
+              <a href={personalData.linkedin} target="_blank" rel="noreferrer" className="p-3 bg-[#141414] border border-white/15 text-white hover:border-[#8B6DFF] hover:text-[#8B6DFF]">
                 <Linkedin size={20} />
               </a>
             </div>
           </div>
 
-          {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 bg-[#0f0f13] border border-white/15 p-8 rounded-sm">
+          {/* Right Direct Message Form */}
+          <div className="lg:col-span-7 bg-[#141414] border border-white/15 p-8">
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
-                <CheckCircle2 size={48} className="text-[#ccff00] animate-bounce" />
-                <h3 className="font-syne text-2xl font-bold text-white uppercase">MESSAGE RECEIVED</h3>
-                <p className="text-xs text-slate-300 max-w-sm">
-                  Thank you for reaching out! Reuben will review your inquiry and get back to you shortly.
+                <CheckCircle2 size={48} className="text-[#8B6DFF] animate-bounce" />
+                <h3 className="font-syne text-2xl font-bold text-white uppercase">MESSAGE SENT</h3>
+                <p className="text-xs text-slate-300">
+                  Thank you for reaching out! Reuben will get back to you shortly.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 text-xs">
-                <div className="border-b border-white/10 pb-4">
-                  <h3 className="font-syne text-xl font-bold text-white uppercase">SEND A DIRECT TRANSMISSION</h3>
+                <div className="border-b border-white/10 pb-4 font-bold text-sm text-white">
+                  TRANSMIT DIRECT INQUIRY
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-slate-300 block">YOUR NAME:</label>
+                  <label className="text-slate-400 block">YOUR NAME:</label>
                   <input
                     type="text"
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="e.g. Alex Morgan"
-                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                    placeholder="Enter your full name"
+                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-slate-300 block">YOUR EMAIL:</label>
+                  <label className="text-slate-400 block">YOUR EMAIL:</label>
                   <input
                     type="email"
                     required
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="e.g. alex@company.com"
-                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                    placeholder="Enter your email address"
+                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-slate-300 block">PROJECT / INQUIRY DETAILS:</label>
+                  <label className="text-slate-400 block">MESSAGE:</label>
                   <textarea
                     rows="4"
                     required
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder="Tell me about your project, timeline, or engineering opportunity..."
-                    className="w-full bg-[#050507] border border-white/10 p-3 text-white font-mono focus:border-[#ccff00] focus:outline-none rounded-sm"
+                    placeholder="Project details, opportunities, or feedback..."
+                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn-lime w-full flex items-center justify-center gap-2"
-                >
+                <button type="submit" className="btn-editorial-purple w-full flex items-center justify-center gap-2">
                   <Send size={16} />
-                  <span>TRANSMIT MESSAGE</span>
+                  <span>SEND TRANSMISSION</span>
                 </button>
               </form>
             )}
@@ -181,10 +163,11 @@ export default function Contact({ engineerMode }) {
 
         </div>
 
-        {/* Footer Copyright */}
+        {/* Footer (Matching Reference Image) */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+          <div className="font-syne font-bold text-white text-lg">reubg</div>
           <div>© {new Date().getFullYear()} REUBEN BINU GEORGE. ALL RIGHTS RESERVED.</div>
-          <div className="text-[#ccff00]">DOMAIN: REUBG.IN</div>
+          <a href="#hero" className="hover:text-white uppercase font-bold">BACK TO TOP ↑</a>
         </div>
 
       </div>

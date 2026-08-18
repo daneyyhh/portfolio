@@ -1,129 +1,98 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, ArrowDown, Code2, Sparkles, ArrowRight } from 'lucide-react';
-import HeroCanvas from '../Three/HeroCanvas';
+import { ArrowDown, ArrowRight } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
 
 export default function Hero({ engineerMode, onOpenResume }) {
   return (
-    <section id="hero" className="relative min-h-screen pt-24 pb-16 flex flex-col justify-center overflow-hidden bg-[#09090b]">
-      {/* Radial ambient glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-radial-glow pointer-events-none opacity-60"></div>
-      <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
+    <section id="hero" className="relative min-h-screen pt-32 pb-20 flex flex-col justify-between overflow-hidden bg-[#F1F0EB] text-[#111111]">
+      <div className="absolute inset-0 bg-grid-editorial pointer-events-none opacity-40"></div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 my-auto">
         
-        {/* Left Column: Headline & Hero Copy */}
-        <div className="lg:col-span-7 space-y-6 text-left">
+        {/* Left Column: Huge Editorial Hero Typography */}
+        <div className="lg:col-span-8 space-y-6">
           
-          {/* Status Badge */}
+          {/* Top Sub-Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[#ccff00]/10 border border-[#ccff00]/30 text-[#ccff00] font-mono text-xs tracking-widest uppercase"
+            className="font-mono text-xs text-[#555555] uppercase tracking-[0.25em] font-bold"
           >
-            <span className="w-2 h-2 rounded-full bg-[#ccff00] animate-pulse"></span>
-            <span>{personalData.status}</span>
+            FULL-STACK DEVELOPER / CREATIVE ENGINEER
           </motion.div>
 
-          {/* Main Statement Headline */}
-          <motion.h1
+          {/* Headline Matching Reference Image */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] uppercase"
+            className="space-y-0"
           >
-            BUILDING DIGITAL <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ccff00] via-white to-purple-400">
-              EXPERIENCES THAT MATTER.
-            </span>
-          </motion.h1>
+            <h1 className="font-syne text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#111111]">
+              I BUILD<br />
+              DIGITAL<br />
+              WORLDS<span className="text-[#8B6DFF]">.</span>
+            </h1>
+            
+            {/* Script signature reubg matching reference */}
+            <div className="font-syne italic text-3xl sm:text-5xl text-[#8B6DFF] font-bold tracking-tight pt-2">
+              reubg
+            </div>
+          </motion.div>
 
-          {/* Subtitle / Intro */}
+          {/* Subtitle Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-sans text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed"
+            className="font-sans text-slate-700 text-base sm:text-lg max-w-xl leading-relaxed pt-2"
           >
-            Hi, I'm <strong className="text-white font-semibold">{personalData.name}</strong> ({personalData.brand}). A <span className="text-[#ccff00] font-mono font-bold">Full-Stack Developer × Creative Engineer</span> combining web applications, AI/ML models, UI/UX systems, and 3D interactive graphics.
+            I create immersive digital experiences that blend code, design and creativity to solve real-world problems.
           </motion.p>
 
-          {/* Interactive Code Panel (Code -> 3D transition element) */}
+          {/* Hero Actions */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-[#0f0f13] border border-white/15 p-4 rounded-sm font-mono text-xs text-slate-300 shadow-xl max-w-lg relative overflow-hidden"
-          >
-            <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3 text-[10px] text-slate-400">
-              <div className="flex items-center gap-2">
-                <Terminal size={12} className="text-[#ccff00]" />
-                <span>developer.config.js</span>
-              </div>
-              <span className="text-[#ccff00]">LIVE ARCHITECTURE</span>
-            </div>
-
-            <pre className="text-slate-200 overflow-x-auto">
-              <code>
-                <span className="text-purple-400">const</span> <span className="text-[#ccff00]">developer</span> = &#123;<br />
-                &nbsp;&nbsp;focus: <span className="text-emerald-300">"Full-Stack Web"</span>,<br />
-                &nbsp;&nbsp;aiML: <span className="text-amber-300">true</span>,<br />
-                &nbsp;&nbsp;uiux: <span className="text-amber-300">true</span>,<br />
-                &nbsp;&nbsp;gameDev: <span className="text-amber-300">true</span>,<br />
-                &nbsp;&nbsp;threeD: <span className="text-amber-300">true</span><br />
-                &#125;;
-              </code>
-            </pre>
-          </motion.div>
-
-          {/* Hero CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-4 pt-2"
+            className="flex flex-wrap items-center gap-4 pt-4"
           >
             <a
               href="#projects"
               data-cursor="EXPLORE"
-              className="btn-lime flex items-center gap-2 shadow-lg"
+              className="btn-editorial flex items-center gap-3"
             >
-              <span>EXPLORE WORKS</span>
+              <span>VIEW MY WORK</span>
               <ArrowRight size={16} />
             </a>
 
             <button
               onClick={onOpenResume}
-              className="btn-outline flex items-center gap-2"
+              className="btn-editorial-outline flex items-center gap-2"
             >
-              <span>VIEW RESUME</span>
+              <span>RESUME PDF</span>
             </button>
           </motion.div>
         </div>
 
-        {/* Right Column: Three.js Interactive 3D Canvas Centerpiece */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="lg:col-span-5 h-[400px] lg:h-[520px] relative flex items-center justify-center border border-white/10 bg-[#0f0f13]/40 rounded-sm overflow-hidden"
-          data-cursor="DRAG 3D"
-        >
-          <HeroCanvas engineerMode={engineerMode} />
-          
-          <div className="absolute top-4 right-4 text-[10px] font-mono text-slate-400 bg-black/60 px-2 py-1 border border-white/10">
-            RBG 3D CENTERPIECE
-          </div>
-        </motion.div>
+        {/* Right Column: Empty space for Persistent 3D centerpiece */}
+        <div className="lg:col-span-4 min-h-[300px] pointer-events-none" />
 
       </div>
 
-      {/* Bottom Scroll Down Prompt */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 font-mono text-[10px] text-slate-400 uppercase tracking-widest pointer-events-none">
-        <span>SCROLL TO EXPLORE ARCHITECTURE</span>
-        <ArrowDown size={14} className="animate-bounce text-[#ccff00]" />
+      {/* Bottom Info Row (Matching Reference) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex flex-col sm:flex-row justify-between items-center text-xs font-mono text-[#555555] uppercase tracking-widest border-t border-[#C9C7C0] pt-6 relative z-10 gap-4">
+        <div className="flex items-center gap-2">
+          <ArrowDown size={14} className="animate-bounce text-[#8B6DFF]" />
+          <span>SCROLL TO EXPLORE</span>
+        </div>
+
+        <div className="bg-[#E4E2DC] px-4 py-2 border border-[#C9C7C0] text-[#111111] font-bold flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
+          <span>BASED IN INDIA / AVAILABLE FOR FREELANCE</span>
+        </div>
       </div>
     </section>
   );

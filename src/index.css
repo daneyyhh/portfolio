@@ -6,98 +6,76 @@
 
 @layer base {
   :root {
-    --bg-dark: #09090b;
-    --accent-lime: #ccff00;
-    --accent-purple: #a855f7;
+    --bg-ivory: #F1F0EB;
+    --text-black: #111111;
+    --accent-purple: #8B6DFF;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--bg-dark);
-    color: #f1f5f9;
+    background-color: var(--bg-ivory);
+    color: var(--text-black);
   }
   
   body {
-    @apply bg-[#09090b] text-slate-100 font-sans antialiased selection:bg-[#ccff00] selection:text-black overflow-x-hidden;
+    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white overflow-x-hidden;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Custom scrollbar */
+  /* Editorial scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #09090b;
+    background: #F1F0EB;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e1e24;
-    border-radius: 3px;
+    background: #C9C7C0;
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #ccff00;
+    background: #8B6DFF;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-[#0f0f13]/80 backdrop-blur-md border border-white/10 hover:border-[#ccff00]/40 transition-all duration-300 shadow-lg;
-  }
-  
-  .glass-card-purple {
-    @apply bg-[#0f0f13]/80 backdrop-blur-md border border-white/10 hover:border-purple-500/40 transition-all duration-300 shadow-lg;
+  .editorial-card {
+    @apply bg-[#FAF9F5] border border-[#C9C7C0] hover:border-[#8B6DFF] transition-all duration-300 shadow-sm;
   }
 
-  .text-glow-lime {
-    text-shadow: 0 0 15px rgba(204, 255, 0, 0.4);
+  .editorial-card-dark {
+    @apply bg-[#141414] border border-white/10 hover:border-[#8B6DFF]/50 transition-all duration-300 shadow-lg text-white;
   }
 
-  .text-glow-purple {
-    text-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+  .vertical-tag {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 
-  .btn-lime {
-    @apply bg-[#ccff00] text-black font-mono font-bold px-6 py-3 rounded-none hover:bg-[#b8ff00] hover:shadow-[0_0_20px_rgba(204,255,0,0.5)] transition-all duration-300 active:scale-95;
+  .btn-editorial {
+    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 border border-[#111111] hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-all duration-300 active:scale-95;
   }
 
-  .btn-outline {
-    @apply bg-transparent text-white font-mono font-medium px-6 py-3 border border-white/20 hover:border-[#ccff00] hover:text-[#ccff00] transition-all duration-300 active:scale-95;
+  .btn-editorial-purple {
+    @apply bg-[#8B6DFF] text-white font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 hover:bg-[#7a5ceb] transition-all duration-300 active:scale-95 shadow-md;
   }
 
-  .engineer-tag {
-    @apply font-mono text-[10px] tracking-widest uppercase bg-lime-400/10 text-[#ccff00] border border-[#ccff00]/30 px-2 py-0.5 rounded-sm;
+  .btn-editorial-outline {
+    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 border border-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF] transition-all duration-300 active:scale-95;
   }
 }
 
-/* Background Grids & Ambient Lighting */
-.bg-grid {
-  background-size: 36px 36px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+/* Background Grids */
+.bg-grid-editorial {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
 }
 
-.bg-radial-glow {
-  background: radial-gradient(circle at 50% 20%, rgba(204, 255, 0, 0.08) 0%, rgba(168, 85, 247, 0.03) 35%, transparent 70%);
-}
-
-.scanline {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0) 50%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.3)
-  );
-  background-size: 100% 4px;
-}
-
-/* Animations */
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 4s infinite ease-in-out;
+.bg-grid-dark {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Eye, Code2, Menu, X, FileText } from 'lucide-react';
-import { personalData } from '../../data/portfolioData';
+import { Menu, X, Eye, Terminal, FileText } from 'lucide-react';
 
 export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
@@ -10,15 +9,14 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      const sections = ['hero', 'about', 'domains', 'projects', 'architecture', 'journey', 'skills', 'experience', 'contact'];
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
+      setScrolled(window.scrollY > 40);
+      const sections = ['hero', 'introduction', 'about', 'process', 'projects', 'skills', 'gamelab', 'ailab', 'contact'];
+      for (const sId of sections) {
+        const el = document.getElementById(sId);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveSection(sectionId);
+          if (rect.top <= 250 && rect.bottom >= 250) {
+            setActiveSection(sId);
             break;
           }
         }
@@ -30,103 +28,80 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#hero', id: 'hero' },
-    { name: 'Profile', href: '#domains', id: 'domains' },
-    { name: 'Works', href: '#projects', id: 'projects' },
-    { name: 'Architecture', href: '#architecture', id: 'architecture' },
-    { name: 'Journey', href: '#journey', id: 'journey' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Experience', href: '#experience', id: 'experience' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
+    { num: '01', name: 'HOME', href: '#hero', id: 'hero' },
+    { num: '02', name: 'ABOUT', href: '#introduction', id: 'introduction' },
+    { num: '03', name: 'WORK', href: '#projects', id: 'projects' },
+    { num: '04', name: 'PROCESS', href: '#process', id: 'process' },
+    { num: '05', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#050507]/90 backdrop-blur-md border-b border-white/10 py-3 shadow-xl' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/90 backdrop-blur-md border-b border-[#C9C7C0] py-4' : 'bg-transparent py-6'}`}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
         
         {/* Brand Logo */}
         <a href="#hero" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-sm bg-[#0f0f13] border border-white/20 flex items-center justify-center group-hover:border-[#ccff00] transition-colors">
-            <span className="font-syne font-extrabold text-[#ccff00] text-sm">RB</span>
-          </div>
-          <span className="font-syne font-bold text-xl tracking-tight text-white group-hover:text-[#ccff00] transition-colors">
-            reub<span className="text-[#ccff00]">g</span>
+          <span className="font-syne font-extrabold text-2xl tracking-tighter text-[#111111] group-hover:text-[#8B6DFF] transition-colors uppercase">
+            reub<span className="text-[#8B6DFF]">g</span>
           </span>
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-6">
+        {/* Desktop Editorial Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-8 text-xs font-bold tracking-wider">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className={`font-mono text-xs uppercase tracking-wider transition-all duration-200 relative ${
-                activeSection === link.id ? 'text-[#ccff00] font-bold' : 'text-slate-400 hover:text-white'
+              className={`transition-colors duration-200 flex items-center gap-1.5 ${
+                activeSection === link.id ? 'text-[#8B6DFF]' : 'text-[#111111] hover:text-[#8B6DFF]'
               }`}
             >
-              {link.name}
-              {activeSection === link.id && (
-                <motion.span
-                  layoutId="activeIndicator"
-                  className="absolute -bottom-1 left-0 w-full h-[2px] bg-[#ccff00]"
-                />
-              )}
+              <span className="text-[10px] text-[#555555] font-normal">{link.num}.</span>
+              <span>{link.name}</span>
             </a>
           ))}
         </nav>
 
-        {/* Mode Toggle & Resume CTA */}
+        {/* Right CTA Actions */}
         <div className="hidden sm:flex items-center gap-4">
-          {/* Design / Engineer Mode Toggle */}
           <button
             onClick={() => setEngineerMode(!engineerMode)}
-            className={`flex items-center gap-2 px-3 py-1.5 border font-mono text-xs tracking-wider rounded-sm transition-all duration-300 ${
+            className={`px-3 py-1.5 border text-xs tracking-wider rounded-none transition-all flex items-center gap-1.5 ${
               engineerMode
-                ? 'bg-[#ccff00]/10 border-[#ccff00] text-[#ccff00] shadow-[0_0_12px_rgba(204,255,0,0.3)]'
-                : 'bg-white/5 border-white/20 text-slate-300 hover:border-white/40'
+                ? 'bg-[#111111] border-[#111111] text-[#8B6DFF]'
+                : 'bg-transparent border-[#111111] text-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF]'
             }`}
-            title="Toggle between Visual Design view and Deep Technical Specs"
+            title="Toggle Design / Engineer Mode"
           >
-            {engineerMode ? (
-              <>
-                <Terminal size={14} className="animate-pulse" />
-                <span>ENGINEER MODE</span>
-              </>
-            ) : (
-              <>
-                <Eye size={14} />
-                <span>DESIGN MODE</span>
-              </>
-            )}
+            {engineerMode ? <Terminal size={14} /> : <Eye size={14} />}
+            <span>{engineerMode ? 'ENGINEER' : 'DESIGN'}</span>
           </button>
 
-          {/* Interactive Resume Button */}
           <button
             onClick={onOpenResume}
-            className="flex items-center gap-2 bg-[#ccff00] text-black font-mono font-bold text-xs px-4 py-1.5 rounded-sm hover:bg-[#b8ff00] transition-colors shadow-md active:scale-95"
+            className="btn-editorial-purple py-1.5 px-4 text-xs"
           >
-            <FileText size={14} />
-            <span>RESUME</span>
+            RESUME
           </button>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
+        {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-slate-300 hover:text-white"
+          className="lg:hidden p-2 text-[#111111] hover:text-[#8B6DFF]"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#09090b] border-b border-white/10 px-6 py-6 font-mono"
+            className="lg:hidden bg-[#F1F0EB] border-b border-[#C9C7C0] px-6 py-6 font-mono"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -134,39 +109,33 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-sm uppercase tracking-widest ${
-                    activeSection === link.id ? 'text-[#ccff00] font-bold' : 'text-slate-300'
+                  className={`text-sm tracking-widest flex items-center gap-2 ${
+                    activeSection === link.id ? 'text-[#8B6DFF] font-bold' : 'text-[#111111]'
                   }`}
                 >
-                  {link.name}
+                  <span className="text-xs text-[#555555]">{link.num}.</span>
+                  <span>{link.name}</span>
                 </a>
               ))}
 
-              <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
+              <div className="pt-4 border-t border-[#C9C7C0] flex flex-col gap-2">
                 <button
                   onClick={() => {
                     setEngineerMode(!engineerMode);
                     setMobileMenuOpen(false);
                   }}
-                  className={`flex items-center justify-center gap-2 py-2 border font-mono text-xs tracking-wider rounded-sm ${
-                    engineerMode
-                      ? 'bg-[#ccff00]/10 border-[#ccff00] text-[#ccff00]'
-                      : 'bg-white/5 border-white/20 text-slate-300'
-                  }`}
+                  className="btn-editorial-outline py-2 text-xs"
                 >
-                  {engineerMode ? <Terminal size={14} /> : <Eye size={14} />}
-                  <span>{engineerMode ? 'ENGINEER MODE (ACTIVE)' : 'SWITCH TO ENGINEER MODE'}</span>
+                  TOGGLE {engineerMode ? 'DESIGN' : 'ENGINEER'} MODE
                 </button>
-
                 <button
                   onClick={() => {
                     onOpenResume();
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center gap-2 bg-[#ccff00] text-black font-mono font-bold text-xs py-2 rounded-sm"
+                  className="btn-editorial-purple py-2 text-xs"
                 >
-                  <FileText size={14} />
-                  <span>VIEW INTERACTIVE RESUME</span>
+                  VIEW RESUME
                 </button>
               </div>
             </div>
