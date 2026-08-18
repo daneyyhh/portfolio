@@ -20,7 +20,6 @@ import Contact from './components/Sections/Contact';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [engineerMode, setEngineerMode] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
 
@@ -42,7 +41,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#F1F0EB] text-[#111111] font-sans ${engineerMode ? 'engineer-mode-active' : ''}`}>
+    <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans">
       
       {/* Mandatory Pre-loader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
@@ -56,24 +55,20 @@ export default function App() {
         {/* Easter Egg Event Listener */}
         <EasterEggs />
 
-        {/* Fixed Editorial Header — Always Visible */}
+        {/* Fixed Editorial Header — Always Visible with Subtle Separator */}
         <Navbar
-          engineerMode={engineerMode}
-          setEngineerMode={setEngineerMode}
           onOpenResume={() => setResumeOpen(true)}
         />
 
         {/* Main Editorial Flow */}
         <main className="relative z-10">
           <Hero
-            engineerMode={engineerMode}
             onOpenResume={() => setResumeOpen(true)}
           />
           
           <Introduction />
           
           <AboutResume
-            engineerMode={engineerMode}
             resumeOpen={resumeOpen}
             setResumeOpen={setResumeOpen}
           />
@@ -82,7 +77,7 @@ export default function App() {
           
           <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
           
-          <Architecture engineerMode={engineerMode} />
+          <Architecture />
           
           <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
           
@@ -90,9 +85,9 @@ export default function App() {
           
           <AiLab />
           
-          <Experience engineerMode={engineerMode} />
+          <Experience />
           
-          <Contact engineerMode={engineerMode} />
+          <Contact />
         </main>
 
         {/* Interactive Case Study Modal */}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Eye, Terminal } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import ReubgLogo from './ReubgLogo';
 
-export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) {
+export default function Navbar({ onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
 
-      // Map portfolio sections to the 5 exact navbar navigation IDs
+      // Map sections to the 5 exact navbar navigation IDs
       const navSectionMap = [
         { navId: 'home', elementIds: ['hero'] },
         { navId: 'about', elementIds: ['introduction', 'about'] },
@@ -55,10 +55,10 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md border-b border-[#C9C7C0] py-3 shadow-sm' : 'bg-[#F1F0EB]/80 backdrop-blur-sm py-5'}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md py-3' : 'bg-[#F1F0EB]/90 backdrop-blur-sm py-4'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
         
-        {/* Brand Logo */}
+        {/* Single Source of Truth Brand Logo */}
         <a href="#hero" className="flex items-center group shrink-0">
           <ReubgLogo variant="light" className="w-[100px] sm:w-[120px] md:w-[145px] h-auto" />
         </a>
@@ -79,24 +79,11 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
           ))}
         </nav>
 
-        {/* Right CTA Actions */}
-        <div className="hidden sm:flex items-center gap-4">
-          <button
-            onClick={() => setEngineerMode(!engineerMode)}
-            className={`px-3 py-1.5 border text-xs tracking-wider rounded-none transition-all flex items-center gap-1.5 ${
-              engineerMode
-                ? 'bg-[#111111] border-[#111111] text-[#8B6DFF]'
-                : 'bg-transparent border-[#111111] text-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF]'
-            }`}
-            title="Toggle Design / Engineer Mode"
-          >
-            {engineerMode ? <Terminal size={14} /> : <Eye size={14} />}
-            <span>{engineerMode ? 'ENGINEER' : 'DESIGN'}</span>
-          </button>
-
+        {/* Right Action: RESUME Button */}
+        <div className="hidden sm:flex items-center">
           <button
             onClick={onOpenResume}
-            className="btn-editorial-purple py-1.5 px-4 text-xs"
+            className="btn-editorial-purple py-1.5 px-5 text-xs"
           >
             RESUME
           </button>
@@ -118,7 +105,7 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#F1F0EB] border-b border-[#C9C7C0] px-6 py-6 font-mono"
+            className="lg:hidden bg-[#F1F0EB] border-b border-[#E4E2DC] px-6 py-6 font-mono"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -135,22 +122,13 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
                 </a>
               ))}
 
-              <div className="pt-4 border-t border-[#C9C7C0] flex flex-col gap-2">
-                <button
-                  onClick={() => {
-                    setEngineerMode(!engineerMode);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="btn-editorial-outline py-2 text-xs"
-                >
-                  TOGGLE {engineerMode ? 'DESIGN' : 'ENGINEER'} MODE
-                </button>
+              <div className="pt-4 border-t border-[#E4E2DC]">
                 <button
                   onClick={() => {
                     onOpenResume();
                     setMobileMenuOpen(false);
                   }}
-                  className="btn-editorial-purple py-2 text-xs"
+                  className="btn-editorial-purple w-full py-2.5 text-xs"
                 >
                   VIEW RESUME
                 </button>
