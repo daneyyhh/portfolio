@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Layers, Cpu, Server, Database, Cloud, Bot, Box, ArrowRight, Activity, CheckCircle2 } from 'lucide-react';
 
 export default function Architecture() {
-  const [activeLayerIndex, setActiveLayerIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [smoothProgress, setSmoothProgress] = useState(0); // 0.00 to 6.00 continuous float
   const sectionRef = useRef(null);
+  const targetProgressRef = useRef(0);
+  const animFrameRef = useRef(null);
 
   const layers = [
     {
@@ -17,8 +18,7 @@ export default function Architecture() {
       technologies: ["UI / UX", "Responsive Design", "Accessibility", "Motion"],
       flow: ["USER INTERACTION", "RESPONSIVE CANVAS", "MOTION STATE", "VISUAL FEEDBACK"],
       logos: ["Figma", "Tailwind CSS", "Framer Motion", "Inter Font"],
-      visualType: "UI_SCREENSHOT",
-      codeSnippet: "// Responsive UI Layout & Interaction Systems\nconst interfaceConfig = { mode: 'editorial', responsive: true, accessibility: 'AAA' };"
+      codeSnippet: "// 01. EXPERIENCE LAYER\nconst interfaceConfig = {\n  design: 'editorial',\n  responsiveness: 'adaptive',\n  accessibility: 'AAA'\n};"
     },
     {
       id: "02",
@@ -29,8 +29,7 @@ export default function Architecture() {
       technologies: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS"],
       flow: ["UI", "COMPONENTS", "STATE", "API"],
       logos: ["React.js", "Next.js", "TypeScript", "JavaScript", "Tailwind"],
-      visualType: "FRONTEND_CODE",
-      codeSnippet: "import React, { useState } from 'react';\nexport function Component({ state }) {\n  return <div className=\"client-render\">{state}</div>;\n}"
+      codeSnippet: "// 02. FRONTEND LAYER\nimport React, { useState } from 'react';\nexport function ClientApp({ state }) {\n  return <RenderComponent data={state} />;\n}"
     },
     {
       id: "03",
@@ -41,8 +40,7 @@ export default function Architecture() {
       technologies: ["Node.js", "Express", "Python", "REST API", "JWT Auth"],
       flow: ["CLIENT", "API", "SERVICES", "DATABASE"],
       logos: ["Node.js", "Express", "Python", "REST API", "JWT"],
-      visualType: "API_PIPELINE",
-      codeSnippet: "app.post('/api/v1/session', async (req, res) => {\n  const token = await authService.verifyToken(req.headers.authorization);\n  return res.json({ status: 200, token });\n});"
+      codeSnippet: "// 03. BACKEND LAYER\napp.post('/api/v1/session', async (req, res) => {\n  const token = await authService.verify(req.headers.auth);\n  res.json({ status: 200, token });\n});"
     },
     {
       id: "04",
@@ -53,8 +51,7 @@ export default function Architecture() {
       technologies: ["PostgreSQL", "MongoDB", "Firebase", "Redis"],
       flow: ["APPLICATION", "DATABASE", "CACHE", "DATA"],
       logos: ["PostgreSQL", "MongoDB", "Firebase", "Redis"],
-      visualType: "DATABASE_SCHEMA",
-      codeSnippet: "CREATE TABLE users (\n  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n  email VARCHAR(255) UNIQUE NOT NULL,\n  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()\n);"
+      codeSnippet: "-- 04. DATABASE LAYER\nCREATE TABLE app_sessions (\n  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n  user_id UUID REFERENCES users(id),\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);"
     },
     {
       id: "05",
@@ -65,8 +62,7 @@ export default function Architecture() {
       technologies: ["AWS", "Docker", "Vercel", "GitHub", "CI/CD"],
       flow: ["CODE", "BUILD", "DOCKER", "DEPLOY", "MONITOR"],
       logos: ["AWS", "Vercel", "Docker", "GitHub CI"],
-      visualType: "DEPLOYMENT_STACK",
-      codeSnippet: "# Dockerfile Production Build\nFROM node:20-alpine AS builder\nWORKDIR /app\nRUN npm run build\nCMD [\"node\", \"dist/index.js\"]"
+      codeSnippet: "# 05. INFRASTRUCTURE LAYER\nFROM node:20-alpine AS builder\nWORKDIR /app\nRUN npm run build\nCMD [\"node\", \"dist/index.js\"]"
     },
     {
       id: "06",
@@ -77,8 +73,7 @@ export default function Architecture() {
       technologies: ["Python", "OpenAI API", "Machine Learning", "Vector Database"],
       flow: ["DATA", "PROCESS", "MODEL", "API", "APPLICATION"],
       logos: ["Python", "OpenAI", "Scikit-Learn", "VectorDB"],
-      visualType: "AI_MODEL_NODE",
-      codeSnippet: "import sklearn.ensemble as ensemble\nmodel = ensemble.RandomForestClassifier(n_estimators=100)\nmodel.fit(X_train, y_train)\npredictions = model.predict(X_test)"
+      codeSnippet: "# 06. AI / DATA LAYER\nimport sklearn.ensemble as ensemble\nmodel = ensemble.RandomForestClassifier(n_estimators=100)\nmodel.fit(X_train, y_train)\npreds = model.predict(X_test)"
     },
     {
       id: "07",
@@ -89,47 +84,59 @@ export default function Architecture() {
       technologies: ["Three.js", "React Three Fiber", "WebGL", "GSAP"],
       flow: ["INPUT", "INTERACTION", "ANIMATION", "3D SCENE", "RENDER"],
       logos: ["Three.js", "WebGL", "GSAP", "R3F"],
-      visualType: "THREE_RENDER",
-      codeSnippet: "const scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);\nrenderer.render(scene, camera);"
+      codeSnippet: "// 07. 3D / INTERACTION LAYER\nconst scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);\nrenderer.render(scene, camera);"
     }
   ];
 
-  // Scroll-driven calculation linking scroll progress to current architecture layer
+  // Smooth lerp animation loop linking scroll target -> smooth floating float 0.00 -> 6.00
   useEffect(() => {
     const handleScroll = () => {
       const el = sectionRef.current;
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      const totalScrollHeight = rect.height - window.innerHeight;
-      
-      if (totalScrollHeight <= 0) return;
+      const totalScrollableHeight = rect.height - window.innerHeight;
 
-      // Current scroll position within section bounds
+      if (totalScrollableHeight <= 0) return;
+
       const currentScroll = Math.max(0, -rect.top);
-      const progress = Math.min(1, Math.max(0, currentScroll / totalScrollHeight));
+      const normalizedRatio = Math.min(1, Math.max(0, currentScroll / totalScrollableHeight));
 
-      setScrollProgress(progress);
+      // Target index from 0.00 -> 6.00
+      targetProgressRef.current = normalizedRatio * 6.0;
+    };
 
-      // Map 0 -> 100% progress into 7 chapters (approx 14.28% each)
-      const chapterIndex = Math.min(6, Math.floor(progress * 7));
-      setActiveLayerIndex(chapterIndex);
+    let currentProgress = 0;
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    const updateSmoothLoop = () => {
+      currentProgress = lerp(currentProgress, targetProgressRef.current, 0.1);
+      setSmoothProgress(currentProgress);
+      animFrameRef.current = requestAnimationFrame(updateSmoothLoop);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    animFrameRef.current = requestAnimationFrame(updateSmoothLoop);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
   }, []);
 
-  const activeLayer = layers[activeLayerIndex];
+  // Compute active layer index for primary focus
+  const activeFloatIndex = Math.min(6, Math.max(0, smoothProgress));
+  const primaryIndex = Math.min(6, Math.max(0, Math.round(activeFloatIndex)));
+  const primaryLayer = layers[primaryIndex];
 
   return (
     <section
       id="architecture"
       ref={sectionRef}
-      className="relative min-h-[350vh] bg-[#0A0A0A] text-white border-t border-white/10 font-mono"
+      className="relative min-h-[500vh] bg-[#0A0A0A] text-white border-t border-white/10 font-mono"
     >
-      {/* Sticky Pinned Viewport Container */}
+      {/* Sticky Viewport Frame */}
       <div className="sticky top-0 h-screen flex flex-col justify-between p-6 md:p-12 overflow-hidden z-10">
         
         {/* Section Header */}
@@ -137,7 +144,7 @@ export default function Architecture() {
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-1">
               <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
-              <span>SYSTEM / 01</span>
+              <span>SYSTEM / 01 — SCROLL STORYTELLING</span>
             </div>
             <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
               LIVE ARCHITECTURE
@@ -149,177 +156,172 @@ export default function Architecture() {
           </div>
         </div>
 
-        {/* Main Pinned Viewport Content: Left Details, Center 3D Stack, Right Tech Specs */}
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-4 flex-1">
+        {/* Main 3D Composition Workspace */}
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-2 flex-1 relative">
           
-          {/* Left Column: Scroll-Driven Active Topic Details */}
+          {/* Left Column: Continuous Scroll-Interpolated Text & Flow Specs */}
           <div className="lg:col-span-5 space-y-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeLayer.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">
-                      {activeLayer.id}
-                    </span>
-                    <div>
-                      <h3 className="font-syne text-3xl font-extrabold text-white uppercase tracking-tight">
-                        {activeLayer.title}
-                      </h3>
-                      <div className="text-xs font-mono text-slate-400 uppercase tracking-widest">
-                        {activeLayer.subtitle}
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="font-sans text-slate-300 text-sm md:text-base leading-relaxed pt-2">
-                    "{activeLayer.description}"
-                  </p>
-                </div>
-
-                {/* Architecture Flow Execution Stack */}
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <div className="text-xs font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
-                    <Activity size={14} className="animate-spin" />
-                    <span>SYSTEM EXECUTION FLOW:</span>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                    {activeLayer.flow.map((step, idx) => (
-                      <React.Fragment key={idx}>
-                        <span className="bg-[#141414] border border-white/15 text-white px-2 py-0.5 font-bold">
-                          {step}
-                        </span>
-                        {idx < activeLayer.flow.length - 1 && (
-                          <ArrowRight size={12} className="text-[#8B6DFF]" />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Recognized Technology Logos & Badges */}
-                <div className="space-y-2 pt-2">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">
+                  {primaryLayer.id}
+                </span>
+                <div>
+                  <h3 className="font-syne text-3xl font-extrabold text-white uppercase tracking-tight transition-all duration-200">
+                    {primaryLayer.title}
+                  </h3>
                   <div className="text-xs font-mono text-slate-400 uppercase tracking-widest">
-                    RECOGNIZED TECH STACK:
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {activeLayer.logos.map((logo) => (
-                      <span
-                        key={logo}
-                        className="bg-[#141414] border border-[#8B6DFF]/40 text-white font-mono text-xs px-3 py-1 font-bold flex items-center gap-1.5"
-                      >
-                        <CheckCircle2 size={12} className="text-[#8B6DFF]" />
-                        <span>{logo}</span>
-                      </span>
-                    ))}
+                    {primaryLayer.subtitle}
                   </div>
                 </div>
+              </div>
 
-              </motion.div>
-            </AnimatePresence>
+              <p className="font-sans text-slate-300 text-sm md:text-base leading-relaxed">
+                "{primaryLayer.description}"
+              </p>
+            </div>
+
+            {/* System Execution Flow */}
+            <div className="space-y-3 pt-3 border-t border-white/10">
+              <div className="text-xs font-mono text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
+                <Activity size={14} className="animate-spin" />
+                <span>SYSTEM EXECUTION FLOW:</span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                {primaryLayer.flow.map((step, idx) => (
+                  <React.Fragment key={idx}>
+                    <span className="bg-[#141414] border border-white/15 text-white px-2.5 py-1 font-bold">
+                      {step}
+                    </span>
+                    {idx < primaryLayer.flow.length - 1 && (
+                      <ArrowRight size={12} className="text-[#8B6DFF]" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+
+            {/* Tech Stack Logos & Badges */}
+            <div className="space-y-2 pt-2">
+              <div className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+                RECOGNIZED TECH STACK:
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {primaryLayer.logos.map((logo) => (
+                  <span
+                    key={logo}
+                    className="bg-[#141414] border border-[#8B6DFF]/40 text-white font-mono text-xs px-3 py-1 font-bold flex items-center gap-1.5"
+                  >
+                    <CheckCircle2 size={12} className="text-[#8B6DFF]" />
+                    <span>{logo}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Architecture Code Inspector (Continuous Code Interpolation) */}
+            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-3.5 text-xs text-[#8B6DFF] shadow-2xl rounded-none">
+              <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-1.5 mb-2">
+                <span>INSPECTOR // LAYER {primaryLayer.id}</span>
+                <span className="text-[#8B6DFF] uppercase font-bold">{primaryLayer.title}</span>
+              </div>
+              <pre className="text-slate-200 text-[11px] leading-relaxed overflow-x-auto">
+                <code>{primaryLayer.codeSnippet}</code>
+              </pre>
+            </div>
           </div>
 
-          {/* Center Column: 3D Stack Visualization (Physical Depth & Scale) */}
-          <div className="lg:col-span-6 relative flex flex-col justify-center items-center py-4">
+          {/* Center Column: The HERO 3D Physical Architecture Layer Stack */}
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center min-h-[420px] py-4 [perspective:1000px]">
             
-            {/* Visual Code/Architecture Preview Window */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeLayer.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="w-full bg-[#141414] border-2 border-[#8B6DFF] p-4 mb-4 font-mono text-xs text-[#8B6DFF] shadow-2xl overflow-x-auto"
-              >
-                <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-2 mb-2">
-                  <span>ARCHITECTURE INSPECTOR // LAYER {activeLayer.id}</span>
-                  <span className="text-[#8B6DFF] uppercase font-bold">{activeLayer.title}</span>
-                </div>
-                <pre className="text-slate-200 text-[11px] leading-relaxed">
-                  <code>{activeLayer.codeSnippet}</code>
-                </pre>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Physical Layered Stack Cards */}
-            <div className="w-full space-y-1.5 relative">
+            <div className="w-full space-y-2 relative [transform-style:preserve-3d]">
               {layers.map((layer, idx) => {
-                const isActive = activeLayerIndex === idx;
-                const offset = idx - activeLayerIndex;
+                // Continuous distance offset from current smooth float progress index
+                const offset = idx - activeFloatIndex;
+                const absOffset = Math.abs(offset);
+
+                // Continuous mathematical transformations
+                const translateZ = 60 - absOffset * 70; // Active comes forward +60px, inactive recedes
+                const translateY = offset * 50; // Continuous vertical spacing
+                const scale = Math.max(0.78, 1 - absOffset * 0.07); // Smooth scaling
+                const opacity = Math.max(0.15, 1 - absOffset * 0.42); // Smooth opacity falloff
+                const blurPx = Math.min(6, absOffset * 1.8); // Subtle depth of field blur
+                const isPrimary = primaryIndex === idx;
 
                 return (
-                  <motion.div
+                  <div
                     key={layer.id}
-                    animate={{
-                      scale: isActive ? 1.02 : 0.96 - Math.abs(offset) * 0.02,
-                      y: offset * 2,
-                      opacity: isActive ? 1 : Math.max(0.3, 1 - Math.abs(offset) * 0.2),
-                      borderColor: isActive ? '#8B6DFF' : 'rgba(255,255,255,0.1)'
+                    style={{
+                      transform: `translate3d(0px, ${translateY}px, ${translateZ}px) scale(${scale})`,
+                      opacity: opacity,
+                      filter: `blur(${blurPx}px)`,
+                      zIndex: Math.round(100 - absOffset * 10)
                     }}
-                    transition={{ duration: 0.3 }}
-                    className={`p-3 border font-mono transition-all duration-300 rounded-none flex items-center justify-between ${
-                      isActive
-                        ? 'bg-[#141414] text-white border-2 shadow-[0_0_20px_rgba(139,109,255,0.3)] z-30'
-                        : 'bg-[#0A0A0A] text-slate-400 z-10'
+                    className={`p-4 border font-mono transition-all duration-75 rounded-none flex items-center justify-between shadow-2xl ${
+                      isPrimary
+                        ? 'bg-[#141414] text-white border-2 border-[#8B6DFF] shadow-[0_0_30px_rgba(139,109,255,0.4)]'
+                        : 'bg-[#0A0A0A] text-slate-400 border-white/10'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className={`font-mono text-xs font-bold ${isActive ? 'text-[#8B6DFF]' : 'text-slate-600'}`}>
+                    <div className="flex items-center gap-4">
+                      <span className={`font-mono text-xs font-bold ${isPrimary ? 'text-[#8B6DFF]' : 'text-slate-600'}`}>
                         {layer.id}
                       </span>
-                      <div className="font-syne font-bold text-xs text-white uppercase tracking-wider">
+                      <div className="font-syne font-extrabold text-sm text-white uppercase tracking-wider">
                         {layer.title}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
-                        {layer.technologies.slice(0, 2).join(' • ')}
+                        {layer.technologies.slice(0, 3).join(' • ')}
                       </span>
-                      <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-[#8B6DFF] animate-ping' : 'bg-white/20'}`}></div>
+                      <div className={`w-2.5 h-2.5 rounded-full ${isPrimary ? 'bg-[#8B6DFF] animate-pulse' : 'bg-white/20'}`} />
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
+
           </div>
 
-          {/* Right Column: Minimal Vertical Scroll Progress Indicator (01 -> 07) */}
-          <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center space-y-3 font-mono text-xs shrink-0">
-            {layers.map((layer, idx) => {
-              const isActive = activeLayerIndex === idx;
+          {/* Right Column: Continuous Vertical Progress Line Indicator (01 -> 07) */}
+          <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center h-full relative py-6">
+            
+            {/* Track Line */}
+            <div className="w-[2px] h-64 bg-white/10 relative flex flex-col justify-between items-center py-2">
+              
+              {/* Floating Active Node Ball moving continuously */}
+              <div
+                style={{ top: `${(activeFloatIndex / 6) * 100}%` }}
+                className="absolute w-3 h-3 rounded-full bg-[#8B6DFF] -translate-x-[5px] -translate-y-1.5 shadow-[0_0_12px_#8B6DFF] transition-all duration-75"
+              />
 
-              return (
-                <div key={layer.id} className="flex flex-col items-center gap-1">
-                  <span className={`font-bold transition-colors ${isActive ? 'text-[#8B6DFF] text-sm' : 'text-slate-600 text-[10px]'}`}>
-                    {layer.id}
-                  </span>
-                  <div className={`w-2 h-2 rounded-full transition-all ${isActive ? 'bg-[#8B6DFF] scale-125' : 'bg-white/20'}`} />
-                  {idx < layers.length - 1 && (
-                    <div className={`w-[1px] h-4 ${isActive ? 'bg-[#8B6DFF]' : 'bg-white/10'}`} />
-                  )}
-                </div>
-              );
-            })}
+              {layers.map((l, i) => (
+                <div
+                  key={l.id}
+                  className={`w-1.5 h-1.5 rounded-full z-10 transition-colors ${
+                    primaryIndex === i ? 'bg-[#8B6DFF]' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="mt-4 font-mono text-[10px] text-[#8B6DFF] font-bold">
+              0{primaryIndex + 1}/07
+            </div>
           </div>
 
         </div>
 
-        {/* Bottom Status Bar */}
+        {/* Bottom Continuous Status Bar */}
         <div className="max-w-7xl mx-auto w-full border-t border-white/10 pt-3 flex justify-between items-center text-xs text-slate-400 font-mono shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
-            <span>SCROLL CONTROLLED ARCHITECTURE // CHAPTER {activeLayerIndex + 1} OF 7</span>
+            <span>CONTINUOUS SCROLL ENGINE // LAYER 0{primaryIndex + 1} OF 07 ACTIVE</span>
           </div>
-          <div>PROGRESS: {Math.round(scrollProgress * 100)}%</div>
+          <div>SCROLL POSITION: {Math.round((smoothProgress / 6) * 100)}%</div>
         </div>
 
       </div>
