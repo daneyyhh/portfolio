@@ -6,33 +6,51 @@ import ReubgLogo from './ReubgLogo';
 export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
-      const sections = ['hero', 'introduction', 'about', 'process', 'projects', 'skills', 'gamelab', 'ailab', 'contact'];
-      for (const sId of sections) {
-        const el = document.getElementById(sId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 250 && rect.bottom >= 250) {
-            setActiveSection(sId);
-            break;
+
+      // Map portfolio sections to the 5 exact navbar navigation IDs
+      const navSectionMap = [
+        { navId: 'home', elementIds: ['hero'] },
+        { navId: 'about', elementIds: ['introduction', 'about'] },
+        { navId: 'process', elementIds: ['process'] },
+        { navId: 'work', elementIds: ['projects', 'architecture', 'skills'] },
+        { navId: 'contact', elementIds: ['gamelab', 'ailab', 'experience', 'contact'] }
+      ];
+
+      const viewportCenter = window.scrollY + window.innerHeight / 3;
+      let currentNavId = 'home';
+
+      for (const group of navSectionMap) {
+        for (const elId of group.elementIds) {
+          const el = document.getElementById(elId);
+          if (el) {
+            const top = el.offsetTop;
+            const height = el.offsetHeight;
+            if (viewportCenter >= top && viewportCenter < top + height) {
+              currentNavId = group.navId;
+              break;
+            }
           }
         }
       }
+
+      setActiveSection(currentNavId);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { num: '01', name: 'HOME', href: '#hero', id: 'hero' },
-    { num: '02', name: 'ABOUT', href: '#introduction', id: 'introduction' },
-    { num: '03', name: 'WORK', href: '#projects', id: 'projects' },
-    { num: '04', name: 'PROCESS', href: '#process', id: 'process' },
+    { num: '01', name: 'HOME', href: '#hero', id: 'home' },
+    { num: '02', name: 'ABOUT', href: '#introduction', id: 'about' },
+    { num: '03', name: 'PROCESS', href: '#process', id: 'process' },
+    { num: '04', name: 'WORK', href: '#projects', id: 'work' },
     { num: '05', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
@@ -40,7 +58,7 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md border-b border-[#C9C7C0] py-3 shadow-sm' : 'bg-[#F1F0EB]/80 backdrop-blur-sm py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
         
-        {/* Brand Logo - Transparent PNG Asset (Desktop 145px, Mobile 100px, Unfiltered) */}
+        {/* Brand Logo */}
         <a href="#hero" className="flex items-center group shrink-0">
           <ReubgLogo variant="light" className="w-[100px] sm:w-[120px] md:w-[145px] h-auto" />
         </a>
