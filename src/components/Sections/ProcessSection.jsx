@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
@@ -7,7 +7,7 @@ export default function ProcessSection() {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
   const fillRailRef = useRef(null);
-  const percentRef = useRef(null);
+  const progressPercentRef = useRef(null);
   const counterActiveRef = useRef(null);
 
   const stages = [
@@ -95,29 +95,30 @@ export default function ProcessSection() {
       const floatProgress = normalizedRatio * 6.0;
 
       // 1. Direct GPU Transform Updates for 3D Layered Process Stack Cards
-      cardRefs.current.forEach((cardEl, idx) => {
-        if (!cardEl) return;
-        const offset = idx - floatProgress;
-        const absOffset = Math.abs(offset);
+      if (cardRefs.current && Array.isArray(cardRefs.current)) {
+        cardRefs.current.forEach((cardEl, idx) => {
+          if (!cardEl) return;
+          const offset = idx - floatProgress;
+          const absOffset = Math.abs(offset);
 
-        // Calculate staggered 3D depth shift
-        const translateZ = 0 - absOffset * 40;
-        const translateY = offset * 32;
-        const scale = Math.max(0.82, 1 - absOffset * 0.06);
-        const opacity = Math.max(0.18, 1 - absOffset * 0.38);
-        const isPrimary = Math.abs(idx - Math.round(floatProgress)) < 0.5;
+          const translateZ = 0 - absOffset * 40;
+          const translateY = offset * 32;
+          const scale = Math.max(0.82, 1 - absOffset * 0.06);
+          const opacity = Math.max(0.18, 1 - absOffset * 0.38);
+          const isPrimary = Math.abs(idx - Math.round(floatProgress)) < 0.5;
 
-        cardEl.style.transform = `translate3d(${offset * 12}px, ${translateY}px, ${translateZ}px) scale(${scale})`;
-        cardEl.style.opacity = opacity.toFixed(3);
-        
-        if (isPrimary) {
-          cardEl.style.borderColor = '#8B6DFF';
-          cardEl.style.boxShadow = '0 0 25px rgba(139,109,255,0.35)';
-        } else {
-          cardEl.style.borderColor = 'rgba(255,255,255,0.1)';
-          cardEl.style.boxShadow = 'none';
-        }
-      });
+          cardEl.style.transform = `translate3d(${offset * 12}px, ${translateY}px, ${translateZ}px) scale(${scale})`;
+          cardEl.style.opacity = opacity.toFixed(3);
+          
+          if (isPrimary) {
+            cardEl.style.borderColor = '#8B6DFF';
+            cardEl.style.boxShadow = '0 0 25px rgba(139,109,255,0.35)';
+          } else {
+            cardEl.style.borderColor = 'rgba(255,255,255,0.1)';
+            cardEl.style.boxShadow = 'none';
+          }
+        });
+      }
 
       // 2. Direct DOM update for Engineering Progress Rail fill line
       if (fillRailRef.current) {
@@ -153,7 +154,7 @@ export default function ProcessSection() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const activeStage = stages[activeStageIndex];
+  const activeStage = stages[activeStageIndex] || stages[0];
 
   return (
     <section
@@ -184,7 +185,7 @@ export default function ProcessSection() {
         {/* Main Viewport Workspace: Left Process Inspector, Center 3D Stack, Right Progress Rail */}
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-2 flex-1 relative">
           
-          {/* PART 3 — PART 3 PROCESS INSPECTOR SPECIFICATION PANEL */}
+          {/* PART 3 PROCESS INSPECTOR SPECIFICATION PANEL */}
           <div className="lg:col-span-5 bg-[#141414] border border-white/15 p-5 md:p-6 space-y-4 shadow-2xl rounded-none">
             
             {/* Inspector Header */}
@@ -220,7 +221,7 @@ export default function ProcessSection() {
             <div className="space-y-1.5 pt-2 border-t border-white/10">
               <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">ACTIVITIES</div>
               <div className="space-y-1">
-                {activeStage.activities.map((act, i) => (
+                {activeStage.activities && activeStage.activities.map((act, i) => (
                   <div key={i} className="flex items-center gap-2 text-xs text-slate-300 font-mono">
                     <span className="text-[#8B6DFF]">○</span>
                     <span>{act}</span>
@@ -237,7 +238,7 @@ export default function ProcessSection() {
 
           </div>
 
-          {/* PART 2 — REDESIGN THE PROCESS STACK (CENTER HERO 3D LAYERED PANELS) */}
+          {/* PART 2 PROCESS STACK (CENTER HERO 3D LAYERED PANELS) */}
           <div className="lg:col-span-4 relative flex flex-col items-center justify-center min-h-[400px] py-2 [perspective:1000px]">
             <div className="w-full space-y-2 relative [transform-style:preserve-3d]">
               {stages.map((stg, idx) => (
@@ -271,7 +272,7 @@ export default function ProcessSection() {
             </div>
           </div>
 
-          {/* PART 1 — REBUILT ENGINEERING PROGRESS RAIL (RIGHT SIDE) */}
+          {/* PART 1 REBUILT ENGINEERING PROGRESS RAIL (RIGHT SIDE) */}
           <div className="lg:col-span-3 hidden lg:flex flex-col justify-between items-start h-[360px] pl-6 relative font-mono text-xs">
             
             {/* Base Gray Track */}
