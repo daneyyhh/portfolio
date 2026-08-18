@@ -40,9 +40,9 @@ export default function Navbar({ engineerMode, setEngineerMode, onOpenResume }) 
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md border-b border-[#C9C7C0] py-3 shadow-sm' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
         
-        {/* Brand Logo - Exact User Image */}
-        <a href="#hero" className="flex items-center gap-2 group">
-          <ReubgLogo className="h-8 md:h-9 w-auto filter invert mix-blend-difference" />
+        {/* Brand Logo - Exact User Image (Desktop 130px, Mobile 100px) */}
+        <a href="#hero" className="flex items-center group">
+          <ReubgLogo className="w-[100px] md:w-[135px] h-auto filter invert mix-blend-difference" />
         </a>
 
         {/* Desktop Editorial Navigation Links */}

@@ -37,9 +37,9 @@ export default function Hero({ engineerMode, onOpenResume }) {
               WORLDS<span className="text-[#8B6DFF]">.</span>
             </h1>
             
-            {/* Exact User Uploaded reubg Logo */}
+            {/* Exact Approved reubg Logo Asset as Signature Mark */}
             <div className="pt-2">
-              <ReubgLogo className="h-10 sm:h-14 md:h-16 w-auto filter invert mix-blend-difference" />
+              <ReubgLogo className="w-[180px] sm:w-[240px] h-auto filter invert mix-blend-difference" />
             </div>
           </motion.div>
 
@@ -62,7 +62,6 @@ export default function Hero({ engineerMode, onOpenResume }) {
           >
             <a
               href="#projects"
-              data-cursor="EXPLORE"
               className="btn-editorial flex items-center gap-3"
             >
               <span>VIEW MY WORK</span>

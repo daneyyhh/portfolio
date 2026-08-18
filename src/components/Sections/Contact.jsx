@@ -40,7 +40,7 @@ export default function Contact({ engineerMode }) {
               </h2>
 
               <div className="pt-2">
-                <ReubgLogo className="h-10 md:h-12 w-auto filter drop-shadow-[0_0_15px_rgba(139,109,255,0.4)]" />
+                <ReubgLogo className="w-[180px] h-auto" />
               </div>
             </div>
 
@@ -167,7 +167,7 @@ export default function Contact({ engineerMode }) {
 
         {/* Footer */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <ReubgLogo className="h-7 w-auto filter drop-shadow-[0_0_10px_rgba(139,109,255,0.3)]" />
+          <ReubgLogo className="w-[120px] h-auto" />
           <div>© {new Date().getFullYear()} REUBEN BINU GEORGE. ALL RIGHTS RESERVED.</div>
           <a href="#hero" className="hover:text-white uppercase font-bold">BACK TO TOP ↑</a>
         </div>
