@@ -79,7 +79,7 @@ export default function App() {
           
           <Architecture />
           
-          <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
+          <TechStack />
           
           <GameLab />
           
