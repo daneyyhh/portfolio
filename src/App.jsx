@@ -45,65 +45,69 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-[#F1F0EB] text-[#111111] font-sans ${engineerMode ? 'engineer-mode-active' : ''}`}>
       
-      {/* Pre-loader */}
+      {/* Full-Screen Mandatory Pre-loader */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* Persistent Three.js WebGL Canvas Journey */}
-      <PersistentCanvas />
+      {/* Main Portfolio Content — Rendered after pre-loader transition */}
+      <div className={loading ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-700'}>
+        
+        {/* Persistent Three.js WebGL Canvas Journey */}
+        <PersistentCanvas />
 
-      {/* Custom Precision Pointer */}
-      <CustomCursor />
+        {/* Custom Precision Pointer */}
+        <CustomCursor />
 
-      {/* Easter Egg Event Listener */}
-      <EasterEggs />
+        {/* Easter Egg Event Listener */}
+        <EasterEggs />
 
-      {/* Sticky Editorial Header */}
-      <Navbar
-        engineerMode={engineerMode}
-        setEngineerMode={setEngineerMode}
-        onOpenResume={() => setResumeOpen(true)}
-      />
-
-      {/* Main Page Flow Matching Reference Image media_1787062891685.jpg */}
-      <main className="relative z-10">
-        <Hero
+        {/* Sticky Editorial Header */}
+        <Navbar
           engineerMode={engineerMode}
+          setEngineerMode={setEngineerMode}
           onOpenResume={() => setResumeOpen(true)}
         />
-        
-        <Introduction />
-        
-        <AboutResume
-          engineerMode={engineerMode}
-          resumeOpen={resumeOpen}
-          setResumeOpen={setResumeOpen}
-        />
-        
-        <ProcessSection />
-        
-        <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
-        
-        <Architecture engineerMode={engineerMode} />
-        
-        <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
-        
-        <GameLab />
-        
-        <AiLab />
-        
-        <Experience engineerMode={engineerMode} />
-        
-        <Contact engineerMode={engineerMode} />
-      </main>
 
-      {/* Interactive Case Study Modal */}
-      {selectedProject && (
-        <CaseStudyModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
+        {/* Main Page Flow Matching Reference Image media_1787062891685.jpg */}
+        <main className="relative z-10">
+          <Hero
+            engineerMode={engineerMode}
+            onOpenResume={() => setResumeOpen(true)}
+          />
+          
+          <Introduction />
+          
+          <AboutResume
+            engineerMode={engineerMode}
+            resumeOpen={resumeOpen}
+            setResumeOpen={setResumeOpen}
+          />
+          
+          <ProcessSection />
+          
+          <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
+          
+          <Architecture engineerMode={engineerMode} />
+          
+          <TechStack onSelectProject={(proj) => setSelectedProject(proj)} />
+          
+          <GameLab />
+          
+          <AiLab />
+          
+          <Experience engineerMode={engineerMode} />
+          
+          <Contact engineerMode={engineerMode} />
+        </main>
 
+        {/* Interactive Case Study Modal */}
+        {selectedProject && (
+          <CaseStudyModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+
+      </div>
     </div>
   );
 }
