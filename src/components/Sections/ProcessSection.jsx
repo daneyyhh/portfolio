@@ -7,7 +7,6 @@ export default function ProcessSection() {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
   const fillRailRef = useRef(null);
-  const progressPercentRef = useRef(null);
   const counterActiveRef = useRef(null);
 
   const stages = [
@@ -83,7 +82,7 @@ export default function ProcessSection() {
     }
   ];
 
-  // Direct GPU Transform & Style updates on native scroll — ZERO React re-renders on scroll frames!
+  // Direct GPU & Style updates on native scroll — ZERO React re-renders on scroll frames!
   useEffect(() => {
     let lastActiveIdx = -1;
     let ticking = false;
@@ -101,7 +100,7 @@ export default function ProcessSection() {
       const normalizedRatio = Math.min(1, Math.max(0, currentScroll / totalScrollableHeight));
       const floatProgress = normalizedRatio * 6.0;
 
-      // 1. Direct Style Updates for Rectangular Stack Cards
+      // 1. Direct Style Updates for Rectangular Process Stack Cards
       if (cardRefs.current && Array.isArray(cardRefs.current)) {
         cardRefs.current.forEach((cardEl, idx) => {
           if (!cardEl) return;
@@ -109,8 +108,8 @@ export default function ProcessSection() {
 
           if (isPrimary) {
             cardEl.style.borderColor = '#8B6DFF';
-            cardEl.style.backgroundColor = 'rgba(139, 109, 255, 0.08)';
-            cardEl.style.boxShadow = '0 0 15px rgba(139, 109, 255, 0.2)';
+            cardEl.style.backgroundColor = 'rgba(139, 109, 255, 0.1)';
+            cardEl.style.boxShadow = '0 0 15px rgba(139, 109, 255, 0.25)';
           } else {
             cardEl.style.borderColor = 'rgba(255, 255, 255, 0.1)';
             cardEl.style.backgroundColor = '#111111';
@@ -119,12 +118,9 @@ export default function ProcessSection() {
         });
       }
 
-      // 2. Direct DOM update for Engineering Progress Rail fill line
+      // 2. Direct DOM update for Vertical Progress Rail fill line
       if (fillRailRef.current) {
         fillRailRef.current.style.height = `${normalizedRatio * 100}%`;
-      }
-      if (progressPercentRef.current) {
-        progressPercentRef.current.innerText = `${Math.round(normalizedRatio * 100)}%`;
       }
 
       // 3. Update React active stage index ONLY when discrete index changes!
@@ -159,7 +155,7 @@ export default function ProcessSection() {
     <section
       id="process"
       ref={sectionRef}
-      className="relative min-h-[350vh] bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono"
+      className="relative min-h-[450vh] bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono"
     >
       {/* Sticky Pinned Viewport Container */}
       <div className="sticky top-0 h-screen flex flex-col justify-between p-6 md:p-10 overflow-hidden z-10">
@@ -181,11 +177,11 @@ export default function ProcessSection() {
           </div>
         </div>
 
-        {/* 3-Column Workspace: LEFT Process Inspector (col-span-4), CENTER Rectangular Stack (col-span-5), RIGHT Timeline (col-span-3) */}
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-2 flex-1 relative">
+        {/* 3-Column Workspace: LEFT Process Inspector (col-span-4), CENTER Spacious Rectangular Stack (col-span-5), RIGHT Timeline (col-span-3) */}
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-4 flex-1 relative">
           
           {/* LEFT COLUMN: PROCESS INSPECTOR SPECIFICATION PANEL */}
-          <div className="lg:col-span-4 bg-[#111111] border border-white/10 p-5 md:p-6 space-y-4 shadow-2xl rounded-none">
+          <div className="lg:col-span-4 bg-[#111111] border border-white/10 p-6 md:p-7 space-y-5 shadow-2xl rounded-none">
             
             {/* Inspector Header */}
             <div className="flex justify-between items-center border-b border-white/10 pb-3 text-xs font-bold">
@@ -231,15 +227,15 @@ export default function ProcessSection() {
             </div>
 
             {/* OUTPUT Section */}
-            <div className="pt-2 border-t border-white/10 bg-[#0A0A0A] border border-[#8B6DFF]/30 p-2.5">
+            <div className="pt-2 border-t border-white/10 bg-[#0A0A0A] border border-[#8B6DFF]/30 p-3">
               <div className="text-[10px] text-[#8B6DFF] font-bold uppercase tracking-widest">OUTPUT</div>
               <div className="text-white font-bold text-xs uppercase">{activeStage.output}</div>
             </div>
 
           </div>
 
-          {/* CENTER COLUMN: RECTANGULAR PROCESS STACK (7 FLAT RECTANGULAR PANELS) */}
-          <div className="lg:col-span-5 space-y-2 relative flex flex-col justify-center">
+          {/* CENTER COLUMN: SPACIOUS RECTANGULAR PROCESS STACK (7 FLAT RECTANGULAR PANELS WITH INCREASED VERTICAL SPACING) */}
+          <div className="lg:col-span-5 space-y-3 relative flex flex-col justify-center py-2">
             {stages.map((stg, idx) => {
               const Icon = stg.icon;
               const isActive = activeStageIndex === idx;
@@ -248,13 +244,13 @@ export default function ProcessSection() {
                 <div
                   key={stg.id}
                   ref={(el) => (cardRefs.current[idx] = el)}
-                  className={`p-3.5 border rounded-none flex items-center justify-between transition-all duration-300 ${
+                  className={`p-4 border rounded-none flex items-center justify-between transition-all duration-300 ${
                     isActive
-                      ? 'bg-[#8B6DFF]/10 border-[#8B6DFF] shadow-[0_0_15px_rgba(139,109,255,0.2)]'
+                      ? 'bg-[#8B6DFF]/10 border-[#8B6DFF] shadow-[0_0_15px_rgba(139,109,255,0.25)]'
                       : 'bg-[#111111] border-white/10'
                   }`}
                 >
-                  <div className="flex items-center gap-3.5">
+                  <div className="flex items-center gap-4">
                     <span className={`font-mono text-sm font-extrabold ${isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'}`}>
                       {stg.id}
                     </span>
@@ -277,8 +273,8 @@ export default function ProcessSection() {
             })}
           </div>
 
-          {/* RIGHT COLUMN: PROCESS TIMELINE (ENGINEERING PROGRESS RAIL) */}
-          <div className="lg:col-span-3 hidden lg:flex flex-col justify-between items-start h-[360px] pl-6 relative font-mono text-xs border-l border-white/10">
+          {/* RIGHT COLUMN: SPACIOUS PROCESS TIMELINE (ENGINEERING PROGRESS RAIL WITH INCREASED VERTICAL SPACING) */}
+          <div className="lg:col-span-3 hidden lg:flex flex-col justify-between items-start h-[400px] pl-8 relative font-mono text-xs border-l border-white/10">
             
             {/* Base Continuous Track */}
             <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#555555]/30">
@@ -291,14 +287,14 @@ export default function ProcessSection() {
             </div>
 
             {/* Stage Nodes & Aligned Stage Names */}
-            <div className="space-y-3.5 w-full">
+            <div className="space-y-4 font-mono w-full">
               {stages.map((s, i) => {
                 const isActive = activeStageIndex === i;
 
                 return (
                   <div key={s.id} className="flex items-center gap-3">
-                    {/* Precision Node Marker (Outer Ring + Small Solid Center 8-12px) */}
-                    <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center -ml-[23px] bg-[#0A0A0A] border transition-all ${
+                    {/* Node Marker (Small Ring + Solid Center) */}
+                    <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center -ml-[31px] bg-[#0A0A0A] border transition-all ${
                       isActive ? 'border-[#8B6DFF] scale-110' : 'border-white/20'
                     }`}>
                       <div className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#8B6DFF]' : 'bg-[#555555]'}`} />
@@ -307,7 +303,7 @@ export default function ProcessSection() {
                     {/* Stage Label (Number + Name) */}
                     <div className="text-xs uppercase font-bold tracking-wider">
                       <span className={isActive ? 'text-[#8B6DFF] mr-2' : 'text-[#555555] mr-2'}>{s.id}</span>
-                      <span className={isActive ? 'text-white' : 'text-[#555555]'}>{s.name}</span>
+                      <span className={isActive ? 'text-[#F1F0EB]' : 'text-[#555555]'}>{s.name}</span>
                     </div>
                   </div>
                 );
@@ -322,15 +318,6 @@ export default function ProcessSection() {
 
           </div>
 
-        </div>
-
-        {/* Bottom Status Bar */}
-        <div className="max-w-7xl mx-auto w-full border-t border-white/10 pt-3 flex justify-between items-center text-xs text-[#E4E2DC] font-mono shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse"></span>
-            <span>ENGINEERING PROCESS // STAGE 0{activeStageIndex + 1} OF 07 ACTIVE</span>
-          </div>
-          <div>SCROLL PROGRESS: <span ref={progressPercentRef}>0%</span></div>
         </div>
 
       </div>
