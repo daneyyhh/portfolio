@@ -8,8 +8,8 @@ export default function Hero({ onOpenResume }) {
     <section id="hero" className="relative min-h-screen pt-32 sm:pt-36 pb-20 flex flex-col justify-between overflow-x-clip bg-[#F1F0EB] text-[#111111] w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 my-auto">
         
-        {/* Left Column: Responsive Editorial Hero Typography with Masked Upward Rising Animation */}
-        <div className="lg:col-span-9 xl:col-span-8 space-y-6 w-full max-w-full">
+        {/* Left Column: Responsive Editorial Hero Typography with Full Container Width */}
+        <div className="lg:col-span-12 xl:col-span-10 space-y-6 w-full max-w-full">
           
           {/* Sub-Header in Masked Container */}
           <div className="overflow-hidden py-1 w-full max-w-full">
@@ -23,24 +23,24 @@ export default function Hero({ onOpenResume }) {
             </motion.div>
           </div>
 
-          {/* Main Hero Headline in Responsive Masked Container (Fluid clamp sizing, No Letter Clipping) */}
-          <div className="overflow-hidden py-1 pr-4 w-full max-w-full">
+          {/* Main Hero Headline: 100% Fully Visible WORLDS on Desktop and Mobile */}
+          <div className="overflow-visible py-1 w-full max-w-full">
             <motion.div
               initial={{ opacity: 0, y: 110 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 2.7, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-full"
+              className="w-full max-w-full overflow-visible"
             >
               <h1
-                className="font-syne font-extrabold tracking-tighter uppercase leading-[0.88] text-[#111111] w-full max-w-full"
+                className="font-syne font-extrabold tracking-tight uppercase leading-[0.9] text-[#111111] w-full max-w-full overflow-visible"
                 style={{
-                  fontSize: 'clamp(2.75rem, 8.5vw, 8rem)',
-                  letterSpacing: 'clamp(-0.04em, -0.2vw, -0.02em)',
+                  fontSize: 'clamp(2.4rem, 6.8vw, 6.5rem)',
+                  letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
                 }}
               >
-                <span className="block">I BUILD</span>
-                <span className="block">DIGITAL</span>
-                <span className="block">
+                <span className="block w-full overflow-visible whitespace-nowrap">I BUILD</span>
+                <span className="block w-full overflow-visible whitespace-nowrap">DIGITAL</span>
+                <span className="block w-full overflow-visible whitespace-nowrap">
                   WORLDS<span className="text-[#8B6DFF]">.</span>
                 </span>
               </h1>
@@ -84,9 +84,6 @@ export default function Hero({ onOpenResume }) {
             </motion.div>
           </div>
         </div>
-
-        {/* Right Column: Space for 3D persistent centerpiece */}
-        <div className="hidden lg:block lg:col-span-3 xl:col-span-4 min-h-[300px] pointer-events-none" />
 
       </div>
 

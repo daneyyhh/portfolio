@@ -1,72 +1,67 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function TechStack() {
+export default function TechStack({ engineerMode }) {
   const techCategories = [
     {
       id: "01",
-      name: "FRONTEND",
+      name: "CORE LANGUAGES",
       items: [
-        { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/html5/html5-original.svg" },
-        { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/css3/css3-original.svg" },
-        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/javascript/javascript-original.svg" },
-        { name: "Bootstrap", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/bootstrap/bootstrap-original.svg" },
-        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/react/react-original.svg" },
-        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/nextjs/nextjs-original.svg" },
+        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+        { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+        { name: "LUA", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg" }
       ]
     },
     {
       id: "02",
-      name: "BACKEND",
+      name: "FRAMEWORKS & LIBS",
       items: [
-        { name: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/php/php-original.svg" },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "REST APIs", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/express/express-original.svg" },
+        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+        { name: "Bootstrap 5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" },
+        { name: "Three.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" },
+        { name: "Framer Motion", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg" }
       ]
     },
     {
       id: "03",
-      name: "DATABASE",
+      name: "DATABASES & ORM",
       items: [
-        { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/mysql/mysql-original.svg" },
-        { name: "SQL", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg" },
-        { name: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/firebase/firebase-plain.svg" },
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+        { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+        { name: "Redis", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
       ]
     },
     {
       id: "04",
-      name: "AI / ML",
+      name: "DEV TOOLS & ENGINES",
       items: [
-        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/python/python-original.svg" },
-        { name: "Scikit-Learn", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/scikitlearn/scikitlearn-original.svg" },
-        { name: "ML Classification", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/tensorflow/tensorflow-original.svg" },
+        { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+        { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+        { name: "Unity 3D", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" },
+        { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+        { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" },
+        { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" }
       ]
     },
     {
       id: "05",
-      name: "GAME DEVELOPMENT",
+      name: "AI & CREATIVE DESIGN",
       items: [
-        { name: "Unity 3D", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/unity/unity-original.svg" },
-        { name: "C#", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/csharp/csharp-original.svg" },
-        { name: "Lua Scripting", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/lua/lua-original.svg" },
-      ]
-    },
-    {
-      id: "06",
-      name: "DESIGN",
-      items: [
-        { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/figma/figma-original.svg" },
-      ]
-    },
-    {
-      id: "07",
-      name: "TOOLS",
-      items: [
-        { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/git/git-original.svg" },
-        { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/github/github-original.svg" },
-        { name: "Postman", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/postman/postman-original.svg" },
-        { name: "VS Code", logo: "https://cdn.jsdelivr.net/gh/devicon/devicon/icons/vscode/vscode-original.svg" },
+        { name: "Scikit-Learn", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" },
+        { name: "NumPy", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" },
+        { name: "Pandas", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" },
+        { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
+        { name: "Illustrator", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" }
       ]
     }
   ];
@@ -86,10 +81,10 @@ export default function TechStack() {
               TOOLING & STACK
             </div>
             <h2
-              className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full"
+              className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full overflow-visible"
               style={{
-                fontSize: 'clamp(1.85rem, 8vw, 3.75rem)',
-                letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
+                fontSize: 'clamp(1.75rem, 6.8vw, 3.5rem)',
+                letterSpacing: 'clamp(-0.03em, -0.2vw, 0em)',
               }}
             >
               TECHNOLOGIES
@@ -101,7 +96,7 @@ export default function TechStack() {
         </div>
 
         {/* Editorial Technology Index Categories */}
-        <div className="space-y-12">
+        <div className="space-y-10 sm:space-y-12 w-full">
           {techCategories.map((cat, index) => (
             <motion.div
               key={cat.id}
@@ -109,39 +104,31 @@ export default function TechStack() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="border-b border-[#C9C7C0] pb-10 space-y-6"
+              className="border-b border-[#C9C7C0] pb-8 sm:pb-10 space-y-4 sm:space-y-6 w-full"
             >
               {/* Category Header */}
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-sm font-bold text-[#8B6DFF]">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <span className="font-mono text-xs sm:text-sm font-bold text-[#8B6DFF]">
                   {cat.id}
                 </span>
-                <h3 className="font-syne text-xl md:text-2xl font-extrabold text-[#111111] uppercase tracking-tight">
+                <h3 className="font-syne text-lg sm:text-xl md:text-2xl font-extrabold text-[#111111] uppercase tracking-tight">
                   {cat.name}
                 </h3>
               </div>
 
-              {/* Technologies Row (Informational & Non-Clickable) */}
-              <div className="flex flex-wrap gap-8 md:gap-12 items-center pt-2">
+              {/* Technologies Row */}
+              <div className="flex flex-wrap gap-4 sm:gap-8 md:gap-12 items-center pt-2 w-full">
                 {cat.items.map((tech) => (
                   <div
                     key={tech.name}
-                    className="group select-none flex flex-col items-center gap-3 transition-transform duration-300 hover:scale-105"
+                    className="flex items-center gap-2 sm:gap-3 py-1 px-2 group select-none"
                   >
-                    {/* Official Tech Logo (Grayscale by default, color on hover) */}
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center p-1">
-                      <img
-                        src={tech.logo}
-                        alt={tech.name}
-                        className="w-full h-full object-contain filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    </div>
-
-                    {/* Technology Name */}
-                    <span className="font-mono text-xs md:text-sm font-bold text-[#111111] group-hover:text-[#8B6DFF] transition-colors">
+                    <img
+                      src={tech.icon}
+                      alt={tech.name}
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300 shrink-0"
+                    />
+                    <span className="font-mono text-xs sm:text-sm text-[#333333] group-hover:text-[#111111] font-medium tracking-wide">
                       {tech.name}
                     </span>
                   </div>
@@ -149,17 +136,6 @@ export default function TechStack() {
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Technical Editorial Footer */}
-        <div className="pt-6 border-t border-[#C9C7C0] flex flex-col md:flex-row justify-between items-center text-xs font-mono text-[#555555] gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#8B6DFF]"></span>
-            <span>SELECTED TOOLS / CURRENT STACK</span>
-          </div>
-          <div className="uppercase tracking-widest font-bold text-[#111111]">
-            WEB • AI • 3D • GAME DEVELOPMENT • DESIGN
-          </div>
         </div>
 
       </div>

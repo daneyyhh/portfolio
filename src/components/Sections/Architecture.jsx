@@ -81,13 +81,13 @@ export default function Architecture({ engineerMode }) {
               <span>SYSTEM ARCHITECTURE</span>
             </div>
             <h2
-              className="font-syne font-extrabold text-white uppercase tracking-tight w-full max-w-full"
+              className="font-syne font-extrabold text-white uppercase tracking-tight w-full max-w-full overflow-visible"
               style={{
-                fontSize: 'clamp(1.85rem, 7.5vw, 3.75rem)',
-                letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
+                fontSize: 'clamp(1.75rem, 6.8vw, 3.5rem)',
+                letterSpacing: 'clamp(-0.03em, -0.2vw, 0em)',
               }}
             >
-              LIVE ARCHITECTURE
+              ARCHITECTURE
             </h2>
           </div>
           <p className="font-mono text-xs text-slate-400 max-w-md">
