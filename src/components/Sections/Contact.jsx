@@ -19,157 +19,180 @@ export default function Contact({ engineerMode }) {
   };
 
   return (
-    <section id="contact" className="py-28 px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono">
-      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
+    <section id="contact" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono w-full overflow-x-clip">
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10 w-full">
         
         {/* Editorial Contact Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start w-full">
           <div className="hidden lg:flex lg:col-span-1">
             <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">10</span>
           </div>
 
-          <div className="lg:col-span-11 space-y-2">
+          <div className="lg:col-span-11 space-y-2 w-full max-w-full">
             <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
               LET'S CONNECT
             </div>
 
-            <div className="space-y-4">
-              <h2 className="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
-                LET'S BUILD<br />
-                SOMETHING AMAZING<span className="text-[#8B6DFF]">.</span>
+            <div className="space-y-4 w-full max-w-full">
+              <h2
+                className="font-syne font-extrabold text-white uppercase tracking-tight leading-none w-full max-w-full"
+                style={{
+                  fontSize: 'clamp(1.85rem, 7vw, 4.5rem)',
+                  letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
+                }}
+              >
+                <span className="block">LET'S BUILD</span>
+                <span className="block">SOMETHING</span>
+                <span className="block">AMAZING<span className="text-[#8B6DFF]">.</span></span>
               </h2>
 
               <div className="pt-2">
-                <ReubgLogo variant="dark" className="w-[180px] h-auto" />
+                <ReubgLogo variant="dark" className="w-[140px] sm:w-[180px] h-auto" />
               </div>
             </div>
 
-            <p className="font-sans text-slate-300 text-base max-w-lg pt-2">
+            <p className="font-sans text-slate-300 text-sm sm:text-base max-w-lg pt-2">
               Have a project in mind or just want to say hi? Let's connect!
             </p>
           </div>
         </div>
 
         {/* Contact Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-4 w-full">
           
           {/* Left Info Column */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="space-y-4 text-xs">
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6 w-full">
+            <div className="space-y-3 sm:space-y-4 text-xs w-full">
               <a
                 href={`mailto:${personalData.email}`}
-                className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group"
+                className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group w-full"
               >
-                <div className="p-3 bg-[#8B6DFF]/10 text-[#8B6DFF] border border-[#8B6DFF]/30">
-                  <Mail size={18} />
+                <div className="p-2.5 sm:p-3 bg-[#8B6DFF]/10 text-[#8B6DFF] border border-[#8B6DFF]/30 shrink-0">
+                  <Mail size={16} />
                 </div>
-                <div>
-                  <div className="text-slate-400">PRIMARY EMAIL:</div>
-                  <div className="text-white font-bold text-sm group-hover:text-[#8B6DFF]">{personalData.email}</div>
+                <div className="overflow-hidden">
+                  <div className="text-slate-400 text-[10px]">PRIMARY EMAIL:</div>
+                  <div className="text-white font-bold text-xs sm:text-sm group-hover:text-[#8B6DFF] truncate">{personalData.email}</div>
                 </div>
               </a>
 
               <a
                 href={`mailto:${personalData.altEmail}`}
-                className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group"
+                className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 bg-[#141414] border border-white/10 hover:border-[#8B6DFF] transition-colors group w-full"
               >
-                <div className="p-3 bg-white/5 text-slate-300 border border-white/10">
-                  <Mail size={18} />
+                <div className="p-2.5 sm:p-3 bg-[#8B6DFF]/10 text-[#8B6DFF] border border-[#8B6DFF]/30 shrink-0">
+                  <Mail size={16} />
                 </div>
-                <div>
-                  <div className="text-slate-400">DIRECT EMAIL:</div>
-                  <div className="text-white font-bold text-sm group-hover:text-[#8B6DFF]">{personalData.altEmail}</div>
+                <div className="overflow-hidden">
+                  <div className="text-slate-400 text-[10px]">ALT EMAIL:</div>
+                  <div className="text-white font-bold text-xs sm:text-sm group-hover:text-[#8B6DFF] truncate">{personalData.altEmail}</div>
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 bg-[#141414] border border-white/10">
-                <div className="p-3 bg-white/5 text-slate-300 border border-white/10">
-                  <MapPin size={18} />
+              <div className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4 bg-[#141414] border border-white/10 w-full">
+                <div className="p-2.5 sm:p-3 bg-[#8B6DFF]/10 text-[#8B6DFF] border border-[#8B6DFF]/30 shrink-0">
+                  <MapPin size={16} />
                 </div>
                 <div>
-                  <div className="text-slate-400">LOCATION & DOMAIN:</div>
-                  <div className="text-white font-bold text-sm">{personalData.location} // <span className="text-[#8B6DFF]">REUBG.IN</span></div>
+                  <div className="text-slate-400 text-[10px]">LOCATION:</div>
+                  <div className="text-white font-bold text-xs sm:text-sm">{personalData.location}</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-4 pt-2">
-              <a href={personalData.github} target="_blank" rel="noreferrer" className="p-3 bg-[#141414] border border-white/15 text-white hover:border-[#8B6DFF] hover:text-[#8B6DFF]">
-                <Github size={20} />
-              </a>
-              <a href={personalData.linkedin} target="_blank" rel="noreferrer" className="p-3 bg-[#141414] border border-white/15 text-white hover:border-[#8B6DFF] hover:text-[#8B6DFF]">
-                <Linkedin size={20} />
-              </a>
+            {/* Social Links */}
+            <div className="pt-2">
+              <div className="text-[10px] text-[#8B6DFF] font-bold uppercase tracking-widest mb-3">
+                ONLINE PROFILES
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { name: 'GITHUB', icon: Github, url: personalData.github },
+                  { name: 'LINKEDIN', icon: Linkedin, url: personalData.linkedin },
+                ].map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.name}
+                      href={s.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#141414] border border-white/10 text-slate-300 hover:text-white hover:border-[#8B6DFF] transition-colors text-xs"
+                    >
+                      <Icon size={14} />
+                      <span>{s.name}</span>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Right Direct Message Form */}
-          <div className="lg:col-span-7 bg-[#141414] border border-white/15 p-8">
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
-                <CheckCircle2 size={48} className="text-[#8B6DFF] animate-bounce" />
-                <h3 className="font-syne text-2xl font-bold text-white uppercase">MESSAGE SENT</h3>
-                <p className="text-xs text-slate-300">
-                  Thank you for reaching out! Reuben will get back to you shortly.
-                </p>
+          {/* Right Form Column */}
+          <div className="lg:col-span-7 w-full">
+            <form onSubmit={handleSubmit} className="bg-[#141414] border border-white/10 p-5 sm:p-8 space-y-4 sm:space-y-6 w-full max-w-full">
+              <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest border-b border-white/10 pb-3">
+                SEND A MESSAGE
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 text-xs">
-                <div className="border-b border-white/10 pb-4 font-bold text-sm text-white">
-                  TRANSMIT DIRECT INQUIRY
-                </div>
 
-                <div className="space-y-1">
-                  <label className="text-slate-400 block">YOUR NAME:</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                <div className="space-y-1 w-full">
+                  <label className="text-[10px] text-slate-400 uppercase tracking-wider block">NAME *</label>
                   <input
                     type="text"
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="Enter your full name"
-                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
+                    className="w-full bg-[#0A0A0A] border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors"
+                    placeholder="Your Name"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-slate-400 block">YOUR EMAIL:</label>
+                <div className="space-y-1 w-full">
+                  <label className="text-[10px] text-slate-400 uppercase tracking-wider block">EMAIL *</label>
                   <input
                     type="email"
                     required
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="Enter your email address"
-                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
+                    className="w-full bg-[#0A0A0A] border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors"
+                    placeholder="name@domain.com"
                   />
                 </div>
+              </div>
 
-                <div className="space-y-1">
-                  <label className="text-slate-400 block">MESSAGE:</label>
-                  <textarea
-                    rows="4"
-                    required
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder="Project details, opportunities, or feedback..."
-                    className="w-full bg-[#0A0A0A] border border-white/10 p-3 text-white focus:border-[#8B6DFF] focus:outline-none"
-                  />
-                </div>
+              <div className="space-y-1 w-full">
+                <label className="text-[10px] text-slate-400 uppercase tracking-wider block">MESSAGE *</label>
+                <textarea
+                  required
+                  rows={4}
+                  value={formState.message}
+                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                  className="w-full bg-[#0A0A0A] border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors resize-none"
+                  placeholder="Tell me about your project, ideas, or opportunity..."
+                />
+              </div>
 
-                <button type="submit" className="btn-editorial-purple w-full flex items-center justify-center gap-2">
-                  <Send size={16} />
-                  <span>SEND TRANSMISSION</span>
-                </button>
-              </form>
-            )}
+              <button
+                type="submit"
+                disabled={submitted}
+                className="w-full btn-editorial-purple flex items-center justify-center gap-2"
+              >
+                {submitted ? (
+                  <>
+                    <CheckCircle2 size={16} className="text-green-400" />
+                    <span>MESSAGE TRANSMITTED</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} />
+                    <span>SEND MESSAGE</span>
+                  </>
+                )}
+              </button>
+            </form>
           </div>
 
-        </div>
-
-        {/* Footer */}
-        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <ReubgLogo variant="dark" className="w-[120px] h-auto" />
-          <div>© {new Date().getFullYear()} REUBEN BINU GEORGE. ALL RIGHTS RESERVED.</div>
-          <a href="#hero" className="hover:text-white uppercase font-bold">BACK TO TOP ↑</a>
         </div>
 
       </div>

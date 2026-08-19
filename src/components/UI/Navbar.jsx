@@ -55,12 +55,12 @@ export default function Navbar({ onOpenResume }) {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md py-3' : 'bg-[#F1F0EB]/90 backdrop-blur-sm py-4'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between font-mono">
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md py-3' : 'bg-[#F1F0EB]/90 backdrop-blur-sm py-4'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
         {/* Single Source of Truth Brand Logo */}
         <a href="#hero" className="flex items-center group shrink-0">
-          <ReubgLogo variant="light" className="w-[100px] sm:w-[120px] md:w-[145px] h-auto" />
+          <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[145px] h-auto" />
         </a>
 
         {/* Desktop Editorial Navigation Links */}
@@ -93,8 +93,9 @@ export default function Navbar({ onOpenResume }) {
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="lg:hidden p-2 text-[#111111] hover:text-[#8B6DFF]"
+          aria-label="Toggle Navigation Menu"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -105,7 +106,7 @@ export default function Navbar({ onOpenResume }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#F1F0EB] border-b border-[#E4E2DC] px-6 py-6 font-mono"
+            className="lg:hidden bg-[#F1F0EB] border-b border-[#E4E2DC] px-4 sm:px-6 py-6 font-mono"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (

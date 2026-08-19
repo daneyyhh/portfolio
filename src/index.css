@@ -11,15 +11,40 @@
     --accent-purple: #8B6DFF;
   }
 
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   html {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: var(--bg-ivory);
     color: var(--text-black);
+    overflow-x: clip;
   }
   
   body {
-    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     overflow-x: clip;
+    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
+  }
+
+  img, video, canvas, svg {
+    max-width: 100%;
   }
 
   /* Editorial scrollbar */
@@ -53,19 +78,17 @@
   }
 
   .btn-editorial {
-    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 border border-[#111111] hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-all duration-300 active:scale-95;
+    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-all duration-300 active:scale-95 text-center;
   }
 
   .btn-editorial-purple {
-    @apply bg-[#8B6DFF] text-white font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 hover:bg-[#7a5ceb] transition-all duration-300 active:scale-95 shadow-md;
+    @apply bg-[#8B6DFF] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#7a5ceb] transition-all duration-300 active:scale-95 shadow-md text-center;
   }
 
   .btn-editorial-outline {
-    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-6 py-3 border border-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF] transition-all duration-300 active:scale-95;
+    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF] transition-all duration-300 active:scale-95 text-center;
   }
 }
-
-/* NO GRIDS, NO TEXTURES, NO NOISE — FLAT SOLID #F1F0EB BACKGROUND */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
