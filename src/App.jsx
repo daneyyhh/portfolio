@@ -18,18 +18,23 @@ import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('reubg_intro_seen');
+    }
+    return true;
+  });
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans">
+    <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
       
-      {/* Mandatory Pre-loader */}
+      {/* 01 -> 100 Visual Sequence Pre-loader Curtain */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* Main Portfolio Content — Flat #F1F0EB background */}
-      <div className={loading ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-700'}>
+      {/* Main Portfolio Content — Live Underneath Loader for Physical Upward Reveal */}
+      <div className="relative w-full opacity-100">
         
         {/* Persistent Three.js WebGL Canvas Journey */}
         <PersistentCanvas />
