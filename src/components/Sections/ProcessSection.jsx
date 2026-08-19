@@ -1,76 +1,76 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, ArrowRight } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw } from 'lucide-react';
 
 const STAGES = [
   {
     id: "01",
     name: "DISCOVER",
     icon: Search,
-    shortDesc: "Understand the problem before deciding what to build.",
-    purpose: "Understand the actual problem before deciding what to build.",
-    focus: "User needs · Business requirements · Constraints",
-    activities: ["Research", "User interviews", "Problem analysis", "Requirement gathering", "Constraint identification"],
-    output: "CLEAR PROBLEM DEFINITION"
+    headline: "Understand the actual problem before deciding what to build.",
+    detail: "Research the user, understand the context, identify the real problem, and uncover the constraints before moving into solutions.",
+    focus: "User needs • Research • Constraints",
+    activities: ["User research & interviews", "Problem space analysis", "Requirement gathering", "Technical constraint discovery", "Competitive benchmarking"],
+    deliverable: "Clear problem definition"
   },
   {
     id: "02",
     name: "DEFINE",
     icon: Target,
-    shortDesc: "Define scope and technical requirements.",
-    purpose: "Turn research into a clear product and technical direction.",
-    focus: "Requirements · Scope · Architecture · Priorities",
-    activities: ["Define requirements", "Establish project scope", "Prioritize features", "Define technical constraints", "Create project roadmap"],
-    output: "DEFINED PROJECT SCOPE"
+    headline: "Turn research into a clear product and technical direction.",
+    detail: "Translate research findings into clear requirements, goals, priorities, and a defined scope for the project.",
+    focus: "Requirements • Scope • Objectives",
+    activities: ["Product requirement docs", "Scope definition & boundaries", "Feature prioritization", "System architecture map", "Project milestones roadmap"],
+    deliverable: "Defined project scope"
   },
   {
     id: "03",
     name: "DESIGN",
     icon: Layout,
-    shortDesc: "Design experience and system architecture.",
-    purpose: "Transform requirements into a usable and scalable experience.",
-    focus: "UX · UI · System architecture · Interaction",
-    activities: ["Wireframing", "Interface design", "User flows", "Design system", "Architecture planning"],
-    output: "VALIDATED DESIGN DIRECTION"
+    headline: "Create the structure, experience, and visual direction.",
+    detail: "Develop the information architecture, interaction patterns, visual system, and overall experience before implementation.",
+    focus: "UX • UI • Interaction • Visual system",
+    activities: ["Information architecture", "Wireframing & user flows", "Interactive design systems", "Visual art direction", "Prototype validation"],
+    deliverable: "Validated design direction"
   },
   {
     id: "04",
     name: "BUILD",
     icon: Code2,
-    shortDesc: "Build scalable application.",
-    purpose: "Transform the approved design into a functional product.",
-    focus: "Frontend · Backend · APIs · Integration",
-    activities: ["Component development", "API implementation", "Database integration", "Authentication", "System integration"],
-    output: "WORKING APPLICATION"
+    headline: "Turn the approved direction into a functional product.",
+    detail: "Implement the interface, features, interactions, systems, and technical architecture while maintaining design quality.",
+    focus: "Development • Integration • Engineering",
+    activities: ["Modern component development", "REST / GraphQL API integration", "State management & store", "Authentication & DB setup", "Pixel-perfect motion fidelity"],
+    deliverable: "Working application"
   },
   {
     id: "05",
     name: "DEPLOY",
     icon: Rocket,
-    shortDesc: "Deploy to production environment.",
-    purpose: "Move the application from development into a production environment.",
-    focus: "Infrastructure · Hosting · CI/CD · Configuration",
-    activities: ["Production configuration", "Deployment", "Environment setup", "Domain configuration", "Monitoring"],
-    output: "PRODUCTION-READY APPLICATION"
+    headline: "Prepare the finished product for real-world use.",
+    detail: "Test production builds, configure deployment, optimize performance, and make the project ready for release.",
+    focus: "Release • Performance • Production",
+    activities: ["CI/CD automated pipeline", "Edge CDN hosting & domains", "Build asset minification", "SEO & metadata config", "Uptime & error monitoring"],
+    deliverable: "Production-ready application"
   },
   {
     id: "06",
     name: "TEST",
     icon: ShieldCheck,
-    shortDesc: "Test, validate & ensure quality.",
-    purpose: "Validate functionality, performance and reliability before final delivery.",
-    focus: "Quality · Performance · Responsiveness · Security",
-    activities: ["Functional testing", "Responsive testing", "Performance testing", "Bug identification", "User validation"],
-    output: "STABLE PRODUCT"
+    headline: "Validate the experience and identify what needs improvement.",
+    detail: "Evaluate functionality, usability, performance, and edge cases to find problems before they reach the final user.",
+    focus: "QA • Usability • Performance",
+    activities: ["Cross-browser & responsive QA", "Lighthouse & Core Web Vitals", "Accessibility (WCAG) checks", "Edge case stress testing", "Usability feedback loops"],
+    deliverable: "Stable product"
   },
   {
     id: "07",
     name: "ITERATE",
     icon: RefreshCw,
-    shortDesc: "Improve based on feedback.",
-    purpose: "Continuously improve the product using real feedback and performance data.",
-    focus: "Feedback · Optimization · Analytics · Improvements",
-    activities: ["Collect feedback", "Analyze performance", "Identify improvements", "Optimize experience", "Release iterations"],
-    output: "CONTINUOUSLY IMPROVING PRODUCT"
+    headline: "Use feedback and results to continuously improve.",
+    detail: "Analyze feedback, identify opportunities, refine the product, and repeat the process until the experience becomes stronger.",
+    focus: "Feedback • Refinement • Optimization",
+    activities: ["User analytics review", "Conversion & flow tuning", "Performance optimizations", "Feature enhancements", "Continuous delivery updates"],
+    deliverable: "Continuously improving product"
   }
 ];
 
@@ -79,7 +79,7 @@ export default function ProcessSection() {
   const activeStageIndexRef = useRef(0);
   const containerRef = useRef(null);
 
-  // Pure passive native scroll tracking to update active stage 0..6
+  // Passive native scroll-driven stage calculation
   useEffect(() => {
     let rafId = null;
 
@@ -118,7 +118,6 @@ export default function ProcessSection() {
     };
   }, []);
 
-  // Jump to stage on navigation click
   const handleStageClick = (idx) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -135,19 +134,20 @@ export default function ProcessSection() {
 
   const activeStage = STAGES[activeStageIndex];
   const IconComponent = activeStage.icon;
+  const progressPercent = Math.round(((activeStageIndex + 1) / STAGES.length) * 100);
 
   return (
     <section
       id="process"
       ref={containerRef}
       className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
-      style={{ height: '320vh' }}
+      style={{ height: '300vh' }}
     >
-      {/* Sticky Compact Viewport (Fits cleanly within 100vh) */}
+      {/* Sticky Compact 100vh Viewport */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-10 max-w-7xl mx-auto overflow-hidden select-none">
         
         {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4 pt-2">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-2">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 bg-[#8B6DFF] animate-pulse" />
             <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
@@ -166,28 +166,35 @@ export default function ProcessSection() {
           </div>
         </div>
 
-        {/* Mobile Horizontal Progress Tabs (Visible on small screens) */}
-        <div className="flex lg:hidden items-center justify-between gap-1 py-2 border-b border-white/10 overflow-x-auto">
-          {STAGES.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => handleStageClick(idx)}
-              className={`px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 ${
-                idx === activeStageIndex
-                  ? 'bg-[#8B6DFF] text-white font-bold'
-                  : 'bg-[#141414] text-[#777777] border border-white/10'
-              }`}
-            >
-              {s.id} {s.name}
-            </button>
-          ))}
+        {/* Mobile Horizontal Stepper Indicator */}
+        <div className="flex lg:hidden items-center justify-between gap-1.5 py-2.5 border-b border-white/10 overflow-x-auto">
+          {STAGES.map((s, idx) => {
+            const isActive = idx === activeStageIndex;
+            const isCompleted = idx < activeStageIndex;
+            return (
+              <button
+                key={s.id}
+                onClick={() => handleStageClick(idx)}
+                className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#8B6DFF] text-white font-bold'
+                    : isCompleted
+                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30'
+                    : 'bg-[#111111] text-[#666666] border border-white/10'
+                }`}
+              >
+                <span>{s.id}</span>
+                <span className="hidden min-[400px]:inline">{s.name}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Main 3-Column Interactive Process Viewport (Desktop & Tablet) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center my-auto w-full py-4">
+        {/* Main 3-Column Interactive Process Viewport (Compact & Balanced Spacing) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center my-auto w-full py-2">
           
-          {/* 1. LEFT: Process Inspector (State-reactive technical details) */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl h-[480px]">
+          {/* 1. LEFT: Process Inspector */}
+          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl h-[470px]">
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
                 <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
@@ -198,92 +205,107 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              <div className="space-y-1">
-                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
-                <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
-                  {activeStage.purpose}
-                </p>
-              </div>
-
-              <div className="space-y-1 pt-1">
-                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
-                <div className="text-xs text-[#8B6DFF] font-mono font-medium">
-                  {activeStage.focus}
+              {/* Dynamic Content with Smooth Transition */}
+              <div key={activeStage.id} className="space-y-3.5 animate-fadeIn">
+                <div className="space-y-1">
+                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
+                  <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
+                    {activeStage.headline}
+                  </p>
                 </div>
-              </div>
 
-              <div className="space-y-1.5 pt-1">
-                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
-                <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
-                  {activeStage.activities.map((act, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <span className="w-1 h-1 bg-[#8B6DFF] rounded-full" />
-                      <span>{act}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="space-y-1">
+                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
+                  <div className="text-xs text-[#8B6DFF] font-mono font-medium">
+                    {activeStage.focus}
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
+                  <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
+                    {activeStage.activities.map((act, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
+                        <span className="truncate">{act}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-white/10">
               <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
-              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10">
-                {activeStage.output}
+              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
+                {activeStage.deliverable}
               </div>
             </div>
           </div>
 
-          {/* 2. CENTER: Active Process Stage Card (Large & Prominent) */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 min-h-[360px] lg:h-[480px]">
-            {/* Top Tag & Number */}
+          {/* 2. CENTER: Active Stage Card (No giant duplicate number, prominent title + detail) */}
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 min-h-[380px] lg:h-[470px]">
+            
+            {/* Top Label & Icon */}
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
-                  ACTIVE STAGE // 0{activeStageIndex + 1}
+                  ACTIVE STAGE // {activeStage.id}
                 </span>
-                <IconComponent size={24} className="text-[#8B6DFF]" />
+                <IconComponent size={22} className="text-[#8B6DFF]" />
               </div>
 
-              {/* Huge Stage Title */}
-              <div className="space-y-2">
-                <div className="font-syne text-4xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
-                  {activeStage.id} {activeStage.name}
-                </div>
-                <p className="font-sans text-sm sm:text-base text-[#D0D0D0] leading-relaxed">
-                  {activeStage.shortDesc}
+              {/* Title & Concise Topic Details (Clean Hierarchy, No Giant Number) */}
+              <div key={activeStage.id} className="space-y-3 animate-fadeIn">
+                <h3 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+                  {activeStage.name}
+                </h3>
+                
+                <p className="font-sans text-sm sm:text-base text-white font-medium leading-snug">
+                  {activeStage.headline}
                 </p>
-              </div>
 
-              {/* Mobile-only Inspector Snippets */}
-              <div className="lg:hidden space-y-3 pt-3 border-t border-white/10 text-xs">
-                <div>
-                  <span className="text-[#555555] text-[10px] uppercase block font-bold">FOCUS</span>
-                  <span className="text-[#8B6DFF] font-mono">{activeStage.focus}</span>
-                </div>
-                <div>
-                  <span className="text-[#555555] text-[10px] uppercase block font-bold">DELIVERABLE</span>
-                  <span className="text-white font-bold font-mono">{activeStage.output}</span>
-                </div>
+                <p className="font-sans text-xs sm:text-sm text-[#A0A0A0] leading-relaxed">
+                  {activeStage.detail}
+                </p>
               </div>
             </div>
 
-            {/* Bottom Meta & Animated Line */}
-            <div className="space-y-3 pt-4 border-t border-white/10 hidden sm:block">
-              <div className="flex items-center justify-between text-xs font-mono text-[#888888]">
-                <span>{activeStage.focus}</span>
-                <span className="text-[#8B6DFF] font-bold">{activeStage.output}</span>
+            {/* Bottom Focus & Deliverable Blocks */}
+            <div className="space-y-3 pt-4 border-t border-white/10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+                <div className="space-y-0.5">
+                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
+                    FOCUS
+                  </span>
+                  <span className="text-[#8B6DFF] text-[11px] block font-medium">
+                    {activeStage.focus}
+                  </span>
+                </div>
+
+                <div className="space-y-0.5">
+                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
+                    KEY DELIVERABLE
+                  </span>
+                  <span className="text-white text-[11px] font-bold block">
+                    {activeStage.deliverable}
+                  </span>
+                </div>
               </div>
-              <div className="w-full bg-[#222222] h-[2px] overflow-hidden">
+
+              {/* Progress Bar */}
+              <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-2">
                 <div
                   className="bg-[#8B6DFF] h-full transition-all duration-300 ease-out"
-                  style={{ width: `${((activeStageIndex + 1) / STAGES.length) * 100}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
+
           </div>
 
-          {/* 3. RIGHT: Compact Vertical Stage Navigation */}
-          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-2.5 pl-4 border-l border-white/10 h-[480px]">
+          {/* 3. RIGHT: Compact Vertical Stage Navigator */}
+          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-2 pl-4 border-l border-white/10 h-[470px]">
             <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
               STAGE NAVIGATOR
             </div>
@@ -322,7 +344,7 @@ export default function ProcessSection() {
           </div>
 
           <div className="text-right text-[#888888] tracking-wider uppercase font-mono">
-            {activeStageIndex === STAGES.length - 1 ? 'READY TO PROCEED →' : 'SCROLL TO EXPLORE NEXT STAGE ↓'}
+            {activeStageIndex === STAGES.length - 1 ? 'READY TO PROCEED →' : 'SCROLL TO ADVANCE STAGE ↓'}
           </div>
         </div>
 
