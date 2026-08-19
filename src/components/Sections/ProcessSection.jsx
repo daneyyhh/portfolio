@@ -9,7 +9,13 @@ const STAGES = [
     headline: "Understand the actual problem before deciding what to build.",
     detail: "Research the user, understand the context, identify the real problem, and uncover the constraints before moving into solutions.",
     focus: "User needs • Research • Constraints",
-    activities: ["User research & interviews", "Problem space analysis", "Requirement gathering", "Technical constraint discovery", "Competitive benchmarking"],
+    activities: [
+      "User research & interviews",
+      "Problem space analysis",
+      "Requirement gathering",
+      "Technical constraint discovery",
+      "Competitive benchmarking"
+    ],
     deliverable: "Clear problem definition"
   },
   {
@@ -19,7 +25,13 @@ const STAGES = [
     headline: "Turn research into a clear product and technical direction.",
     detail: "Translate research findings into clear requirements, goals, priorities, and a defined scope for the project.",
     focus: "Requirements • Scope • Objectives",
-    activities: ["Product requirement docs", "Scope definition & boundaries", "Feature prioritization", "System architecture map", "Project milestones roadmap"],
+    activities: [
+      "Product requirement docs",
+      "Scope definition & boundaries",
+      "Feature prioritization",
+      "System architecture map",
+      "Project milestones roadmap"
+    ],
     deliverable: "Defined project scope"
   },
   {
@@ -29,7 +41,13 @@ const STAGES = [
     headline: "Create the structure, experience, and visual direction.",
     detail: "Develop the information architecture, interaction patterns, visual system, and overall experience before implementation.",
     focus: "UX • UI • Interaction • Visual system",
-    activities: ["Information architecture", "Wireframing & user flows", "Interactive design systems", "Visual art direction", "Prototype validation"],
+    activities: [
+      "Information architecture",
+      "Wireframing & user flows",
+      "Interactive design systems",
+      "Visual art direction",
+      "Prototype validation"
+    ],
     deliverable: "Validated design direction"
   },
   {
@@ -39,7 +57,13 @@ const STAGES = [
     headline: "Turn the approved direction into a functional product.",
     detail: "Implement the interface, features, interactions, systems, and technical architecture while maintaining design quality.",
     focus: "Development • Integration • Engineering",
-    activities: ["Modern component development", "REST / GraphQL API integration", "State management & store", "Authentication & DB setup", "Pixel-perfect motion fidelity"],
+    activities: [
+      "Modern component development",
+      "REST / GraphQL API integration",
+      "State management & store",
+      "Authentication & DB setup",
+      "Pixel-perfect motion fidelity"
+    ],
     deliverable: "Working application"
   },
   {
@@ -49,7 +73,13 @@ const STAGES = [
     headline: "Prepare the finished product for real-world use.",
     detail: "Test production builds, configure deployment, optimize performance, and make the project ready for release.",
     focus: "Release • Performance • Production",
-    activities: ["CI/CD automated pipeline", "Edge CDN hosting & domains", "Build asset minification", "SEO & metadata config", "Uptime & error monitoring"],
+    activities: [
+      "CI/CD automated pipeline",
+      "Edge CDN hosting & domains",
+      "Build asset minification",
+      "SEO & metadata config",
+      "Uptime & error monitoring"
+    ],
     deliverable: "Production-ready application"
   },
   {
@@ -59,7 +89,13 @@ const STAGES = [
     headline: "Validate the experience and identify what needs improvement.",
     detail: "Evaluate functionality, usability, performance, and edge cases to find problems before they reach the final user.",
     focus: "QA • Usability • Performance",
-    activities: ["Cross-browser & responsive QA", "Lighthouse & Core Web Vitals", "Accessibility (WCAG) checks", "Edge case stress testing", "Usability feedback loops"],
+    activities: [
+      "Cross-browser & responsive QA",
+      "Lighthouse & Core Web Vitals",
+      "Accessibility (WCAG) checks",
+      "Edge case stress testing",
+      "Usability feedback loops"
+    ],
     deliverable: "Stable product"
   },
   {
@@ -69,17 +105,24 @@ const STAGES = [
     headline: "Use feedback and results to continuously improve.",
     detail: "Analyze feedback, identify opportunities, refine the product, and repeat the process until the experience becomes stronger.",
     focus: "Feedback • Refinement • Optimization",
-    activities: ["User analytics review", "Conversion & flow tuning", "Performance optimizations", "Feature enhancements", "Continuous delivery updates"],
+    activities: [
+      "User analytics review",
+      "Conversion & flow tuning",
+      "Performance optimizations",
+      "Feature enhancements",
+      "Continuous delivery updates"
+    ],
     deliverable: "Continuously improving product"
   }
 ];
 
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const activeStageIndexRef = useRef(0);
   const containerRef = useRef(null);
 
-  // Passive native scroll-driven stage calculation
+  // Pure passive scroll progress tracker mapped smoothly to 7 stages
   useEffect(() => {
     let rafId = null;
 
@@ -90,12 +133,17 @@ export default function ProcessSection() {
       if (totalScrollable <= 0) return;
 
       const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-      const stageIdx = Math.min(STAGES.length - 1, Math.floor(progress * STAGES.length));
+      // Normalized progress 0.00 to 1.00 clamped
+      const rawProgress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      setScrollProgress(rawProgress);
 
-      if (stageIdx !== activeStageIndexRef.current) {
-        activeStageIndexRef.current = stageIdx;
-        setActiveStageIndex(stageIdx);
+      // Continuous stage calculation (0 to 6)
+      const stageProgress = rawProgress * (STAGES.length - 1);
+      const activeIdx = Math.min(STAGES.length - 1, Math.max(0, Math.round(stageProgress)));
+
+      if (activeIdx !== activeStageIndexRef.current) {
+        activeStageIndexRef.current = activeIdx;
+        setActiveStageIndex(activeIdx);
       }
     };
 
@@ -118,13 +166,14 @@ export default function ProcessSection() {
     };
   }, []);
 
+  // Smooth click navigation to any stage
   const handleStageClick = (idx) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const containerTop = rect.top + scrollTop;
     const totalScrollable = rect.height - window.innerHeight;
-    const targetScroll = containerTop + (idx / (STAGES.length - 0.95)) * totalScrollable;
+    const targetScroll = containerTop + (idx / (STAGES.length - 1)) * totalScrollable;
 
     window.scrollTo({
       top: targetScroll,
@@ -134,18 +183,20 @@ export default function ProcessSection() {
 
   const activeStage = STAGES[activeStageIndex];
   const IconComponent = activeStage.icon;
-  const progressPercent = Math.round(((activeStageIndex + 1) / STAGES.length) * 100);
+  const progressPercent = Math.round(scrollProgress * 100);
 
   return (
     <section
       id="process"
       ref={containerRef}
-      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
-      style={{ height: '300vh' }}
+      className="process-scroll relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
+      style={{ height: '700vh' }}
     >
-      {/* Sticky Compact 100vh Viewport */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-10 max-w-7xl mx-auto overflow-hidden select-none">
-        
+      {/* Pinned Sticky Viewport (100vh / 100svh) */}
+      <div
+        className="process-sticky sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-10 max-w-7xl mx-auto overflow-hidden select-none"
+        style={{ height: '100vh', position: 'sticky', top: 0 }}
+      >
         {/* Top Header Bar */}
         <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-2">
           <div className="flex items-center gap-3">
@@ -160,7 +211,7 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex items-center gap-3 text-xs">
-            <span className="text-[#8B6DFF] font-bold tracking-widest">
+            <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
               STAGE {activeStage.id} / 07
             </span>
           </div>
@@ -190,7 +241,7 @@ export default function ProcessSection() {
           })}
         </div>
 
-        {/* Main 3-Column Interactive Process Viewport (Compact & Balanced Spacing) */}
+        {/* Main 3-Column Interactive Process Viewport (Desktop & Tablet) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center my-auto w-full py-2">
           
           {/* 1. LEFT: Process Inspector */}
@@ -205,7 +256,7 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              {/* Dynamic Content with Smooth Transition */}
+              {/* Dynamic Content with Smooth Subtle Fade/Translate Transition */}
               <div key={activeStage.id} className="space-y-3.5 animate-fadeIn">
                 <div className="space-y-1">
                   <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
@@ -293,11 +344,11 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              {/* Progress Bar */}
+              {/* Continuous Real Scroll-Progress Indicator */}
               <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-2">
                 <div
-                  className="bg-[#8B6DFF] h-full transition-all duration-300 ease-out"
-                  style={{ width: `${progressPercent}%` }}
+                  className="bg-[#8B6DFF] h-full transition-all duration-75 ease-out"
+                  style={{ width: `${Math.max(4, scrollProgress * 100)}%` }}
                 />
               </div>
             </div>
@@ -334,12 +385,12 @@ export default function ProcessSection() {
 
         </div>
 
-        {/* Bottom Footer Info Bar */}
+        {/* Bottom Footer Info Bar with Continuous Progress Percentage */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-3 text-[10px] sm:text-xs text-[#555555]">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
             <span className="tracking-widest uppercase">
-              SCROLL-DRIVEN ARCHITECTURE // CONTINUOUS NATIVE PROGRESSION
+              SCROLL PROGRESSION // {progressPercent}% COMPLETED
             </span>
           </div>
 

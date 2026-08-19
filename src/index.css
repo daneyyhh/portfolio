@@ -17,7 +17,8 @@
   }
   
   body {
-    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white overflow-x-hidden;
+    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white;
+    overflow-x: clip;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
