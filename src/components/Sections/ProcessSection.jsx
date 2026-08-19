@@ -122,6 +122,7 @@ export default function ProcessSection() {
   const progressBarRef = useRef(null);
   const debugPercentRef = useRef(null);
   const footerPercentRef = useRef(null);
+  const headerStageTextRef = useRef(null);
   const stageGliderRef = useRef(null);
 
   const cardRefs = useRef([]);
@@ -182,12 +183,12 @@ export default function ProcessSection() {
           if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
           if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
 
-          // 3. Gliding Navigator Indicator on Right (travels through full navigator list)
+          // 3. Gliding Navigator Indicator on Right
           if (stageGliderRef.current) {
-            stageGliderRef.current.style.transform = `translateY(${p * (numStages - 1) * 44}px)`;
+            stageGliderRef.current.style.transform = `translate3d(0, ${p * (numStages - 1) * 44}px, 0)`;
           }
 
-          // 4. Continuous Cross-Fade & Transform per stage
+          // 4. Mathematical Continuous Cross-Fade & Overlapping Translation
           let dominantStage = 0;
           let maxOpacity = -1;
 
@@ -196,41 +197,41 @@ export default function ProcessSection() {
             const delta = (p - center) / interval; // -1 to +1 relative to this stage
             const absDelta = Math.abs(delta);
 
-            // Progressive opacity (1.0 at center, 0.0 at edges)
-            const opacity = Math.max(0, Math.min(1, 1 - absDelta * 1.1));
-            // Progressive smooth translateY (-18px past center, +18px before center)
-            const translateY = -delta * 18;
-            // Progressive scale (1.0 at center, 0.96 at edges)
-            const scale = Math.max(0.96, 1 - absDelta * 0.04);
-            const isVisible = opacity > 0.01;
+            // True linear crossfade (1.0 at center, 0.0 at edges)
+            const opacity = Math.max(0, Math.min(1, 1 - absDelta));
+            // Progressive smooth translateY (-25px past center, +25px before center)
+            const translateY = -delta * 25;
+            // Progressive scale (1.0 at center, 0.98 at edges)
+            const scale = 1 - delta * 0.02;
+            const isVisible = opacity > 0.005;
 
             if (opacity > maxOpacity) {
               maxOpacity = opacity;
               dominantStage = i;
             }
 
-            // Update Center Card
+            // Update Center Card Entire Content Unit
             if (cardRefs.current[i]) {
               const el = cardRefs.current[i];
-              el.style.opacity = opacity.toFixed(3);
-              el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
-              el.style.pointerEvents = opacity > 0.6 ? 'auto' : 'none';
+              el.style.opacity = opacity.toFixed(4);
+              el.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+              el.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
               el.style.visibility = isVisible ? 'visible' : 'hidden';
             }
 
-            // Update Left Inspector
+            // Update Left Inspector Entire Content Unit
             if (inspectorRefs.current[i]) {
               const el = inspectorRefs.current[i];
-              el.style.opacity = opacity.toFixed(3);
-              el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
+              el.style.opacity = opacity.toFixed(4);
+              el.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0)`;
               el.style.visibility = isVisible ? 'visible' : 'hidden';
             }
 
             // Update Right Navigator Item
             if (navRefs.current[i]) {
               const el = navRefs.current[i];
-              const navOpacity = Math.max(0.35, Math.min(1, 0.35 + opacity * 0.65));
-              const navScale = Math.max(0.96, Math.min(1, 0.96 + opacity * 0.04));
+              const navOpacity = 0.40 + opacity * 0.60;
+              const navScale = 0.96 + opacity * 0.04;
               const navX = opacity * 6;
               el.style.opacity = navOpacity.toFixed(3);
               el.style.transform = `translate3d(${navX.toFixed(1)}px, 0, 0) scale(${navScale.toFixed(3)})`;
@@ -239,11 +240,15 @@ export default function ProcessSection() {
             // Update Mobile Pill
             if (pillRefs.current[i]) {
               const el = pillRefs.current[i];
-              const pillOpacity = Math.max(0.40, Math.min(1, 0.40 + opacity * 0.60));
-              const pillScale = Math.max(0.95, Math.min(1.05, 0.95 + opacity * 0.10));
+              const pillOpacity = 0.45 + opacity * 0.55;
+              const pillScale = 0.95 + opacity * 0.10;
               el.style.opacity = pillOpacity.toFixed(3);
               el.style.transform = `scale(${pillScale.toFixed(3)})`;
             }
+          }
+
+          if (headerStageTextRef.current) {
+            headerStageTextRef.current.textContent = `STAGE ${STAGES[dominantStage].id} / 07`;
           }
 
           if (dominantStage !== activeStageIndex) {
@@ -288,7 +293,7 @@ export default function ProcessSection() {
     >
       <div className="max-w-7xl mx-auto space-y-8 relative z-10 w-full">
 
-        {/* Top Header Bar with Live Animation Debug Badge */}
+        {/* Top Header Bar with Live Animation Status */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4 w-full">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse" />
@@ -302,13 +307,13 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex items-center gap-3 text-xs">
-            {/* Real-time Smooth Progress Badge */}
+            {/* Live Continuous Progress Badge */}
             <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#8B6DFF]/15 border border-[#8B6DFF]/30 text-[#8B6DFF] text-[10px] font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF] animate-ping" />
               PROCESS ANIMATION: ACTIVE // PROGRESS: <span ref={debugPercentRef} className="font-bold text-white">0%</span>
             </span>
 
-            <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
+            <span ref={headerStageTextRef} className="text-[#8B6DFF] font-bold tracking-widest font-mono">
               STAGE {activeStage.id} / 07
             </span>
           </div>
@@ -350,132 +355,147 @@ export default function ProcessSection() {
               </span>
             </div>
 
-            {/* Stacked Inspector Stages */}
+            {/* Stacked Inspector Stages — Continuous Physical Crossfade */}
             <div className="relative flex-1 my-3 overflow-hidden">
               {STAGES.map((stage, idx) => (
                 <div
                   key={stage.id}
                   ref={(el) => (inspectorRefs.current[idx] = el)}
-                  className="absolute inset-0 space-y-3 will-change-transform"
+                  className="absolute inset-0 flex flex-col justify-between will-change-transform"
                   style={{
                     opacity: idx === 0 ? 1 : 0,
-                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 18px, 0)',
+                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 25px, 0)',
                     visibility: idx === 0 ? 'visible' : 'hidden',
                   }}
                 >
-                  <div className="space-y-1">
-                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
-                    <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
-                      {stage.headline}
-                    </p>
-                  </div>
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
+                      <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
+                        {stage.headline}
+                      </p>
+                    </div>
 
-                  <div className="space-y-1">
-                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
-                    <div className="text-xs text-[#8B6DFF] font-mono font-medium">
-                      {stage.focus}
+                    <div className="space-y-1">
+                      <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
+                      <div className="text-xs text-[#8B6DFF] font-mono font-medium">
+                        {stage.focus}
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
+                      <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
+                        {stage.activities.map((act, i) => (
+                          <li key={i} className="flex items-center gap-2">
+                            <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
+                            <span className="truncate">{act}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
-                    <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
-                      {stage.activities.map((act, i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
-                          <span className="truncate">{act}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="pt-2 border-t border-white/10">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
+                    <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
+                      {stage.deliverable}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-3 border-t border-white/10 shrink-0 z-20">
-              <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
-              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate transition-colors duration-300">
-                {activeStage.deliverable}
-              </div>
+            <div className="pt-2 border-t border-white/10 shrink-0 z-20 flex items-center justify-between text-[10px] text-white/40">
+              <span>STAGE // {activeStage.name}</span>
+              <span className="text-[#8B6DFF] font-bold">{activeStage.id} / 07</span>
             </div>
           </div>
 
-          {/* CENTER: Active Stage Card (Continuous Fluid Stage Blending) */}
+          {/* CENTER: Active Stage Card (Continuous Fluid Stage Blending with Whole Unit Motion) */}
           <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative h-[380px] sm:h-[420px] lg:h-[440px] overflow-hidden">
             
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 shrink-0 z-20">
-              <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
-                ACTIVE STAGE // {activeStage.id}
-              </span>
-              <span className="text-xs font-mono text-[#8B6DFF]">{activeStage.name}</span>
-            </div>
-
-            {/* Stacked Continuous Stage Cards */}
-            <div className="relative flex-1 my-3 overflow-hidden">
+            {/* Stacked Continuous Stage Cards — Entire Unit Fades & Moves Together */}
+            <div className="relative flex-1 overflow-hidden">
               {STAGES.map((stage, idx) => {
                 const IconComp = stage.icon;
                 return (
                   <div
                     key={stage.id}
                     ref={(el) => (cardRefs.current[idx] = el)}
-                    className="absolute inset-0 flex flex-col justify-center space-y-2.5 will-change-transform"
+                    className="absolute inset-0 flex flex-col justify-between will-change-transform"
                     style={{
                       opacity: idx === 0 ? 1 : 0,
-                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 18px, 0) scale(0.96)',
+                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 25px, 0) scale(1.02)',
                       visibility: idx === 0 ? 'visible' : 'hidden',
                     }}
                   >
-                    <div className="flex items-center gap-3 mb-1">
-                      <IconComp size={22} className="text-[#8B6DFF] shrink-0" />
-                      <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
-                        {stage.name}
-                      </h3>
-                    </div>
-                    
-                    <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
-                      {stage.headline}
-                    </p>
+                    {/* Top Unit: Header inside each stage */}
+                    <div>
+                      <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+                        <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
+                          ACTIVE STAGE // {stage.id}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <IconComp size={18} className="text-[#8B6DFF]" />
+                          <span className="text-xs font-mono text-[#8B6DFF] font-bold">{stage.name}</span>
+                        </div>
+                      </div>
 
-                    <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
-                      {stage.detail}
-                    </p>
+                      {/* Middle Unit: Title and Descriptions */}
+                      <div className="space-y-2.5">
+                        <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+                          {stage.name}
+                        </h3>
+                        
+                        <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
+                          {stage.headline}
+                        </p>
+
+                        <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
+                          {stage.detail}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Bottom Unit: Focus and Deliverables inside each stage */}
+                    <div className="space-y-2 pt-3 border-t border-white/10">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+                        <div className="space-y-0.5">
+                          <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
+                            FOCUS
+                          </span>
+                          <span className="text-[#8B6DFF] text-[10px] sm:text-[11px] block font-medium truncate">
+                            {stage.focus}
+                          </span>
+                        </div>
+
+                        <div className="space-y-0.5">
+                          <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
+                            KEY DELIVERABLE
+                          </span>
+                          <span className="text-white text-[10px] sm:text-[11px] font-bold block truncate">
+                            {stage.deliverable}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 );
               })}
             </div>
 
-            <div className="space-y-3 pt-3 border-t border-white/10 shrink-0 z-20">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-                <div className="space-y-0.5">
-                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
-                    FOCUS
-                  </span>
-                  <span className="text-[#8B6DFF] text-[10px] sm:text-[11px] block font-medium">
-                    {activeStage.focus}
-                  </span>
-                </div>
-
-                <div className="space-y-0.5">
-                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
-                    KEY DELIVERABLE
-                  </span>
-                  <span className="text-white text-[10px] sm:text-[11px] font-bold block">
-                    {activeStage.deliverable}
-                  </span>
-                </div>
-              </div>
-
-              {/* Continuous GPU-interpolated Liquid Progress Bar */}
-              <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1">
-                <div
-                  ref={progressBarRef}
-                  className="bg-[#8B6DFF] h-full origin-left will-change-transform"
-                  style={{
-                    transform: 'scaleX(0.04)',
-                    transition: 'transform 0.04s linear'
-                  }}
-                />
-              </div>
+            {/* Continuous GPU Progress Bar at bottom of card */}
+            <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-3 shrink-0 z-20">
+              <div
+                ref={progressBarRef}
+                className="bg-[#8B6DFF] h-full origin-left will-change-transform"
+                style={{
+                  transform: 'scaleX(0.04)',
+                  transition: 'transform 0.04s linear'
+                }}
+              />
             </div>
 
           </div>
@@ -507,7 +527,7 @@ export default function ProcessSection() {
                         : 'border-transparent text-white/50 hover:text-white'
                     }`}
                     style={{
-                      opacity: idx === 0 ? 1 : 0.35,
+                      opacity: idx === 0 ? 1 : 0.40,
                       transform: idx === 0 ? 'translate3d(6px, 0, 0) scale(1)' : 'translate3d(0, 0, 0) scale(0.96)',
                     }}
                   >
