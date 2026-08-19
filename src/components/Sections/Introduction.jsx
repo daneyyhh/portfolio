@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import portraitImg from '../../assets/reuben-portrait.jpg';
+import { whoamiImageBase64 } from '../../assets/whoamiImageBase64';
 
 export default function Introduction() {
   return (
@@ -68,7 +68,7 @@ export default function Introduction() {
             className="relative border-2 border-[#111111] bg-[#111111] overflow-hidden group shadow-2xl w-full max-w-full"
           >
             <img
-              src={portraitImg}
+              src={whoamiImageBase64}
               alt="Reuben Binu George"
               className="w-full h-auto max-h-[520px] object-cover object-top group-hover:scale-105 transition-transform duration-700 block"
             />
