@@ -1,76 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
 import ReubgLogo from './ReubgLogo';
 
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState('loading'); // 'loading' | 'completing' | 'done'
+  const [isExiting, setIsExiting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setPhase('completing');
-          
-          setTimeout(() => {
-            setPhase('done');
-            if (onComplete) onComplete();
-          }, 500);
-          
-          return 100;
-        }
-        const step = Math.floor(Math.random() * 6) + 4;
-        return prev + step > 100 ? 100 : prev + step;
-      });
-    }, 40);
+    setIsMounted(true);
 
-    return () => clearInterval(timer);
+    // Smooth deterministic progress increment
+    let currentProgress = 0;
+    const startTime = performance.now();
+    const duration = 1300; // 1.3 seconds total loading experience
+    let animationFrameId;
+
+    const updateProgress = (now) => {
+      const elapsed = now - startTime;
+      const progressFraction = Math.min(elapsed / duration, 1);
+      
+      // Easing curve: fast start, steady middle, clean snap to 100
+      const eased = Math.min(1, Math.pow(progressFraction, 0.85));
+      currentProgress = Math.round(eased * 100);
+      setProgress(currentProgress);
+
+      if (progressFraction < 1) {
+        animationFrameId = requestAnimationFrame(updateProgress);
+      } else {
+        setProgress(100);
+        // Clean hold at 100% then smooth dissolve
+        setTimeout(() => {
+          setIsExiting(true);
+          setTimeout(() => {
+            if (onComplete) onComplete();
+          }, 450);
+        }, 220);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateProgress);
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [onComplete]);
 
   return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] } }}
-      className="fixed inset-0 z-[999] bg-[#0A0A0A] text-white flex flex-col justify-center items-center p-6 md:p-12 font-mono overflow-hidden selection:bg-[#8B6DFF] selection:text-white"
+    <div
+      className={`fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col justify-center items-center select-none overflow-hidden transition-opacity duration-450 ease-out ${
+        isExiting ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}
+      style={{ minHeight: '100dvh', height: '100vh', width: '100vw' }}
+      aria-label="Loading portfolio"
+      role="status"
     >
-      {/* Centered Pre-loader Hierarchy */}
-      <div className="flex flex-col items-center justify-center text-center space-y-8 w-full max-w-2xl my-auto z-10">
+      {/* Centered Composition with Generous Spacing */}
+      <div
+        className={`flex flex-col items-center justify-center text-center w-full px-6 max-w-xl mx-auto space-y-7 sm:space-y-8 md:space-y-10 z-10 transition-all duration-500 ease-out ${
+          isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+        }`}
+      >
         
-        {/* 1. LARGE REUBG LOGO (420px–500px on Desktop, Clean sitting on #0A0A0A without any glow box) */}
-        <motion.div
-          animate={phase === 'completing' ? { scale: [1, 1.03, 1] } : { scale: 1 }}
-          transition={{ duration: 0.4 }}
-          className="flex justify-center w-full"
-        >
-          <ReubgLogo variant="dark" className="w-[clamp(240px,75vw,360px)] md:w-[clamp(320px,35vw,500px)] h-auto" />
-        </motion.div>
+        {/* 1. BRAND LOGO (Large, crisp, sitting directly on #0A0A0A, no box, no glow) */}
+        <div className="w-[min(74vw,300px)] sm:w-[380px] md:w-[480px] max-w-[520px] flex items-center justify-center shrink-0">
+          <ReubgLogo
+            variant="dark"
+            className="w-full h-auto object-contain max-h-[140px] md:max-h-[180px]"
+          />
+        </div>
 
-        {/* 2. FULL-STACK DEVELOPER */}
-        <div className="text-xs md:text-sm font-mono text-slate-300 tracking-[0.3em] uppercase">
+        {/* 2. SUBTITLE */}
+        <div className="text-[11px] sm:text-xs md:text-sm font-mono text-[#A0A0A0] tracking-[0.35em] uppercase font-medium">
           FULL-STACK DEVELOPER
         </div>
 
-        {/* 3. PROGRESS BAR LINE */}
-        <div className="w-64 md:w-96 space-y-3 pt-2">
-          <div className="h-[2px] w-full bg-white/10 rounded-none overflow-hidden">
-            <motion.div
-              className="h-full bg-[#8B6DFF]"
+        {/* 3. MINIMAL PROGRESS BAR & STATUS */}
+        <div className="w-[min(78vw,320px)] sm:w-[350px] md:w-[420px] max-w-[440px] space-y-2.5 pt-1 sm:pt-2">
+          
+          {/* Status Label & Percentage (INITIALIZING EXPERIENCE on left, percentage on right) */}
+          <div className="flex justify-between items-center text-[10px] sm:text-[11px] font-mono tracking-widest uppercase">
+            <span className="text-[#8B6DFF] font-semibold">
+              {progress >= 100 ? 'INITIALIZING EXPERIENCE' : 'INITIALIZING EXPERIENCE'}
+            </span>
+            <span className="font-bold text-[#F1F0EB] tabular-nums">
+              {progress}%
+            </span>
+          </div>
+
+          {/* Minimal 2px Rectangular Progress Bar Track (No glow, no pill shape, no gradient) */}
+          <div className="w-full h-[2px] bg-[#1A1A1A] rounded-none overflow-hidden relative">
+            <div
+              className="h-full bg-[#8B6DFF] rounded-none transition-all duration-75 ease-out"
               style={{ width: `${progress}%` }}
-              transition={{ duration: 0.1 }}
             />
           </div>
-          
-          {/* 4. INITIALIZING EXPERIENCE + PERCENTAGE */}
-          <div className="flex justify-between text-[11px] font-mono text-slate-400">
-            <span className="text-[#8B6DFF] uppercase tracking-widest">
-              {phase === 'completing' ? 'EXPERIENCE READY' : 'INITIALIZING EXPERIENCE'}
-            </span>
-            <span className="font-bold text-white">{progress}%</span>
-          </div>
+
         </div>
 
       </div>
-    </motion.div>
+    </div>
   );
 }
