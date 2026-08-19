@@ -157,12 +157,12 @@ export default function ProcessSection() {
       targetProgressRef.current = progress;
     };
 
-    // Inertia damping loop (smoothing factor: 0.09)
+    // Inertia damping loop (smoothing factor: 0.08 for fluid studio feel)
     const loop = () => {
       if (inViewRef.current) {
         const diff = targetProgressRef.current - currentProgressRef.current;
         if (Math.abs(diff) > 0.0002) {
-          currentProgressRef.current += diff * 0.09;
+          currentProgressRef.current += diff * 0.08;
           const p = Math.max(0, Math.min(1, currentProgressRef.current));
 
           // Direct GPU-accelerated transform update on progress bar (60-120fps)
@@ -266,8 +266,8 @@ export default function ProcessSection() {
                   isActive
                     ? 'bg-[#8B6DFF] text-white font-bold shadow-md scale-105 opacity-100'
                     : isCompleted
-                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30 opacity-70'
-                    : 'bg-[#111111] text-white/50 border border-white/10 opacity-40 hover:opacity-80'
+                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30 opacity-70 scale-95'
+                    : 'bg-[#111111] text-white/50 border border-white/10 opacity-40 scale-95 hover:opacity-80'
                 }`}
               >
                 <span>{s.id}</span>
@@ -295,9 +295,9 @@ export default function ProcessSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
+                  exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-3"
                 >
@@ -352,9 +352,9 @@ export default function ProcessSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.98 }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-2.5"
                 >
@@ -422,8 +422,8 @@ export default function ProcessSection() {
                   onClick={() => handleStageClick(idx)}
                   className={`flex items-center gap-3 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] py-1.5 px-3 border-l-2 cursor-pointer ${
                     isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1.5 opacity-100 scale-[1.02]'
-                      : 'border-transparent text-white/50 opacity-40 hover:opacity-80 hover:text-white hover:border-white/20'
+                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1.5 opacity-100 scale-100'
+                      : 'border-transparent text-white/50 opacity-40 scale-95 hover:opacity-80 hover:text-white hover:border-white/20'
                   }`}
                 >
                   <span className={`text-[10px] font-mono transition-colors duration-500 ${isActive ? 'text-[#8B6DFF]' : 'text-white/40'}`}>
