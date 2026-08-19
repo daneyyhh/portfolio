@@ -17,8 +17,8 @@ export default function Navbar({ onOpenResume }) {
         { navId: 'home', elementIds: ['hero'] },
         { navId: 'about', elementIds: ['introduction', 'about'] },
         { navId: 'process', elementIds: ['process'] },
-        { navId: 'work', elementIds: ['projects', 'architecture', 'skills'] },
-        { navId: 'contact', elementIds: ['gamelab', 'ailab', 'experience', 'contact'] }
+        { navId: 'work', elementIds: ['projects', 'architecture', 'skills', 'visual-archive'] },
+        { navId: 'contact', elementIds: ['ailab', 'experience', 'contact'] }
       ];
 
       const viewportCenter = window.scrollY + window.innerHeight / 3;

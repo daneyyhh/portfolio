@@ -12,7 +12,7 @@ import ProcessSection from './components/Sections/ProcessSection';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
-import GameLab from './components/Sections/GameLab';
+import VisualArchive from './components/Sections/VisualArchive';
 import AiLab from './components/Sections/AiLab';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
@@ -63,7 +63,7 @@ export default function App() {
           
           <TechStack />
           
-          <GameLab />
+          <VisualArchive />
           
           <AiLab />
           
