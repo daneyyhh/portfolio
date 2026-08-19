@@ -137,9 +137,10 @@ export default function ProcessSection() {
   useEffect(() => {
     let rafId = null;
     const numStages = STAGES.length;
-    const interval = 1 / (numStages - 1);
+    const numIntervals = numStages - 1; // 6 intervals between 7 stages
+    const slotWidth = 1 / numIntervals;
 
-    // Keep RAF loop active when section is near viewport
+    // Observe when section is near viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -183,43 +184,71 @@ export default function ProcessSection() {
           if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
           if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
 
-          // 3. Gliding Navigator Indicator on Right
+          // 3. Calculate active stage slot and transition progress
+          // p ranges 0..1 across 6 slots
+          const rawSlot = p * numIntervals;
+          const k = Math.min(numIntervals - 1, Math.max(0, Math.floor(rawSlot)));
+          const slotProgress = rawSlot - k; // 0..1 within slot k
+
+          // Transition zone: 40% hold on stage k, 60% transition to k+1
+          const holdRatio = 0.35;
+          let transitionFraction = 0;
+          if (slotProgress > holdRatio) {
+            transitionFraction = (slotProgress - holdRatio) / (1 - holdRatio);
+          }
+          // Smoothstep curve for buttery organic transition
+          const smoothS = transitionFraction * transitionFraction * (3 - 2 * transitionFraction);
+
+          const floatStageIndex = k + smoothS;
+
+          // Gliding Navigator Indicator on Right
           if (stageGliderRef.current) {
-            stageGliderRef.current.style.transform = `translate3d(0, ${p * (numStages - 1) * 44}px, 0)`;
+            stageGliderRef.current.style.transform = `translate3d(0, ${floatStageIndex * 44}px, 0)`;
           }
 
-          // 4. Mathematical Continuous Cross-Fade & Overlapping Translation
-          let dominantStage = 0;
-          let maxOpacity = -1;
+          // 4. Update every stage layer (outgoing + incoming overlap)
+          let dominantStage = k;
+          if (smoothS > 0.5 && k + 1 < numStages) {
+            dominantStage = k + 1;
+          }
 
           for (let i = 0; i < numStages; i++) {
-            const center = i * interval;
-            const delta = (p - center) / interval; // -1 to +1 relative to this stage
-            const absDelta = Math.abs(delta);
+            let opacity = 0;
+            let translateY = 20;
+            let scale = 1.02;
 
-            // True linear crossfade (1.0 at center, 0.0 at edges)
-            const opacity = Math.max(0, Math.min(1, 1 - absDelta));
-            // Progressive smooth translateY (-25px past center, +25px before center)
-            const translateY = -delta * 25;
-            // Progressive scale (1.0 at center, 0.98 at edges)
-            const scale = 1 - delta * 0.02;
-            const isVisible = opacity > 0.005;
-
-            if (opacity > maxOpacity) {
-              maxOpacity = opacity;
-              dominantStage = i;
+            if (i === k) {
+              // Current / outgoing stage
+              opacity = 1 - smoothS;
+              translateY = -smoothS * 20;
+              scale = 1 - smoothS * 0.02;
+            } else if (i === k + 1) {
+              // Next / incoming stage
+              opacity = smoothS;
+              translateY = (1 - smoothS) * 20;
+              scale = 1 + (1 - smoothS) * 0.02;
+            } else if (i < k) {
+              opacity = 0;
+              translateY = -20;
+              scale = 0.98;
+            } else {
+              opacity = 0;
+              translateY = 20;
+              scale = 1.02;
             }
 
-            // Update Center Card Entire Content Unit
+            const isVisible = opacity > 0.005;
+
+            // Center Card Stage Layer
             if (cardRefs.current[i]) {
               const el = cardRefs.current[i];
               el.style.opacity = opacity.toFixed(4);
               el.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
-              el.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
+              el.style.pointerEvents = opacity > 0.4 ? 'auto' : 'none';
               el.style.visibility = isVisible ? 'visible' : 'hidden';
             }
 
-            // Update Left Inspector Entire Content Unit
+            // Left Inspector Stage Layer
             if (inspectorRefs.current[i]) {
               const el = inspectorRefs.current[i];
               el.style.opacity = opacity.toFixed(4);
@@ -227,7 +256,7 @@ export default function ProcessSection() {
               el.style.visibility = isVisible ? 'visible' : 'hidden';
             }
 
-            // Update Right Navigator Item
+            // Right Stage Navigator Item
             if (navRefs.current[i]) {
               const el = navRefs.current[i];
               const navOpacity = 0.40 + opacity * 0.60;
@@ -237,7 +266,7 @@ export default function ProcessSection() {
               el.style.transform = `translate3d(${navX.toFixed(1)}px, 0, 0) scale(${navScale.toFixed(3)})`;
             }
 
-            // Update Mobile Pill
+            // Mobile Pill Item
             if (pillRefs.current[i]) {
               const el = pillRefs.current[i];
               const pillOpacity = 0.45 + opacity * 0.55;
@@ -364,7 +393,7 @@ export default function ProcessSection() {
                   className="absolute inset-0 flex flex-col justify-between will-change-transform"
                   style={{
                     opacity: idx === 0 ? 1 : 0,
-                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 25px, 0)',
+                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 20px, 0)',
                     visibility: idx === 0 ? 'visible' : 'hidden',
                   }}
                 >
@@ -426,7 +455,7 @@ export default function ProcessSection() {
                     className="absolute inset-0 flex flex-col justify-between will-change-transform"
                     style={{
                       opacity: idx === 0 ? 1 : 0,
-                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 25px, 0) scale(1.02)',
+                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 20px, 0) scale(1.02)',
                       visibility: idx === 0 ? 'visible' : 'hidden',
                     }}
                   >
