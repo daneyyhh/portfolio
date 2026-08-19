@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const POSTERS = Array.from({ length: 24 }, (_, i) => {
@@ -13,6 +14,18 @@ const POSTERS = Array.from({ length: 24 }, (_, i) => {
 export default function VisualArchive() {
   const [activeImageIndex, setActiveImageIndex] = useState(null);
   const totalCount = POSTERS.length;
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (activeImageIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeImageIndex]);
 
   // Keyboard navigation for lightbox
   const handleKeyDown = useCallback((e) => {
@@ -122,15 +135,17 @@ export default function VisualArchive() {
 
       </div>
 
-      {/* Clean Full-Screen Artwork Lightbox Viewer */}
-      {activeImageIndex !== null && (
+      {/* True Full-Screen Lightbox Portal (Renders into document.body at z-[99999] ABOVE Navbar) */}
+      {activeImageIndex !== null && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xl flex flex-col justify-between items-center p-4 sm:p-6"
+          className="fixed inset-0 w-screen h-screen bg-[#000000] text-white flex flex-col justify-between items-center p-4 sm:p-6 select-none transition-opacity duration-300 ease-out"
+          style={{ zIndex: 99999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}
           onClick={() => setActiveImageIndex(null)}
         >
-          {/* Top Minimal Bar (Index + Controls) */}
+          {/* Top Minimal Controls Bar */}
           <div
-            className="w-full max-w-6xl flex items-center justify-between py-2 border-b border-white/10 z-20"
+            className="w-full max-w-6xl flex items-center justify-between py-3 border-b border-white/10 relative"
+            style={{ zIndex: 100000 }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-xs font-mono text-[#8B6DFF] font-bold tracking-widest">
@@ -140,21 +155,21 @@ export default function VisualArchive() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveImageIndex((prev) => (prev - 1 + totalCount) % totalCount)}
-                className="p-2 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors cursor-pointer"
                 title="Previous (Left Arrow)"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => setActiveImageIndex((prev) => (prev + 1) % totalCount)}
-                className="p-2 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors cursor-pointer"
                 title="Next (Right Arrow)"
               >
                 <ChevronRight size={18} />
               </button>
               <button
                 onClick={() => setActiveImageIndex(null)}
-                className="p-2 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors ml-2"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors ml-2 cursor-pointer"
                 title="Close (Esc)"
               >
                 <X size={18} />
@@ -162,23 +177,29 @@ export default function VisualArchive() {
             </div>
           </div>
 
-          {/* Centered Large Artwork Canvas */}
+          {/* Centered Large Artwork Canvas (Preserves Native Proportions, No Distortion, No Cropping) */}
           <div
-            className="my-auto flex items-center justify-center w-full h-[82vh] overflow-hidden p-2 z-10"
+            className="my-auto flex items-center justify-center w-full h-[82vh] overflow-hidden p-2 relative"
+            style={{ zIndex: 99999 }}
             onClick={(e) => e.stopPropagation()}
           >
             <img
+              key={POSTERS[activeImageIndex].id}
               src={POSTERS[activeImageIndex].src}
-              alt={`Visual Archive ${POSTERS[activeImageIndex].index}`}
-              className="max-h-[80vh] max-w-[90vw] object-contain filter contrast-125 brightness-95 shadow-2xl select-none"
+              alt={`Artwork ${POSTERS[activeImageIndex].index}`}
+              className="max-h-[78vh] max-w-[88vw] object-contain filter contrast-125 brightness-95 shadow-2xl select-none transition-transform duration-300 ease-out"
             />
           </div>
 
           {/* Bottom Minimal Navigation Cue */}
-          <div className="text-[10px] font-mono text-[#555555] tracking-widest uppercase z-20">
+          <div
+            className="text-[10px] font-mono text-[#555555] tracking-widest uppercase pb-2 relative"
+            style={{ zIndex: 100000 }}
+          >
             USE ARROW KEYS OR CHEVRONS TO NAVIGATE · ESC TO CLOSE
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </section>

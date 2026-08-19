@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Github, Layers, CheckCircle2 } from 'lucide-react';
 
 export default function CaseStudyModal({ project, onClose }) {
+  useEffect(() => {
+    if (project) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [project]);
+
   if (!project) return null;
   const cs = project.caseStudy || {};
 
@@ -12,7 +23,7 @@ export default function CaseStudyModal({ project, onClose }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-[#0A0A0A]/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 overflow-y-auto font-mono selection:bg-[#8B6DFF] selection:text-white"
+        className="fixed inset-0 z-[99999] bg-[#0A0A0A]/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-8 overflow-y-auto font-mono selection:bg-[#8B6DFF] selection:text-white"
       >
         <div className="relative w-full max-w-5xl bg-[#141414] border border-white/15 my-8 overflow-hidden shadow-2xl rounded-none text-slate-200">
           
