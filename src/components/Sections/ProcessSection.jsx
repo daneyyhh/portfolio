@@ -182,7 +182,7 @@ export default function ProcessSection() {
           if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
           if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
 
-          // 3. Gliding Navigator Indicator on Right
+          // 3. Gliding Navigator Indicator on Right (travels through full navigator list)
           if (stageGliderRef.current) {
             stageGliderRef.current.style.transform = `translateY(${p * (numStages - 1) * 44}px)`;
           }
@@ -198,8 +198,8 @@ export default function ProcessSection() {
 
             // Progressive opacity (1.0 at center, 0.0 at edges)
             const opacity = Math.max(0, Math.min(1, 1 - absDelta * 1.1));
-            // Progressive smooth translateY (-20px past center, +20px before center)
-            const translateY = -delta * 20;
+            // Progressive smooth translateY (-18px past center, +18px before center)
+            const translateY = -delta * 18;
             // Progressive scale (1.0 at center, 0.96 at edges)
             const scale = Math.max(0.96, 1 - absDelta * 0.04);
             const isVisible = opacity > 0.01;
@@ -305,7 +305,7 @@ export default function ProcessSection() {
             {/* Real-time Smooth Progress Badge */}
             <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#8B6DFF]/15 border border-[#8B6DFF]/30 text-[#8B6DFF] text-[10px] font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF] animate-ping" />
-              PROCESS ANIMATION: NEW // PROGRESS: <span ref={debugPercentRef} className="font-bold text-white">0%</span>
+              PROCESS ANIMATION: ACTIVE // PROGRESS: <span ref={debugPercentRef} className="font-bold text-white">0%</span>
             </span>
 
             <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
@@ -359,7 +359,7 @@ export default function ProcessSection() {
                   className="absolute inset-0 space-y-3 will-change-transform"
                   style={{
                     opacity: idx === 0 ? 1 : 0,
-                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 20px, 0)',
+                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 18px, 0)',
                     visibility: idx === 0 ? 'visible' : 'hidden',
                   }}
                 >
@@ -421,7 +421,7 @@ export default function ProcessSection() {
                     className="absolute inset-0 flex flex-col justify-center space-y-2.5 will-change-transform"
                     style={{
                       opacity: idx === 0 ? 1 : 0,
-                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 20px, 0) scale(0.96)',
+                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 18px, 0) scale(0.96)',
                       visibility: idx === 0 ? 'visible' : 'hidden',
                     }}
                   >
@@ -487,6 +487,13 @@ export default function ProcessSection() {
             </div>
 
             <div className="space-y-1.5 relative">
+              {/* Continuous Gliding Indicator Line */}
+              <div
+                ref={stageGliderRef}
+                className="absolute -left-[17px] w-[3px] h-[38px] bg-[#8B6DFF] rounded-full shadow-[0_0_12px_#8B6DFF] pointer-events-none transition-transform will-change-transform"
+                style={{ top: 0 }}
+              />
+
               {STAGES.map((s, idx) => {
                 const isActive = idx === activeStageIndex;
                 return (
