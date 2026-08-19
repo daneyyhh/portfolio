@@ -116,28 +116,48 @@ const STAGES = [
   }
 ];
 
+// VH_PER_STAGE: how many viewport-heights of scroll each stage takes
+const VH_PER_STAGE = 0.85;
+// Total section height = stages * VH_PER_STAGE + 1 (1vh for the sticky viewport itself)
+const TOTAL_VH = STAGES.length * VH_PER_STAGE + 1;
+
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const containerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const outerRef = useRef(null);
   const activeStageIndexRef = useRef(0);
 
   useEffect(() => {
     let rafId = null;
 
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const totalScrollable = rect.height - window.innerHeight;
-      if (totalScrollable <= 0) return;
+      if (!outerRef.current) return;
 
-      const scrolled = -rect.top;
-      // Clamp progress strictly between 0.00 and 1.00
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      // Use offsetTop + offsetHeight for stable measurements (not affected by transforms)
+      const sectionTop = outerRef.current.offsetTop;
+      const sectionHeight = outerRef.current.offsetHeight;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const vh = window.innerHeight;
+
+      // The "active" scroll range: from when section top hits viewport top
+      // to when section bottom hits viewport bottom
+      const scrollStart = sectionTop;                        // when section enters
+      const scrollEnd = sectionTop + sectionHeight - vh;    // when section exits (sticky releases)
+
+      if (scrollEnd <= scrollStart) return;
+
+      const scrolled = scrollY - scrollStart;
+      const progress = Math.max(0, Math.min(1, scrolled / (scrollEnd - scrollStart)));
+
       setScrollProgress(progress);
+      setIsVisible(scrollY + vh > sectionTop && scrollY < sectionTop + sectionHeight);
 
-      // Smooth discrete stage mapping across 7 stages
-      const stageIdx = Math.min(STAGES.length - 1, Math.max(0, Math.floor(progress * STAGES.length)));
+      // Map progress evenly across stages — use floor so each stage gets equal range
+      const stageIdx = Math.min(
+        STAGES.length - 1,
+        Math.max(0, Math.floor(progress * STAGES.length))
+      );
 
       if (stageIdx !== activeStageIndexRef.current) {
         activeStageIndexRef.current = stageIdx;
@@ -165,17 +185,14 @@ export default function ProcessSection() {
   }, []);
 
   const handleStageClick = (idx) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const containerTop = rect.top + scrollTop;
-    const totalScrollable = rect.height - window.innerHeight;
-    const targetScroll = containerTop + (idx / STAGES.length) * totalScrollable;
+    if (!outerRef.current) return;
+    const sectionTop = outerRef.current.offsetTop;
+    const sectionHeight = outerRef.current.offsetHeight;
+    const vh = window.innerHeight;
+    const scrollEnd = sectionTop + sectionHeight - vh;
+    const targetScroll = sectionTop + (idx / STAGES.length) * (scrollEnd - sectionTop);
 
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
+    window.scrollTo({ top: Math.max(sectionTop, targetScroll), behavior: 'smooth' });
   };
 
   const activeStage = STAGES[activeStageIndex];
@@ -183,219 +200,210 @@ export default function ProcessSection() {
   const progressPercent = Math.round(scrollProgress * 100);
 
   return (
+    /*
+     * STRUCTURE:
+     * <section>                 ← outerRef, sets total scroll height, bg color
+     *   <div.sticky-wrapper>   ← position:sticky, top:0, height:100vh, w-full (FULL WIDTH — no max-w here)
+     *     <div.content>        ← max-w-7xl mx-auto INSIDE sticky, for centered content layout
+     *       ...Process UI...
+     *     </div>
+     *   </div>
+     * </section>
+     *
+     * KEY: sticky wrapper must be w-full so position:sticky works correctly.
+     * centering (max-w-7xl mx-auto) goes INSIDE the sticky wrapper, not on it.
+     */
     <section
       id="process"
-      ref={containerRef}
-      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full overflow-visible"
-      style={{ height: '200vh' }}
+      ref={outerRef}
+      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
+      style={{ height: `${TOTAL_VH * 100}vh` }}
     >
-      {/* Sticky 100vh Viewport */}
+      {/* STICKY WRAPPER: must be w-full and position:sticky, top:0 */}
       <div
-        className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-8 max-w-7xl mx-auto select-none z-20 overflow-hidden"
-        style={{ position: 'sticky', top: 0, height: '100vh', maxHeight: '100svh' }}
+        className="w-full bg-[#0A0A0A]"
+        style={{ position: 'sticky', top: 0, height: '100vh', zIndex: 20 }}
       >
-        {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 pt-1 sm:pt-2 w-full shrink-0">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 bg-[#8B6DFF] animate-pulse" />
-            <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
-              03 // PROCESS
-            </span>
-            <span className="text-white/30 hidden sm:inline-block">/</span>
-            <span className="text-white/70 text-xs tracking-wider uppercase hidden sm:inline-block">
-              ENGINEERING & DESIGN LIFECYCLE
-            </span>
-          </div>
+        {/* CONTENT: centered layout inside sticky wrapper */}
+        <div className="h-full w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col justify-between select-none overflow-hidden">
 
-          <div className="flex items-center gap-3 text-xs">
-            <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
-              STAGE {activeStage.id} / 07
-            </span>
-          </div>
-        </div>
-
-        {/* Mobile Horizontal Stepper Indicator */}
-        <div className="flex lg:hidden items-center justify-between gap-1 py-1.5 border-b border-white/10 overflow-x-auto w-full shrink-0">
-          {STAGES.map((s, idx) => {
-            const isActive = idx === activeStageIndex;
-            const isCompleted = idx < activeStageIndex;
-            return (
-              <button
-                key={s.id}
-                onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1 px-2 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
-                  isActive
-                    ? 'bg-[#8B6DFF] text-white font-bold'
-                    : isCompleted
-                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30'
-                    : 'bg-[#111111] text-[#666666] border border-white/10'
-                }`}
-              >
-                <span>{s.id}</span>
-                <span className="hidden min-[400px]:inline">{s.name}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Main 3-Column Interactive Process Viewport */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8 items-stretch my-auto w-full flex-1 py-2 sm:py-4 max-h-[75vh] overflow-hidden">
-          
-          {/* 1. LEFT: Process Inspector */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl w-full h-full overflow-hidden">
-            <div className="space-y-3 xl:space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
-                  PROCESS INSPECTOR
-                </span>
-                <span className="text-[10px] text-[#555555] font-mono">
-                  [ {activeStage.id} / 07 ]
-                </span>
-              </div>
-
-              {/* Dynamic Content with Smooth Subtle Transition */}
-              <div key={activeStage.id} className="space-y-3 transition-opacity duration-300">
-                <div className="space-y-1">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
-                  <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
-                    {activeStage.headline}
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
-                  <div className="text-xs text-[#8B6DFF] font-mono font-medium">
-                    {activeStage.focus}
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
-                  <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
-                    {activeStage.activities.map((act, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
-                        <span className="truncate">{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          {/* Top Header Bar */}
+          <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 pt-3 sm:pt-4 shrink-0">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-[#8B6DFF] animate-pulse" />
+              <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
+                03 // PROCESS
+              </span>
+              <span className="text-white/30 hidden sm:inline-block">/</span>
+              <span className="text-white/70 text-xs tracking-wider uppercase hidden sm:inline-block">
+                ENGINEERING & DESIGN LIFECYCLE
+              </span>
             </div>
-
-            <div className="pt-3 border-t border-white/10">
-              <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
-              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
-                {activeStage.deliverable}
-              </div>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
+                STAGE {activeStage.id} / 07
+              </span>
             </div>
           </div>
 
-          {/* 2. CENTER: Active Stage Card */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-4 sm:p-6 md:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 w-full h-full">
-            
-            {/* Top Label & Icon */}
-            <div className="space-y-2 sm:space-y-3">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3">
-                <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
-                  ACTIVE STAGE // {activeStage.id}
-                </span>
-                <IconComponent size={20} className="text-[#8B6DFF]" />
-              </div>
-
-              {/* Title & Concise Topic Details */}
-              <div key={activeStage.id} className="space-y-2 sm:space-y-3 transition-opacity duration-300">
-                <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
-                  {activeStage.name}
-                </h3>
-                
-                <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
-                  {activeStage.headline}
-                </p>
-
-                <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
-                  {activeStage.detail}
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom Focus & Deliverable Blocks */}
-            <div className="space-y-2 sm:space-y-3 pt-2 sm:pt-3 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-                <div className="space-y-0.5">
-                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
-                    FOCUS
-                  </span>
-                  <span className="text-[#8B6DFF] text-[10px] sm:text-[11px] block font-medium">
-                    {activeStage.focus}
-                  </span>
-                </div>
-
-                <div className="space-y-0.5">
-                  <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
-                    KEY DELIVERABLE
-                  </span>
-                  <span className="text-white text-[10px] sm:text-[11px] font-bold block">
-                    {activeStage.deliverable}
-                  </span>
-                </div>
-              </div>
-
-              {/* Continuous Scroll-Progress Indicator */}
-              <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1.5">
-                <div
-                  className="bg-[#8B6DFF] h-full transition-all duration-75 ease-out"
-                  style={{ width: `${Math.max(4, scrollProgress * 100)}%` }}
-                />
-              </div>
-            </div>
-
-          </div>
-
-          {/* 3. RIGHT: Compact Vertical Stage Navigator */}
-          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-full w-full">
-            <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
-              STAGE NAVIGATOR
-            </div>
+          {/* Mobile Horizontal Stepper Indicator */}
+          <div className="flex lg:hidden items-center gap-1 py-1.5 border-b border-white/10 overflow-x-auto w-full shrink-0">
             {STAGES.map((s, idx) => {
               const isActive = idx === activeStageIndex;
+              const isCompleted = idx < activeStageIndex;
               return (
                 <button
                   key={s.id}
                   onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-3 text-left transition-all duration-200 py-1.5 px-3 border-l-2 cursor-pointer ${
+                  className={`flex items-center gap-1 px-2 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider transition-all duration-200 shrink-0 cursor-pointer ${
                     isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold'
-                      : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
+                      ? 'bg-[#8B6DFF] text-white font-bold'
+                      : isCompleted
+                      ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30'
+                      : 'bg-[#111111] text-[#666666] border border-white/10'
                   }`}
                 >
-                  <span className={`text-[10px] font-mono ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
-                    {s.id}
-                  </span>
-                  <span className="text-xs uppercase tracking-wider font-mono">
-                    {s.name}
-                  </span>
+                  <span>{s.id}</span>
+                  <span className="hidden min-[400px]:inline">{s.name}</span>
                 </button>
               );
             })}
           </div>
 
-        </div>
+          {/* Main 3-Column Process Viewport */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch w-full py-3 sm:py-4 flex-1 min-h-0">
 
-        {/* Bottom Footer Info Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-2 sm:pt-3 text-[10px] sm:text-xs text-[#555555] w-full shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
-            <span className="tracking-widest uppercase">
-              SCROLL PROGRESSION // {progressPercent}% COMPLETED
-            </span>
+            {/* LEFT: Process Inspector */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl w-full min-h-0 overflow-hidden">
+              <div className="space-y-3 xl:space-y-4 min-h-0 overflow-hidden">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2 shrink-0">
+                  <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
+                    PROCESS INSPECTOR
+                  </span>
+                  <span className="text-[10px] text-[#555555] font-mono shrink-0">
+                    [ {activeStage.id} / 07 ]
+                  </span>
+                </div>
+
+                <div key={activeStage.id} className="space-y-3" style={{ transition: 'opacity 0.3s ease' }}>
+                  <div className="space-y-1">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
+                    <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
+                      {activeStage.headline}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
+                    <div className="text-xs text-[#8B6DFF] font-mono font-medium">{activeStage.focus}</div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
+                    <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
+                      {activeStage.activities.map((act, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
+                          <span className="truncate">{act}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-white/10 shrink-0">
+                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
+                <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
+                  {activeStage.deliverable}
+                </div>
+              </div>
+            </div>
+
+            {/* CENTER: Active Stage Card */}
+            <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-4 sm:p-6 md:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative w-full min-h-0 overflow-hidden">
+              <div className="space-y-2 sm:space-y-3 min-h-0 overflow-hidden">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 shrink-0">
+                  <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
+                    ACTIVE STAGE // {activeStage.id}
+                  </span>
+                  <IconComponent size={20} className="text-[#8B6DFF] shrink-0" />
+                </div>
+
+                <div key={activeStage.id} className="space-y-2 sm:space-y-3" style={{ transition: 'opacity 0.3s ease' }}>
+                  <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+                    {activeStage.name}
+                  </h3>
+                  <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
+                    {activeStage.headline}
+                  </p>
+                  <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
+                    {activeStage.detail}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2 sm:space-y-3 pt-2 sm:pt-3 border-t border-white/10 shrink-0">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">FOCUS</span>
+                    <span className="text-[#8B6DFF] text-[10px] sm:text-[11px] block font-medium">{activeStage.focus}</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">KEY DELIVERABLE</span>
+                    <span className="text-white text-[10px] sm:text-[11px] font-bold block">{activeStage.deliverable}</span>
+                  </div>
+                </div>
+                <div className="w-full bg-[#222222] h-[2px] overflow-hidden">
+                  <div
+                    className="bg-[#8B6DFF] h-full"
+                    style={{ width: `${Math.max(4, progressPercent)}%`, transition: 'width 0.1s ease-out' }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT: Stage Navigator */}
+            <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-full w-full">
+              <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
+                STAGE NAVIGATOR
+              </div>
+              {STAGES.map((s, idx) => {
+                const isActive = idx === activeStageIndex;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => handleStageClick(idx)}
+                    className={`flex items-center gap-3 text-left py-1.5 px-3 border-l-2 cursor-pointer ${
+                      isActive
+                        ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold'
+                        : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
+                    }`}
+                    style={{ transition: 'all 0.2s ease' }}
+                  >
+                    <span className={`text-[10px] font-mono ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
+                      {s.id}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider font-mono">{s.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
           </div>
 
-          <div className="text-right text-[#888888] tracking-wider uppercase font-mono">
-            {activeStageIndex === STAGES.length - 1 ? 'READY TO PROCEED →' : 'SCROLL TO ADVANCE STAGE ↓'}
+          {/* Bottom Footer */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-2 sm:pt-3 pb-3 sm:pb-4 text-[10px] sm:text-xs text-[#555555] w-full shrink-0">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
+              <span className="tracking-widest uppercase">
+                SCROLL PROGRESSION // {progressPercent}% COMPLETED
+              </span>
+            </div>
+            <div className="text-right text-[#888888] tracking-wider uppercase font-mono">
+              {activeStageIndex === STAGES.length - 1 ? 'READY TO PROCEED →' : 'SCROLL TO ADVANCE STAGE ↓'}
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
   );
