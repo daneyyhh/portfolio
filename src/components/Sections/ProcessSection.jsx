@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw } from 'lucide-react';
 
 const STAGES = [
@@ -123,16 +122,23 @@ export default function ProcessSection() {
   const progressBarRef = useRef(null);
   const debugPercentRef = useRef(null);
   const footerPercentRef = useRef(null);
+  const stageGliderRef = useRef(null);
+
+  const cardRefs = useRef([]);
+  const inspectorRefs = useRef([]);
+  const navRefs = useRef([]);
+  const pillRefs = useRef([]);
 
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
-  const activeStageIndexRef = useRef(0);
   const inViewRef = useRef(true);
 
   useEffect(() => {
     let rafId = null;
+    const numStages = STAGES.length;
+    const interval = 1 / (numStages - 1);
 
-    // IntersectionObserver to keep RAF loop active when near section
+    // Keep RAF loop active when section is near viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -151,44 +157,97 @@ export default function ProcessSection() {
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Calculate progress while section travels through viewport
+      // Continuous progression as section travels through viewport
       const totalTravel = vh + rect.height;
       const currentTravel = vh - rect.top;
       const progress = Math.max(0, Math.min(1, currentTravel / totalTravel));
       targetProgressRef.current = progress;
     };
 
-    // Smooth inertia loop (k = 0.10)
+    // Continuous stage interpolation loop (inertia damping: 0.08)
     const loop = () => {
       if (inViewRef.current) {
         const diff = targetProgressRef.current - currentProgressRef.current;
         if (Math.abs(diff) > 0.0001) {
-          currentProgressRef.current += diff * 0.10;
+          currentProgressRef.current += diff * 0.08;
           const p = Math.max(0, Math.min(1, currentProgressRef.current));
 
-          // Direct GPU-accelerated transform update on progress bar
+          // 1. Direct GPU transform update on progress bar
           if (progressBarRef.current) {
             progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, p)})`;
           }
 
-          // Direct DOM text updates for instant 60-120fps counter
+          // 2. Direct percentage text updates
           const pct = `${Math.round(p * 100)}%`;
-          if (debugPercentRef.current) {
-            debugPercentRef.current.textContent = pct;
-          }
-          if (footerPercentRef.current) {
-            footerPercentRef.current.textContent = pct;
+          if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
+          if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
+
+          // 3. Gliding Navigator Indicator on Right
+          if (stageGliderRef.current) {
+            stageGliderRef.current.style.transform = `translateY(${p * (numStages - 1) * 44}px)`;
           }
 
-          // Stage index calculated from smoothly interpolated progress
-          const stageIdx = Math.min(
-            STAGES.length - 1,
-            Math.max(0, Math.floor(p * STAGES.length))
-          );
+          // 4. Continuous Cross-Fade & Transform per stage
+          let dominantStage = 0;
+          let maxOpacity = -1;
 
-          if (stageIdx !== activeStageIndexRef.current) {
-            activeStageIndexRef.current = stageIdx;
-            setActiveStageIndex(stageIdx);
+          for (let i = 0; i < numStages; i++) {
+            const center = i * interval;
+            const delta = (p - center) / interval; // -1 to +1 relative to this stage
+            const absDelta = Math.abs(delta);
+
+            // Progressive opacity (1.0 at center, 0.0 at edges)
+            const opacity = Math.max(0, Math.min(1, 1 - absDelta * 1.1));
+            // Progressive smooth translateY (-20px past center, +20px before center)
+            const translateY = -delta * 20;
+            // Progressive scale (1.0 at center, 0.96 at edges)
+            const scale = Math.max(0.96, 1 - absDelta * 0.04);
+            const isVisible = opacity > 0.01;
+
+            if (opacity > maxOpacity) {
+              maxOpacity = opacity;
+              dominantStage = i;
+            }
+
+            // Update Center Card
+            if (cardRefs.current[i]) {
+              const el = cardRefs.current[i];
+              el.style.opacity = opacity.toFixed(3);
+              el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+              el.style.pointerEvents = opacity > 0.6 ? 'auto' : 'none';
+              el.style.visibility = isVisible ? 'visible' : 'hidden';
+            }
+
+            // Update Left Inspector
+            if (inspectorRefs.current[i]) {
+              const el = inspectorRefs.current[i];
+              el.style.opacity = opacity.toFixed(3);
+              el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
+              el.style.visibility = isVisible ? 'visible' : 'hidden';
+            }
+
+            // Update Right Navigator Item
+            if (navRefs.current[i]) {
+              const el = navRefs.current[i];
+              const navOpacity = Math.max(0.35, Math.min(1, 0.35 + opacity * 0.65));
+              const navScale = Math.max(0.96, Math.min(1, 0.96 + opacity * 0.04));
+              const navX = opacity * 6;
+              el.style.opacity = navOpacity.toFixed(3);
+              el.style.transform = `translate3d(${navX.toFixed(1)}px, 0, 0) scale(${navScale.toFixed(3)})`;
+            }
+
+            // Update Mobile Pill
+            if (pillRefs.current[i]) {
+              const el = pillRefs.current[i];
+              const pillOpacity = Math.max(0.40, Math.min(1, 0.40 + opacity * 0.60));
+              const pillScale = Math.max(0.95, Math.min(1.05, 0.95 + opacity * 0.10));
+              el.style.opacity = pillOpacity.toFixed(3);
+              el.style.transform = `scale(${pillScale.toFixed(3)})`;
+            }
+          }
+
+          if (dominantStage !== activeStageIndex) {
+            setActiveStageIndex(dominantStage);
           }
         }
       }
@@ -210,25 +269,16 @@ export default function ProcessSection() {
       window.removeEventListener('resize', onScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [activeStageIndex]);
 
   const handleStageClick = (idx) => {
     setActiveStageIndex(idx);
-    activeStageIndexRef.current = idx;
-    const target = (idx + 0.5) / STAGES.length;
+    const target = idx / (STAGES.length - 1);
     targetProgressRef.current = target;
     currentProgressRef.current = target;
-
-    if (progressBarRef.current) {
-      progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, target)})`;
-    }
-    const pct = `${Math.round(target * 100)}%`;
-    if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
-    if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
   };
 
   const activeStage = STAGES[activeStageIndex];
-  const IconComponent = activeStage.icon;
 
   return (
     <section
@@ -268,17 +318,15 @@ export default function ProcessSection() {
         <div className="flex lg:hidden items-center gap-1.5 py-1 overflow-x-auto w-full">
           {STAGES.map((s, idx) => {
             const isActive = idx === activeStageIndex;
-            const isCompleted = idx < activeStageIndex;
             return (
               <button
                 key={s.id}
+                ref={(el) => (pillRefs.current[idx] = el)}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider shrink-0 cursor-pointer will-change-transform ${
                   isActive
-                    ? 'bg-[#8B6DFF] text-white font-bold shadow-md scale-105 opacity-100'
-                    : isCompleted
-                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30 opacity-70 scale-95'
-                    : 'bg-[#111111] text-white/50 border border-white/10 opacity-40 scale-95 hover:opacity-80'
+                    ? 'bg-[#8B6DFF] text-white font-bold shadow-md'
+                    : 'bg-[#111111] text-white/60 border border-white/10'
                 }`}
               >
                 <span>{s.id}</span>
@@ -291,45 +339,48 @@ export default function ProcessSection() {
         {/* Main 3-Column Interactive Process Viewport */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch w-full">
 
-          {/* LEFT: Process Inspector */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-6 shadow-2xl h-[440px]">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
-                  PROCESS INSPECTOR
-                </span>
-                <span className="text-[10px] text-[#555555] font-mono">
-                  [ {activeStage.id} / 07 ]
-                </span>
-              </div>
+          {/* LEFT: Process Inspector (Continuous Cross-Fade Stack) */}
+          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-6 shadow-2xl h-[440px] relative overflow-hidden">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2 shrink-0 z-20">
+              <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
+                PROCESS INSPECTOR
+              </span>
+              <span className="text-[10px] text-[#555555] font-mono">
+                [ {activeStage.id} / 07 ]
+              </span>
+            </div>
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStage.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="space-y-3"
+            {/* Stacked Inspector Stages */}
+            <div className="relative flex-1 my-3 overflow-hidden">
+              {STAGES.map((stage, idx) => (
+                <div
+                  key={stage.id}
+                  ref={(el) => (inspectorRefs.current[idx] = el)}
+                  className="absolute inset-0 space-y-3 will-change-transform"
+                  style={{
+                    opacity: idx === 0 ? 1 : 0,
+                    transform: idx === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 20px, 0)',
+                    visibility: idx === 0 ? 'visible' : 'hidden',
+                  }}
                 >
                   <div className="space-y-1">
                     <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
                     <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
-                      {activeStage.headline}
+                      {stage.headline}
                     </p>
                   </div>
 
                   <div className="space-y-1">
                     <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
                     <div className="text-xs text-[#8B6DFF] font-mono font-medium">
-                      {activeStage.focus}
+                      {stage.focus}
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
                     <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
                     <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
-                      {activeStage.activities.map((act, i) => (
+                      {stage.activities.map((act, i) => (
                         <li key={i} className="flex items-center gap-2">
                           <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
                           <span className="truncate">{act}</span>
@@ -337,11 +388,11 @@ export default function ProcessSection() {
                       ))}
                     </ul>
                   </div>
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              ))}
             </div>
 
-            <div className="pt-3 border-t border-white/10">
+            <div className="pt-3 border-t border-white/10 shrink-0 z-20">
               <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
               <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate transition-colors duration-300">
                 {activeStage.deliverable}
@@ -349,42 +400,51 @@ export default function ProcessSection() {
             </div>
           </div>
 
-          {/* CENTER: Active Stage Card with Fluid Framer-Motion Transitions */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative h-[380px] sm:h-[420px] lg:h-[440px]">
+          {/* CENTER: Active Stage Card (Continuous Fluid Stage Blending) */}
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative h-[380px] sm:h-[420px] lg:h-[440px] overflow-hidden">
             
-            <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
-                  ACTIVE STAGE // {activeStage.id}
-                </span>
-                <IconComponent size={20} className="text-[#8B6DFF] transition-transform duration-300" />
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStage.id}
-                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.98 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="space-y-2.5"
-                >
-                  <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
-                    {activeStage.name}
-                  </h3>
-                  
-                  <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
-                    {activeStage.headline}
-                  </p>
-
-                  <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
-                    {activeStage.detail}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+            <div className="flex items-center justify-between border-b border-white/10 pb-3 shrink-0 z-20">
+              <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
+                ACTIVE STAGE // {activeStage.id}
+              </span>
+              <span className="text-xs font-mono text-[#8B6DFF]">{activeStage.name}</span>
             </div>
 
-            <div className="space-y-3 pt-3 border-t border-white/10">
+            {/* Stacked Continuous Stage Cards */}
+            <div className="relative flex-1 my-3 overflow-hidden">
+              {STAGES.map((stage, idx) => {
+                const IconComp = stage.icon;
+                return (
+                  <div
+                    key={stage.id}
+                    ref={(el) => (cardRefs.current[idx] = el)}
+                    className="absolute inset-0 flex flex-col justify-center space-y-2.5 will-change-transform"
+                    style={{
+                      opacity: idx === 0 ? 1 : 0,
+                      transform: idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 20px, 0) scale(0.96)',
+                      visibility: idx === 0 ? 'visible' : 'hidden',
+                    }}
+                  >
+                    <div className="flex items-center gap-3 mb-1">
+                      <IconComp size={22} className="text-[#8B6DFF] shrink-0" />
+                      <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+                        {stage.name}
+                      </h3>
+                    </div>
+                    
+                    <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
+                      {stage.headline}
+                    </p>
+
+                    <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
+                      {stage.detail}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="space-y-3 pt-3 border-t border-white/10 shrink-0 z-20">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
                 <div className="space-y-0.5">
                   <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
@@ -420,32 +480,40 @@ export default function ProcessSection() {
 
           </div>
 
-          {/* RIGHT: Compact Vertical Stage Navigator */}
-          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-[440px]">
+          {/* RIGHT: Stage Navigator with Gliding Indicator */}
+          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-[440px] relative">
             <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
               STAGE NAVIGATOR
             </div>
-            {STAGES.map((s, idx) => {
-              const isActive = idx === activeStageIndex;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-3 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] py-2 px-3 border-l-2 cursor-pointer ${
-                    isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/20 text-white font-bold translate-x-2 opacity-100 scale-100 shadow-md'
-                      : 'border-transparent text-white/50 opacity-40 scale-95 hover:opacity-80 hover:text-white hover:border-white/20'
-                  }`}
-                >
-                  <span className={`text-[10px] font-mono transition-colors duration-500 ${isActive ? 'text-[#8B6DFF] font-bold' : 'text-white/40'}`}>
-                    {s.id}
-                  </span>
-                  <span className="text-xs uppercase tracking-wider font-mono">
-                    {s.name}
-                  </span>
-                </button>
-              );
-            })}
+
+            <div className="space-y-1.5 relative">
+              {STAGES.map((s, idx) => {
+                const isActive = idx === activeStageIndex;
+                return (
+                  <button
+                    key={s.id}
+                    ref={(el) => (navRefs.current[idx] = el)}
+                    onClick={() => handleStageClick(idx)}
+                    className={`flex items-center gap-3 text-left py-2 px-3 border-l-2 cursor-pointer w-full will-change-transform ${
+                      isActive
+                        ? 'border-[#8B6DFF] bg-[#8B6DFF]/20 text-white font-bold shadow-sm'
+                        : 'border-transparent text-white/50 hover:text-white'
+                    }`}
+                    style={{
+                      opacity: idx === 0 ? 1 : 0.35,
+                      transform: idx === 0 ? 'translate3d(6px, 0, 0) scale(1)' : 'translate3d(0, 0, 0) scale(0.96)',
+                    }}
+                  >
+                    <span className={`text-[10px] font-mono ${isActive ? 'text-[#8B6DFF] font-bold' : 'text-white/40'}`}>
+                      {s.id}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider font-mono">
+                      {s.name}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
         </div>
