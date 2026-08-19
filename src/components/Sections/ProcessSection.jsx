@@ -125,23 +125,22 @@ export default function ProcessSection() {
   useEffect(() => {
     let rafId = null;
 
-    const handleScroll = () => {
+    const updateProcess = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
+      const sectionTop = rect.top;
       const sectionHeight = sectionRef.current.offsetHeight;
-      const vh = window.innerHeight;
-      const totalScrollable = sectionHeight - vh;
-      if (totalScrollable <= 0) return;
+      const viewportHeight = window.innerHeight;
+      const scrollableDistance = sectionHeight - viewportHeight;
 
-      // rect.top is the distance from top of viewport to section top
-      // When section top hits viewport top: rect.top = 0, scrolled = 0
-      // When section bottom hits viewport bottom: rect.top = -totalScrollable, scrolled = totalScrollable
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      if (scrollableDistance <= 0) return;
 
+      // When section top is at viewport top: sectionTop = 0, progress = 0
+      // When section bottom is at viewport bottom: sectionTop = -scrollableDistance, progress = 1
+      const progress = Math.max(0, Math.min(1, -sectionTop / scrollableDistance));
       setScrollProgress(progress);
 
-      // Map progress [0.0, 1.0] across 7 stages (0 to 6)
+      // Exact 7 stages mapped to progress slices
       const stageIdx = Math.min(
         STAGES.length - 1,
         Math.max(0, Math.floor(progress * STAGES.length))
@@ -156,14 +155,14 @@ export default function ProcessSection() {
     const onScroll = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
-        handleScroll();
+        updateProcess();
         rafId = null;
       });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    handleScroll();
+    updateProcess();
 
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -177,10 +176,10 @@ export default function ProcessSection() {
     const rect = sectionRef.current.getBoundingClientRect();
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     const sectionTop = rect.top + scrollY;
-    const vh = window.innerHeight;
-    const totalScrollable = sectionRef.current.offsetHeight - vh;
+    const viewportHeight = window.innerHeight;
+    const scrollableDistance = sectionRef.current.offsetHeight - viewportHeight;
 
-    const targetScroll = sectionTop + ((idx + 0.5) / STAGES.length) * totalScrollable;
+    const targetScroll = sectionTop + ((idx + 0.5) / STAGES.length) * scrollableDistance;
     window.scrollTo({
       top: Math.max(sectionTop, targetScroll),
       behavior: 'smooth'
@@ -198,12 +197,18 @@ export default function ProcessSection() {
       className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
       style={{ height: '220vh' }}
     >
-      {/* FULL-WIDTH STICKY WRAPPER: Pins in viewport while user scrolls through 220vh */}
+      {/* Pinned Sticky Viewport (100vh / 100svh) */}
       <div
         className="w-full bg-[#0A0A0A]"
-        style={{ position: 'sticky', top: 0, height: '100vh', minHeight: '100svh', zIndex: 20 }}
+        style={{
+          position: 'sticky',
+          top: 0,
+          height: '100vh',
+          minHeight: '100svh',
+          zIndex: 20
+        }}
       >
-        {/* CENTERED LAYOUT INSIDE STICKY WRAPPER */}
+        {/* Centered Content Layout */}
         <div className="h-full w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col justify-between select-none overflow-hidden">
 
           {/* Top Header Bar */}
