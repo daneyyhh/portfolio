@@ -130,22 +130,26 @@ export default function ProcessSection() {
       const rect = sectionRef.current.getBoundingClientRect();
       const sectionHeight = sectionRef.current.offsetHeight;
       const vh = window.innerHeight;
-      const track = sectionHeight - vh;
-      if (track <= 0) return;
+      const totalScrollable = sectionHeight - vh;
+      if (totalScrollable <= 0) return;
 
-      // rect.top is current distance from top of viewport to section top
-      // When section top reaches viewport top, rect.top === 0, scrolled = 0
+      // rect.top is the distance from top of viewport to section top
+      // When section top hits viewport top: rect.top = 0, scrolled = 0
+      // When section bottom hits viewport bottom: rect.top = -totalScrollable, scrolled = totalScrollable
       const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / track));
+      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
 
       setScrollProgress(progress);
 
-      // Map progress 0.0 -> 1.0 evenly across 7 stages
-      const idx = Math.min(STAGES.length - 1, Math.max(0, Math.floor(progress * STAGES.length)));
-      
-      if (idx !== activeStageIndexRef.current) {
-        activeStageIndexRef.current = idx;
-        setActiveStageIndex(idx);
+      // Map progress [0.0, 1.0] across 7 stages (0 to 6)
+      const stageIdx = Math.min(
+        STAGES.length - 1,
+        Math.max(0, Math.floor(progress * STAGES.length))
+      );
+
+      if (stageIdx !== activeStageIndexRef.current) {
+        activeStageIndexRef.current = stageIdx;
+        setActiveStageIndex(stageIdx);
       }
     };
 
@@ -171,14 +175,14 @@ export default function ProcessSection() {
   const handleStageClick = (idx) => {
     if (!sectionRef.current) return;
     const rect = sectionRef.current.getBoundingClientRect();
-    const absoluteTop = rect.top + (window.pageYOffset || document.documentElement.scrollTop);
-    const sectionHeight = sectionRef.current.offsetHeight;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const sectionTop = rect.top + scrollY;
     const vh = window.innerHeight;
-    const track = sectionHeight - vh;
+    const totalScrollable = sectionRef.current.offsetHeight - vh;
 
-    const targetScroll = absoluteTop + ((idx + 0.5) / STAGES.length) * track;
+    const targetScroll = sectionTop + ((idx + 0.5) / STAGES.length) * totalScrollable;
     window.scrollTo({
-      top: Math.max(absoluteTop, targetScroll),
+      top: Math.max(sectionTop, targetScroll),
       behavior: 'smooth'
     });
   };
@@ -192,9 +196,9 @@ export default function ProcessSection() {
       id="process"
       ref={sectionRef}
       className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
-      style={{ height: '200vh' }}
+      style={{ height: '220vh' }}
     >
-      {/* FULL-WIDTH STICKY WRAPPER */}
+      {/* FULL-WIDTH STICKY WRAPPER: Pins in viewport while user scrolls through 220vh */}
       <div
         className="w-full bg-[#0A0A0A]"
         style={{ position: 'sticky', top: 0, height: '100vh', minHeight: '100svh', zIndex: 20 }}
@@ -222,7 +226,7 @@ export default function ProcessSection() {
             </div>
           </div>
 
-          {/* Mobile Stage Stepper */}
+          {/* Mobile Stage Stepper Pills */}
           <div className="flex lg:hidden items-center gap-1 py-1.5 border-b border-white/10 overflow-x-auto w-full shrink-0">
             {STAGES.map((s, idx) => {
               const isActive = idx === activeStageIndex;
@@ -261,7 +265,7 @@ export default function ProcessSection() {
                   </span>
                 </div>
 
-                <div key={activeStage.id} className="space-y-3 transition-opacity duration-300">
+                <div key={activeStage.id} className="space-y-3 animate-process-fade">
                   <div className="space-y-1">
                     <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
                     <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
@@ -309,7 +313,7 @@ export default function ProcessSection() {
                   <IconComponent size={20} className="text-[#8B6DFF] shrink-0" />
                 </div>
 
-                <div key={activeStage.id} className="space-y-2 sm:space-y-3 transition-opacity duration-300">
+                <div key={activeStage.id} className="space-y-2 sm:space-y-3 animate-process-fade">
                   <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
                     {activeStage.name}
                   </h3>
