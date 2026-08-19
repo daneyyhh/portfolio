@@ -18,24 +18,17 @@ import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
 
 export default function App() {
-  const [loading, setLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) return false;
-      return !sessionStorage.getItem('introShown');
-    }
-    return true;
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
       
-      {/* 01 -> 100 Visual Sequence Pre-loader Curtain */}
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
+      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
-      {/* Main Portfolio Content — Live Underneath Loader for Physical Upward Reveal */}
+      {/* Main Portfolio Content — Rendered Live Underneath Loader for Physical Upward Reveal */}
       <div className="relative w-full opacity-100">
         
         {/* Persistent Three.js WebGL Canvas Journey */}
