@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { personalData } from '../../data/portfolioData';
+import portraitImg from '../../assets/reuben-portrait.jpg';
 
 export default function Introduction() {
   return (
@@ -58,7 +58,7 @@ export default function Introduction() {
           </div>
         </div>
 
-        {/* Right Column: B&W High-Contrast Editorial Portrait */}
+        {/* Right Column: User Uploaded Portrait */}
         <div className="lg:col-span-5 relative w-full max-w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -68,13 +68,13 @@ export default function Introduction() {
             className="relative border-2 border-[#111111] bg-[#111111] overflow-hidden group shadow-2xl w-full max-w-full"
           >
             <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80"
+              src={portraitImg}
               alt="Reuben Binu George"
-              className="w-full h-[320px] sm:h-[450px] object-cover filter grayscale contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
+              className="w-full h-auto max-h-[520px] object-cover object-top group-hover:scale-105 transition-transform duration-700 block"
             />
             
             {/* Overlay Script Tag */}
-            <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 font-syne italic text-xl sm:text-2xl text-white font-bold tracking-tight">
+            <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 font-syne italic text-xl sm:text-2xl text-white font-bold tracking-tight drop-shadow-md">
               let's build together
             </div>
           </motion.div>
