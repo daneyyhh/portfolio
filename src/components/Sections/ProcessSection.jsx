@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw } from 'lucide-react';
 
 const STAGES = [
@@ -118,45 +119,77 @@ const STAGES = [
 
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [displayProgress, setDisplayProgress] = useState(0);
   const sectionRef = useRef(null);
+
+  const targetProgressRef = useRef(0);
+  const currentProgressRef = useRef(0);
   const activeStageIndexRef = useRef(0);
+  const inViewRef = useRef(false);
 
   useEffect(() => {
     let rafId = null;
 
-    const handleScroll = () => {
+    // IntersectionObserver to keep RAF loop lightweight and active only near viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inViewRef.current = entry.isIntersecting;
+        });
+      },
+      { rootMargin: '150px 0px 150px 0px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    const calculateTarget = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Calculate scroll progress while section travels through viewport
+      // Smooth progression while section travels across viewport
       const totalTravel = vh + rect.height;
       const currentTravel = vh - rect.top;
       const progress = Math.max(0, Math.min(1, currentTravel / totalTravel));
+      targetProgressRef.current = progress;
+    };
 
-      setScrollProgress(progress);
+    const loop = () => {
+      if (inViewRef.current) {
+        // Continuous linear interpolation (lerp) for liquid studio smoothness
+        const diff = targetProgressRef.current - currentProgressRef.current;
+        if (Math.abs(diff) > 0.0005) {
+          currentProgressRef.current += diff * 0.12;
+          const current = Math.max(0, Math.min(1, currentProgressRef.current));
+          setDisplayProgress(current);
 
-      const stageIdx = Math.min(STAGES.length - 1, Math.max(0, Math.floor(progress * STAGES.length)));
-      if (stageIdx !== activeStageIndexRef.current) {
-        activeStageIndexRef.current = stageIdx;
-        setActiveStageIndex(stageIdx);
+          const stageIdx = Math.min(
+            STAGES.length - 1,
+            Math.max(0, Math.floor(current * STAGES.length))
+          );
+
+          if (stageIdx !== activeStageIndexRef.current) {
+            activeStageIndexRef.current = stageIdx;
+            setActiveStageIndex(stageIdx);
+          }
+        }
       }
+      rafId = requestAnimationFrame(loop);
     };
 
     const onScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        handleScroll();
-        rafId = null;
-      });
+      calculateTarget();
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    handleScroll();
+    calculateTarget();
+    rafId = requestAnimationFrame(loop);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       if (rafId) cancelAnimationFrame(rafId);
@@ -166,12 +199,15 @@ export default function ProcessSection() {
   const handleStageClick = (idx) => {
     setActiveStageIndex(idx);
     activeStageIndexRef.current = idx;
-    setScrollProgress((idx + 0.5) / STAGES.length);
+    const target = (idx + 0.5) / STAGES.length;
+    targetProgressRef.current = target;
+    currentProgressRef.current = target;
+    setDisplayProgress(target);
   };
 
   const activeStage = STAGES[activeStageIndex];
   const IconComponent = activeStage.icon;
-  const progressPercent = Math.round(scrollProgress * 100);
+  const progressPercent = Math.round(displayProgress * 100);
 
   return (
     <section
@@ -210,12 +246,12 @@ export default function ProcessSection() {
               <button
                 key={s.id}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider transition-colors shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider transition-all duration-300 shrink-0 cursor-pointer ${
                   isActive
-                    ? 'bg-[#8B6DFF] text-white font-bold'
+                    ? 'bg-[#8B6DFF] text-white font-bold shadow-sm scale-105'
                     : isCompleted
                     ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30'
-                    : 'bg-[#111111] text-[#666666] border border-white/10'
+                    : 'bg-[#111111] text-[#666666] border border-white/10 hover:border-white/30'
                 }`}
               >
                 <span>{s.id}</span>
@@ -240,33 +276,42 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              <div key={activeStage.id} className="space-y-3">
-                <div className="space-y-1">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
-                  <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
-                    {activeStage.headline}
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
-                  <div className="text-xs text-[#8B6DFF] font-mono font-medium">
-                    {activeStage.focus}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStage.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-3"
+                >
+                  <div className="space-y-1">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
+                    <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
+                      {activeStage.headline}
+                    </p>
                   </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
-                  <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
-                    {activeStage.activities.map((act, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
-                        <span className="truncate">{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+                  <div className="space-y-1">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
+                    <div className="text-xs text-[#8B6DFF] font-mono font-medium">
+                      {activeStage.focus}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
+                    <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
+                      {activeStage.activities.map((act, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="w-1 h-1 bg-[#8B6DFF] rounded-full shrink-0" />
+                          <span className="truncate">{act}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div className="pt-3 border-t border-white/10">
@@ -277,7 +322,7 @@ export default function ProcessSection() {
             </div>
           </div>
 
-          {/* CENTER: Active Stage Card */}
+          {/* CENTER: Active Stage Card with Fluid Framer-Motion Transitions */}
           <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative h-[380px] sm:h-[420px] lg:h-[440px]">
             
             <div className="space-y-3">
@@ -288,19 +333,28 @@ export default function ProcessSection() {
                 <IconComponent size={20} className="text-[#8B6DFF]" />
               </div>
 
-              <div key={activeStage.id} className="space-y-2.5">
-                <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
-                  {activeStage.name}
-                </h3>
-                
-                <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
-                  {activeStage.headline}
-                </p>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStage.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-2.5"
+                >
+                  <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+                    {activeStage.name}
+                  </h3>
+                  
+                  <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
+                    {activeStage.headline}
+                  </p>
 
-                <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
-                  {activeStage.detail}
-                </p>
-              </div>
+                  <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
+                    {activeStage.detail}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div className="space-y-3 pt-3 border-t border-white/10">
@@ -324,11 +378,14 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              {/* Continuous Scroll-Progress Indicator */}
+              {/* Continuous GPU-interpolated Liquid Progress Bar */}
               <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1">
                 <div
-                  className="bg-[#8B6DFF] h-full transition-all duration-150 ease-out"
-                  style={{ width: `${Math.max(4, progressPercent)}%` }}
+                  className="bg-[#8B6DFF] h-full origin-left will-change-transform"
+                  style={{
+                    transform: `scaleX(${Math.max(0.04, displayProgress)})`,
+                    transition: 'transform 0.05s linear'
+                  }}
                 />
               </div>
             </div>
@@ -346,13 +403,13 @@ export default function ProcessSection() {
                 <button
                   key={s.id}
                   onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-3 text-left transition-colors py-1.5 px-3 border-l-2 cursor-pointer ${
+                  className={`flex items-center gap-3 text-left transition-all duration-300 py-1.5 px-3 border-l-2 cursor-pointer ${
                     isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold'
+                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1'
                       : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
                   }`}
                 >
-                  <span className={`text-[10px] font-mono ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
+                  <span className={`text-[10px] font-mono transition-colors duration-300 ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
                     {s.id}
                   </span>
                   <span className="text-xs uppercase tracking-wider font-mono">
