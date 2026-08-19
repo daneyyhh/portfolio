@@ -132,15 +132,16 @@ export default function ProcessSection() {
       if (totalScrollable <= 0) return;
 
       const scrolled = -rect.top;
+      // Clamp progress strictly between 0.00 and 1.00
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
       setScrollProgress(progress);
 
-      const rawStage = progress * (STAGES.length - 1);
-      const activeIdx = Math.min(STAGES.length - 1, Math.max(0, Math.round(rawStage)));
+      // Smooth discrete stage mapping across 7 stages
+      const stageIdx = Math.min(STAGES.length - 1, Math.max(0, Math.floor(progress * STAGES.length)));
 
-      if (activeIdx !== activeStageIndexRef.current) {
-        activeStageIndexRef.current = activeIdx;
-        setActiveStageIndex(activeIdx);
+      if (stageIdx !== activeStageIndexRef.current) {
+        activeStageIndexRef.current = stageIdx;
+        setActiveStageIndex(stageIdx);
       }
     };
 
@@ -169,7 +170,7 @@ export default function ProcessSection() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const containerTop = rect.top + scrollTop;
     const totalScrollable = rect.height - window.innerHeight;
-    const targetScroll = containerTop + (idx / (STAGES.length - 1)) * totalScrollable;
+    const targetScroll = containerTop + (idx / STAGES.length) * totalScrollable;
 
     window.scrollTo({
       top: targetScroll,
@@ -186,7 +187,7 @@ export default function ProcessSection() {
       id="process"
       ref={containerRef}
       className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full overflow-visible"
-      style={{ height: '350vh' }}
+      style={{ height: '200vh' }}
     >
       {/* Sticky 100vh Viewport */}
       <div
@@ -214,7 +215,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Mobile Horizontal Stepper Indicator */}
-        <div className="flex lg:hidden items-center justify-between gap-1.5 py-2 border-b border-white/10 overflow-x-auto w-full shrink-0">
+        <div className="flex lg:hidden items-center justify-between gap-1 py-1.5 border-b border-white/10 overflow-x-auto w-full shrink-0">
           {STAGES.map((s, idx) => {
             const isActive = idx === activeStageIndex;
             const isCompleted = idx < activeStageIndex;
@@ -222,7 +223,7 @@ export default function ProcessSection() {
               <button
                 key={s.id}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1 px-2 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1 px-2 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
                   isActive
                     ? 'bg-[#8B6DFF] text-white font-bold'
                     : isCompleted
@@ -238,7 +239,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Main 3-Column Interactive Process Viewport */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8 items-stretch my-auto w-full flex-1 py-2 sm:py-4 max-h-[72vh] overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8 items-stretch my-auto w-full flex-1 py-2 sm:py-4 max-h-[75vh] overflow-hidden">
           
           {/* 1. LEFT: Process Inspector */}
           <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl w-full h-full overflow-hidden">
@@ -268,7 +269,7 @@ export default function ProcessSection() {
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
                   <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
                     {activeStage.activities.map((act, i) => (
