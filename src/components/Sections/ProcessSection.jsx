@@ -119,8 +119,9 @@ const STAGES = [
 
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const [displayProgress, setDisplayProgress] = useState(0);
   const sectionRef = useRef(null);
+  const progressBarRef = useRef(null);
+  const progressPercentRef = useRef(null);
 
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
@@ -130,14 +131,14 @@ export default function ProcessSection() {
   useEffect(() => {
     let rafId = null;
 
-    // IntersectionObserver to keep RAF loop lightweight and active only near viewport
+    // IntersectionObserver to run RAF loop only when section is near viewport
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           inViewRef.current = entry.isIntersecting;
         });
       },
-      { rootMargin: '150px 0px 150px 0px' }
+      { rootMargin: '200px 0px 200px 0px' }
     );
 
     if (sectionRef.current) {
@@ -149,25 +150,35 @@ export default function ProcessSection() {
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Smooth progression while section travels across viewport
+      // Calculate progress while section travels through viewport
       const totalTravel = vh + rect.height;
       const currentTravel = vh - rect.top;
       const progress = Math.max(0, Math.min(1, currentTravel / totalTravel));
       targetProgressRef.current = progress;
     };
 
+    // Inertia damping loop (smoothing factor: 0.09)
     const loop = () => {
       if (inViewRef.current) {
-        // Continuous linear interpolation (lerp) for liquid studio smoothness
         const diff = targetProgressRef.current - currentProgressRef.current;
-        if (Math.abs(diff) > 0.0005) {
-          currentProgressRef.current += diff * 0.10;
-          const current = Math.max(0, Math.min(1, currentProgressRef.current));
-          setDisplayProgress(current);
+        if (Math.abs(diff) > 0.0002) {
+          currentProgressRef.current += diff * 0.09;
+          const p = Math.max(0, Math.min(1, currentProgressRef.current));
 
+          // Direct GPU-accelerated transform update on progress bar (60-120fps)
+          if (progressBarRef.current) {
+            progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, p)})`;
+          }
+
+          // Direct text update on percentage
+          if (progressPercentRef.current) {
+            progressPercentRef.current.textContent = `${Math.round(p * 100)}%`;
+          }
+
+          // Stage index calculated from smoothly interpolated progress
           const stageIdx = Math.min(
             STAGES.length - 1,
-            Math.max(0, Math.floor(current * STAGES.length))
+            Math.max(0, Math.floor(p * STAGES.length))
           );
 
           if (stageIdx !== activeStageIndexRef.current) {
@@ -202,12 +213,17 @@ export default function ProcessSection() {
     const target = (idx + 0.5) / STAGES.length;
     targetProgressRef.current = target;
     currentProgressRef.current = target;
-    setDisplayProgress(target);
+
+    if (progressBarRef.current) {
+      progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, target)})`;
+    }
+    if (progressPercentRef.current) {
+      progressPercentRef.current.textContent = `${Math.round(target * 100)}%`;
+    }
   };
 
   const activeStage = STAGES[activeStageIndex];
   const IconComponent = activeStage.icon;
-  const progressPercent = Math.round(displayProgress * 100);
 
   return (
     <section
@@ -246,12 +262,12 @@ export default function ProcessSection() {
               <button
                 key={s.id}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider transition-all duration-300 shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0 cursor-pointer ${
                   isActive
-                    ? 'bg-[#8B6DFF] text-white font-bold shadow-sm scale-105'
+                    ? 'bg-[#8B6DFF] text-white font-bold shadow-md scale-105 opacity-100'
                     : isCompleted
-                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30'
-                    : 'bg-[#111111] text-[#666666] border border-white/10 hover:border-white/30'
+                    ? 'bg-[#181818] text-[#8B6DFF] border border-[#8B6DFF]/30 opacity-70'
+                    : 'bg-[#111111] text-white/50 border border-white/10 opacity-40 hover:opacity-80'
                 }`}
               >
                 <span>{s.id}</span>
@@ -279,10 +295,10 @@ export default function ProcessSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-3"
                 >
                   <div className="space-y-1">
@@ -336,10 +352,10 @@ export default function ProcessSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-2.5"
                 >
                   <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
@@ -381,10 +397,11 @@ export default function ProcessSection() {
               {/* Continuous GPU-interpolated Liquid Progress Bar */}
               <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1">
                 <div
+                  ref={progressBarRef}
                   className="bg-[#8B6DFF] h-full origin-left will-change-transform"
                   style={{
-                    transform: `scaleX(${Math.max(0.04, displayProgress)})`,
-                    transition: 'transform 0.05s linear'
+                    transform: 'scaleX(0.04)',
+                    transition: 'transform 0.04s linear'
                   }}
                 />
               </div>
@@ -403,13 +420,13 @@ export default function ProcessSection() {
                 <button
                   key={s.id}
                   onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-3 text-left transition-all duration-300 py-1.5 px-3 border-l-2 cursor-pointer ${
+                  className={`flex items-center gap-3 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] py-1.5 px-3 border-l-2 cursor-pointer ${
                     isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1'
-                      : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
+                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1.5 opacity-100 scale-[1.02]'
+                      : 'border-transparent text-white/50 opacity-40 hover:opacity-80 hover:text-white hover:border-white/20'
                   }`}
                 >
-                  <span className={`text-[10px] font-mono transition-colors duration-300 ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
+                  <span className={`text-[10px] font-mono transition-colors duration-500 ${isActive ? 'text-[#8B6DFF]' : 'text-white/40'}`}>
                     {s.id}
                   </span>
                   <span className="text-xs uppercase tracking-wider font-mono">
@@ -427,7 +444,7 @@ export default function ProcessSection() {
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
             <span className="tracking-widest uppercase">
-              SCROLL PROGRESSION // {progressPercent}% COMPLETED
+              SCROLL PROGRESSION // <span ref={progressPercentRef} className="text-[#8B6DFF] font-bold">0%</span> COMPLETED
             </span>
           </div>
 
