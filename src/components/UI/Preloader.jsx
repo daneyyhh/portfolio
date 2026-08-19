@@ -36,13 +36,13 @@ export default function Preloader({ onComplete }) {
   onCompleteRef.current = onComplete;
 
   useEffect(() => {
-    // 1. Preload all 5 images before starting animation
+    // 1. Preload all 5 images
     INTRO_IMAGES.forEach((src) => {
       const img = new Image();
       img.src = src;
     });
 
-    const totalDuration = 3200; // 3.2 seconds total continuous master timeline
+    const totalDuration = 3200; // 3.2s continuous master timeline
     const startTime = performance.now();
     let frameId;
 
@@ -61,7 +61,6 @@ export default function Preloader({ onComplete }) {
       let stepNum = 1;
 
       if (progress < imagePhaseEnd) {
-        // Continuous fractional index between 0.0 and 4.0
         const rawIndex = (progress / imagePhaseEnd) * (INTRO_IMAGES.length - 1);
         idxA = Math.floor(rawIndex);
         idxB = Math.min(INTRO_IMAGES.length - 1, idxA + 1);
@@ -139,7 +138,7 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen z-[999999] bg-[#050505] text-[#F1F0EB] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden font-mono will-change-transform pointer-events-none"
+      className="fixed inset-0 w-screen h-screen z-[999999] text-[#111111] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden font-mono will-change-transform pointer-events-none"
       style={{
         zIndex: 999999,
         position: 'fixed',
@@ -148,16 +147,16 @@ export default function Preloader({ onComplete }) {
         width: '100vw',
         height: '100svh',
         minHeight: '100vh',
-        backgroundColor: '#050505',
+        backgroundColor: '#F1F0EB', // 100% Exact match with landing page background
         transform: `translate3d(0, ${curtainY}vh, 0)`,
       }}
       aria-label="Studio Intro"
     >
-      {/* Top Header: Brand Wordmark + Masked Counter */}
+      {/* Top Header: Brand Wordmark + Micro Counter */}
       <div className="w-full max-w-6xl flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
-          <ReubgLogo variant="dark" className="w-[78px] sm:w-[92px] h-auto object-contain" />
-          <span className="text-[10px] text-[#444444] tracking-widest uppercase hidden sm:inline-block">
+          <ReubgLogo variant="light" className="w-[78px] sm:w-[92px] h-auto object-contain" />
+          <span className="text-[10px] text-[#777777] tracking-widest uppercase hidden sm:inline-block">
             // STUDIO INTRO
           </span>
         </div>
@@ -167,13 +166,13 @@ export default function Preloader({ onComplete }) {
           <span className="text-[#8B6DFF] font-bold tracking-widest">
             0{currentStep} / 05
           </span>
-          <span className="text-[#555555] text-[10px] tracking-wider">
+          <span className="text-[#777777] text-[10px] tracking-wider">
             [{percentage}%]
           </span>
         </div>
       </div>
 
-      {/* Center Frameless Floating Artwork (Zero Box, Zero Border, Mathematical Cross-Dissolve) */}
+      {/* Center Frameless Floating Artwork (Zero Box, Pure Floating on Landing Background) */}
       <div className="my-auto flex items-center justify-center relative z-10 w-full">
         <div
           className="relative w-[58vw] sm:w-[30vw] max-w-[380px] aspect-[2/3] sm:aspect-[3/4] max-h-[46vh] sm:max-h-[52vh] flex items-center justify-center bg-transparent border-none outline-none shadow-none"
@@ -220,20 +219,20 @@ export default function Preloader({ onComplete }) {
       </div>
 
       {/* Bottom Status Bar */}
-      <div className="w-full max-w-6xl flex items-center justify-between z-20 pt-3 border-t border-white/10 text-xs">
-        <div className="text-[10px] text-[#444444] tracking-widest uppercase font-mono">
+      <div className="w-full max-w-6xl flex items-center justify-between z-20 pt-3 border-t border-[#C9C7C0] text-xs">
+        <div className="text-[10px] text-[#777777] tracking-widest uppercase font-mono">
           VISUAL REEL // 5 STUDIES
         </div>
 
         {/* Continuous Progress Track */}
         <div className="flex items-center gap-3">
-          <div className="w-20 sm:w-32 h-[1.5px] bg-[#1A1A1A] overflow-hidden">
+          <div className="w-20 sm:w-32 h-[1.5px] bg-[#D8D6CF] overflow-hidden">
             <div
               className="h-full bg-[#8B6DFF] will-change-transform"
               style={{ width: `${Math.min(100, Math.round((progress / 0.82) * 100))}%` }}
             />
           </div>
-          <span className="text-[10px] text-[#777777] font-mono tracking-wider">
+          <span className="text-[10px] text-[#666666] font-mono tracking-wider">
             {isHundred ? 'ENTER' : 'LOAD'}
           </span>
         </div>
