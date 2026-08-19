@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, ArrowRight } from 'lucide-react';
 
 const STAGES = [
   {
@@ -77,257 +77,253 @@ const STAGES = [
 export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const activeStageIndexRef = useRef(0);
-  const stageRefs = useRef([]);
+  const containerRef = useRef(null);
 
-  // Pure passive stage detection via native scroll + requestAnimationFrame throttling
-  // ZERO scroll interception, ZERO wheel listeners, ZERO preventDefault, ZERO scroll-lock
+  // Pure passive native scroll tracking to update active stage 0..6
   useEffect(() => {
     let rafId = null;
 
-    const checkActiveStage = () => {
-      const triggerLine = window.innerHeight * 0.42;
-      let closestIdx = 0;
-      let minDistance = Infinity;
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const totalScrollable = rect.height - window.innerHeight;
+      if (totalScrollable <= 0) return;
 
-      stageRefs.current.forEach((el, idx) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const elementCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(elementCenter - triggerLine);
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      const stageIdx = Math.min(STAGES.length - 1, Math.floor(progress * STAGES.length));
 
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIdx = idx;
-        }
-      });
-
-      // ONLY update React state if the active stage actually changed
-      if (closestIdx !== activeStageIndexRef.current) {
-        activeStageIndexRef.current = closestIdx;
-        setActiveStageIndex(closestIdx);
+      if (stageIdx !== activeStageIndexRef.current) {
+        activeStageIndexRef.current = stageIdx;
+        setActiveStageIndex(stageIdx);
       }
     };
 
-    const handleScroll = () => {
+    const onScrollThrottled = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
-        checkActiveStage();
+        handleScroll();
         rafId = null;
       });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-    checkActiveStage(); // Initial check
+    window.addEventListener('scroll', onScrollThrottled, { passive: true });
+    window.addEventListener('resize', onScrollThrottled, { passive: true });
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScrollThrottled);
+      window.removeEventListener('resize', onScrollThrottled);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
-  const activeStage = STAGES[activeStageIndex] || STAGES[0];
+  // Jump to stage on navigation click
+  const handleStageClick = (idx) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalScrollable = rect.height - window.innerHeight;
+    const targetScroll = containerTop + (idx / (STAGES.length - 0.95)) * totalScrollable;
+
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  };
+
+  const activeStage = STAGES[activeStageIndex];
+  const IconComponent = activeStage.icon;
 
   return (
     <section
       id="process"
-      className="py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono relative w-full overflow-hidden"
+      ref={containerRef}
+      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
+      style={{ height: '320vh' }}
     >
-      <div className="max-w-7xl mx-auto space-y-12 md:space-y-20 relative z-10">
+      {/* Sticky Compact Viewport (Fits cleanly within 100vh) */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-10 max-w-7xl mx-auto overflow-hidden select-none">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 md:pb-8">
-          <div>
-            <div className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-2">
-              METHODOLOGY // 03
-            </div>
-            <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
-              MY PROCESS
-            </h2>
-          </div>
-
-          <div className="text-xs text-[#888888] font-mono max-w-md">
-            A structured engineering approach from concept to continuous optimization.
-          </div>
-        </div>
-
-        {/* MOBILE STICKY INSPECTOR HUD (< lg screens) */}
-        <div className="lg:hidden sticky top-16 z-30 bg-[#111111]/95 backdrop-blur-md border border-white/15 p-4 shadow-xl">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#8B6DFF]" />
-              <span className="text-[11px] text-[#8B6DFF] font-bold uppercase tracking-wider">
-                STAGE {activeStage.id} // {activeStage.name}
-              </span>
-            </div>
-            <span className="text-[10px] text-[#888888] uppercase tracking-widest">INSPECTOR</span>
-          </div>
-
-          <p className="font-sans text-xs text-[#E4E2DC] leading-relaxed mb-2">
-            {activeStage.purpose}
-          </p>
-
-          <div className="flex items-center justify-between text-[10px] pt-2 border-t border-white/10">
-            <span className="text-[#8B6DFF] truncate max-w-[55%]">
-              FOCUS: {activeStage.focus.split('·')[0]}
+        {/* Top Header Bar */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-4 pt-2">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 bg-[#8B6DFF] animate-pulse" />
+            <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
+              03 // PROCESS
             </span>
-            <span className="text-white font-bold uppercase truncate max-w-[42%] text-right">
-              {activeStage.output}
+            <span className="text-white/30 hidden sm:inline-block">/</span>
+            <span className="text-white/70 text-xs tracking-wider uppercase hidden sm:inline-block">
+              ENGINEERING & DESIGN LIFECYCLE
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 text-xs">
+            <span className="text-[#8B6DFF] font-bold tracking-widest">
+              STAGE {activeStage.id} / 07
             </span>
           </div>
         </div>
 
-        {/* 3-Column Workspace: LEFT Process Inspector (Sticky), CENTER Sequential Stages (Spacious), RIGHT Timeline Rail (Sticky) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative">
+        {/* Mobile Horizontal Progress Tabs (Visible on small screens) */}
+        <div className="flex lg:hidden items-center justify-between gap-1 py-2 border-b border-white/10 overflow-x-auto">
+          {STAGES.map((s, idx) => (
+            <button
+              key={s.id}
+              onClick={() => handleStageClick(idx)}
+              className={`px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 ${
+                idx === activeStageIndex
+                  ? 'bg-[#8B6DFF] text-white font-bold'
+                  : 'bg-[#141414] text-[#777777] border border-white/10'
+              }`}
+            >
+              {s.id} {s.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Main 3-Column Interactive Process Viewport (Desktop & Tablet) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center my-auto w-full py-4">
           
-          {/* LEFT COLUMN: DESKTOP STICKY PROCESS INSPECTOR SPECIFICATION PANEL */}
-          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28 bg-[#111111] border border-white/10 p-6 md:p-7 space-y-6 shadow-2xl rounded-none">
-            
-            {/* Inspector Header */}
-            <div className="flex justify-between items-center border-b border-white/10 pb-3 text-xs font-bold">
-              <span className="text-[#555555] uppercase tracking-widest">PROCESS INSPECTOR</span>
-              <span className="text-[#8B6DFF] uppercase tracking-widest">STAGE {activeStage.id}</span>
-            </div>
+          {/* 1. LEFT: Process Inspector (State-reactive technical details) */}
+          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl h-[480px]">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
+                  PROCESS INSPECTOR
+                </span>
+                <span className="text-[10px] text-[#555555] font-mono">
+                  [ {activeStage.id} / 07 ]
+                </span>
+              </div>
 
-            {/* Stage Title */}
-            <div className="space-y-1">
-              <div className="text-[10px] text-[#555555] font-bold uppercase tracking-widest">CURRENT STAGE</div>
-              <h3 className="font-syne text-2xl md:text-3xl font-extrabold text-white uppercase tracking-tight">
-                {activeStage.name}
-              </h3>
-            </div>
+              <div className="space-y-1">
+                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
+                <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
+                  {activeStage.purpose}
+                </p>
+              </div>
 
-            {/* PURPOSE Section */}
-            <div className="space-y-1.5 pt-3 border-t border-white/10">
-              <div className="text-[10px] text-[#8B6DFF] font-bold uppercase tracking-widest">PURPOSE</div>
-              <p className="font-sans text-xs md:text-sm text-[#E4E2DC] leading-relaxed">
-                {activeStage.purpose}
-              </p>
-            </div>
+              <div className="space-y-1 pt-1">
+                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">FOCUS</div>
+                <div className="text-xs text-[#8B6DFF] font-mono font-medium">
+                  {activeStage.focus}
+                </div>
+              </div>
 
-            {/* FOCUS Section */}
-            <div className="space-y-1.5 pt-3 border-t border-white/10">
-              <div className="text-[10px] text-[#555555] font-bold uppercase tracking-widest">FOCUS</div>
-              <div className="text-xs text-white font-mono font-bold">
-                {activeStage.focus}
+              <div className="space-y-1.5 pt-1">
+                <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
+                <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
+                  {activeStage.activities.map((act, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <span className="w-1 h-1 bg-[#8B6DFF] rounded-full" />
+                      <span>{act}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            {/* ACTIVITIES Section */}
-            <div className="space-y-2 pt-3 border-t border-white/10">
-              <div className="text-[10px] text-[#555555] font-bold uppercase tracking-widest">ACTIVITIES</div>
-              <div className="space-y-1.5">
-                {activeStage.activities.map((act, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-[#C9C7C0] font-mono">
-                    <span className="text-[#8B6DFF]">•</span>
-                    <span>{act}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* OUTPUT Section */}
             <div className="pt-3 border-t border-white/10">
-              <div className="bg-[#0A0A0A] border border-[#8B6DFF]/30 p-3">
-                <div className="text-[10px] text-[#8B6DFF] font-bold uppercase tracking-widest mb-1">OUTPUT</div>
-                <div className="text-white font-bold text-xs uppercase tracking-wide">{activeStage.output}</div>
+              <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
+              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10">
+                {activeStage.output}
               </div>
             </div>
-
           </div>
 
-          {/* CENTER COLUMN: 7 SEQUENTIAL RECTANGULAR PROCESS STAGE PANELS WITH GENEROUS VERTICAL SPACING */}
-          <div className="col-span-1 lg:col-span-5 space-y-28 sm:space-y-36 md:space-y-44 py-4">
-            {STAGES.map((stg, idx) => {
-              const Icon = stg.icon;
-              const isActive = activeStageIndex === idx;
+          {/* 2. CENTER: Active Process Stage Card (Large & Prominent) */}
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-6 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 min-h-[360px] lg:h-[480px]">
+            {/* Top Tag & Number */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
+                  ACTIVE STAGE // 0{activeStageIndex + 1}
+                </span>
+                <IconComponent size={24} className="text-[#8B6DFF]" />
+              </div>
 
-              return (
+              {/* Huge Stage Title */}
+              <div className="space-y-2">
+                <div className="font-syne text-4xl sm:text-5xl font-extrabold text-white tracking-tight uppercase">
+                  {activeStage.id} {activeStage.name}
+                </div>
+                <p className="font-sans text-sm sm:text-base text-[#D0D0D0] leading-relaxed">
+                  {activeStage.shortDesc}
+                </p>
+              </div>
+
+              {/* Mobile-only Inspector Snippets */}
+              <div className="lg:hidden space-y-3 pt-3 border-t border-white/10 text-xs">
+                <div>
+                  <span className="text-[#555555] text-[10px] uppercase block font-bold">FOCUS</span>
+                  <span className="text-[#8B6DFF] font-mono">{activeStage.focus}</span>
+                </div>
+                <div>
+                  <span className="text-[#555555] text-[10px] uppercase block font-bold">DELIVERABLE</span>
+                  <span className="text-white font-bold font-mono">{activeStage.output}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Meta & Animated Line */}
+            <div className="space-y-3 pt-4 border-t border-white/10 hidden sm:block">
+              <div className="flex items-center justify-between text-xs font-mono text-[#888888]">
+                <span>{activeStage.focus}</span>
+                <span className="text-[#8B6DFF] font-bold">{activeStage.output}</span>
+              </div>
+              <div className="w-full bg-[#222222] h-[2px] overflow-hidden">
                 <div
-                  key={stg.id}
-                  ref={(el) => (stageRefs.current[idx] = el)}
-                  className={`p-6 sm:p-8 md:p-9 border rounded-none flex flex-col gap-6 transition-colors duration-200 w-full ${
+                  className="bg-[#8B6DFF] h-full transition-all duration-300 ease-out"
+                  style={{ width: `${((activeStageIndex + 1) / STAGES.length) * 100}%` }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. RIGHT: Compact Vertical Stage Navigation */}
+          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-2.5 pl-4 border-l border-white/10 h-[480px]">
+            <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
+              STAGE NAVIGATOR
+            </div>
+            {STAGES.map((s, idx) => {
+              const isActive = idx === activeStageIndex;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => handleStageClick(idx)}
+                  className={`flex items-center gap-3 text-left transition-all duration-200 py-1.5 px-3 border-l-2 cursor-pointer ${
                     isActive
-                      ? 'bg-[#141414] border-[#8B6DFF] text-[#F1F0EB]'
-                      : 'bg-[#0E0E0E] border-white/10 text-[#888888]'
+                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold'
+                      : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
                   }`}
                 >
-                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                    <div className="flex items-center gap-3">
-                      <span className={`font-mono text-base font-extrabold ${isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'}`}>
-                        {stg.id}
-                      </span>
-                      <Icon size={20} className={isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'} />
-                      <h4 className={`font-syne font-extrabold text-lg sm:text-xl uppercase tracking-wider ${isActive ? 'text-white' : 'text-[#A0A0A0]'}`}>
-                        {stg.name}
-                      </h4>
-                    </div>
-                  </div>
-
-                  <p className={`font-sans text-xs sm:text-sm leading-relaxed ${isActive ? 'text-[#E4E2DC]' : 'text-[#888888]'}`}>
-                    {stg.purpose}
-                  </p>
-
-                  <div className="space-y-2 pt-2 border-t border-white/10 lg:hidden">
-                    <div className="text-[10px] text-[#555555] font-bold uppercase tracking-wider">ACTIVITIES</div>
-                    <div className="flex flex-wrap gap-2">
-                      {stg.activities.slice(0, 3).map((act, i) => (
-                        <span key={i} className="text-[11px] bg-white/5 px-2 py-0.5 text-[#C9C7C0] border border-white/10">
-                          {act}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs font-mono">
-                    <span className={isActive ? 'text-[#8B6DFF] font-bold' : 'text-[#555555]'}>
-                      FOCUS: {stg.focus.split('·')[0]}
-                    </span>
-                    <span className={isActive ? 'text-[#C9C7C0]' : 'text-[#555555]'}>
-                      {stg.output}
-                    </span>
-                  </div>
-                </div>
+                  <span className={`text-[10px] font-mono ${isActive ? 'text-[#8B6DFF]' : 'text-[#444444]'}`}>
+                    {s.id}
+                  </span>
+                  <span className="text-xs uppercase tracking-wider font-mono">
+                    {s.name}
+                  </span>
+                </button>
               );
             })}
           </div>
 
-          {/* RIGHT COLUMN: STICKY VERTICAL ENGINEERING TIMELINE RAIL */}
-          <div className="lg:col-span-3 hidden lg:flex lg:sticky lg:top-28 flex-col justify-start items-start pl-8 relative font-mono text-xs border-l border-white/10">
-            
-            {/* Stage Nodes & Aligned Stage Names with Generous Spacing */}
-            <div className="space-y-12 font-mono w-full py-2">
-              {STAGES.map((s, i) => {
-                const isActive = activeStageIndex === i;
+        </div>
 
-                return (
-                  <div key={s.id} className="flex items-center gap-4 group">
-                    {/* Clean Technical Indicator: Graphite circle (#555555) inactive, slightly larger #8B6DFF active */}
-                    <div
-                      className={`w-2.5 h-2.5 rounded-full -ml-[38px] transition-all duration-200 ${
-                        isActive
-                          ? 'bg-[#8B6DFF] scale-125 ring-2 ring-[#8B6DFF]/40'
-                          : 'bg-[#555555]'
-                      }`}
-                    />
-
-                    {/* Stage Label */}
-                    <div className="text-xs uppercase font-bold tracking-wider transition-colors duration-200">
-                      <span className={`mr-2.5 ${isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'}`}>
-                        {s.id}
-                      </span>
-                      <span className={isActive ? 'text-[#F1F0EB]' : 'text-[#555555]'}>
-                        {s.name}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
+        {/* Bottom Footer Info Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-3 text-[10px] sm:text-xs text-[#555555]">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
+            <span className="tracking-widest uppercase">
+              SCROLL-DRIVEN ARCHITECTURE // CONTINUOUS NATIVE PROGRESSION
+            </span>
           </div>
 
+          <div className="text-right text-[#888888] tracking-wider uppercase font-mono">
+            {activeStageIndex === STAGES.length - 1 ? 'READY TO PROCEED →' : 'SCROLL TO EXPLORE NEXT STAGE ↓'}
+          </div>
         </div>
 
       </div>
