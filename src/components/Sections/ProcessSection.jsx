@@ -125,26 +125,24 @@ export default function ProcessSection() {
   useEffect(() => {
     let rafId = null;
 
-    const updateProcess = () => {
+    const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-      const sectionTop = rect.top;
-      const sectionHeight = sectionRef.current.offsetHeight;
-      const viewportHeight = window.innerHeight;
-      const scrollableDistance = sectionHeight - viewportHeight;
+      const vh = window.innerHeight;
+      const maxScroll = sectionRef.current.offsetHeight - vh;
 
-      if (scrollableDistance <= 0) return;
+      if (maxScroll <= 0) return;
 
-      // When section top is at viewport top: sectionTop = 0, progress = 0
-      // When section bottom is at viewport bottom: sectionTop = -scrollableDistance, progress = 1
-      const progress = Math.max(0, Math.min(1, -sectionTop / scrollableDistance));
+      // Scrolled distance within this section:
+      // rect.top === 0 -> scrolled = 0 -> progress = 0
+      // rect.top === -maxScroll -> scrolled = maxScroll -> progress = 1
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+
       setScrollProgress(progress);
 
-      // Exact 7 stages mapped to progress slices
-      const stageIdx = Math.min(
-        STAGES.length - 1,
-        Math.max(0, Math.floor(progress * STAGES.length))
-      );
+      // Exact 7 stages (0 to 6)
+      const stageIdx = Math.min(6, Math.max(0, Math.floor(progress * 7)));
 
       if (stageIdx !== activeStageIndexRef.current) {
         activeStageIndexRef.current = stageIdx;
@@ -155,14 +153,14 @@ export default function ProcessSection() {
     const onScroll = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
-        updateProcess();
+        handleScroll();
         rafId = null;
       });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    updateProcess();
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -176,10 +174,10 @@ export default function ProcessSection() {
     const rect = sectionRef.current.getBoundingClientRect();
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
     const sectionTop = rect.top + scrollY;
-    const viewportHeight = window.innerHeight;
-    const scrollableDistance = sectionRef.current.offsetHeight - viewportHeight;
+    const vh = window.innerHeight;
+    const maxScroll = sectionRef.current.offsetHeight - vh;
 
-    const targetScroll = sectionTop + ((idx + 0.5) / STAGES.length) * scrollableDistance;
+    const targetScroll = sectionTop + ((idx + 0.5) / STAGES.length) * maxScroll;
     window.scrollTo({
       top: Math.max(sectionTop, targetScroll),
       behavior: 'smooth'
@@ -195,9 +193,9 @@ export default function ProcessSection() {
       id="process"
       ref={sectionRef}
       className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
-      style={{ height: '220vh' }}
+      style={{ height: '180vh' }}
     >
-      {/* Pinned Sticky Viewport (100vh / 100svh) */}
+      {/* Pinned Sticky Viewport (100vh) */}
       <div
         className="w-full bg-[#0A0A0A]"
         style={{
@@ -209,10 +207,10 @@ export default function ProcessSection() {
         }}
       >
         {/* Centered Content Layout */}
-        <div className="h-full w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col justify-between select-none overflow-hidden">
+        <div className="h-full w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col justify-between py-4 sm:py-6 select-none">
 
           {/* Top Header Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 pt-3 sm:pt-4 shrink-0">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3 shrink-0">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse" />
               <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
@@ -232,7 +230,7 @@ export default function ProcessSection() {
           </div>
 
           {/* Mobile Stage Stepper Pills */}
-          <div className="flex lg:hidden items-center gap-1 py-1.5 border-b border-white/10 overflow-x-auto w-full shrink-0">
+          <div className="flex lg:hidden items-center gap-1 py-2 border-b border-white/10 overflow-x-auto w-full shrink-0">
             {STAGES.map((s, idx) => {
               const isActive = idx === activeStageIndex;
               const isCompleted = idx < activeStageIndex;
@@ -240,7 +238,7 @@ export default function ProcessSection() {
                 <button
                   key={s.id}
                   onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-1 px-2 py-1 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider transition-all duration-200 shrink-0 cursor-pointer ${
+                  className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider transition-colors shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-[#8B6DFF] text-white font-bold'
                       : isCompleted
@@ -256,21 +254,21 @@ export default function ProcessSection() {
           </div>
 
           {/* Main 3-Column Interactive Process Viewport */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch w-full py-3 sm:py-4 flex-1 min-h-0 overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch w-full my-auto py-2">
 
             {/* LEFT: Process Inspector */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl w-full min-h-0 overflow-hidden">
-              <div className="space-y-3 xl:space-y-4 min-h-0 overflow-hidden">
-                <div className="flex items-center justify-between border-b border-white/10 pb-2 shrink-0">
+            <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl h-[440px]">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
                   <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
                     PROCESS INSPECTOR
                   </span>
-                  <span className="text-[10px] text-[#555555] font-mono shrink-0">
+                  <span className="text-[10px] text-[#555555] font-mono">
                     [ {activeStage.id} / 07 ]
                   </span>
                 </div>
 
-                <div key={activeStage.id} className="space-y-3 animate-process-fade">
+                <div key={activeStage.id} className="space-y-3">
                   <div className="space-y-1">
                     <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
                     <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
@@ -299,7 +297,7 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-white/10 shrink-0">
+              <div className="pt-3 border-t border-white/10">
                 <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
                 <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
                   {activeStage.deliverable}
@@ -308,17 +306,17 @@ export default function ProcessSection() {
             </div>
 
             {/* CENTER: Active Stage Card */}
-            <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-4 sm:p-6 md:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative w-full min-h-0 overflow-hidden">
+            <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-5 sm:p-7 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative h-[360px] sm:h-[400px] lg:h-[440px]">
               
-              <div className="space-y-2 sm:space-y-3 min-h-0 overflow-hidden">
-                <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 shrink-0">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
                   <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
                     ACTIVE STAGE // {activeStage.id}
                   </span>
-                  <IconComponent size={20} className="text-[#8B6DFF] shrink-0" />
+                  <IconComponent size={20} className="text-[#8B6DFF]" />
                 </div>
 
-                <div key={activeStage.id} className="space-y-2 sm:space-y-3 animate-process-fade">
+                <div key={activeStage.id} className="space-y-2.5">
                   <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
                     {activeStage.name}
                   </h3>
@@ -333,7 +331,7 @@ export default function ProcessSection() {
                 </div>
               </div>
 
-              <div className="space-y-2 sm:space-y-3 pt-2 sm:pt-3 border-t border-white/10 shrink-0">
+              <div className="space-y-3 pt-3 border-t border-white/10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
                   <div className="space-y-0.5">
                     <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
@@ -355,7 +353,7 @@ export default function ProcessSection() {
                 </div>
 
                 {/* Continuous Scroll-Progress Indicator */}
-                <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1.5">
+                <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1">
                   <div
                     className="bg-[#8B6DFF] h-full transition-all duration-75 ease-out"
                     style={{ width: `${Math.max(4, progressPercent)}%` }}
@@ -366,7 +364,7 @@ export default function ProcessSection() {
             </div>
 
             {/* RIGHT: Compact Vertical Stage Navigator */}
-            <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-full w-full">
+            <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-[440px]">
               <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
                 STAGE NAVIGATOR
               </div>
@@ -376,7 +374,7 @@ export default function ProcessSection() {
                   <button
                     key={s.id}
                     onClick={() => handleStageClick(idx)}
-                    className={`flex items-center gap-3 text-left transition-all duration-200 py-1.5 px-3 border-l-2 cursor-pointer ${
+                    className={`flex items-center gap-3 text-left transition-colors py-1.5 px-3 border-l-2 cursor-pointer ${
                       isActive
                         ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold'
                         : 'border-transparent text-[#666666] hover:text-[#B0B0B0] hover:border-white/20'
@@ -396,7 +394,7 @@ export default function ProcessSection() {
           </div>
 
           {/* Bottom Footer Info Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-2 sm:pt-3 pb-3 sm:pb-4 text-[10px] sm:text-xs text-[#555555] w-full shrink-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-3 text-[10px] sm:text-xs text-[#555555] shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
               <span className="tracking-widest uppercase">
