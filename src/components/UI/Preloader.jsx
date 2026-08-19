@@ -1,100 +1,160 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReubgLogo from './ReubgLogo';
 
+// 9 curated Work images for the rapid cinematic preview sequence
+const SEQUENCE_IMAGES = [
+  '/images/posters/poster-01.jpeg',
+  '/images/posters/poster-02.jpeg',
+  '/images/posters/poster-04.jpeg',
+  '/images/posters/poster-06.jpeg',
+  '/images/posters/poster-07.jpeg',
+  '/images/posters/poster-09.jpeg',
+  '/images/posters/poster-11.jpeg',
+  '/images/posters/poster-15.jpeg',
+  '/images/posters/poster-19.jpeg',
+];
+
 export default function Preloader({ onComplete }) {
-  const [progress, setProgress] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const totalFrames = SEQUENCE_IMAGES.length;
 
   useEffect(() => {
-    setIsMounted(true);
+    // Check if returning visitor in same session for instant/shorter entry
+    const isReturning = typeof window !== 'undefined' && sessionStorage.getItem('reubg_visited');
 
-    // Smooth deterministic progress increment
-    let currentProgress = 0;
-    const startTime = performance.now();
-    const duration = 1300; // 1.3 seconds total loading experience
-    let animationFrameId;
+    // Preload sequence images immediately
+    let loadedCount = 0;
+    SEQUENCE_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount >= Math.min(3, totalFrames)) {
+          setImagesLoaded(true);
+        }
+      };
+    });
 
-    const updateProgress = (now) => {
-      const elapsed = now - startTime;
-      const progressFraction = Math.min(elapsed / duration, 1);
-      
-      // Easing curve: fast start, steady middle, clean snap to 100
-      const eased = Math.min(1, Math.pow(progressFraction, 0.85));
-      currentProgress = Math.round(eased * 100);
-      setProgress(currentProgress);
+    // Fallback if loading takes longer than 300ms
+    const loadTimeout = setTimeout(() => setImagesLoaded(true), 300);
 
-      if (progressFraction < 1) {
-        animationFrameId = requestAnimationFrame(updateProgress);
+    const frameInterval = isReturning ? 140 : 210; // faster for returning, cinematic for first visit
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      if (step < totalFrames) {
+        setCurrentIndex(step);
       } else {
-        setProgress(100);
-        // Clean hold at 100% then smooth dissolve
+        clearInterval(timer);
+        // Final frame hold then smooth dissolve into portfolio
         setTimeout(() => {
           setIsExiting(true);
+          try {
+            sessionStorage.setItem('reubg_visited', 'true');
+          } catch (e) {}
+
           setTimeout(() => {
             if (onComplete) onComplete();
           }, 450);
-        }, 220);
+        }, 180);
       }
-    };
-
-    animationFrameId = requestAnimationFrame(updateProgress);
+    }, frameInterval);
 
     return () => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      clearInterval(timer);
+      clearTimeout(loadTimeout);
     };
-  }, [onComplete]);
+  }, [onComplete, totalFrames]);
+
+  const currentNumber = String(currentIndex + 1).padStart(2, '0');
+  const totalNumber = String(totalFrames).padStart(2, '0');
+  const progressPercent = Math.round(((currentIndex + 1) / totalFrames) * 100);
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col justify-center items-center select-none overflow-hidden transition-opacity duration-450 ease-out ${
-        isExiting ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[999999] bg-[#0A0A0A] text-[#F1F0EB] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden transition-all duration-500 ease-out font-mono ${
+        isExiting ? 'opacity-0 scale-[1.02] pointer-events-none' : 'opacity-100 scale-100'
       }`}
       style={{ minHeight: '100dvh', height: '100vh', width: '100vw' }}
-      aria-label="Loading portfolio"
+      aria-label="Loading creative portfolio"
       role="status"
     >
-      {/* Centered Composition with Generous Spacing */}
-      <div
-        className={`flex flex-col items-center justify-center text-center w-full px-6 max-w-xl mx-auto space-y-7 sm:space-y-8 md:space-y-10 z-10 transition-all duration-500 ease-out ${
-          isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-        }`}
-      >
+      {/* Top Bar: Subtle Branding & Studio Disciplines */}
+      <div className="w-full max-w-7xl flex items-center justify-between z-20">
+        <div className="flex items-center gap-3">
+          <ReubgLogo variant="dark" className="w-[85px] sm:w-[105px] h-auto object-contain" />
+          <span className="text-[10px] text-[#555555] tracking-widest hidden sm:inline-block">
+            // PORTFOLIO PREVIEW
+          </span>
+        </div>
+
+        <div className="text-[10px] sm:text-[11px] font-mono text-[#777777] tracking-[0.25em] uppercase text-right">
+          CREATIVE DEVELOPER <span className="text-[#8B6DFF]">×</span> DIGITAL DESIGNER
+        </div>
+      </div>
+
+      {/* Center Cinematic Work Showcase Canvas */}
+      <div className="my-auto flex flex-col items-center justify-center relative z-10 w-full max-w-lg h-[62vh] sm:h-[68vh]">
+        {/* Subtle Background Coordinate Glow */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+          <div className="w-72 h-96 bg-[#8B6DFF]/15 blur-3xl rounded-full" />
+        </div>
+
+        {/* Rapid Visual Work Frame */}
+        <div className="relative w-full h-full flex items-center justify-center p-2">
+          {SEQUENCE_IMAGES.map((imgSrc, idx) => (
+            <div
+              key={imgSrc}
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ease-out ${
+                idx === currentIndex
+                  ? 'opacity-100 scale-100'
+                  : idx === currentIndex - 1
+                  ? 'opacity-0 scale-[1.02] pointer-events-none'
+                  : 'opacity-0 scale-95 pointer-events-none'
+              }`}
+            >
+              <div className="relative max-h-full aspect-[2/3] bg-[#0E0E0E] border border-white/15 p-1 shadow-2xl overflow-hidden flex items-center justify-center">
+                <img
+                  src={imgSrc}
+                  alt={`Work Preview ${idx + 1}`}
+                  className="w-full h-full object-contain filter contrast-125 brightness-95"
+                />
+
+                {/* Subtle Scanline Edge */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#8B6DFF]/5 to-transparent pointer-events-none opacity-60" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom Bar: Technical Counter + Minimal Progress Track + Status */}
+      <div className="w-full max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 z-20 pt-2 border-t border-white/10">
         
-        {/* 1. BRAND LOGO (Large, crisp, sitting directly on #0A0A0A, no box, no glow) */}
-        <div className="w-[min(74vw,300px)] sm:w-[380px] md:w-[480px] max-w-[520px] flex items-center justify-center shrink-0">
-          <ReubgLogo
-            variant="dark"
-            className="w-full h-auto object-contain max-h-[140px] md:max-h-[180px]"
+        {/* Technical Numerical Counter */}
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold text-[#8B6DFF] tracking-widest font-mono">
+            {currentNumber} / {totalNumber}
+          </span>
+          <span className="text-[10px] text-[#555555] tracking-widest uppercase">
+            FRAMES PROCESSED
+          </span>
+        </div>
+
+        {/* Minimal Horizontal Progress Track */}
+        <div className="w-48 sm:w-64 h-[2px] bg-[#1A1A1A] overflow-hidden relative">
+          <div
+            className="h-full bg-[#8B6DFF] transition-all duration-200 ease-out"
+            style={{ width: `${progressPercent}%` }}
           />
         </div>
 
-        {/* 2. SUBTITLE */}
-        <div className="text-[11px] sm:text-xs md:text-sm font-mono text-[#A0A0A0] tracking-[0.35em] uppercase font-medium">
-          FULL-STACK DEVELOPER
-        </div>
-
-        {/* 3. MINIMAL PROGRESS BAR & STATUS */}
-        <div className="w-[min(78vw,320px)] sm:w-[350px] md:w-[420px] max-w-[440px] space-y-2.5 pt-1 sm:pt-2">
-          
-          {/* Status Label & Percentage (INITIALIZING EXPERIENCE on left, percentage on right) */}
-          <div className="flex justify-between items-center text-[10px] sm:text-[11px] font-mono tracking-widest uppercase">
-            <span className="text-[#8B6DFF] font-semibold">
-              {progress >= 100 ? 'INITIALIZING EXPERIENCE' : 'INITIALIZING EXPERIENCE'}
-            </span>
-            <span className="font-bold text-[#F1F0EB] tabular-nums">
-              {progress}%
-            </span>
-          </div>
-
-          {/* Minimal 2px Rectangular Progress Bar Track (No glow, no pill shape, no gradient) */}
-          <div className="w-full h-[2px] bg-[#1A1A1A] rounded-none overflow-hidden relative">
-            <div
-              className="h-full bg-[#8B6DFF] rounded-none transition-all duration-75 ease-out"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-
+        {/* Subtitle / Status */}
+        <div className="text-[10px] text-[#777777] tracking-[0.2em] uppercase text-right">
+          INITIALIZING VISUAL ARCHIVE <span className="text-white font-bold">{progressPercent}%</span>
         </div>
 
       </div>
