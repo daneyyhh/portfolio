@@ -185,16 +185,16 @@ export default function ProcessSection() {
     <section
       id="process"
       ref={containerRef}
-      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full"
-      style={{ height: '320vh' }}
+      className="relative bg-[#0A0A0A] text-[#F1F0EB] font-mono border-t border-white/10 w-full overflow-visible"
+      style={{ height: '350vh' }}
     >
-      {/* Sticky Compact 100vh Viewport */}
+      {/* Sticky 100vh Viewport */}
       <div
-        className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-10 max-w-7xl mx-auto overflow-hidden select-none z-20"
-        style={{ position: 'sticky', top: 0, height: '100vh' }}
+        className="sticky top-0 h-screen w-full flex flex-col justify-between p-4 sm:p-6 md:p-8 max-w-7xl mx-auto select-none z-20 overflow-hidden"
+        style={{ position: 'sticky', top: 0, height: '100vh', maxHeight: '100svh' }}
       >
         {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-2 w-full">
+        <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3 pt-1 sm:pt-2 w-full shrink-0">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 bg-[#8B6DFF] animate-pulse" />
             <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
@@ -214,7 +214,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Mobile Horizontal Stepper Indicator */}
-        <div className="flex lg:hidden items-center justify-between gap-1.5 py-2 border-b border-white/10 overflow-x-auto w-full">
+        <div className="flex lg:hidden items-center justify-between gap-1.5 py-2 border-b border-white/10 overflow-x-auto w-full shrink-0">
           {STAGES.map((s, idx) => {
             const isActive = idx === activeStageIndex;
             const isCompleted = idx < activeStageIndex;
@@ -222,7 +222,7 @@ export default function ProcessSection() {
               <button
                 key={s.id}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1 px-2 py-1 text-[10px] font-mono uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
                   isActive
                     ? 'bg-[#8B6DFF] text-white font-bold'
                     : isCompleted
@@ -238,11 +238,11 @@ export default function ProcessSection() {
         </div>
 
         {/* Main 3-Column Interactive Process Viewport */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center my-auto w-full py-2">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8 items-stretch my-auto w-full flex-1 py-2 sm:py-4 max-h-[72vh] overflow-hidden">
           
           {/* 1. LEFT: Process Inspector */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl h-[460px] w-full">
-            <div className="space-y-4">
+          <div className="hidden lg:flex lg:col-span-4 flex-col justify-between bg-[#111111] border border-white/15 p-5 xl:p-6 shadow-2xl w-full h-full overflow-hidden">
+            <div className="space-y-3 xl:space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
                 <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
                   PROCESS INSPECTOR
@@ -252,8 +252,8 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              {/* Dynamic Content with Smooth Subtle Fade/Translate Transition */}
-              <div key={activeStage.id} className="space-y-3 animate-fadeIn">
+              {/* Dynamic Content with Smooth Subtle Transition */}
+              <div key={activeStage.id} className="space-y-3 transition-opacity duration-300">
                 <div className="space-y-1">
                   <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">PURPOSE</div>
                   <p className="text-xs text-[#E0E0E0] font-sans leading-relaxed">
@@ -268,7 +268,7 @@ export default function ProcessSection() {
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold">CORE ACTIVITIES</div>
                   <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
                     {activeStage.activities.map((act, i) => (
@@ -291,11 +291,11 @@ export default function ProcessSection() {
           </div>
 
           {/* 2. CENTER: Active Stage Card */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-5 sm:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 min-h-[360px] lg:h-[460px] w-full">
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[#141414] border-2 border-[#8B6DFF] p-4 sm:p-6 md:p-8 shadow-[0_0_35px_rgba(139,109,255,0.15)] relative overflow-hidden transition-all duration-300 w-full h-full">
             
             {/* Top Label & Icon */}
-            <div className="space-y-3 sm:space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2.5 sm:pb-3">
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2 sm:pb-3">
                 <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
                   ACTIVE STAGE // {activeStage.id}
                 </span>
@@ -303,24 +303,24 @@ export default function ProcessSection() {
               </div>
 
               {/* Title & Concise Topic Details */}
-              <div key={activeStage.id} className="space-y-2.5 sm:space-y-3 animate-fadeIn">
-                <h3 className="font-syne text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
+              <div key={activeStage.id} className="space-y-2 sm:space-y-3 transition-opacity duration-300">
+                <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
                   {activeStage.name}
                 </h3>
                 
-                <p className="font-sans text-xs sm:text-base text-white font-medium leading-snug">
+                <p className="font-sans text-xs sm:text-sm md:text-base text-white font-medium leading-snug">
                   {activeStage.headline}
                 </p>
 
-                <p className="font-sans text-[11px] sm:text-sm text-[#A0A0A0] leading-relaxed">
+                <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A0A0A0] leading-relaxed">
                   {activeStage.detail}
                 </p>
               </div>
             </div>
 
             {/* Bottom Focus & Deliverable Blocks */}
-            <div className="space-y-3 pt-3 sm:pt-4 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs font-mono">
+            <div className="space-y-2 sm:space-y-3 pt-2 sm:pt-3 border-t border-white/10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
                 <div className="space-y-0.5">
                   <span className="text-[9px] text-[#555555] uppercase tracking-wider font-bold block">
                     FOCUS
@@ -341,7 +341,7 @@ export default function ProcessSection() {
               </div>
 
               {/* Continuous Scroll-Progress Indicator */}
-              <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-2">
+              <div className="w-full bg-[#222222] h-[2px] overflow-hidden mt-1.5">
                 <div
                   className="bg-[#8B6DFF] h-full transition-all duration-75 ease-out"
                   style={{ width: `${Math.max(4, scrollProgress * 100)}%` }}
@@ -352,7 +352,7 @@ export default function ProcessSection() {
           </div>
 
           {/* 3. RIGHT: Compact Vertical Stage Navigator */}
-          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-[460px] w-full">
+          <div className="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-1.5 pl-4 border-l border-white/10 h-full w-full">
             <div className="text-[10px] text-[#555555] font-mono uppercase tracking-widest mb-2 font-bold">
               STAGE NAVIGATOR
             </div>
@@ -382,7 +382,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Bottom Footer Info Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-3 text-[10px] sm:text-xs text-[#555555] w-full">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 pt-2 sm:pt-3 text-[10px] sm:text-xs text-[#555555] w-full shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
             <span className="tracking-widest uppercase">
