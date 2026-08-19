@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReubgLogo from './ReubgLogo';
 
-// Exactly 5 unique work images (each appears only once)
+// 5 unique master work images (each appears only once)
 const INTRO_IMAGES = [
   '/images/posters/poster-01.jpeg',
   '/images/posters/poster-06.jpeg',
@@ -10,74 +10,136 @@ const INTRO_IMAGES = [
   '/images/posters/poster-19.jpeg',
 ];
 
+// High-precision cubic-bezier(0.77, 0, 0.175, 1) for physical curtain release
+function easeCurtain(t) {
+  return t < 0.5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
 export default function Preloader({ onComplete }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLifting, setIsLifting] = useState(false);
-  const [isReady, setIsReady] = useState(false);
+  const [animState, setAnimState] = useState({
+    progress: 0,
+    activeIdxA: 0,
+    activeIdxB: 1,
+    opacityA: 1,
+    opacityB: 0,
+    scaleA: 1,
+    scaleB: 1.015,
+    curtainY: 0,
+    artworkScale: 1,
+    currentStep: 1,
+    isComplete: false,
+  });
+
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
-    // 1. Preload all 5 images before starting sequence
-    let loaded = 0;
+    // 1. Preload all 5 images before starting animation
     INTRO_IMAGES.forEach((src) => {
       const img = new Image();
       img.src = src;
-      img.onload = () => {
-        loaded++;
-        if (loaded >= INTRO_IMAGES.length) {
-          setIsReady(true);
-        }
-      };
-      img.onerror = () => {
-        loaded++;
-        if (loaded >= INTRO_IMAGES.length) {
-          setIsReady(true);
-        }
-      };
     });
 
-    // Fallback in case caching makes onload instantaneous or delayed
-    const readyTimeout = setTimeout(() => setIsReady(true), 200);
-    return () => clearTimeout(readyTimeout);
+    const totalDuration = 3200; // 3.2 seconds total continuous master timeline
+    const startTime = performance.now();
+    let frameId;
+
+    const tick = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / totalDuration);
+
+      // Phase 1: 0.00 -> 0.82 (Continuous mathematical image cross-dissolve)
+      const imagePhaseEnd = 0.82;
+      let idxA = 0;
+      let idxB = 1;
+      let opA = 1;
+      let opB = 0;
+      let scA = 1;
+      let scB = 1.015;
+      let stepNum = 1;
+
+      if (progress < imagePhaseEnd) {
+        // Continuous fractional index between 0.0 and 4.0
+        const rawIndex = (progress / imagePhaseEnd) * (INTRO_IMAGES.length - 1);
+        idxA = Math.floor(rawIndex);
+        idxB = Math.min(INTRO_IMAGES.length - 1, idxA + 1);
+        const fract = rawIndex - idxA;
+
+        // Smooth cross-dissolve: outgoing scales down 1.00 -> 0.985, incoming settles 1.015 -> 1.00
+        opA = 1 - fract;
+        opB = fract;
+        scA = 1.0 - fract * 0.015;
+        scB = 1.015 - fract * 0.015;
+        stepNum = Math.min(5, Math.floor(rawIndex) + 1);
+      } else {
+        // Hold final 5th image (100% state)
+        idxA = INTRO_IMAGES.length - 1;
+        idxB = INTRO_IMAGES.length - 1;
+        opA = 1;
+        opB = 0;
+        scA = 1;
+        scB = 1;
+        stepNum = 5;
+      }
+
+      // Phase 2: 0.82 -> 1.00 (Continuous smooth upward curtain release)
+      let curtainY = 0;
+      let artworkScale = 1;
+      if (progress >= imagePhaseEnd) {
+        const exitProgress = (progress - imagePhaseEnd) / (1 - imagePhaseEnd);
+        const eased = easeCurtain(exitProgress);
+        curtainY = -eased * 115; // translateY(-115vh)
+        artworkScale = 1.0 - eased * 0.06; // artwork scales down 1.0 -> 0.94 as it rises
+      }
+
+      setAnimState({
+        progress,
+        activeIdxA: idxA,
+        activeIdxB: idxB,
+        opacityA: opA,
+        opacityB: opB,
+        scaleA: scA,
+        scaleB: scB,
+        curtainY,
+        artworkScale,
+        currentStep: stepNum,
+        isComplete: progress >= 1,
+      });
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      } else {
+        if (onCompleteRef.current) {
+          onCompleteRef.current();
+        }
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
-  useEffect(() => {
-    if (!isReady) return;
+  const {
+    activeIdxA,
+    activeIdxB,
+    opacityA,
+    opacityB,
+    scaleA,
+    scaleB,
+    curtainY,
+    artworkScale,
+    currentStep,
+    progress
+  } = animState;
 
-    // 2. Stage 01: 5-step smooth dissolve sequence (0.65s per frame)
-    const stepDuration = 650;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      if (step < INTRO_IMAGES.length) {
-        setCurrentIndex(step);
-      } else {
-        clearInterval(timer);
-
-        // 3. Stage 02: 100% state hold (250ms on the 5th artwork)
-        setTimeout(() => {
-          // 4. Stage 03: Physical upward curtain lift (1.2s smooth exit)
-          setIsLifting(true);
-
-          setTimeout(() => {
-            if (onComplete) onComplete();
-          }, 1200);
-        }, 250);
-      }
-    }, stepDuration);
-
-    return () => clearInterval(timer);
-  }, [isReady, onComplete]);
-
-  const currentNumber = String(currentIndex + 1).padStart(2, '0');
-  const totalCount = String(INTRO_IMAGES.length).padStart(2, '0');
-  const percentage = Math.round(((currentIndex + 1) / INTRO_IMAGES.length) * 100);
+  const isHundred = progress >= 0.80;
+  const percentage = isHundred ? 100 : Math.round((currentStep / 5) * 100);
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen z-[999999] bg-[#050505] text-[#F1F0EB] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden font-mono will-change-transform ${
-        isLifting ? '-translate-y-[110vh] pointer-events-none' : 'translate-y-0'
-      }`}
+      className="fixed inset-0 w-screen h-screen z-[999999] bg-[#050505] text-[#F1F0EB] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden font-mono will-change-transform pointer-events-none"
       style={{
         zIndex: 999999,
         position: 'fixed',
@@ -87,25 +149,23 @@ export default function Preloader({ onComplete }) {
         height: '100svh',
         minHeight: '100vh',
         backgroundColor: '#050505',
-        transitionProperty: 'transform',
-        transitionDuration: '1200ms',
-        transitionTimingFunction: 'cubic-bezier(0.76, 0, 0.24, 1)',
+        transform: `translate3d(0, ${curtainY}vh, 0)`,
       }}
       aria-label="Studio Intro"
     >
-      {/* Top Header: Brand Wordmark + Small Micro-Counter in Top-Right */}
+      {/* Top Header: Brand Wordmark + Masked Counter */}
       <div className="w-full max-w-6xl flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
-          <ReubgLogo variant="dark" className="w-[80px] sm:w-[95px] h-auto object-contain" />
+          <ReubgLogo variant="dark" className="w-[78px] sm:w-[92px] h-auto object-contain" />
           <span className="text-[10px] text-[#444444] tracking-widest uppercase hidden sm:inline-block">
-            // INTRO
+            // STUDIO INTRO
           </span>
         </div>
 
-        {/* Small Technical Micro-Counter */}
+        {/* Small Micro-Counter */}
         <div className="flex items-center gap-2 text-xs font-mono">
           <span className="text-[#8B6DFF] font-bold tracking-widest">
-            {currentNumber} / {totalCount}
+            0{currentStep} / 05
           </span>
           <span className="text-[#555555] text-[10px] tracking-wider">
             [{percentage}%]
@@ -113,61 +173,68 @@ export default function Preloader({ onComplete }) {
         </div>
       </div>
 
-      {/* Center Frameless Artwork (Floats directly on background, no box/border/stroke) */}
+      {/* Center Frameless Floating Artwork (Zero Box, Zero Border, Mathematical Cross-Dissolve) */}
       <div className="my-auto flex items-center justify-center relative z-10 w-full">
         <div
-          className={`relative w-[60vw] sm:w-[32vw] max-w-[420px] aspect-[2/3] sm:aspect-[3/4] max-h-[48vh] sm:max-h-[54vh] flex items-center justify-center bg-transparent border-none outline-none shadow-none transition-transform duration-1000 ease-out ${
-            isLifting ? 'scale-95' : 'scale-100'
-          }`}
-          style={{ background: 'transparent', border: 'none', boxShadow: 'none', outline: 'none' }}
+          className="relative w-[58vw] sm:w-[30vw] max-w-[380px] aspect-[2/3] sm:aspect-[3/4] max-h-[46vh] sm:max-h-[52vh] flex items-center justify-center bg-transparent border-none outline-none shadow-none"
+          style={{
+            background: 'transparent',
+            border: 'none',
+            outline: 'none',
+            boxShadow: 'none',
+            transform: `scale3d(${artworkScale}, ${artworkScale}, 1)`
+          }}
         >
-          {INTRO_IMAGES.map((src, idx) => {
-            const isActive = idx === currentIndex;
-            const isPrev = idx === currentIndex - 1;
+          {/* Layer A */}
+          <div
+            className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform"
+            style={{
+              opacity: opacityA,
+              transform: `scale3d(${scaleA}, ${scaleA}, 1)`,
+            }}
+          >
+            <img
+              src={INTRO_IMAGES[activeIdxA]}
+              alt=""
+              className="w-full h-full object-contain filter contrast-110 brightness-95 select-none"
+              style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}
+            />
+          </div>
 
-            return (
-              <div
-                key={src}
-                className={`absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-750 ease-[cubic-bezier(0.65,0,0.35,1)] ${
-                  isActive
-                    ? 'opacity-100 scale-100 z-10'
-                    : isPrev
-                    ? 'opacity-0 scale-[0.98] z-0 pointer-events-none'
-                    : 'opacity-0 scale-[1.02] z-0 pointer-events-none'
-                }`}
-                style={{
-                  transitionDuration: '750ms',
-                  transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)'
-                }}
-              >
-                <img
-                  src={src}
-                  alt={`Artwork Preview ${idx + 1}`}
-                  className="w-full h-full object-contain filter contrast-110 brightness-95 select-none"
-                  style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}
-                />
-              </div>
-            );
-          })}
+          {/* Layer B */}
+          <div
+            className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform"
+            style={{
+              opacity: opacityB,
+              transform: `scale3d(${scaleB}, ${scaleB}, 1)`,
+            }}
+          >
+            <img
+              src={INTRO_IMAGES[activeIdxB]}
+              alt=""
+              className="w-full h-full object-contain filter contrast-110 brightness-95 select-none"
+              style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Bottom Minimal Progress Track */}
+      {/* Bottom Status Bar */}
       <div className="w-full max-w-6xl flex items-center justify-between z-20 pt-3 border-t border-white/10 text-xs">
         <div className="text-[10px] text-[#444444] tracking-widest uppercase font-mono">
-          VISUAL ARCHIVE // 5 STUDIES
+          VISUAL REEL // 5 STUDIES
         </div>
 
-        {/* Micro Purple Progress Track */}
+        {/* Continuous Progress Track */}
         <div className="flex items-center gap-3">
           <div className="w-20 sm:w-32 h-[1.5px] bg-[#1A1A1A] overflow-hidden">
             <div
-              className="h-full bg-[#8B6DFF] transition-all duration-500 ease-out"
-              style={{ width: `${percentage}%` }}
+              className="h-full bg-[#8B6DFF] will-change-transform"
+              style={{ width: `${Math.min(100, Math.round((progress / 0.82) * 100))}%` }}
             />
           </div>
           <span className="text-[10px] text-[#777777] font-mono tracking-wider">
-            {percentage === 100 ? 'ENTER' : 'LOAD'}
+            {isHundred ? 'ENTER' : 'LOAD'}
           </span>
         </div>
       </div>
