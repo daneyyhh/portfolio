@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Lenis from 'lenis';
+import React, { useState } from 'react';
 import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
 import CaseStudyModal from './components/UI/CaseStudyModal';
@@ -22,23 +21,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
-
-  useEffect(() => {
-    // Lenis Smooth Scroll Setup
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans">

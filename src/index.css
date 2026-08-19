@@ -12,7 +12,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     background-color: var(--bg-ivory);
     color: var(--text-black);
   }

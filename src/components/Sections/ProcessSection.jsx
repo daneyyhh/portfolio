@@ -85,7 +85,7 @@ export default function ProcessSection() {
     let rafId = null;
 
     const checkActiveStage = () => {
-      const viewportCenter = window.innerHeight * 0.45;
+      const triggerLine = window.innerHeight * 0.42;
       let closestIdx = 0;
       let minDistance = Infinity;
 
@@ -93,7 +93,7 @@ export default function ProcessSection() {
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const elementCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(elementCenter - viewportCenter);
+        const distance = Math.abs(elementCenter - triggerLine);
 
         if (distance < minDistance) {
           minDistance = distance;
@@ -117,10 +117,12 @@ export default function ProcessSection() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     checkActiveStage(); // Initial check
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, []);
@@ -130,17 +132,17 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="py-32 px-6 md:px-12 bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono relative"
+      className="py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono relative w-full overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto space-y-20 relative z-10">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-20 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 md:pb-8">
           <div>
             <div className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-2">
               METHODOLOGY // 03
             </div>
-            <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
+            <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase tracking-tight">
               MY PROCESS
             </h2>
           </div>
@@ -150,11 +152,37 @@ export default function ProcessSection() {
           </div>
         </div>
 
+        {/* MOBILE STICKY INSPECTOR HUD (< lg screens) */}
+        <div className="lg:hidden sticky top-16 z-30 bg-[#111111]/95 backdrop-blur-md border border-white/15 p-4 shadow-xl">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#8B6DFF]" />
+              <span className="text-[11px] text-[#8B6DFF] font-bold uppercase tracking-wider">
+                STAGE {activeStage.id} // {activeStage.name}
+              </span>
+            </div>
+            <span className="text-[10px] text-[#888888] uppercase tracking-widest">INSPECTOR</span>
+          </div>
+
+          <p className="font-sans text-xs text-[#E4E2DC] leading-relaxed mb-2">
+            {activeStage.purpose}
+          </p>
+
+          <div className="flex items-center justify-between text-[10px] pt-2 border-t border-white/10">
+            <span className="text-[#8B6DFF] truncate max-w-[55%]">
+              FOCUS: {activeStage.focus.split('·')[0]}
+            </span>
+            <span className="text-white font-bold uppercase truncate max-w-[42%] text-right">
+              {activeStage.output}
+            </span>
+          </div>
+        </div>
+
         {/* 3-Column Workspace: LEFT Process Inspector (Sticky), CENTER Sequential Stages (Spacious), RIGHT Timeline Rail (Sticky) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative">
           
-          {/* LEFT COLUMN: STICKY PROCESS INSPECTOR SPECIFICATION PANEL */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28 bg-[#111111] border border-white/10 p-6 md:p-7 space-y-6 shadow-2xl rounded-none">
+          {/* LEFT COLUMN: DESKTOP STICKY PROCESS INSPECTOR SPECIFICATION PANEL */}
+          <div className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28 bg-[#111111] border border-white/10 p-6 md:p-7 space-y-6 shadow-2xl rounded-none">
             
             {/* Inspector Header */}
             <div className="flex justify-between items-center border-b border-white/10 pb-3 text-xs font-bold">
@@ -210,7 +238,7 @@ export default function ProcessSection() {
           </div>
 
           {/* CENTER COLUMN: 7 SEQUENTIAL RECTANGULAR PROCESS STAGE PANELS WITH GENEROUS VERTICAL SPACING */}
-          <div className="lg:col-span-5 space-y-36 py-6">
+          <div className="col-span-1 lg:col-span-5 space-y-28 sm:space-y-36 md:space-y-44 py-4">
             {STAGES.map((stg, idx) => {
               const Icon = stg.icon;
               const isActive = activeStageIndex === idx;
@@ -219,7 +247,7 @@ export default function ProcessSection() {
                 <div
                   key={stg.id}
                   ref={(el) => (stageRefs.current[idx] = el)}
-                  className={`p-7 md:p-9 border rounded-none flex flex-col gap-6 transition-colors duration-200 ${
+                  className={`p-6 sm:p-8 md:p-9 border rounded-none flex flex-col gap-6 transition-colors duration-200 w-full ${
                     isActive
                       ? 'bg-[#141414] border-[#8B6DFF] text-[#F1F0EB]'
                       : 'bg-[#0E0E0E] border-white/10 text-[#888888]'
@@ -231,15 +259,26 @@ export default function ProcessSection() {
                         {stg.id}
                       </span>
                       <Icon size={20} className={isActive ? 'text-[#8B6DFF]' : 'text-[#555555]'} />
-                      <h4 className={`font-syne font-extrabold text-xl uppercase tracking-wider ${isActive ? 'text-white' : 'text-[#A0A0A0]'}`}>
+                      <h4 className={`font-syne font-extrabold text-lg sm:text-xl uppercase tracking-wider ${isActive ? 'text-white' : 'text-[#A0A0A0]'}`}>
                         {stg.name}
                       </h4>
                     </div>
                   </div>
 
-                  <p className={`font-sans text-sm leading-relaxed ${isActive ? 'text-[#E4E2DC]' : 'text-[#888888]'}`}>
+                  <p className={`font-sans text-xs sm:text-sm leading-relaxed ${isActive ? 'text-[#E4E2DC]' : 'text-[#888888]'}`}>
                     {stg.purpose}
                   </p>
+
+                  <div className="space-y-2 pt-2 border-t border-white/10 lg:hidden">
+                    <div className="text-[10px] text-[#555555] font-bold uppercase tracking-wider">ACTIVITIES</div>
+                    <div className="flex flex-wrap gap-2">
+                      {stg.activities.slice(0, 3).map((act, i) => (
+                        <span key={i} className="text-[11px] bg-white/5 px-2 py-0.5 text-[#C9C7C0] border border-white/10">
+                          {act}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
                   <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs font-mono">
                     <span className={isActive ? 'text-[#8B6DFF] font-bold' : 'text-[#555555]'}>
