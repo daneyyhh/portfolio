@@ -72,23 +72,29 @@ export default function TechStack() {
   ];
 
   return (
-    <section id="skills" className="py-28 px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono">
-      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
+    <section id="skills" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10 w-full">
         
         {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end border-b border-[#C9C7C0] pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
           <div className="hidden lg:flex lg:col-span-1">
             <span className="font-mono text-4xl font-extrabold text-[#111111]">06</span>
           </div>
 
-          <div className="lg:col-span-11 space-y-1">
+          <div className="lg:col-span-11 space-y-1 w-full max-w-full">
             <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
               TOOLING & STACK
             </div>
-            <h2 className="font-syne text-4xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">
+            <h2
+              className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full"
+              style={{
+                fontSize: 'clamp(1.85rem, 8vw, 3.75rem)',
+                letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
+              }}
+            >
               TECHNOLOGIES
             </h2>
-            <p className="font-sans text-slate-700 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+            <p className="font-sans text-slate-700 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
               Tools and technologies I work with across web, AI, design, game development, and interactive experiences.
             </p>
           </div>
