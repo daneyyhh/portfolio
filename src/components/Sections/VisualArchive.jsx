@@ -36,11 +36,11 @@ export default function VisualArchive() {
       id="visual-archive"
       className="py-28 md:py-36 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-[#F1F0EB] border-t border-white/10 font-mono relative w-full overflow-hidden"
     >
-      {/* Background Subtle Coordinate Watermarks */}
+      {/* Background Coordinate Watermarks */}
       <div className="absolute top-12 right-12 text-[10px] text-white/5 uppercase select-none pointer-events-none hidden xl:block leading-relaxed tracking-widest text-right">
-        [ARCHIVE-REF // 07-VA-{totalCount}]<br />
-        EXHIBITION PRINT SERIES<br />
-        300 DPI MASTER FILES
+        [MATRIX // 6×4 ARCHIVE]<br />
+        EXHIBITION SERIES · 24 STUDIES<br />
+        HIGH-PRECISION 300 DPI
       </div>
 
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
@@ -51,8 +51,8 @@ export default function VisualArchive() {
             <div className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
               07
             </div>
-            <h2 className="font-syne text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase leading-[0.92]">
-              VISUAL<br />ARCHIVE
+            <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight uppercase leading-[0.92]">
+              VISUAL ARCHIVE
             </h2>
           </div>
 
@@ -61,52 +61,41 @@ export default function VisualArchive() {
               SELECTED VISUAL WORKS
             </div>
             <div className="text-[11px] font-mono text-[#777777] tracking-[0.2em] uppercase">
-              POSTERS / EXPERIMENTS / VISUAL STUDIES
+              POSTERS / VISUAL STUDIES / EXPERIMENTS
             </div>
           </div>
         </div>
 
-        {/* Editorial Asymmetric Image Showcase (Exact Original Sequence 01 -> 24) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 items-start">
-          {POSTERS.map((poster, idx) => {
-            // First poster given prominent double-span on desktop for editorial rhythm
-            const isLead = idx === 0;
+        {/* Strict 6 × 4 Editorial Gallery Grid (6 Columns Desktop, 3 Tablet, 2 Mobile, 1 XS) */}
+        <div className="grid grid-cols-1 min-[440px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 md:gap-6">
+          {POSTERS.map((poster, idx) => (
+            <div
+              key={poster.id}
+              onClick={() => setActiveImageIndex(idx)}
+              className="group flex flex-col cursor-pointer select-none"
+            >
+              {/* Image Frame with Subtle Charcoal Background & Contain Fit */}
+              <div className="relative w-full aspect-[2/3] bg-[#0E0E0E] border border-white/10 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-[#8B6DFF]/80 group-hover:shadow-[0_0_15px_rgba(139,109,255,0.15)]">
+                <img
+                  src={poster.src}
+                  alt={`Artwork ${poster.index}`}
+                  className="w-full h-full object-contain p-1 filter contrast-125 brightness-95 transition-all duration-300 ease-out group-hover:scale-[1.02] group-hover:brightness-105"
+                  loading="lazy"
+                />
 
-            return (
-              <div
-                key={poster.id}
-                onClick={() => setActiveImageIndex(idx)}
-                className={`group relative bg-[#111111] border border-white/10 cursor-pointer overflow-hidden transition-all duration-300 hover:border-[#8B6DFF] select-none ${
-                  isLead ? 'sm:col-span-2 lg:col-span-2' : 'col-span-1'
-                }`}
-              >
-                {/* Poster Canvas — Preserves True Aspect Ratio without cropping */}
-                <div className={`relative overflow-hidden bg-[#0D0D0D] w-full flex items-center justify-center ${
-                  isLead ? 'aspect-[3/4] sm:aspect-[4/3] max-h-[580px]' : 'aspect-[2/3]'
-                }`}>
-                  <img
-                    src={poster.src}
-                    alt={`Visual Archive Study ${poster.index}`}
-                    className="w-full h-full object-cover filter contrast-125 brightness-95 transition-all duration-500 ease-out group-hover:scale-[1.02] group-hover:brightness-105"
-                    loading="lazy"
-                  />
-
-                  {/* Dark Vignette Overlay on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-40 group-hover:opacity-70 transition-opacity pointer-events-none" />
-
-                  {/* Minimal Numerical Index in Corner */}
-                  <div className="absolute top-3 left-3 pointer-events-none z-10">
-                    <span className="bg-[#0A0A0A]/90 backdrop-blur-sm border border-white/15 text-white font-mono text-[10px] font-extrabold px-2.5 py-1">
-                      {poster.index}
-                    </span>
-                  </div>
-
-                  {/* Thin Purple Accent Line on Hover */}
-                  <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-[#8B6DFF] transition-all duration-300 ease-out z-10" />
-                </div>
+                {/* Ultra-subtle bottom border line accent */}
+                <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[1.5px] bg-[#8B6DFF] transition-all duration-300 ease-out" />
               </div>
-            );
-          })}
+
+              {/* Tiny Technical Numerical Index Outside Artwork */}
+              <div className="pt-2 flex justify-between items-center text-[10px] font-mono text-[#555555] group-hover:text-[#8B6DFF] transition-colors">
+                <span className="font-bold tracking-wider">{poster.index}</span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] tracking-widest uppercase">
+                  VIEW
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Section Footer */}
@@ -133,13 +122,13 @@ export default function VisualArchive() {
 
       </div>
 
-      {/* Full-Screen Pure Artwork Viewer (Clean: Artwork + Number + Navigation + Close only) */}
+      {/* Clean Full-Screen Artwork Lightbox Viewer */}
       {activeImageIndex !== null && (
         <div
           className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xl flex flex-col justify-between items-center p-4 sm:p-6"
           onClick={() => setActiveImageIndex(null)}
         >
-          {/* Top Minimal Bar */}
+          {/* Top Minimal Bar (Index + Controls) */}
           <div
             className="w-full max-w-6xl flex items-center justify-between py-2 border-b border-white/10 z-20"
             onClick={(e) => e.stopPropagation()}
@@ -185,7 +174,7 @@ export default function VisualArchive() {
             />
           </div>
 
-          {/* Bottom Minimal Indicator */}
+          {/* Bottom Minimal Navigation Cue */}
           <div className="text-[10px] font-mono text-[#555555] tracking-widest uppercase z-20">
             USE ARROW KEYS OR CHEVRONS TO NAVIGATE · ESC TO CLOSE
           </div>
