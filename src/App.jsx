@@ -20,7 +20,9 @@ import Contact from './components/Sections/Contact';
 export default function App() {
   const [loading, setLoading] = useState(() => {
     if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('reubg_intro_seen');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return false;
+      return !sessionStorage.getItem('introShown');
     }
     return true;
   });
