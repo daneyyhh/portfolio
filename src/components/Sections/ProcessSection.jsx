@@ -161,7 +161,7 @@ export default function ProcessSection() {
         // Continuous linear interpolation (lerp) for liquid studio smoothness
         const diff = targetProgressRef.current - currentProgressRef.current;
         if (Math.abs(diff) > 0.0005) {
-          currentProgressRef.current += diff * 0.12;
+          currentProgressRef.current += diff * 0.10;
           const current = Math.max(0, Math.min(1, currentProgressRef.current));
           setDisplayProgress(current);
 
@@ -279,10 +279,10 @@ export default function ProcessSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-3"
                 >
                   <div className="space-y-1">
@@ -316,7 +316,7 @@ export default function ProcessSection() {
 
             <div className="pt-3 border-t border-white/10">
               <div className="text-[9px] text-[#555555] uppercase tracking-widest font-bold mb-1">KEY DELIVERABLE</div>
-              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate">
+              <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] p-2 border border-white/10 truncate transition-colors duration-300">
                 {activeStage.deliverable}
               </div>
             </div>
@@ -330,16 +330,16 @@ export default function ProcessSection() {
                 <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest uppercase">
                   ACTIVE STAGE // {activeStage.id}
                 </span>
-                <IconComponent size={20} className="text-[#8B6DFF]" />
+                <IconComponent size={20} className="text-[#8B6DFF] transition-transform duration-300" />
               </div>
 
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-2.5"
                 >
                   <h3 className="font-syne text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight uppercase leading-none">
