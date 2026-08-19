@@ -121,24 +121,25 @@ export default function ProcessSection() {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const sectionRef = useRef(null);
   const progressBarRef = useRef(null);
-  const progressPercentRef = useRef(null);
+  const debugPercentRef = useRef(null);
+  const footerPercentRef = useRef(null);
 
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
   const activeStageIndexRef = useRef(0);
-  const inViewRef = useRef(false);
+  const inViewRef = useRef(true);
 
   useEffect(() => {
     let rafId = null;
 
-    // IntersectionObserver to run RAF loop only when section is near viewport
+    // IntersectionObserver to keep RAF loop active when near section
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           inViewRef.current = entry.isIntersecting;
         });
       },
-      { rootMargin: '200px 0px 200px 0px' }
+      { rootMargin: '300px 0px 300px 0px' }
     );
 
     if (sectionRef.current) {
@@ -157,22 +158,26 @@ export default function ProcessSection() {
       targetProgressRef.current = progress;
     };
 
-    // Inertia damping loop (smoothing factor: 0.08 for fluid studio feel)
+    // Smooth inertia loop (k = 0.10)
     const loop = () => {
       if (inViewRef.current) {
         const diff = targetProgressRef.current - currentProgressRef.current;
-        if (Math.abs(diff) > 0.0002) {
-          currentProgressRef.current += diff * 0.08;
+        if (Math.abs(diff) > 0.0001) {
+          currentProgressRef.current += diff * 0.10;
           const p = Math.max(0, Math.min(1, currentProgressRef.current));
 
-          // Direct GPU-accelerated transform update on progress bar (60-120fps)
+          // Direct GPU-accelerated transform update on progress bar
           if (progressBarRef.current) {
             progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, p)})`;
           }
 
-          // Direct text update on percentage
-          if (progressPercentRef.current) {
-            progressPercentRef.current.textContent = `${Math.round(p * 100)}%`;
+          // Direct DOM text updates for instant 60-120fps counter
+          const pct = `${Math.round(p * 100)}%`;
+          if (debugPercentRef.current) {
+            debugPercentRef.current.textContent = pct;
+          }
+          if (footerPercentRef.current) {
+            footerPercentRef.current.textContent = pct;
           }
 
           // Stage index calculated from smoothly interpolated progress
@@ -217,9 +222,9 @@ export default function ProcessSection() {
     if (progressBarRef.current) {
       progressBarRef.current.style.transform = `scaleX(${Math.max(0.04, target)})`;
     }
-    if (progressPercentRef.current) {
-      progressPercentRef.current.textContent = `${Math.round(target * 100)}%`;
-    }
+    const pct = `${Math.round(target * 100)}%`;
+    if (debugPercentRef.current) debugPercentRef.current.textContent = pct;
+    if (footerPercentRef.current) footerPercentRef.current.textContent = pct;
   };
 
   const activeStage = STAGES[activeStageIndex];
@@ -233,7 +238,7 @@ export default function ProcessSection() {
     >
       <div className="max-w-7xl mx-auto space-y-8 relative z-10 w-full">
 
-        {/* Top Header Bar */}
+        {/* Top Header Bar with Live Animation Debug Badge */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4 w-full">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse" />
@@ -247,6 +252,12 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex items-center gap-3 text-xs">
+            {/* Real-time Smooth Progress Badge */}
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#8B6DFF]/15 border border-[#8B6DFF]/30 text-[#8B6DFF] text-[10px] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF] animate-ping" />
+              PROCESS ANIMATION: NEW // PROGRESS: <span ref={debugPercentRef} className="font-bold text-white">0%</span>
+            </span>
+
             <span className="text-[#8B6DFF] font-bold tracking-widest font-mono">
               STAGE {activeStage.id} / 07
             </span>
@@ -420,13 +431,13 @@ export default function ProcessSection() {
                 <button
                   key={s.id}
                   onClick={() => handleStageClick(idx)}
-                  className={`flex items-center gap-3 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] py-1.5 px-3 border-l-2 cursor-pointer ${
+                  className={`flex items-center gap-3 text-left transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] py-2 px-3 border-l-2 cursor-pointer ${
                     isActive
-                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/15 text-white font-bold translate-x-1.5 opacity-100 scale-100'
+                      ? 'border-[#8B6DFF] bg-[#8B6DFF]/20 text-white font-bold translate-x-2 opacity-100 scale-100 shadow-md'
                       : 'border-transparent text-white/50 opacity-40 scale-95 hover:opacity-80 hover:text-white hover:border-white/20'
                   }`}
                 >
-                  <span className={`text-[10px] font-mono transition-colors duration-500 ${isActive ? 'text-[#8B6DFF]' : 'text-white/40'}`}>
+                  <span className={`text-[10px] font-mono transition-colors duration-500 ${isActive ? 'text-[#8B6DFF] font-bold' : 'text-white/40'}`}>
                     {s.id}
                   </span>
                   <span className="text-xs uppercase tracking-wider font-mono">
@@ -444,7 +455,7 @@ export default function ProcessSection() {
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
             <span className="tracking-widest uppercase">
-              SCROLL PROGRESSION // <span ref={progressPercentRef} className="text-[#8B6DFF] font-bold">0%</span> COMPLETED
+              SCROLL PROGRESSION // <span ref={footerPercentRef} className="text-[#8B6DFF] font-bold">0%</span> COMPLETED
             </span>
           </div>
 
