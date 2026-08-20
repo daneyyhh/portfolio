@@ -18,6 +18,27 @@ export default function Navbar({ onOpenResume }) {
     { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
+  // Smooth scroll handler accounting for header height offset
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const headerOffset = 72;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      if (window.history && window.history.pushState) {
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -58,11 +79,15 @@ export default function Navbar({ onOpenResume }) {
   }, []);
 
   return (
-    <header className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip bg-[#F1F0EB] ${scrolled ? 'py-3 shadow-sm' : 'py-4'}`}>
+    <header className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip bg-[#F1F0EB] ${scrolled ? 'py-3 shadow-md' : 'py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
         {/* Brand Logo */}
-        <a href="#hero" className="flex items-center group shrink-0">
+        <a
+          href="#hero"
+          onClick={(e) => handleNavClick(e, '#hero')}
+          className="flex items-center group shrink-0"
+        >
           <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[135px] h-auto" />
         </a>
 
@@ -72,8 +97,11 @@ export default function Navbar({ onOpenResume }) {
             <a
               key={link.name}
               href={link.href}
-              className={`transition-colors duration-200 flex items-center gap-1.5 py-1 ${
-                activeSection === link.id ? 'text-[#8B6DFF] font-extrabold border-b-2 border-[#8B6DFF]' : 'text-[#111111] hover:text-[#8B6DFF]'
+              onClick={(e) => handleNavClick(e, link.href)}
+              className={`transition-all duration-200 flex items-center gap-1.5 py-1 ${
+                activeSection === link.id
+                  ? 'text-[#8B6DFF] font-extrabold border-b-2 border-[#8B6DFF]'
+                  : 'text-[#111111] hover:text-[#8B6DFF]'
               }`}
             >
               <span className="text-[10px] text-[#555555] font-normal">{link.num}.</span>
@@ -116,7 +144,10 @@ export default function Navbar({ onOpenResume }) {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setMobileMenuOpen(false);
+                  }}
                   className={`text-sm tracking-widest flex items-center gap-2.5 py-1.5 ${
                     activeSection === link.id ? 'text-[#8B6DFF] font-bold' : 'text-[#111111]'
                   }`}
