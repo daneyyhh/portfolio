@@ -28,13 +28,9 @@ export default function PersistentCanvas({ scrollProgress = 0 }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Ambient & Point Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // Ambient & Directional Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
-
-    const purpleLight = new THREE.PointLight(0x8B6DFF, 4, 15);
-    purpleLight.position.set(0, 0, 2);
-    scene.add(purpleLight);
 
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
     dirLight.position.set(5, 5, 5);
@@ -90,14 +86,7 @@ export default function PersistentCanvas({ scrollProgress = 0 }) {
     const frameWireframe = new THREE.LineSegments(frameEdges, frameMat);
     mainGroup.add(frameWireframe);
 
-    // 4. Orbital Ring
-    const ringGeo = new THREE.TorusGeometry(3.2, 0.02, 16, 100);
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0x8B6DFF, emissive: 0x8B6DFF, emissiveIntensity: 0.5 });
-    const orbitalRing = new THREE.Mesh(ringGeo, ringMat);
-    orbitalRing.rotation.x = Math.PI / 3;
-    mainGroup.add(orbitalRing);
-
-    // 5. Floating Spheres
+    // 4. Floating Spheres
     const spheresGroup = new THREE.Group();
     const sphereGeo = new THREE.SphereGeometry(0.12, 16, 16);
     const sphereMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.2, metalness: 0.9 });
@@ -138,7 +127,6 @@ export default function PersistentCanvas({ scrollProgress = 0 }) {
       if (progress > 0.3 && progress < 0.6) {
         const factor = (progress - 0.3) * 3.3;
         glassCube.scale.set(1 + factor * 0.4, 1 + factor * 0.4, 1 + factor * 0.4);
-        orbitalRing.rotation.y = factor * Math.PI;
       } else {
         glassCube.scale.set(1, 1, 1);
       }

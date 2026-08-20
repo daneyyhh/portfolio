@@ -58,7 +58,7 @@ export default function Navbar({ onOpenResume }) {
   }, []);
 
   return (
-    <header className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md py-3 shadow-sm' : 'bg-[#F1F0EB]/85 backdrop-blur-sm py-4'}`}>
+    <header className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip bg-[#F1F0EB] ${scrolled ? 'py-3 shadow-sm' : 'py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
         {/* Brand Logo */}
