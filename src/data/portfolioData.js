@@ -6,11 +6,9 @@ export const personalData = {
   subTagline: "Full-Stack Developer × Creative Engineer",
   bio: "Creative Engineer specializing in Full-Stack Web Development, AI/ML models, UI/UX Design, and 3D Game Development. Passionate about bridging technical rigor with cinematic interactive aesthetics.",
   location: "Kerala, India",
-  email: "hello@reubg.in",
-  altEmail: "reubenbg04@gmail.com",
+  email: "reuben@reubg.in",
   domain: "https://reubg.in",
   github: "https://github.com/daneyyhh",
-  linkedin: "https://linkedin.com/in/reubenbinugeorge",
   status: "Available for Opportunities",
   education: {
     degree: "Bachelor of Computer Applications (BCA)",

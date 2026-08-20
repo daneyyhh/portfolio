@@ -38,7 +38,7 @@ export function getAiResponse(userQuery) {
   }
 
   if (query.includes('contact') || query.includes('hire') || query.includes('email') || query.includes('reach') || query.includes('domain')) {
-    return `You can reach Reuben via email at ${personalData.email} or ${personalData.altEmail}. His official portfolio domain is ${personalData.domain}. He is currently ${personalData.status}!`;
+    return `You can reach Reuben via email at ${personalData.email}. His official portfolio domain is ${personalData.domain}. He is currently ${personalData.status}!`;
   }
 
   return `I am Reuben's Portfolio Assistant. You can ask me about his:\n• Verified Tech Stack & Skills\n• Full-Stack, AI/ML, and Unity 3D Projects\n• BCA Game Development Education\n• Certifications from Meta, IBM, Scrimba & Coursera\n• Contact info (${personalData.email})`;
