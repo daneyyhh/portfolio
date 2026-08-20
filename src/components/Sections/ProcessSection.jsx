@@ -364,29 +364,29 @@ export default function ProcessSection() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Precise Stage Timeline */}
+            {/* RIGHT COLUMN: Fixed Vertical Center Axis Stage Timeline */}
             <div className="lg:col-span-3 flex flex-col justify-center pl-8 relative min-h-[380px]">
               
               <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest mb-4 font-bold">
                 STAGE TIMELINE
               </div>
 
-              {/* TIMELINE CONTAINER WITH EXACT GEOMETRIC BOUNDS */}
+              {/* TIMELINE CONTAINER (300px height with exact geometric axis) */}
               <div className="relative flex flex-col justify-between h-[300px]">
                 
-                {/* CONNECTED VERTICAL BACKGROUND LINE (starts at Node 01 center Y=12px, ends at Node 07 center Y=12px from bottom) */}
-                <div className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px] bg-white/15 pointer-events-none" />
+                {/* BASE LINE (z-0, left-[11px] center=12px, top-[12px] to bottom-[12px]) */}
+                <div className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px] bg-white/15 pointer-events-none z-0" />
 
-                {/* ACTIVE SMOOTH FILL LINE (starts at top-[12px], ends at bottom-[12px]) */}
+                {/* PROGRESS LINE (z-0, left-[11px] center=12px, top-[12px] to bottom-[12px]) */}
                 <motion.div
-                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#8B6DFF] shadow-[0_0_8px_rgba(139,109,255,0.7)] origin-top pointer-events-none"
+                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#8B6DFF] shadow-[0_0_8px_rgba(139,109,255,0.8)] origin-top pointer-events-none z-0"
                   style={{
                     scaleY: smoothProgress,
                     height: 'calc(100% - 24px)'
                   }}
                 />
 
-                {/* 7 EQUALLY SPACED TIMELINE STAGE NODES */}
+                {/* 7 EQUALLY SPACED STAGE ROWS ON FIXED AXIS */}
                 {STAGES.map((s, idx) => {
                   const isActive = idx === activeStageIndex;
                   const isPassed = idx < activeStageIndex;
@@ -395,31 +395,31 @@ export default function ProcessSection() {
                     <button
                       key={s.id}
                       onClick={() => handleStageClick(idx)}
-                      className={`flex items-center gap-3.5 text-left cursor-pointer w-full group transition-all duration-300 relative z-10 ${
-                        isActive ? 'translate-x-1' : 'hover:translate-x-0.5'
-                      }`}
+                      className="flex items-center gap-3.5 text-left cursor-pointer w-full group relative z-10 py-0.5 focus:outline-none"
                     >
-                      {/* NODE CIRCLE (24px x 24px, centered over left-[11px] 2px line at X=12px) */}
-                      <div
-                        className={`w-6 h-6 rounded-full flex items-center justify-center border text-[10px] font-mono transition-all duration-300 shrink-0 ${
-                          isActive
-                            ? 'bg-[#8B6DFF] text-white border-[#8B6DFF] shadow-[0_0_10px_rgba(139,109,255,0.4)] font-bold scale-105'
-                            : isPassed
-                            ? 'bg-[#8B6DFF]/15 text-[#8B6DFF] border-[#8B6DFF]/40'
-                            : 'bg-[#141414] text-white/60 border-white/20 group-hover:border-white/40 group-hover:text-white'
-                        }`}
-                      >
-                        {s.id}
+                      {/* FIXED NODE CONTAINER (24px x 24px fixed box, z-10/z-20 over lines) */}
+                      <div className="w-6 h-6 flex items-center justify-center shrink-0 relative z-10">
+                        <div
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono transition-all duration-300 transform-gpu origin-center ${
+                            isActive
+                              ? 'bg-[#8B6DFF] text-white border border-[#8B6DFF] shadow-[0_0_10px_rgba(139,109,255,0.5)] font-bold scale-115 z-20'
+                              : isPassed
+                              ? 'bg-[#8B6DFF]/15 text-[#8B6DFF] border border-[#8B6DFF]/40 z-10'
+                              : 'bg-[#141414] text-white/60 border border-white/20 group-hover:border-white/40 group-hover:text-white z-10'
+                          }`}
+                        >
+                          {s.id}
+                        </div>
                       </div>
 
                       {/* STAGE LABEL AND ITERATE LOOP ICON */}
                       <div className="flex items-center gap-2">
                         <span
-                          className={`text-xs uppercase tracking-wider font-mono transition-all duration-300 ${
+                          className={`text-xs uppercase tracking-wider font-mono transition-colors duration-300 ${
                             isActive
-                              ? 'text-white font-bold tracking-widest'
+                              ? 'text-white font-bold'
                               : isPassed
-                              ? 'text-white/70'
+                              ? 'text-white/70 font-medium'
                               : 'text-white/50 group-hover:text-white/80'
                           }`}
                         >
@@ -492,7 +492,7 @@ export default function ProcessSection() {
               <div className="pt-2 border-t border-white/10">
                 <button
                   onClick={() => setMobileExpanded(!mobileExpanded)}
-                  className="flex items-center justify-between w-full text-left text-xs font-mono text-white/70 hover:text-white py-1"
+                  className="flex items-center justify-between w-full text-left text-xs font-mono text-white/70 hover:text-[#8B6DFF] py-1 cursor-pointer"
                 >
                   <span>ACTIVITIES & DELIVERABLE</span>
                   <ChevronDown size={14} className={`transition-transform duration-300 ${mobileExpanded ? 'rotate-180 text-[#8B6DFF]' : ''}`} />
