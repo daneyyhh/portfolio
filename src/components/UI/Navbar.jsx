@@ -61,10 +61,15 @@ export default function Navbar({ onOpenResume }) {
     <header className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip ${scrolled ? 'bg-[#F1F0EB]/95 backdrop-blur-md py-3 shadow-sm' : 'bg-[#F1F0EB]/85 backdrop-blur-sm py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
-        {/* Brand Logo */}
-        <a href="#hero" className="flex items-center group shrink-0">
-          <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[135px] h-auto" />
-        </a>
+        {/* Brand Logo & Test Verification Banner */}
+        <div className="flex items-center gap-3">
+          <a href="#hero" className="flex items-center group shrink-0">
+            <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[135px] h-auto" />
+          </a>
+          <span className="bg-[#00FF00] text-black font-bold px-2 py-0.5 text-xs rounded uppercase tracking-wider animate-bounce">
+            TEST CHANGE ACTIVE
+          </span>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-xs font-bold tracking-wider">
