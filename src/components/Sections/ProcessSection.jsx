@@ -364,28 +364,29 @@ export default function ProcessSection() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Interactive Vertical Timeline */}
+            {/* RIGHT COLUMN: Precise Stage Timeline */}
             <div className="lg:col-span-3 flex flex-col justify-center pl-8 relative min-h-[380px]">
               
               <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest mb-4 font-bold">
                 STAGE TIMELINE
               </div>
 
-              <div className="relative space-y-4 py-1">
+              {/* TIMELINE CONTAINER WITH EXACT GEOMETRIC BOUNDS */}
+              <div className="relative flex flex-col justify-between h-[300px]">
                 
-                {/* CONNECTED VERTICAL LINE PASSING EXACTLY THROUGH NODE CENTERS (left-[13px]) */}
-                <div className="absolute left-[13px] top-3 bottom-3 w-[2px] bg-white/10 pointer-events-none" />
+                {/* CONNECTED VERTICAL BACKGROUND LINE (starts at Node 01 center Y=12px, ends at Node 07 center Y=12px from bottom) */}
+                <div className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px] bg-white/15 pointer-events-none" />
 
-                {/* ACTIVE SMOOTH FILL LINE */}
+                {/* ACTIVE SMOOTH FILL LINE (starts at top-[12px], ends at bottom-[12px]) */}
                 <motion.div
-                  className="absolute left-[13px] top-3 w-[2px] bg-[#8B6DFF] shadow-[0_0_8px_rgba(139,109,255,0.8)] origin-top pointer-events-none"
+                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#8B6DFF] shadow-[0_0_8px_rgba(139,109,255,0.7)] origin-top pointer-events-none"
                   style={{
                     scaleY: smoothProgress,
                     height: 'calc(100% - 24px)'
                   }}
                 />
 
-                {/* TIMELINE NODES */}
+                {/* 7 EQUALLY SPACED TIMELINE STAGE NODES */}
                 {STAGES.map((s, idx) => {
                   const isActive = idx === activeStageIndex;
                   const isPassed = idx < activeStageIndex;
@@ -394,38 +395,45 @@ export default function ProcessSection() {
                     <button
                       key={s.id}
                       onClick={() => handleStageClick(idx)}
-                      className={`flex items-center gap-3.5 text-left py-1 px-1 cursor-pointer w-full group transition-all duration-300 relative z-10 ${
-                        isActive ? 'translate-x-1.5' : 'hover:translate-x-1'
+                      className={`flex items-center gap-3.5 text-left cursor-pointer w-full group transition-all duration-300 relative z-10 ${
+                        isActive ? 'translate-x-1' : 'hover:translate-x-0.5'
                       }`}
                     >
-                      {/* NODE CIRCLE (28px width centered at 14px over left-[13px] 2px line) */}
+                      {/* NODE CIRCLE (24px x 24px, centered over left-[11px] 2px line at X=12px) */}
                       <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center border text-[10px] font-mono transition-all duration-300 shrink-0 ${
+                        className={`w-6 h-6 rounded-full flex items-center justify-center border text-[10px] font-mono transition-all duration-300 shrink-0 ${
                           isActive
-                            ? 'bg-[#8B6DFF] text-white border-[#8B6DFF] shadow-[0_0_12px_rgba(139,109,255,0.5)] font-bold scale-110'
+                            ? 'bg-[#8B6DFF] text-white border-[#8B6DFF] shadow-[0_0_10px_rgba(139,109,255,0.4)] font-bold scale-105'
                             : isPassed
-                            ? 'bg-[#8B6DFF]/20 text-[#8B6DFF] border-[#8B6DFF]/50'
-                            : 'bg-[#111111] text-white/40 border-white/15 group-hover:border-white/40 group-hover:text-white'
+                            ? 'bg-[#8B6DFF]/15 text-[#8B6DFF] border-[#8B6DFF]/40'
+                            : 'bg-[#141414] text-white/60 border-white/20 group-hover:border-white/40 group-hover:text-white'
                         }`}
                       >
                         {s.id}
                       </div>
 
-                      {/* STAGE NAME & LOOP ICON FOR ITERATE */}
+                      {/* STAGE LABEL AND ITERATE LOOP ICON */}
                       <div className="flex items-center gap-2">
                         <span
-                          className={`text-xs uppercase tracking-wider font-mono transition-colors duration-300 ${
+                          className={`text-xs uppercase tracking-wider font-mono transition-all duration-300 ${
                             isActive
-                              ? 'text-white font-bold'
+                              ? 'text-white font-bold tracking-widest'
                               : isPassed
                               ? 'text-white/70'
-                              : 'text-white/40 group-hover:text-white/80'
+                              : 'text-white/50 group-hover:text-white/80'
                           }`}
                         >
                           {s.name}
                         </span>
+
+                        {/* SUBTLE LOOP ICON FOR 07 ITERATE */}
                         {s.id === "07" && (
-                          <Repeat size={10} className={`shrink-0 ${isActive ? 'text-[#8B6DFF]' : 'text-white/30'}`} />
+                          <Repeat
+                            size={12}
+                            className={`shrink-0 transition-colors duration-300 ${
+                              isActive ? 'text-[#8B6DFF]' : 'text-white/30'
+                            }`}
+                          />
                         )}
                       </div>
                     </button>
