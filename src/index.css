@@ -79,8 +79,12 @@
     @apply bg-[#8B6DFF] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#7a5ceb] transition-all duration-300 active:scale-95 shadow-md text-center;
   }
 
-  .btn-editorial-outline {
-    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:border-[#8B6DFF] hover:text-[#8B6DFF] transition-all duration-300 active:scale-95 text-center;
+  .scroll-snap-y-proximity {
+    scroll-snap-type: y proximity;
+  }
+
+  .scroll-snap-start {
+    scroll-snap-align: start;
   }
 }
 

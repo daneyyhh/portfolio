@@ -42,8 +42,8 @@ export default function App() {
           onOpenResume={() => setResumeOpen(true)}
         />
 
-        {/* Main Editorial Flow */}
-        <main className="relative z-10">
+        {/* Main Editorial Flow with Scroll Snap Proximity */}
+        <main className="relative z-10 scroll-snap-y-proximity">
           <Hero
             onOpenResume={() => setResumeOpen(true)}
           />

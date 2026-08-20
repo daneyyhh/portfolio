@@ -5,7 +5,7 @@ import { personalData } from '../../data/portfolioData';
 
 export default function Hero({ onOpenResume }) {
   return (
-    <section id="hero" className="relative min-h-screen pt-32 sm:pt-36 pb-20 flex flex-col justify-between overflow-x-clip bg-[#F1F0EB] text-[#111111] w-full">
+    <section id="hero" className="relative min-h-[100svh] scroll-snap-start pt-24 sm:pt-28 pb-12 flex flex-col justify-between overflow-x-clip bg-[#F1F0EB] text-[#111111] w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 my-auto">
         
         {/* Left Column: Responsive Editorial Hero Typography with Full Container Width */}

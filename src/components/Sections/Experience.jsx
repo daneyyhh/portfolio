@@ -45,7 +45,7 @@ export default function Experience({ engineerMode }) {
   ];
 
   return (
-    <section id="experience" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full">
+    <section id="experience" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full flex flex-col justify-center">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10 w-full">
         
         {/* Section Header */}

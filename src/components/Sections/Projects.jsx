@@ -19,8 +19,8 @@ export default function Projects({ onSelectProject }) {
       });
 
   return (
-    <section id="projects" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12 relative z-10 w-full">
+    <section id="projects" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10 relative z-10 w-full">
         
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
@@ -48,15 +48,15 @@ export default function Projects({ onSelectProject }) {
           </div>
         </div>
 
-        {/* Animated Tabs */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 w-full">
+        {/* Sticky Animated Tabs */}
+        <div className="sticky top-16 z-30 bg-[#F1F0EB]/95 backdrop-blur-md py-3.5 border-b border-[#C9C7C0] flex flex-wrap gap-1.5 sm:gap-2 w-full">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase cursor-pointer ${
                 activeTab === tab
-                  ? 'bg-[#111111] text-white border-[#111111]'
+                  ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
                   : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#8B6DFF]'
               }`}
             >

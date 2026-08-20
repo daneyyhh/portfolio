@@ -67,7 +67,7 @@ export default function TechStack({ engineerMode }) {
   ];
 
   return (
-    <section id="skills" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
+    <section id="techstack" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10 w-full">
         
         {/* Section Header */}

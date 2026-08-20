@@ -19,7 +19,7 @@ export default function Contact({ engineerMode }) {
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono w-full overflow-x-clip">
+    <section id="contact" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono w-full overflow-x-clip flex flex-col justify-between">
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10 w-full">
         
         {/* Editorial Contact Header */}

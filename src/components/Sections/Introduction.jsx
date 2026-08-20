@@ -5,7 +5,7 @@ import whoamiPortrait from '../../assets/whoami-portrait-v2.jpg';
 
 export default function Introduction() {
   return (
-    <section id="introduction" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] relative border-t border-[#C9C7C0] text-[#111111] w-full overflow-x-clip">
+    <section id="introduction" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] relative border-t border-[#C9C7C0] text-[#111111] w-full overflow-x-clip flex flex-col justify-center">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 w-full">
         
         {/* Left Margin Vertical Tag */}
