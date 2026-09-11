@@ -26,13 +26,13 @@ export default function HeroCanvas({ engineerMode }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Lighting (Strict Palette: Subtle #8B6DFF Purple and Warm Lights)
+    // Lighting (Strict Palette: Subtle #FF1E27 Red and Warm Lights)
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const purpleLight = new THREE.PointLight(0x8B6DFF, 3, 20);
-    purpleLight.position.set(3, 4, 5);
-    scene.add(purpleLight);
+    const redLight = new THREE.PointLight(0xFF1E27, 3, 20);
+    redLight.position.set(3, 4, 5);
+    scene.add(redLight);
 
     // Group for Centerpiece
     const mainGroup = new THREE.Group();
@@ -52,8 +52,8 @@ export default function HeroCanvas({ engineerMode }) {
     // 2. Inner Glowing Core Polyhedron
     const innerGeo = new THREE.OctahedronGeometry(1.1, 0);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x8B6DFF,
-      emissive: 0x8B6DFF,
+      color: 0xFF1E27,
+      emissive: 0xFF1E27,
       emissiveIntensity: 0.5,
       roughness: 0.1,
       metalness: 0.9
@@ -77,7 +77,7 @@ export default function HeroCanvas({ engineerMode }) {
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
       size: 0.03,
-      color: 0x8B6DFF,
+      color: 0xFF1E27,
       transparent: true,
       opacity: 0.7
     });
@@ -143,7 +143,7 @@ export default function HeroCanvas({ engineerMode }) {
     <div className="relative w-full h-full min-h-[350px]">
       <div ref={mountRef} className="w-full h-full absolute inset-0" />
       {engineerMode && (
-        <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-[#8B6DFF] bg-[#0A0A0A] border border-[#8B6DFF]/30 px-3 py-1.5">
+        <div className="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-[#FF1E27] bg-[#0A0A0A] border border-[#FF1E27]/30 px-3 py-1.5">
           <span>WEBGL 3D // THREE.JS SHADER ENGINE</span>
         </div>
       )}

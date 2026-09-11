@@ -17,10 +17,23 @@ export default {
                 charcoal: "#555555",
                 borderstone: "#C9C7C0",
                 darkbg: "#0A0A0A",
+                brandRed: {
+                    DEFAULT: "#FF1E27",
+                    accent: "#FF1E27",
+                    hover: "#E00208",
+                    light: "#FF4D58",
+                    glow: "rgba(255, 30, 39, 0.2)",
+                },
+                red: {
+                    accent: "#FF1E27",
+                    hover: "#E00208",
+                    light: "#FF4D58",
+                    glow: "rgba(255, 30, 39, 0.2)",
+                },
                 purple: {
-                    accent: "#8B6DFF",
-                    light: "#A78BFA",
-                    glow: "rgba(139, 109, 255, 0.2)",
+                    accent: "#FF1E27",
+                    light: "#FF4D58",
+                    glow: "rgba(255, 30, 39, 0.2)",
                 },
             },
             fontFamily: {

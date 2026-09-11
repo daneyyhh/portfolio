@@ -29,7 +29,7 @@ export default function Projects({ onSelectProject }) {
           </div>
 
           <div className="lg:col-span-7 w-full max-w-full">
-            <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest mb-1">
+            <div className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest mb-1">
               FEATURED ENGINEERING
             </div>
             <h2
@@ -57,7 +57,7 @@ export default function Projects({ onSelectProject }) {
               className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase cursor-pointer ${
                 activeTab === tab
                   ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
-                  : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#8B6DFF]'
+                  : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#FF1E27]'
               }`}
             >
               {tab}
@@ -76,7 +76,7 @@ export default function Projects({ onSelectProject }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
-                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden group hover:border-[#8B6DFF] transition-all duration-300 flex flex-col justify-between w-full max-w-full"
+                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden group hover:border-[#FF1E27] transition-all duration-300 flex flex-col justify-between w-full max-w-full"
                 data-cursor="VIEW"
               >
                 <div className="w-full">
@@ -90,7 +90,7 @@ export default function Projects({ onSelectProject }) {
                       alt={project.title}
                       className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                     />
-                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[#111111] text-[#8B6DFF] text-[9px] sm:text-[10px] font-bold px-2 sm:px-2.5 py-1 uppercase">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[#111111] text-[#FF1E27] text-[9px] sm:text-[10px] font-bold px-2 sm:px-2.5 py-1 uppercase">
                       {project.category}
                     </div>
                   </div>
@@ -100,7 +100,7 @@ export default function Projects({ onSelectProject }) {
                     <div className="flex justify-between items-start">
                       <h3
                         onClick={() => onSelectProject(project)}
-                        className="font-syne text-lg sm:text-xl font-bold text-[#111111] group-hover:text-[#8B6DFF] transition-colors cursor-pointer"
+                        className="font-syne text-lg sm:text-xl font-bold text-[#111111] group-hover:text-[#FF1E27] transition-colors cursor-pointer"
                       >
                         {project.title}
                       </h3>
@@ -126,7 +126,7 @@ export default function Projects({ onSelectProject }) {
                 <div className="p-4 sm:p-6 pt-0 border-t border-[#E4E2DC] mt-4 flex items-center justify-between">
                   <button
                     onClick={() => onSelectProject(project)}
-                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#8B6DFF] flex items-center gap-1.5 transition-colors"
+                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#FF1E27] flex items-center gap-1.5 transition-colors"
                   >
                     <span>CASE STUDY</span>
                     <ArrowUpRight size={14} />
@@ -138,7 +138,7 @@ export default function Projects({ onSelectProject }) {
                         href={project.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-600 hover:text-[#8B6DFF] transition-colors"
+                        className="text-slate-600 hover:text-[#FF1E27] transition-colors"
                         title="GitHub Source"
                       >
                         <Github size={16} />
@@ -149,7 +149,7 @@ export default function Projects({ onSelectProject }) {
                         href={project.link}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-600 hover:text-[#8B6DFF] transition-colors"
+                        className="text-slate-600 hover:text-[#FF1E27] transition-colors"
                         title="Live Preview"
                       >
                         <ExternalLink size={16} />

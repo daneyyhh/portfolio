@@ -51,8 +51,8 @@ export default function Experience({ engineerMode }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
           <div className="w-full max-w-full">
-            <div className="flex items-center gap-2 text-xs text-[#8B6DFF] tracking-widest uppercase mb-2 font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#8B6DFF]"></span>
+            <div className="flex items-center gap-2 text-xs text-[#FF1E27] tracking-widest uppercase mb-2 font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27]"></span>
               <span>VERIFIED CHRONOLOGY</span>
             </div>
             <h2
@@ -86,7 +86,7 @@ export default function Experience({ engineerMode }) {
                   className="p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-[#F1F0EB] transition-colors select-none w-full"
                 >
                   <div className="flex items-center gap-3 sm:gap-6 flex-wrap">
-                    <span className="font-mono text-xs text-[#8B6DFF] font-bold bg-[#FAF9F5] px-2 py-1 border border-[#C9C7C0]">
+                    <span className="font-mono text-xs text-[#FF1E27] font-bold bg-[#FAF9F5] px-2 py-1 border border-[#C9C7C0]">
                       {exp.year}
                     </span>
                     <div>
@@ -108,7 +108,7 @@ export default function Experience({ engineerMode }) {
                       ))}
                     </div>
 
-                    <div className="text-[#8B6DFF]">
+                    <div className="text-[#FF1E27]">
                       {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                     </div>
                   </div>
@@ -132,7 +132,7 @@ export default function Experience({ engineerMode }) {
                       <ul className="space-y-1.5 text-xs font-sans text-[#444444]">
                         {exp.details.map((d, i) => (
                           <li key={i} className="flex items-start gap-2">
-                            <CheckCircle2 size={14} className="text-[#8B6DFF] shrink-0 mt-0.5" />
+                            <CheckCircle2 size={14} className="text-[#FF1E27] shrink-0 mt-0.5" />
                             <span>{d}</span>
                           </li>
                         ))}

@@ -180,8 +180,8 @@ export default function ProcessSection() {
         {/* SECTION HEADER */}
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-b border-white/10 pb-4 shrink-0 z-20">
           <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse shadow-[0_0_8px_#8B6DFF]" />
-            <span className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
+            <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse shadow-[0_0_8px_#FF1E27]" />
+            <span className="text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
               03 // PROCESS
             </span>
             <span className="text-white/20 hidden sm:inline-block">•</span>
@@ -191,7 +191,7 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex items-center gap-3 text-xs">
-            <span className="text-[#8B6DFF] font-bold tracking-widest font-mono bg-[#8B6DFF]/10 px-3 py-1 border border-[#8B6DFF]/25 rounded-sm">
+            <span className="text-[#FF1E27] font-bold tracking-widest font-mono bg-[#FF1E27]/10 px-3 py-1 border border-[#FF1E27]/25 rounded-sm">
               STAGE {activeStage.id} / 07
             </span>
           </div>
@@ -207,7 +207,7 @@ export default function ProcessSection() {
                 onClick={() => handleStageClick(idx)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider shrink-0 rounded-sm cursor-pointer transition-all duration-300 ${
                   isActive
-                    ? 'bg-[#8B6DFF] text-white font-bold shadow-[0_0_10px_rgba(139,109,255,0.4)]'
+                    ? 'bg-[#FF1E27] text-white font-bold shadow-[0_0_10px_rgba(255, 30, 39,0.4)]'
                     : 'bg-[#111111] text-white/50 border border-white/10 hover:text-white'
                 }`}
               >
@@ -227,7 +227,7 @@ export default function ProcessSection() {
             {/* LEFT COLUMN: Context Panel */}
             <div className="lg:col-span-4 flex flex-col justify-center bg-[#111111]/80 backdrop-blur-sm border border-white/10 p-6 rounded-none space-y-5 shadow-xl relative min-h-[380px]">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="text-[10px] text-[#8B6DFF] font-bold tracking-widest uppercase">
+                <span className="text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase">
                   STAGE METADATA
                 </span>
                 <span className="text-[10px] text-white/40 font-mono">
@@ -255,7 +255,7 @@ export default function ProcessSection() {
                     <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold">CORE FOCUS</span>
                     <div className="flex flex-wrap gap-1.5 pt-0.5">
                       {activeStage.focus.split('•').map((item, i) => (
-                        <span key={i} className="text-[10px] text-[#8B6DFF] bg-[#8B6DFF]/10 px-2 py-0.5 border border-[#8B6DFF]/20 font-medium">
+                        <span key={i} className="text-[10px] text-[#FF1E27] bg-[#FF1E27]/10 px-2 py-0.5 border border-[#FF1E27]/20 font-medium">
                           {item.trim()}
                         </span>
                       ))}
@@ -267,7 +267,7 @@ export default function ProcessSection() {
                     <ul className="space-y-1.5 text-[11px] text-[#A0A0A0] font-mono">
                       {activeStage.activities.map((act, i) => (
                         <li key={i} className="flex items-center gap-2">
-                          <CheckCircle2 size={13} className="text-[#8B6DFF] shrink-0" />
+                          <CheckCircle2 size={13} className="text-[#FF1E27] shrink-0" />
                           <span className="leading-snug">{act}</span>
                         </li>
                       ))}
@@ -278,7 +278,7 @@ export default function ProcessSection() {
                     <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold block mb-1">KEY OUTPUT</span>
                     <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] px-3 py-2 border border-white/10 flex items-center justify-between">
                       <span className="truncate">{activeStage.deliverable}</span>
-                      <span className="text-[#8B6DFF] text-[10px] ml-2 shrink-0">✓ READY</span>
+                      <span className="text-[#FF1E27] text-[10px] ml-2 shrink-0">✓ READY</span>
                     </div>
                   </div>
                 </motion.div>
@@ -289,9 +289,9 @@ export default function ProcessSection() {
             <div className="lg:col-span-5 flex flex-col justify-center relative min-h-[420px]">
               
               {/* Subtle Ambient Graphic Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#8B6DFF]/10 to-transparent blur-3xl pointer-events-none rounded-full transform -translate-y-4" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FF1E27]/10 to-transparent blur-3xl pointer-events-none rounded-full transform -translate-y-4" />
 
-              <div className="relative bg-[#141414] border border-[#8B6DFF]/40 p-8 shadow-[0_0_30px_rgba(139,109,255,0.12)] space-y-6">
+              <div className="relative bg-[#141414] border border-[#FF1E27]/40 p-8 shadow-[0_0_30px_rgba(255, 30, 39,0.12)] space-y-6">
                 
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -305,11 +305,11 @@ export default function ProcessSection() {
                     {/* Stage Header Badge */}
                     <div className="flex items-center justify-between border-b border-white/10 pb-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-sm bg-[#8B6DFF]/15 border border-[#8B6DFF]/40 flex items-center justify-center text-[#8B6DFF]">
+                        <div className="w-10 h-10 rounded-sm bg-[#FF1E27]/15 border border-[#FF1E27]/40 flex items-center justify-center text-[#FF1E27]">
                           <ActiveIcon size={22} />
                         </div>
                         <div>
-                          <span className="text-[10px] text-[#8B6DFF] font-mono font-bold tracking-widest block uppercase">
+                          <span className="text-[10px] text-[#FF1E27] font-mono font-bold tracking-widest block uppercase">
                             STAGE {activeStage.id}
                           </span>
                           <span className="text-xs text-white/60 uppercase font-mono font-bold">
@@ -319,7 +319,7 @@ export default function ProcessSection() {
                       </div>
 
                       {activeStage.id === "07" ? (
-                        <div className="flex items-center gap-1.5 text-[10px] text-[#8B6DFF] bg-[#8B6DFF]/10 px-2.5 py-1 border border-[#8B6DFF]/30 animate-pulse">
+                        <div className="flex items-center gap-1.5 text-[10px] text-[#FF1E27] bg-[#FF1E27]/10 px-2.5 py-1 border border-[#FF1E27]/30 animate-pulse">
                           <Repeat size={12} />
                           <span className="font-bold">CONTINUOUS LOOP</span>
                         </div>
@@ -379,7 +379,7 @@ export default function ProcessSection() {
 
                 {/* PROGRESS LINE (z-0, left-[11px] center=12px, top-[12px] to bottom-[12px]) */}
                 <motion.div
-                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#8B6DFF] shadow-[0_0_8px_rgba(139,109,255,0.8)] origin-top pointer-events-none z-0"
+                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#FF1E27] shadow-[0_0_8px_rgba(255, 30, 39,0.8)] origin-top pointer-events-none z-0"
                   style={{
                     scaleY: smoothProgress,
                     height: 'calc(100% - 24px)'
@@ -402,9 +402,9 @@ export default function ProcessSection() {
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono transition-all duration-300 transform-gpu origin-center ${
                             isActive
-                              ? 'bg-[#8B6DFF] text-white border border-[#8B6DFF] shadow-[0_0_10px_rgba(139,109,255,0.5)] font-bold scale-115 z-20'
+                              ? 'bg-[#FF1E27] text-white border border-[#FF1E27] shadow-[0_0_10px_rgba(255, 30, 39,0.5)] font-bold scale-115 z-20'
                               : isPassed
-                              ? 'bg-[#8B6DFF]/15 text-[#8B6DFF] border border-[#8B6DFF]/40 z-10'
+                              ? 'bg-[#FF1E27]/15 text-[#FF1E27] border border-[#FF1E27]/40 z-10'
                               : 'bg-[#141414] text-white/60 border border-white/20 group-hover:border-white/40 group-hover:text-white z-10'
                           }`}
                         >
@@ -431,7 +431,7 @@ export default function ProcessSection() {
                           <Repeat
                             size={12}
                             className={`shrink-0 transition-colors duration-300 ${
-                              isActive ? 'text-[#8B6DFF]' : 'text-white/30'
+                              isActive ? 'text-[#FF1E27]' : 'text-white/30'
                             }`}
                           />
                         )}
@@ -446,16 +446,16 @@ export default function ProcessSection() {
 
           {/* MOBILE SINGLE COHESIVE STAGE CARD VIEW */}
           <div className="w-full lg:hidden flex flex-col justify-center my-auto py-2">
-            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-5 sm:p-6 shadow-xl space-y-4">
+            <div className="bg-[#141414] border border-[#FF1E27]/30 p-5 sm:p-6 shadow-xl space-y-4">
               
               {/* Mobile Card Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-sm bg-[#8B6DFF]/15 border border-[#8B6DFF]/30 flex items-center justify-center text-[#8B6DFF]">
+                  <div className="w-8 h-8 rounded-sm bg-[#FF1E27]/15 border border-[#FF1E27]/30 flex items-center justify-center text-[#FF1E27]">
                     <ActiveIcon size={18} />
                   </div>
                   <div>
-                    <span className="text-[9px] text-[#8B6DFF] font-bold block uppercase">STAGE {activeStage.id}</span>
+                    <span className="text-[9px] text-[#FF1E27] font-bold block uppercase">STAGE {activeStage.id}</span>
                     <span className="text-xs text-white font-bold uppercase">{activeStage.name}</span>
                   </div>
                 </div>
@@ -481,7 +481,7 @@ export default function ProcessSection() {
                 <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold block mb-1.5">FOCUS</span>
                 <div className="flex flex-wrap gap-1.5">
                   {activeStage.focus.split('•').map((tag, idx) => (
-                    <span key={idx} className="bg-[#0A0A0A] border border-white/10 px-2 py-0.5 text-[10px] text-[#8B6DFF] font-mono">
+                    <span key={idx} className="bg-[#0A0A0A] border border-white/10 px-2 py-0.5 text-[10px] text-[#FF1E27] font-mono">
                       {tag.trim()}
                     </span>
                   ))}
@@ -492,10 +492,10 @@ export default function ProcessSection() {
               <div className="pt-2 border-t border-white/10">
                 <button
                   onClick={() => setMobileExpanded(!mobileExpanded)}
-                  className="flex items-center justify-between w-full text-left text-xs font-mono text-white/70 hover:text-[#8B6DFF] py-1 cursor-pointer"
+                  className="flex items-center justify-between w-full text-left text-xs font-mono text-white/70 hover:text-[#FF1E27] py-1 cursor-pointer"
                 >
                   <span>ACTIVITIES & DELIVERABLE</span>
-                  <ChevronDown size={14} className={`transition-transform duration-300 ${mobileExpanded ? 'rotate-180 text-[#8B6DFF]' : ''}`} />
+                  <ChevronDown size={14} className={`transition-transform duration-300 ${mobileExpanded ? 'rotate-180 text-[#FF1E27]' : ''}`} />
                 </button>
 
                 {mobileExpanded && (
@@ -508,7 +508,7 @@ export default function ProcessSection() {
                     <ul className="space-y-1 text-[11px] text-[#A0A0A0] font-mono">
                       {activeStage.activities.map((act, i) => (
                         <li key={i} className="flex items-center gap-2">
-                          <CheckCircle2 size={12} className="text-[#8B6DFF] shrink-0" />
+                          <CheckCircle2 size={12} className="text-[#FF1E27] shrink-0" />
                           <span>{act}</span>
                         </li>
                       ))}
@@ -516,7 +516,7 @@ export default function ProcessSection() {
 
                     <div className="bg-[#0A0A0A] p-2 border border-white/10 text-xs text-white font-mono flex items-center justify-between">
                       <span className="text-[10px] text-white/40">DELIVERABLE:</span>
-                      <span className="font-bold text-[#8B6DFF]">{activeStage.deliverable}</span>
+                      <span className="font-bold text-[#FF1E27]">{activeStage.deliverable}</span>
                     </div>
                   </motion.div>
                 )}
@@ -530,15 +530,15 @@ export default function ProcessSection() {
         {/* BOTTOM FOOTER INFO */}
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-t border-white/10 pt-4 shrink-0 z-20 text-[10px] sm:text-xs text-white/40 font-mono">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8B6DFF]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
             <span className="tracking-widest uppercase">
-              SCROLL PROGRESSION // <span className="text-[#8B6DFF] font-bold">{scrollPercentage}%</span> COMPLETED
+              SCROLL PROGRESSION // <span className="text-[#FF1E27] font-bold">{scrollPercentage}%</span> COMPLETED
             </span>
           </div>
 
           <div className="text-right text-white/60 tracking-wider uppercase font-mono">
             {activeStageIndex === STAGES.length - 1 ? (
-              <span className="text-[#8B6DFF] font-bold animate-pulse">CONTINUE SCROLLING FOR SELECTED WORK ↓</span>
+              <span className="text-[#FF1E27] font-bold animate-pulse">CONTINUE SCROLLING FOR SELECTED WORK ↓</span>
             ) : (
               <span>SCROLL DOWN TO ADVANCE STAGE</span>
             )}

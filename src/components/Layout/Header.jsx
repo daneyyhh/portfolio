@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import ReubgLogo from '../UI/ReubgLogo';
 
 const navItems = [
     { href: '#hero', label: 'Home' },
@@ -37,9 +38,8 @@ const Header = () => {
             animate={{ y: 0 }}
         >
             <div className="max-w-7xl mx-auto px-6 sm:px-12 flex justify-between items-center">
-                <a href="#hero" className="font-outfit font-bold text-2xl tracking-tight flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center text-white text-sm">R</span>
-                    <span className="text-white hidden sm:block delay-150">Reuben<span className="text-indigo-400">.dev</span></span>
+                <a href="#hero" className="flex items-center gap-2">
+                    <ReubgLogo variant="dark" className="w-[100px] sm:w-[120px] h-auto" />
                 </a>
 
                 <nav className="hidden md:flex items-center gap-8 glass-panel px-8 py-3 rounded-full">
@@ -47,7 +47,7 @@ const Header = () => {
                         <a
                             key={item.href}
                             href={item.href}
-                            className={`text-sm font-medium transition-colors ${active === item.href ? 'text-indigo-400' : 'text-gray-400 hover:text-white'}`}
+                            className={`text-sm font-medium transition-colors ${active === item.href ? 'text-red-400' : 'text-gray-400 hover:text-white'}`}
                         >
                             {item.label}
                         </a>

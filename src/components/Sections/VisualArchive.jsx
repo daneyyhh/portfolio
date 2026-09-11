@@ -61,7 +61,7 @@ export default function VisualArchive() {
         {/* Minimalist Editorial Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="space-y-2">
-            <div className="text-xs font-mono text-[#8B6DFF] tracking-widest uppercase font-bold">
+            <div className="text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
               07
             </div>
             <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight uppercase leading-[0.92]">
@@ -88,7 +88,7 @@ export default function VisualArchive() {
               className="group flex flex-col cursor-pointer select-none"
             >
               {/* Image Frame with Subtle Charcoal Background & Contain Fit */}
-              <div className="relative w-full aspect-[2/3] bg-[#0E0E0E] border border-white/10 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-[#8B6DFF]/80 group-hover:shadow-[0_0_15px_rgba(139,109,255,0.15)]">
+              <div className="relative w-full aspect-[2/3] bg-[#0E0E0E] border border-white/10 overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:border-[#FF1E27]/80 group-hover:shadow-[0_0_15px_rgba(255, 30, 39,0.15)]">
                 <img
                   src={poster.src}
                   alt={`Artwork ${poster.index}`}
@@ -97,11 +97,11 @@ export default function VisualArchive() {
                 />
 
                 {/* Ultra-subtle bottom border line accent */}
-                <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[1.5px] bg-[#8B6DFF] transition-all duration-300 ease-out" />
+                <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[1.5px] bg-[#FF1E27] transition-all duration-300 ease-out" />
               </div>
 
               {/* Tiny Technical Numerical Index Outside Artwork */}
-              <div className="pt-2 flex justify-between items-center text-[10px] font-mono text-[#555555] group-hover:text-[#8B6DFF] transition-colors">
+              <div className="pt-2 flex justify-between items-center text-[10px] font-mono text-[#555555] group-hover:text-[#FF1E27] transition-colors">
                 <span className="font-bold tracking-wider">{poster.index}</span>
                 <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] tracking-widest uppercase">
                   VIEW
@@ -148,28 +148,28 @@ export default function VisualArchive() {
             style={{ zIndex: 100000 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-xs font-mono text-[#8B6DFF] font-bold tracking-widest">
+            <div className="text-xs font-mono text-[#FF1E27] font-bold tracking-widest">
               {POSTERS[activeImageIndex].index} / {String(totalCount).padStart(2, '0')}
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveImageIndex((prev) => (prev - 1 + totalCount) % totalCount)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors cursor-pointer"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors cursor-pointer"
                 title="Previous (Left Arrow)"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => setActiveImageIndex((prev) => (prev + 1) % totalCount)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors cursor-pointer"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors cursor-pointer"
                 title="Next (Right Arrow)"
               >
                 <ChevronRight size={18} />
               </button>
               <button
                 onClick={() => setActiveImageIndex(null)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-colors ml-2 cursor-pointer"
+                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors ml-2 cursor-pointer"
                 title="Close (Esc)"
               >
                 <X size={18} />

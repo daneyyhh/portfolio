@@ -32,13 +32,13 @@ export default function Contact() {
         {/* Editorial Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start w-full border-b border-white/10 pb-6 sm:pb-8">
           <div className="hidden lg:flex lg:col-span-1">
-            <span className="font-mono text-4xl font-extrabold text-[#8B6DFF]">07</span>
+            <span className="font-mono text-4xl font-extrabold text-[#FF1E27]">07</span>
           </div>
 
           <div className="lg:col-span-11 space-y-3 w-full max-w-full">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#8B6DFF] animate-pulse shadow-[0_0_8px_#8B6DFF]" />
-              <span className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse shadow-[0_0_8px_#FF1E27]" />
+              <span className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest">
                 LET'S CONNECT
               </span>
             </div>
@@ -53,7 +53,7 @@ export default function Contact() {
               >
                 <span className="block">LET'S BUILD</span>
                 <span className="block">SOMETHING</span>
-                <span className="block">AMAZING<span className="text-[#8B6DFF]">.</span></span>
+                <span className="block">AMAZING<span className="text-[#FF1E27]">.</span></span>
               </h2>
             </div>
           </div>
@@ -66,9 +66,9 @@ export default function Contact() {
           <div className="lg:col-span-5 space-y-6 w-full">
             
             {/* Primary Email Card */}
-            <div className="bg-[#141414] border border-[#8B6DFF]/30 p-5 sm:p-6 shadow-xl space-y-3 group hover:border-[#8B6DFF] transition-all">
+            <div className="bg-[#141414] border border-[#FF1E27]/30 p-5 sm:p-6 shadow-xl space-y-3 group hover:border-[#FF1E27] transition-all">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono text-[#8B6DFF] font-bold tracking-widest uppercase">
+                <span className="text-[10px] font-mono text-[#FF1E27] font-bold tracking-widest uppercase">
                   PRIMARY EMAIL
                 </span>
                 <button
@@ -93,12 +93,12 @@ export default function Contact() {
                 href={`mailto:${personalData.email}`}
                 className="flex items-center gap-3 sm:gap-4 pt-1 group"
               >
-                <div className="p-3 bg-[#8B6DFF]/15 text-[#8B6DFF] border border-[#8B6DFF]/40 shrink-0">
+                <div className="p-3 bg-[#FF1E27]/15 text-[#FF1E27] border border-[#FF1E27]/40 shrink-0">
                   <Mail size={20} />
                 </div>
                 <div className="overflow-hidden">
                   <div className="text-slate-400 text-[10px] font-mono uppercase">DIRECT MAIL</div>
-                  <div className="text-white font-bold text-sm sm:text-base group-hover:text-[#8B6DFF] transition-colors truncate">
+                  <div className="text-white font-bold text-sm sm:text-base group-hover:text-[#FF1E27] transition-colors truncate">
                     {personalData.email}
                   </div>
                 </div>
@@ -108,7 +108,7 @@ export default function Contact() {
             {/* Location & Status Card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
               <div className="bg-[#141414] border border-white/10 p-4 space-y-1">
-                <div className="flex items-center gap-2 text-[#8B6DFF] text-[10px] font-bold uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-[#FF1E27] text-[10px] font-bold uppercase tracking-wider">
                   <MapPin size={14} />
                   <span>LOCATION</span>
                 </div>
@@ -126,7 +126,7 @@ export default function Contact() {
 
             {/* Online Profiles Card */}
             <div className="bg-[#141414] border border-white/10 p-5 space-y-3">
-              <div className="text-[10px] text-[#8B6DFF] font-bold uppercase tracking-widest">
+              <div className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest">
                 ONLINE PROFILES
               </div>
               <div className="flex flex-wrap gap-2">
@@ -134,9 +134,9 @@ export default function Contact() {
                   href={personalData.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2.5 px-4 py-2.5 bg-[#0A0A0A] border border-white/15 text-slate-200 hover:text-white hover:border-[#8B6DFF] transition-all text-xs font-bold font-mono group"
+                  className="flex items-center gap-2.5 px-4 py-2.5 bg-[#0A0A0A] border border-white/15 text-slate-200 hover:text-white hover:border-[#FF1E27] transition-all text-xs font-bold font-mono group"
                 >
-                  <Github size={16} className="text-[#8B6DFF] group-hover:scale-110 transition-transform" />
+                  <Github size={16} className="text-[#FF1E27] group-hover:scale-110 transition-transform" />
                   <span>GITHUB PROFILE</span>
                 </a>
               </div>
@@ -153,7 +153,7 @@ export default function Contact() {
           <div className="lg:col-span-7 w-full">
             <form onSubmit={handleSubmit} className="bg-[#141414] border border-white/10 p-6 sm:p-8 space-y-5 sm:space-y-6 w-full shadow-2xl">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <span className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest font-mono">
+                <span className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest font-mono">
                   SEND A MESSAGE
                 </span>
                 <span className="text-[10px] text-white/40 font-mono">
@@ -169,7 +169,7 @@ export default function Contact() {
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors"
+                    className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#FF1E27] focus:outline-none transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
@@ -181,7 +181,7 @@ export default function Contact() {
                     required
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors"
+                    className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#FF1E27] focus:outline-none transition-colors"
                     placeholder="name@domain.com"
                   />
                 </div>
@@ -194,7 +194,7 @@ export default function Contact() {
                   rows={4}
                   value={formState.message}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#8B6DFF] focus:outline-none transition-colors resize-none"
+                  className="w-full bg-[#0A0A0A] border border-white/15 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-white focus:border-[#FF1E27] focus:outline-none transition-colors resize-none"
                   placeholder="Tell me about your project, timeline, or opportunity..."
                 />
               </div>
@@ -202,7 +202,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={submitted}
-                className="w-full btn-editorial-purple flex items-center justify-center gap-2 py-3 cursor-pointer"
+                className="w-full btn-editorial-red flex items-center justify-center gap-2 py-3 cursor-pointer"
               >
                 {submitted ? (
                   <>

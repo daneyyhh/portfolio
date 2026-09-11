@@ -9,7 +9,7 @@ export default function AiLab() {
         
         {/* Left Vertical Tag */}
         <div className="hidden lg:flex lg:col-span-1 flex-col items-center justify-start h-full">
-          <div className="font-mono text-4xl font-extrabold text-[#8B6DFF]">08</div>
+          <div className="font-mono text-4xl font-extrabold text-[#FF1E27]">08</div>
           <div className="vertical-tag font-mono text-xs text-slate-400 uppercase tracking-[0.3em] font-bold mt-6">
             AI LAB
           </div>
@@ -17,7 +17,7 @@ export default function AiLab() {
 
         {/* Text Details */}
         <div className="lg:col-span-6 space-y-4 sm:space-y-6 w-full max-w-full">
-          <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest flex items-center gap-2">
+          <div className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest flex items-center gap-2">
             <Bot size={16} />
             <span>INTELLIGENT SYSTEMS</span>
           </div>
@@ -37,7 +37,7 @@ export default function AiLab() {
           </p>
 
           <div className="pt-2">
-            <a href="#projects" className="btn-editorial-purple flex items-center gap-3 inline-flex text-xs sm:text-sm">
+            <a href="#projects" className="btn-editorial-red flex items-center gap-3 inline-flex text-xs sm:text-sm">
               <span>EXPLORE AI PROJECTS</span>
               <ArrowRight size={16} />
             </a>

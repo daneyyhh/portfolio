@@ -70,7 +70,7 @@ export default function Journey({ engineerMode }) {
                 <h3 className="font-syne text-2xl font-bold text-white uppercase tracking-tight">
                   {journeySteps[activeStep].phase}
                 </h3>
-                <div className="font-mono text-xs text-purple-400 uppercase tracking-widest">
+                <div className="font-mono text-xs text-red-400 uppercase tracking-widest">
                   TECH STACK: {journeySteps[activeStep].tech}
                 </div>
               </div>

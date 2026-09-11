@@ -76,8 +76,8 @@ export default function Architecture({ engineerMode }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6 sm:pb-8 w-full">
           <div className="w-full max-w-full">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#8B6DFF] tracking-widest uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#8B6DFF]"></span>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] tracking-widest uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27]"></span>
               <span>SYSTEM ARCHITECTURE</span>
             </div>
             <h2
@@ -107,16 +107,16 @@ export default function Architecture({ engineerMode }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="bg-[#141414] border border-white/10 p-5 sm:p-6 space-y-4 hover:border-[#8B6DFF] transition-colors group flex flex-col justify-between w-full max-w-full overflow-hidden"
+                className="bg-[#141414] border border-white/10 p-5 sm:p-6 space-y-4 hover:border-[#FF1E27] transition-colors group flex flex-col justify-between w-full max-w-full overflow-hidden"
               >
                 <div className="space-y-3 w-full">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="text-[#8B6DFF] font-bold">LAYER {layer.id}</span>
-                    <Icon size={18} className="text-slate-400 group-hover:text-[#8B6DFF] transition-colors" />
+                    <span className="text-[#FF1E27] font-bold">LAYER {layer.id}</span>
+                    <Icon size={18} className="text-slate-400 group-hover:text-[#FF1E27] transition-colors" />
                   </div>
 
                   <div>
-                    <h3 className="font-syne text-lg sm:text-xl font-bold text-white uppercase group-hover:text-[#8B6DFF] transition-colors">
+                    <h3 className="font-syne text-lg sm:text-xl font-bold text-white uppercase group-hover:text-[#FF1E27] transition-colors">
                       {layer.title}
                     </h3>
                     <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">
@@ -138,7 +138,7 @@ export default function Architecture({ engineerMode }) {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-1 text-[10px] text-[#8B6DFF] w-full overflow-hidden">
+                  <div className="flex flex-wrap items-center gap-1 text-[10px] text-[#FF1E27] w-full overflow-hidden">
                     {layer.flow.map((f, i) => (
                       <React.Fragment key={i}>
                         <span className="truncate">{f}</span>

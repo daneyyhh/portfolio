@@ -18,7 +18,7 @@ export default function Introduction() {
 
         {/* Middle Column: Editorial Introduction Text */}
         <div className="lg:col-span-6 space-y-4 sm:space-y-6 w-full max-w-full">
-          <div className="font-mono text-xs text-[#8B6DFF] uppercase tracking-widest font-bold">
+          <div className="font-mono text-xs text-[#FF1E27] uppercase tracking-widest font-bold">
             WHO I AM
           </div>
 
@@ -41,7 +41,7 @@ export default function Introduction() {
                 key={role}
                 className="bg-[#E4E2DC] border border-[#C9C7C0] text-[#111111] font-mono text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 uppercase"
               >
-                {role} <span className="text-[#8B6DFF]">•</span>
+                {role} <span className="text-[#FF1E27]">•</span>
               </span>
             ))}
           </div>

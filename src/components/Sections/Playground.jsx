@@ -85,7 +85,7 @@ export default function Playground() {
                 <div className="flex gap-3">
                   {[
                     { label: 'NEON LIME', hex: '#ccff00' },
-                    { label: 'CYBER PURPLE', hex: '#a855f7' },
+                    { label: 'CYBER RED', hex: '#FF1E27' },
                     { label: 'ELECTRIC CYAN', hex: '#00f0ff' }
                   ].map((c) => (
                     <button

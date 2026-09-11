@@ -37,7 +37,7 @@ export default function EasterEggs() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="fixed top-20 right-6 z-[200] bg-[#8B6DFF] text-white font-mono border border-white p-4 shadow-2xl rounded-none flex items-center gap-4 text-xs"
+            className="fixed top-20 right-6 z-[200] bg-[#FF1E27] text-white font-mono border border-white p-4 shadow-2xl rounded-none flex items-center gap-4 text-xs"
           >
             <Sparkles className="animate-spin" size={20} />
             <div>
@@ -46,7 +46,7 @@ export default function EasterEggs() {
             </div>
             <button
               onClick={() => setKonamiUnlocked(false)}
-              className="p-1 hover:bg-white hover:text-[#8B6DFF] transition-colors"
+              className="p-1 hover:bg-white hover:text-[#FF1E27] transition-colors"
             >
               <X size={16} />
             </button>
@@ -61,19 +61,19 @@ export default function EasterEggs() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-[200] bg-[#0A0A0A]/95 backdrop-blur-2xl flex flex-col justify-between p-6 md:p-12 font-mono text-white selection:bg-[#8B6DFF] selection:text-white overflow-hidden"
+            className="fixed inset-0 z-[200] bg-[#0A0A0A]/95 backdrop-blur-2xl flex flex-col justify-between p-6 md:p-12 font-mono text-white selection:bg-[#FF1E27] selection:text-white overflow-hidden"
           >
             {/* Top Bar */}
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
               <div className="flex items-center gap-3">
-                <Gamepad2 className="animate-bounce text-[#8B6DFF]" size={24} />
+                <Gamepad2 className="animate-bounce text-[#FF1E27]" size={24} />
                 <span className="font-syne font-extrabold text-lg md:text-xl text-white tracking-widest uppercase">
                   REUBG GAME LAB // MINI ARCADE
                 </span>
               </div>
               <button
                 onClick={() => setGameModeActive(false)}
-                className="bg-[#8B6DFF] text-white px-4 py-2 font-bold hover:bg-[#7a5ceb] flex items-center gap-2 text-xs"
+                className="bg-[#FF1E27] text-white px-4 py-2 font-bold hover:bg-[#E00208] flex items-center gap-2 text-xs"
               >
                 <X size={18} />
                 <span>EXIT GAME MODE</span>
@@ -82,8 +82,8 @@ export default function EasterEggs() {
 
             {/* Game Canvas Box */}
             <div className="flex-1 flex flex-col items-center justify-center my-6 relative border border-white/10 bg-[#141414] p-6 text-center">
-              <div className="w-16 h-16 bg-[#8B6DFF]/10 border-2 border-[#8B6DFF] flex items-center justify-center mb-6">
-                <Gamepad2 size={36} className="text-[#8B6DFF]" />
+              <div className="w-16 h-16 bg-[#FF1E27]/10 border-2 border-[#FF1E27] flex items-center justify-center mb-6">
+                <Gamepad2 size={36} className="text-[#FF1E27]" />
               </div>
               
               <h2 className="font-syne text-3xl md:text-5xl font-extrabold text-white mb-2 uppercase">
@@ -97,26 +97,26 @@ export default function EasterEggs() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-xl text-xs font-mono">
                 <div className="bg-[#0A0A0A] border border-white/10 p-3">
                   <span className="block text-white font-bold mb-1">C# PHYSICS</span>
-                  <span className="text-[#8B6DFF]">60 FPS ENGINE</span>
+                  <span className="text-[#FF1E27]">60 FPS ENGINE</span>
                 </div>
                 <div className="bg-[#0A0A0A] border border-white/10 p-3">
                   <span className="block text-white font-bold mb-1">UNITY 3D</span>
-                  <span className="text-[#8B6DFF]">URP SHADERS</span>
+                  <span className="text-[#FF1E27]">URP SHADERS</span>
                 </div>
                 <div className="bg-[#0A0A0A] border border-white/10 p-3">
                   <span className="block text-white font-bold mb-1">THREE.JS</span>
-                  <span className="text-[#8B6DFF]">WEBGL SHADERS</span>
+                  <span className="text-[#FF1E27]">WEBGL SHADERS</span>
                 </div>
                 <div className="bg-[#0A0A0A] border border-white/10 p-3">
                   <span className="block text-white font-bold mb-1">LUA CORE</span>
-                  <span className="text-[#8B6DFF]">TICK RATE &lt; 0.02ms</span>
+                  <span className="text-[#FF1E27]">TICK RATE &lt; 0.02ms</span>
                 </div>
               </div>
             </div>
 
             {/* Bottom Bar */}
             <div className="flex justify-between items-center text-xs text-slate-400 border-t border-white/10 pt-4">
-              <div>PRESS <span className="text-[#8B6DFF] font-bold">G</span> ANYTIME TO TOGGLE GAME MODE</div>
+              <div>PRESS <span className="text-[#FF1E27] font-bold">G</span> ANYTIME TO TOGGLE GAME MODE</div>
               <div>REUBG.IN // GAME DEV EXPERIENCE</div>
             </div>
           </motion.div>

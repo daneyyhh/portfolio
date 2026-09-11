@@ -10,7 +10,7 @@ const loreData = [
         date: "2024-03-15",
         views: 1204,
         tag: "DEVLOG",
-        color: "text-purple-400 border-purple-900"
+        color: "text-red-400 border-red-900"
     },
     {
         id: 2,

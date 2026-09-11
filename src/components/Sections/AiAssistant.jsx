@@ -40,7 +40,7 @@ export default function AiAssistant() {
         
         {/* Section Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs tracking-widest uppercase rounded-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/30 text-red-400 text-xs tracking-widest uppercase rounded-sm">
             <Bot size={14} />
             <span>PORTFOLIO ASSISTANT</span>
           </div>
@@ -92,7 +92,7 @@ export default function AiAssistant() {
                 </div>
 
                 {msg.sender === 'user' && (
-                  <div className="w-8 h-8 rounded-sm bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-sm bg-red-500/20 border border-red-500/40 text-red-300 flex items-center justify-center shrink-0">
                     <User size={16} />
                   </div>
                 )}

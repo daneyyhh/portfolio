@@ -6,7 +6,7 @@ import { performanceMetrics } from '../../data/portfolioData';
 export default function Performance({ engineerMode }) {
   const scores = [
     { label: "PERFORMANCE", value: performanceMetrics.performance, icon: Zap, color: "text-[#ccff00]", border: "border-[#ccff00]" },
-    { label: "ACCESSIBILITY", value: performanceMetrics.accessibility, icon: ShieldCheck, color: "text-purple-400", border: "border-purple-500" },
+    { label: "ACCESSIBILITY", value: performanceMetrics.accessibility, icon: ShieldCheck, color: "text-red-400", border: "border-red-500" },
     { label: "BEST PRACTICES", value: performanceMetrics.bestPractices, icon: Award, color: "text-cyan-400", border: "border-cyan-400" },
     { label: "SEO OPTIMIZED", value: performanceMetrics.seo, icon: Search, color: "text-emerald-400", border: "border-emerald-400" },
   ];
@@ -77,7 +77,7 @@ export default function Performance({ engineerMode }) {
           </div>
 
           <div className="flex items-center gap-3">
-            <CheckCircle2 size={18} className="text-purple-400" />
+            <CheckCircle2 size={18} className="text-red-400" />
             <span className="text-white font-bold">FIRST CONTENTFUL PAINT: {performanceMetrics.firstContentfulPaint}</span>
           </div>
 

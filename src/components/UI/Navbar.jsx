@@ -100,8 +100,8 @@ export default function Navbar({ onOpenResume }) {
               onClick={(e) => handleNavClick(e, link.href)}
               className={`transition-all duration-200 flex items-center gap-1.5 py-1 ${
                 activeSection === link.id
-                  ? 'text-[#8B6DFF] font-extrabold border-b-2 border-[#8B6DFF]'
-                  : 'text-[#111111] hover:text-[#8B6DFF]'
+                  ? 'text-[#FF1E27] font-extrabold border-b-2 border-[#FF1E27]'
+                  : 'text-[#111111] hover:text-[#FF1E27]'
               }`}
             >
               <span className="text-[10px] text-[#555555] font-normal">{link.num}.</span>
@@ -114,7 +114,7 @@ export default function Navbar({ onOpenResume }) {
         <div className="hidden sm:flex items-center">
           <button
             onClick={onOpenResume}
-            className="btn-editorial-purple py-1.5 px-4 text-xs font-bold tracking-wider"
+            className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider"
           >
             RESUME
           </button>
@@ -123,7 +123,7 @@ export default function Navbar({ onOpenResume }) {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-[#111111] hover:text-[#8B6DFF]"
+          className="lg:hidden p-2 text-[#111111] hover:text-[#FF1E27]"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -149,7 +149,7 @@ export default function Navbar({ onOpenResume }) {
                     setMobileMenuOpen(false);
                   }}
                   className={`text-sm tracking-widest flex items-center gap-2.5 py-1.5 ${
-                    activeSection === link.id ? 'text-[#8B6DFF] font-bold' : 'text-[#111111]'
+                    activeSection === link.id ? 'text-[#FF1E27] font-bold' : 'text-[#111111]'
                   }`}
                 >
                   <span className="text-xs text-[#555555] font-normal">{link.num}.</span>
@@ -163,7 +163,7 @@ export default function Navbar({ onOpenResume }) {
                     onOpenResume();
                     setMobileMenuOpen(false);
                   }}
-                  className="btn-editorial-purple w-full py-2.5 text-xs font-bold tracking-wider"
+                  className="btn-editorial-red w-full py-2.5 text-xs font-bold tracking-wider"
                 >
                   VIEW RESUME
                 </button>

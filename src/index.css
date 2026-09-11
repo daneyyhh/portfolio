@@ -8,7 +8,8 @@
   :root {
     --bg-ivory: #F1F0EB;
     --text-black: #111111;
-    --accent-purple: #8B6DFF;
+    --accent-red: #FF1E27;
+    --accent-purple: #FF1E27;
   }
 
   *, *::before, *::after {
@@ -32,7 +33,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#8B6DFF] selection:text-white;
+    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#FF1E27] selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -58,17 +59,17 @@
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #8B6DFF;
+    background: #FF1E27;
   }
 }
 
 @layer components {
   .editorial-card {
-    @apply bg-[#FAF9F5] border border-[#C9C7C0] hover:border-[#8B6DFF] transition-all duration-300 shadow-sm;
+    @apply bg-[#FAF9F5] border border-[#C9C7C0] hover:border-[#FF1E27] transition-all duration-300 shadow-sm;
   }
 
   .editorial-card-dark {
-    @apply bg-[#141414] border border-white/10 hover:border-[#8B6DFF]/50 transition-all duration-300 shadow-lg text-white;
+    @apply bg-[#141414] border border-white/10 hover:border-[#FF1E27]/50 transition-all duration-300 shadow-lg text-white;
   }
 
   .vertical-tag {
@@ -77,11 +78,12 @@
   }
 
   .btn-editorial {
-    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:bg-[#8B6DFF] hover:border-[#8B6DFF] transition-all duration-300 active:scale-95 text-center;
+    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-all duration-300 active:scale-95 text-center;
   }
 
-  .btn-editorial-purple {
-    @apply bg-[#8B6DFF] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#7a5ceb] transition-all duration-300 active:scale-95 shadow-md text-center;
+  .btn-editorial-purple,
+  .btn-editorial-red {
+    @apply bg-[#FF1E27] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#E00208] transition-all duration-300 active:scale-95 shadow-md text-center;
   }
 
   .scroll-snap-y-proximity {

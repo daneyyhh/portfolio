@@ -12,7 +12,7 @@ export const visualArchiveData = [
     featured: true,
     tags: ["Cinematic", "Typography", "Film Noir"],
     description: "Chiaroscuro Tamil cinema editorial study featuring bold custom serif typography, dual-tone gold and ember lighting, and gritty character framing.",
-    palette: ["#1A1108", "#D49B42", "#8B6DFF", "#F1F0EB"],
+    palette: ["#1A1108", "#D49B42", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · 24 × 36 IN · CMYK PRINT"
   },
   {
@@ -27,8 +27,8 @@ export const visualArchiveData = [
     aspect: "portrait",
     featured: false,
     tags: ["Product", "Advertising", "Branding"],
-    description: "Precision product advertising poster utilizing a Swiss grid layout, dark carbon minimalism, and restrained cyan-violet edge illumination.",
-    palette: ["#0A0A10", "#00439C", "#8B6DFF", "#F1F0EB"],
+    description: "Precision product advertising poster utilizing a Swiss grid layout, dark carbon minimalism, and restrained cyan-crimson edge illumination.",
+    palette: ["#0A0A10", "#00439C", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · A2 POSTER · RGB DIGITAL"
   },
   {
@@ -44,7 +44,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Hardware", "Minimalist", "Brutalist"],
     description: "Monochromatic architectural hardware poster exploring brutalist typography and futuristic curved industrial forms.",
-    palette: ["#050505", "#F5F5F5", "#8B6DFF", "#333333"],
+    palette: ["#050505", "#F5F5F5", "#FF1E27", "#333333"],
     specs: "300 DPI · 18 × 24 IN · MONOCHROME"
   },
   {
@@ -60,7 +60,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Character", "Tactical", "Game Art"],
     description: "Simon 'Ghost' Riley character concept featuring tactical screen overlays, combat typography, and high-contrast smoke.",
-    palette: ["#0B0E0D", "#3A443B", "#8B6DFF", "#C4C4C4"],
+    palette: ["#0B0E0D", "#3A443B", "#FF1E27", "#C4C4C4"],
     specs: "300 DPI · 24 × 36 IN · TACTICAL CAMO"
   },
   {
@@ -76,7 +76,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Surreal", "Concept Art", "3D"],
     description: "Surreal dreamscape study investigating floating geometric monuments, dimensional lighting, and ambient color grading.",
-    palette: ["#080410", "#6B2D94", "#8B6DFF", "#F1F0EB"],
+    palette: ["#080410", "#6B2D94", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · B2 POSTER · AMBIENT GLOW"
   },
   {
@@ -108,7 +108,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Editorial", "Travel", "Typography"],
     description: "Modern Japanese travel editorial incorporating vertical Kanji glyphs, minimalist asymmetric margins, and atmospheric dusk lighting.",
-    palette: ["#0C0E14", "#BA2F39", "#8B6DFF", "#E4E2DC"],
+    palette: ["#0C0E14", "#BA2F39", "#FF1E27", "#E4E2DC"],
     specs: "300 DPI · B2 POSTER · SWISS GRID"
   },
   {
@@ -124,7 +124,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Editorial", "Travel", "Urban"],
     description: "Brutalist typographic layout reflecting London's architectural geometry, fog-filtered street illumination, and structured coordinate stamps.",
-    palette: ["#111315", "#A52A2A", "#8B6DFF", "#D8D6D0"],
+    palette: ["#111315", "#A52A2A", "#FF1E27", "#D8D6D0"],
     specs: "300 DPI · A1 POSTER · METRIC GRID"
   },
   {
@@ -172,7 +172,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Sports", "Formula 1", "Fashion"],
     description: "Haute-couture meets Formula 1 motorsport aesthetics, featuring fluoro-yellow accents, matte black textures, and 7x champion iconography.",
-    palette: ["#0A0A0A", "#DFFF00", "#8B6DFF", "#F1F0EB"],
+    palette: ["#0A0A0A", "#DFFF00", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · A2 POSTER · HIGH CONTRAST"
   },
   {
@@ -188,7 +188,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Automotive", "Advertising", "Muscle"],
     description: "Raw American muscle car advertising poster highlighting muscular chassis proportions, LED racetrack taillights, and asphalt grit.",
-    palette: ["#080808", "#C4151C", "#8B6DFF", "#E4E2DC"],
+    palette: ["#080808", "#C4151C", "#FF1E27", "#E4E2DC"],
     specs: "300 DPI · 24 × 36 IN · MUSCLE RAW"
   },
   {
@@ -204,7 +204,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Character", "Game Art", "Martial Arts"],
     description: "Mortal Kombat Scorpion character tribute with molten ember particles, iconic kunai spear typography, and sinister martial arts framing.",
-    palette: ["#140B02", "#FFA200", "#8B6DFF", "#F1F0EB"],
+    palette: ["#140B02", "#FFA200", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · 20 × 30 IN · EMBER GLOW"
   },
   {
@@ -220,7 +220,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Sports", "Formula 1", "Grand Prix"],
     description: "Monaco Circuit street track geometry combined with high-speed telemetry vectors and modern championship typography.",
-    palette: ["#050810", "#E10600", "#8B6DFF", "#FFFFFF"],
+    palette: ["#050810", "#E10600", "#FF1E27", "#FFFFFF"],
     specs: "300 DPI · 24 × 36 IN · VECTOR TELEMETRY"
   },
   {
@@ -236,7 +236,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Game Art", "Cyberpunk", "Futurism"],
     description: "Night City dystopian street aesthetics with Japanese neon typography, cybernetic wireframes, and rain-slicked concrete reflections.",
-    palette: ["#05050A", "#FCEE09", "#00F0FF", "#8B6DFF"],
+    palette: ["#05050A", "#FCEE09", "#00F0FF", "#FF1E27"],
     specs: "300 DPI · A1 POSTER · CYBER NEON"
   },
   {
@@ -252,7 +252,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Editorial", "Travel", "Neon"],
     description: "Atmospheric study of Shinjuku's neon alleyways after rain, balancing dense Japanese typography with photographic depth.",
-    palette: ["#090912", "#FF0055", "#8B6DFF", "#E6E6FA"],
+    palette: ["#090912", "#FF0055", "#FF1E27", "#E6E6FA"],
     specs: "300 DPI · B2 POSTER · DUAL TONE"
   },
   {
@@ -268,7 +268,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Game Art", "3D", "PlayStation"],
     description: "Vibrant high-contrast PlayStation tribute showcasing playful robotic characters, spatial depth, and clean blue-accented typography.",
-    palette: ["#080C1A", "#0070D1", "#8B6DFF", "#F1F0EB"],
+    palette: ["#080C1A", "#0070D1", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · 18 × 24 IN · 3D GLOSS"
   },
   {
@@ -284,7 +284,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Automotive", "Porsche", "Motorsport"],
     description: "Pure motorsport engineering study detailing swan-neck rear wing aerodynamics, chassis dimensions, and Weissach package styling.",
-    palette: ["#0C0D10", "#FFD500", "#8B6DFF", "#E0E0E0"],
+    palette: ["#0C0D10", "#FFD500", "#FF1E27", "#E0E0E0"],
     specs: "300 DPI · A2 POSTER · TRACK SPECS"
   },
   {
@@ -300,7 +300,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Cinematic", "Sci-Fi", "Space"],
     description: "Monumental cosmic typography celebrating Christopher Nolan's sci-fi epic, framed by gravitational lensing accretion discs.",
-    palette: ["#020204", "#E08B38", "#8B6DFF", "#EBEBEB"],
+    palette: ["#020204", "#E08B38", "#FF1E27", "#EBEBEB"],
     specs: "300 DPI · 24 × 36 IN · COSMIC GLOW"
   },
   {
@@ -316,7 +316,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Cinematic", "Sci-Fi", "Dune"],
     description: "Brutal desert minimalism portraying Arrakis sandstorms, planetary eclipses, and monolithic ancient typography.",
-    palette: ["#140A04", "#D86B27", "#8B6DFF", "#F4E3D7"],
+    palette: ["#140A04", "#D86B27", "#FF1E27", "#F4E3D7"],
     specs: "300 DPI · 24 × 36 IN · SAND GRAIN"
   },
   {
@@ -332,7 +332,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Character", "Cinematic", "Comic"],
     description: "Gotham City atmospheric silhouette poster capturing rain-drenched rooftops, gargoyles, and high-contrast comic book ink aesthetics.",
-    palette: ["#060709", "#243242", "#8B6DFF", "#E1E4EA"],
+    palette: ["#060709", "#243242", "#FF1E27", "#E1E4EA"],
     specs: "300 DPI · 24 × 36 IN · GOTHAM NOIR"
   },
   {
@@ -348,7 +348,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Art Direction", "Animation", "Marvel"],
     description: "Multiversal print experiment blending vintage comic half-tone screen textures with kinetic chromatic aberration lettering.",
-    palette: ["#0D0414", "#E11D48", "#00F5D4", "#8B6DFF"],
+    palette: ["#0D0414", "#E11D48", "#00F5D4", "#FF1E27"],
     specs: "300 DPI · 18 × 24 IN · HALFTONE PRINT"
   },
   {
@@ -364,7 +364,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Cinematic", "Cyberpunk", "Film"],
     description: "Atmospheric amber dust storm study featuring Officer K's spinner silhouette and stark dystopian architecture.",
-    palette: ["#140600", "#FF6B00", "#8B6DFF", "#F1F0EB"],
+    palette: ["#140600", "#FF6B00", "#FF1E27", "#F1F0EB"],
     specs: "300 DPI · 24 × 36 IN · AMBER HAZE"
   },
   {
@@ -380,7 +380,7 @@ export const visualArchiveData = [
     featured: false,
     tags: ["Cinematic", "Historical", "Typography"],
     description: "High-contrast dramatic portrait poster contrasting atomic firestorm silhouettes with sharp geometric mathematical typography.",
-    palette: ["#0A0A0A", "#FF4500", "#8B6DFF", "#FFFFFF"],
+    palette: ["#0A0A0A", "#FF4500", "#FF1E27", "#FFFFFF"],
     specs: "300 DPI · 24 × 36 IN · ATOMIC CONTRAST"
   }
 ];

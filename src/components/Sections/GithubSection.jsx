@@ -17,7 +17,7 @@ export default function GithubSection({ engineerMode }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#C9C7C0] pb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs text-[#8B6DFF] tracking-widest uppercase mb-2 font-bold">
+            <div className="flex items-center gap-2 text-xs text-[#FF1E27] tracking-widest uppercase mb-2 font-bold">
               <Github size={14} />
               <span>CODE REPOSITORIES</span>
             </div>
@@ -49,10 +49,10 @@ export default function GithubSection({ engineerMode }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="bg-[#FAF9F5] border border-[#C9C7C0] p-6 rounded-none space-y-4 hover:border-[#8B6DFF] transition-colors group flex flex-col justify-between"
+              className="bg-[#FAF9F5] border border-[#C9C7C0] p-6 rounded-none space-y-4 hover:border-[#FF1E27] transition-colors group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-xs text-[#8B6DFF]">
+                <div className="flex justify-between items-center text-xs text-[#FF1E27]">
                   <span className="font-bold flex items-center gap-1.5">
                     <GitCommit size={14} />
                     <span>PINNED REPO</span>
@@ -60,7 +60,7 @@ export default function GithubSection({ engineerMode }) {
                   <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
 
-                <h4 className="font-syne text-lg font-bold text-[#111111] uppercase group-hover:text-[#8B6DFF] transition-colors">
+                <h4 className="font-syne text-lg font-bold text-[#111111] uppercase group-hover:text-[#FF1E27] transition-colors">
                   {repo.name}
                 </h4>
 
@@ -70,7 +70,7 @@ export default function GithubSection({ engineerMode }) {
               </div>
 
               <div className="pt-4 border-t border-[#C9C7C0] flex justify-between items-center text-xs text-[#555555]">
-                <span className="text-[#8B6DFF] font-bold">{repo.lang}</span>
+                <span className="text-[#FF1E27] font-bold">{repo.lang}</span>
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1"><Star size={12} /> {repo.stars}</span>
                 </div>

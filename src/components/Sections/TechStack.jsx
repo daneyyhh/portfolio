@@ -77,7 +77,7 @@ export default function TechStack({ engineerMode }) {
           </div>
 
           <div className="lg:col-span-11 space-y-1 w-full max-w-full">
-            <div className="text-xs text-[#8B6DFF] font-bold uppercase tracking-widest">
+            <div className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest">
               TOOLING & STACK
             </div>
             <h2
@@ -108,7 +108,7 @@ export default function TechStack({ engineerMode }) {
             >
               {/* Category Header */}
               <div className="flex items-center gap-3 sm:gap-4">
-                <span className="font-mono text-xs sm:text-sm font-bold text-[#8B6DFF]">
+                <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27]">
                   {cat.id}
                 </span>
                 <h3 className="font-syne text-lg sm:text-xl md:text-2xl font-extrabold text-[#111111] uppercase tracking-tight">

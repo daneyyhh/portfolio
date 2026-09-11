@@ -163,7 +163,7 @@ export default function Preloader({ onComplete }) {
 
         {/* Small Micro-Counter */}
         <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="text-[#8B6DFF] font-bold tracking-widest">
+          <span className="text-[#FF1E27] font-bold tracking-widest">
             0{currentStep} / 05
           </span>
           <span className="text-[#777777] text-[10px] tracking-wider">
@@ -228,7 +228,7 @@ export default function Preloader({ onComplete }) {
         <div className="flex items-center gap-3">
           <div className="w-20 sm:w-32 h-[1.5px] bg-[#D8D6CF] overflow-hidden">
             <div
-              className="h-full bg-[#8B6DFF] will-change-transform"
+              className="h-full bg-[#FF1E27] will-change-transform"
               style={{ width: `${Math.min(100, Math.round((progress / 0.82) * 100))}%` }}
             />
           </div>

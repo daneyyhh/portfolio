@@ -17,7 +17,7 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
         
         {/* Left Margin Vertical Tag */}
         <div className="hidden lg:flex lg:col-span-1 flex-col items-center justify-start h-full">
-          <div className="font-mono text-4xl font-extrabold text-[#8B6DFF]">02</div>
+          <div className="font-mono text-4xl font-extrabold text-[#FF1E27]">02</div>
           <div className="vertical-tag font-mono text-xs text-slate-400 uppercase tracking-[0.3em] font-bold mt-6">
             ABOUT ME
           </div>
@@ -35,7 +35,7 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
             >
               ABOUT ME
             </h2>
-            <div className="w-16 h-1 bg-[#8B6DFF] mt-2"></div>
+            <div className="w-16 h-1 bg-[#FF1E27] mt-2"></div>
           </div>
 
           <div className="font-sans text-slate-300 space-y-3 sm:space-y-4 text-sm sm:text-base leading-relaxed">
@@ -51,7 +51,7 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/10 w-full">
             {stats.map((s) => (
               <div key={s.label} className="space-y-1">
-                <div className="font-syne text-2xl sm:text-3xl font-extrabold text-[#8B6DFF]">{s.num}</div>
+                <div className="font-syne text-2xl sm:text-3xl font-extrabold text-[#FF1E27]">{s.num}</div>
                 <div className="font-mono text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-widest leading-tight">
                   {s.label}
                 </div>
@@ -62,7 +62,7 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
           <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
             <button
               onClick={() => setResumeOpen(true)}
-              className="btn-editorial-purple flex items-center gap-2 text-xs sm:text-sm"
+              className="btn-editorial-red flex items-center gap-2 text-xs sm:text-sm"
             >
               <FileText size={16} />
               <span>VIEW RESUME</span>
@@ -72,7 +72,7 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
               href={personalData.domain}
               target="_blank"
               rel="noreferrer"
-              className="btn-editorial-outline text-white border-white hover:border-[#8B6DFF] flex items-center gap-2 text-xs sm:text-sm"
+              className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm"
             >
               <Download size={16} />
               <span>DOWNLOAD PDF</span>
@@ -111,18 +111,18 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
               </button>
 
               <div className="border-b border-white/10 pb-4">
-                <div className="text-xs text-[#8B6DFF] uppercase tracking-widest font-bold">CURRICULUM VITAE</div>
+                <div className="text-xs text-[#FF1E27] uppercase tracking-widest font-bold">CURRICULUM VITAE</div>
                 <h2 className="font-syne text-2xl sm:text-3xl font-bold text-white uppercase">{personalData.name}</h2>
                 <div className="text-xs text-slate-400 mt-1">{personalData.title} · {personalData.location}</div>
               </div>
 
               <div className="space-y-4 text-xs sm:text-sm font-sans">
-                <div className="font-mono text-xs text-[#8B6DFF] font-bold uppercase tracking-wider">CAREER OBJECTIVE</div>
+                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">CAREER OBJECTIVE</div>
                 <p className="leading-relaxed text-slate-300">{personalData.bio}</p>
               </div>
 
               <div className="space-y-3">
-                <div className="font-mono text-xs text-[#8B6DFF] font-bold uppercase tracking-wider">CORE COMPETENCIES</div>
+                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">CORE COMPETENCIES</div>
                 <div className="flex flex-wrap gap-1.5 text-xs font-mono">
                   {['React', 'Next.js', 'Node.js', 'Python', 'Three.js', 'Tailwind CSS', 'MongoDB', 'PostgreSQL', 'LUA', 'Figma', 'UI/UX'].map((skill) => (
                     <span key={skill} className="bg-[#0A0A0A] border border-white/10 px-2.5 py-1 text-slate-300">
@@ -133,18 +133,18 @@ export default function AboutResume({ engineerMode, resumeOpen, setResumeOpen })
               </div>
 
               <div className="space-y-3">
-                <div className="font-mono text-xs text-[#8B6DFF] font-bold uppercase tracking-wider">EDUCATION</div>
+                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">EDUCATION</div>
                 <div className="bg-[#0A0A0A] p-4 border border-white/10 space-y-1">
                   <div className="font-bold text-white text-xs sm:text-sm">Bachelor of Computer Applications (BCA)</div>
                   <div className="text-xs text-slate-400">Yenepoya Deemed-to-be University · 2022 — 2025</div>
-                  <div className="text-[11px] text-[#8B6DFF]">CGPA: 8.5 / 10 · Cloud Computing & Cyber Security</div>
+                  <div className="text-[11px] text-[#FF1E27]">CGPA: 8.5 / 10 · Cloud Computing & Cyber Security</div>
                 </div>
               </div>
 
               <div className="flex justify-end pt-2">
                 <button
                   onClick={() => setResumeOpen(false)}
-                  className="btn-editorial-purple text-xs"
+                  className="btn-editorial-red text-xs"
                 >
                   CLOSE PREVIEW
                 </button>

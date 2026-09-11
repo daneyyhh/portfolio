@@ -25,7 +25,7 @@ export default function EducationCertifications({ engineerMode }) {
                     <GraduationCap size={24} />
                   </div>
                   <div>
-                    <span className="text-xs text-purple-400 font-bold uppercase">{edu.specialization} SPECIALIZATION</span>
+                    <span className="text-xs text-red-400 font-bold uppercase">{edu.specialization} SPECIALIZATION</span>
                     <h3 className="font-syne text-3xl font-bold text-white uppercase">{edu.degree}</h3>
                   </div>
                 </div>
@@ -48,7 +48,7 @@ export default function EducationCertifications({ engineerMode }) {
         <div className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
             <div>
-              <div className="flex items-center gap-2 text-xs text-purple-400 tracking-widest uppercase mb-1">
+              <div className="flex items-center gap-2 text-xs text-red-400 tracking-widest uppercase mb-1">
                 <Award size={14} />
                 <span>INDUSTRY CREDENTIALS</span>
               </div>
@@ -68,17 +68,17 @@ export default function EducationCertifications({ engineerMode }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="bg-[#0f0f13] border border-white/15 p-6 rounded-sm space-y-4 hover:border-purple-500/50 transition-colors group flex flex-col justify-between"
+                className="bg-[#0f0f13] border border-white/15 p-6 rounded-sm space-y-4 hover:border-red-500/50 transition-colors group flex flex-col justify-between"
               >
                 <div className="space-y-3">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="bg-purple-500/10 text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded-sm font-bold">
+                    <span className="bg-red-500/10 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-sm font-bold">
                       {cert.badge}
                     </span>
                     <ShieldCheck className="text-[#ccff00]" size={18} />
                   </div>
 
-                  <h4 className="font-syne text-lg font-bold text-white uppercase group-hover:text-purple-300 transition-colors">
+                  <h4 className="font-syne text-lg font-bold text-white uppercase group-hover:text-red-300 transition-colors">
                     {cert.title}
                   </h4>
 
