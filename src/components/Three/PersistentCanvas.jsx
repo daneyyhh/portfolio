@@ -148,9 +148,9 @@ export default function PersistentCanvas({ scrollProgress = 0 }) {
       glassCube.rotation.y = elapsedTime * 0.15;
       spheresGroup.rotation.y = elapsedTime * 0.3;
 
-      // Smooth camera interpolation
-      camera.position.y += (targetCameraY - camera.position.y) * 0.05;
-      camera.position.z += (targetCameraZ - camera.position.z) * 0.05;
+      // Smooth camera interpolation synced with scroll momentum
+      camera.position.y += (targetCameraY - camera.position.y) * 0.08;
+      camera.position.z += (targetCameraZ - camera.position.z) * 0.08;
 
       // Parallax offset
       mainGroup.rotation.y = targetRotationY + mouseX * 0.3;

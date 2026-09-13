@@ -122,11 +122,11 @@ export default function ProcessSection() {
     offset: ["start start", "end end"]
   });
 
-  // Responsive, silky-smooth spring without sluggish lag
+  // Responsive, silky-smooth spring tightly synchronized with Lenis momentum
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 180,
-    damping: 28,
-    mass: 0.2,
+    stiffness: 260,
+    damping: 32,
+    mass: 0.1,
     restDelta: 0.0005
   });
 
@@ -159,7 +159,7 @@ export default function ProcessSection() {
     return () => unsubscribe();
   }, [smoothProgress]);
 
-  // Smooth programmatic scroll to clicked stage
+  // Smooth programmatic scroll to clicked stage with Lenis integration
   const handleStageClick = (index) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -170,10 +170,17 @@ export default function ProcessSection() {
     const targetRatio = index / (STAGES.length - 1);
     const targetScrollY = containerStart + targetRatio * scrollableDistance;
 
-    window.scrollTo({
-      top: targetScrollY,
-      behavior: 'smooth'
-    });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(targetScrollY, {
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({
+        top: targetScrollY,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const activeStage = STAGES[activeStageIndex];

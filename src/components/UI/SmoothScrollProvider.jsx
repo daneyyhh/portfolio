@@ -11,21 +11,24 @@ export default function SmoothScrollProvider({ children, disabled = false }) {
       return;
     }
 
+    // High-end momentum physics configuration
     const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxurious exponential ease out
+      lerp: 0.085, // Physical momentum linear interpolation
+      duration: 1.2,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.95,
+      wheelMultiplier: 1.0, // Natural 1:1 responsive wheel input
       touchMultiplier: 1.5,
+      syncTouch: false, // Maintain native smooth touch responsiveness on mobile
+      autoResize: true,
       infinite: false,
     });
 
     lenisRef.current = lenis;
     window.__lenis = lenis;
 
-    // RAF Loop
+    // Single unified requestAnimationFrame loop
     let rafId;
     function raf(time) {
       lenis.raf(time);
@@ -33,7 +36,7 @@ export default function SmoothScrollProvider({ children, disabled = false }) {
     }
     rafId = requestAnimationFrame(raf);
 
-    // Global click listener for anchor links to handle smooth scrolling with header offset
+    // Global anchor navigation handler
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a[href^="#"]');
       if (!target) return;
@@ -46,7 +49,7 @@ export default function SmoothScrollProvider({ children, disabled = false }) {
         const headerOffset = 72;
         lenis.scrollTo(element, {
           offset: -headerOffset,
-          duration: 1.2,
+          duration: 1.15,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
 
@@ -58,7 +61,13 @@ export default function SmoothScrollProvider({ children, disabled = false }) {
 
     document.addEventListener('click', handleAnchorClick);
 
+    // Force resize calculation after initial mount & layout pass
+    const timer = setTimeout(() => {
+      lenis.resize();
+    }, 200);
+
     return () => {
+      clearTimeout(timer);
       document.removeEventListener('click', handleAnchorClick);
       cancelAnimationFrame(rafId);
       lenis.destroy();
