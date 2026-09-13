@@ -1,7 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { MaskHeading, MaskParagraph } from '../UI/TextReveal';
+
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function TechStack({ engineerMode }) {
+  const prefersReduced = useReducedMotion();
+
   const techCategories = [
     {
       id: "01",
@@ -67,43 +72,60 @@ export default function TechStack({ engineerMode }) {
   ];
 
   return (
-    <section id="techstack" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
+    <section id="techstack" className="min-h-[100svh] py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10 w-full">
         
-        {/* Section Header */}
+        {/* Section Header with Staggered Sequence */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
           <div className="hidden lg:flex lg:col-span-1">
-            <span className="font-mono text-4xl font-extrabold text-[#111111]">06</span>
+            <motion.span
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="font-mono text-4xl font-extrabold text-[#111111]"
+            >
+              06
+            </motion.span>
           </div>
 
           <div className="lg:col-span-11 space-y-1 w-full max-w-full">
-            <div className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest">
-              TOOLING & STACK
-            </div>
-            <h2
+            <motion.div
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest flex items-center gap-2"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+              <span>TOOLING & STACK</span>
+            </motion.div>
+
+            <MaskHeading
+              lines={["TECHNOLOGIES"]}
               className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full overflow-visible"
               style={{
                 fontSize: 'clamp(1.75rem, 6.8vw, 3.5rem)',
                 letterSpacing: 'clamp(-0.03em, -0.2vw, 0em)',
               }}
-            >
-              TECHNOLOGIES
-            </h2>
-            <p className="font-sans text-slate-700 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
-              Tools and technologies I work with across web, AI, design, game development, and interactive experiences.
-            </p>
+              delay={0.15}
+            />
+
+            <MaskParagraph delay={0.3} className="font-sans text-slate-700 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+              <p>Tools and technologies I work with across web, AI, design, game development, and interactive experiences.</p>
+            </MaskParagraph>
           </div>
         </div>
 
-        {/* Editorial Technology Index Categories */}
+        {/* Editorial Technology Index Categories with Staggered Viewport Entrance */}
         <div className="space-y-10 sm:space-y-12 w-full">
           {techCategories.map((cat, index) => (
             <motion.div
               key={cat.id}
-              initial={{ opacity: 0, y: 25 }}
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              viewport={{ once: true, margin: "-6% 0px" }}
+              transition={{ duration: prefersReduced ? 0.25 : 0.65, delay: prefersReduced ? 0 : index * 0.08, ease: EASE }}
               className="border-b border-[#C9C7C0] pb-8 sm:pb-10 space-y-4 sm:space-y-6 w-full"
             >
               {/* Category Header */}
@@ -116,17 +138,17 @@ export default function TechStack({ engineerMode }) {
                 </h3>
               </div>
 
-              {/* Technologies Row */}
+              {/* Technologies Row with Smooth Item Hover */}
               <div className="flex flex-wrap gap-4 sm:gap-8 md:gap-12 items-center pt-2 w-full">
                 {cat.items.map((tech) => (
                   <div
                     key={tech.name}
-                    className="flex items-center gap-2 sm:gap-3 py-1 px-2 group select-none"
+                    className="flex items-center gap-2 sm:gap-3 py-1 px-2 group select-none transition-transform hover:-translate-y-0.5 duration-200"
                   >
                     <img
                       src={tech.icon}
                       alt={tech.name}
-                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300 shrink-0"
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-300 shrink-0"
                     />
                     <span className="font-mono text-xs sm:text-sm text-[#333333] group-hover:text-[#111111] font-medium tracking-wide">
                       {tech.name}

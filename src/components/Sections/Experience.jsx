@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
+import { MaskHeading, MaskParagraph } from '../UI/TextReveal';
+
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function Experience({ engineerMode }) {
   const [expanded, setExpanded] = useState(0);
+  const prefersReduced = useReducedMotion();
 
   const experiences = [
     {
@@ -45,40 +49,52 @@ export default function Experience({ engineerMode }) {
   ];
 
   return (
-    <section id="experience" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full flex flex-col justify-center">
+    <section id="experience" className="min-h-[100svh] py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full flex flex-col justify-center">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10 w-full">
         
-        {/* Section Header */}
+        {/* Section Header with Staggered Entrance */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
           <div className="w-full max-w-full">
-            <div className="flex items-center gap-2 text-xs text-[#FF1E27] tracking-widest uppercase mb-2 font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#FF1E27]"></span>
+            <motion.div
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="flex items-center gap-2 text-xs text-[#FF1E27] tracking-widest uppercase mb-2 font-bold"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27]" />
               <span>VERIFIED CHRONOLOGY</span>
-            </div>
-            <h2
+            </motion.div>
+
+            <MaskHeading
+              lines={["EXPERIENCE TIMELINE"]}
               className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full"
               style={{
                 fontSize: 'clamp(1.85rem, 7.5vw, 3.75rem)',
                 letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
               }}
-            >
-              EXPERIENCE TIMELINE
-            </h2>
+              delay={0.15}
+            />
           </div>
-          <p className="text-xs text-[#555555] max-w-md">
-            Chronological breakdown of practical full-stack projects, UI/UX design work, and game development milestones.
-          </p>
+
+          <MaskParagraph delay={0.3} className="text-xs text-[#555555] max-w-md">
+            <p>Chronological breakdown of practical full-stack projects, UI/UX design work, and game development milestones.</p>
+          </MaskParagraph>
         </div>
 
-        {/* Timeline Items List */}
+        {/* Timeline Items List with Staggered Viewport Entrance */}
         <div className="space-y-4 w-full">
           {experiences.map((exp, index) => {
             const isOpen = expanded === index;
 
             return (
-              <div
+              <motion.div
                 key={index}
-                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden transition-all duration-300 w-full"
+                initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-6% 0px" }}
+                transition={{ duration: prefersReduced ? 0.25 : 0.6, delay: prefersReduced ? 0 : index * 0.1, ease: EASE }}
+                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden transition-all duration-300 w-full hover:border-[#FF1E27]/60 shadow-sm"
               >
                 {/* Header Row */}
                 <div
@@ -115,40 +131,42 @@ export default function Experience({ engineerMode }) {
                 </div>
 
                 {/* Expanded Details */}
-                {isOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="px-4 sm:px-6 pb-6 pt-2 border-t border-[#C9C7C0] bg-[#FAF9F5] space-y-4"
-                  >
-                    <p className="font-sans text-xs sm:text-sm text-[#333333] leading-relaxed">
-                      {exp.summary}
-                    </p>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.35, ease: EASE }}
+                      className="px-4 sm:px-6 pb-6 pt-2 border-t border-[#C9C7C0] bg-[#FAF9F5] space-y-4 overflow-hidden"
+                    >
+                      <p className="font-sans text-xs sm:text-sm text-[#333333] leading-relaxed">
+                        {exp.summary}
+                      </p>
 
-                    <div className="space-y-2">
-                      <div className="text-[10px] text-[#555555] uppercase tracking-wider font-bold">KEY ACHIEVEMENTS</div>
-                      <ul className="space-y-1.5 text-xs font-sans text-[#444444]">
-                        {exp.details.map((d, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <CheckCircle2 size={14} className="text-[#FF1E27] shrink-0 mt-0.5" />
-                            <span>{d}</span>
-                          </li>
+                      <div className="space-y-2">
+                        <div className="text-[10px] text-[#555555] uppercase tracking-wider font-bold">KEY ACHIEVEMENTS</div>
+                        <ul className="space-y-1.5 text-xs font-sans text-[#444444]">
+                          {exp.details.map((d, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <CheckCircle2 size={14} className="text-[#FF1E27] shrink-0 mt-0.5" />
+                              <span>{d}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-2 flex flex-wrap gap-1 text-[10px]">
+                        {exp.tech.map(t => (
+                          <span key={t} className="bg-[#E4E2DC] text-[#111111] px-2 py-0.5 border border-[#C9C7C0]">
+                            {t}
+                          </span>
                         ))}
-                      </ul>
-                    </div>
-
-                    <div className="pt-2 flex flex-wrap gap-1 text-[10px]">
-                      {exp.tech.map(t => (
-                        <span key={t} className="bg-[#E4E2DC] text-[#111111] px-2 py-0.5 border border-[#C9C7C0]">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
         </div>

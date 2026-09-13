@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MaskHeading, FadeInUp } from '../UI/TextReveal';
+
+const EASE = [0.16, 1, 0.3, 1];
 
 const POSTERS = Array.from({ length: 24 }, (_, i) => {
   const num = String(i + 1).padStart(2, '0');
@@ -13,17 +17,21 @@ const POSTERS = Array.from({ length: 24 }, (_, i) => {
 
 export default function VisualArchive() {
   const [activeImageIndex, setActiveImageIndex] = useState(null);
+  const prefersReduced = useReducedMotion();
   const totalCount = POSTERS.length;
 
-  // Lock body scroll when lightbox is open
+  // Lock body scroll and pause Lenis when lightbox is open
   useEffect(() => {
     if (activeImageIndex !== null) {
       document.body.style.overflow = 'hidden';
+      if (window.__lenis) window.__lenis.stop();
     } else {
       document.body.style.overflow = '';
+      if (window.__lenis) window.__lenis.start();
     }
     return () => {
       document.body.style.overflow = '';
+      if (window.__lenis) window.__lenis.start();
     };
   }, [activeImageIndex]);
 
@@ -58,32 +66,56 @@ export default function VisualArchive() {
 
       <div className="max-w-7xl mx-auto space-y-16 relative z-10">
         
-        {/* Minimalist Editorial Header */}
+        {/* Minimalist Editorial Header with Masked Reveal */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="space-y-2">
-            <div className="text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
-              07
-            </div>
-            <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight uppercase leading-[0.92]">
-              VISUAL ARCHIVE
-            </h2>
+            <motion.div
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold flex items-center gap-2"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+              <span>07</span>
+            </motion.div>
+
+            <MaskHeading
+              lines={["VISUAL ARCHIVE"]}
+              className="font-syne text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight uppercase leading-[0.92]"
+              delay={0.15}
+            />
           </div>
 
-          <div className="space-y-1 md:text-right">
+          <motion.div
+            initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-8% 0px" }}
+            transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+            className="space-y-1 md:text-right"
+          >
             <div className="font-mono text-xs sm:text-sm font-bold text-white tracking-widest uppercase">
               SELECTED VISUAL WORKS
             </div>
             <div className="text-[11px] font-mono text-[#777777] tracking-[0.2em] uppercase">
               POSTERS / VISUAL STUDIES / EXPERIMENTS
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Strict 6 × 4 Editorial Gallery Grid (6 Columns Desktop, 3 Tablet, 2 Mobile, 1 XS) */}
+        {/* Strict 6 × 4 Editorial Gallery Grid with Staggered Viewport Entrance */}
         <div className="grid grid-cols-1 min-[440px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 md:gap-6">
           {POSTERS.map((poster, idx) => (
-            <div
+            <motion.div
               key={poster.id}
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-5% 0px" }}
+              transition={{
+                duration: prefersReduced ? 0.2 : 0.55,
+                delay: prefersReduced ? 0 : (idx % 6) * 0.05,
+                ease: EASE,
+              }}
               onClick={() => setActiveImageIndex(idx)}
               className="group flex flex-col cursor-pointer select-none"
             >
@@ -92,7 +124,7 @@ export default function VisualArchive() {
                 <img
                   src={poster.src}
                   alt={`Artwork ${poster.index}`}
-                  className="w-full h-full object-contain p-1 filter contrast-125 brightness-95 transition-all duration-300 ease-out group-hover:scale-[1.02] group-hover:brightness-105"
+                  className="w-full h-full object-contain p-1 filter contrast-125 brightness-95 transition-all duration-300 ease-out group-hover:scale-[1.03] group-hover:brightness-105 select-none"
                   loading="lazy"
                 />
 
@@ -107,12 +139,12 @@ export default function VisualArchive() {
                   VIEW
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Section Footer */}
-        <div className="border-t border-white/10 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs">
+        <FadeInUp delay={0.3} className="border-t border-white/10 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs">
           <div className="space-y-0.5 text-center sm:text-left">
             <div className="font-bold text-base sm:text-lg text-white font-syne tracking-wider">
               {String(totalCount).padStart(2, '0')}
@@ -126,82 +158,78 @@ export default function VisualArchive() {
             href="https://drive.google.com/drive/folders/1Fe6jawT0ixn7PNNmN7YSeU_eip62CO7w?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-editorial flex items-center gap-2 font-mono text-xs uppercase font-bold tracking-widest group"
+            className="btn-editorial flex items-center gap-2 font-mono text-xs uppercase font-bold tracking-widest group cursor-pointer"
           >
             <span>VIEW ARCHIVE</span>
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </a>
-        </div>
+        </FadeInUp>
 
       </div>
 
-      {/* True Full-Screen Lightbox Portal (Renders into document.body at z-[99999] ABOVE Navbar) */}
+      {/* True Full-Screen Lightbox Portal */}
       {activeImageIndex !== null && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 w-screen h-screen bg-[#000000] text-white flex flex-col justify-between items-center p-4 sm:p-6 select-none transition-opacity duration-300 ease-out"
-          style={{ zIndex: 99999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}
+          className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 md:p-10 select-none animate-in fade-in duration-200"
           onClick={() => setActiveImageIndex(null)}
         >
-          {/* Top Minimal Controls Bar */}
+          {/* Top Bar */}
           <div
-            className="w-full max-w-6xl flex items-center justify-between py-3 border-b border-white/10 relative"
-            style={{ zIndex: 100000 }}
+            className="flex items-center justify-between text-xs font-mono text-white/60 tracking-widest uppercase z-20"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-xs font-mono text-[#FF1E27] font-bold tracking-widest">
-              {POSTERS[activeImageIndex].index} / {String(totalCount).padStart(2, '0')}
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse" />
+              <span className="text-[#FF1E27] font-bold">POSTER STUDY {POSTERS[activeImageIndex].index} / {totalCount}</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveImageIndex((prev) => (prev - 1 + totalCount) % totalCount)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors cursor-pointer"
-                title="Previous (Left Arrow)"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={() => setActiveImageIndex((prev) => (prev + 1) % totalCount)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors cursor-pointer"
-                title="Next (Right Arrow)"
-              >
-                <ChevronRight size={18} />
-              </button>
-              <button
-                onClick={() => setActiveImageIndex(null)}
-                className="p-2.5 bg-[#111111] border border-white/20 text-white hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-colors ml-2 cursor-pointer"
-                title="Close (Esc)"
-              >
-                <X size={18} />
-              </button>
-            </div>
+            <button
+              onClick={() => setActiveImageIndex(null)}
+              className="flex items-center gap-2 bg-white/10 hover:bg-[#FF1E27] text-white px-3 py-1.5 rounded-sm transition-colors cursor-pointer"
+            >
+              <span>ESC / CLOSE</span>
+              <X size={16} />
+            </button>
           </div>
 
-          {/* Centered Large Artwork Canvas (Preserves Native Proportions, No Distortion, No Cropping) */}
+          {/* Main Focused Artwork Frame */}
           <div
-            className="my-auto flex items-center justify-center w-full h-[82vh] overflow-hidden p-2 relative"
-            style={{ zIndex: 99999 }}
+            className="relative flex-1 flex items-center justify-center my-auto max-h-[82vh] py-2 z-10"
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              key={POSTERS[activeImageIndex].id}
               src={POSTERS[activeImageIndex].src}
-              alt={`Artwork ${POSTERS[activeImageIndex].index}`}
-              className="max-h-[78vh] max-w-[88vw] object-contain filter contrast-125 brightness-95 shadow-2xl select-none transition-transform duration-300 ease-out"
+              alt={`Focused Artwork ${POSTERS[activeImageIndex].index}`}
+              className="max-h-full max-w-full object-contain shadow-[0_0_50px_rgba(0,0,0,0.9)] border border-white/10"
             />
           </div>
 
-          {/* Bottom Minimal Navigation Cue */}
+          {/* Bottom Controls Bar */}
           <div
-            className="text-[10px] font-mono text-[#555555] tracking-widest uppercase pb-2 relative"
-            style={{ zIndex: 100000 }}
+            className="flex items-center justify-between text-xs font-mono text-white/60 z-20 max-w-xl mx-auto w-full pt-2"
+            onClick={(e) => e.stopPropagation()}
           >
-            USE ARROW KEYS OR CHEVRONS TO NAVIGATE · ESC TO CLOSE
+            <button
+              onClick={() => setActiveImageIndex((prev) => (prev - 1 + totalCount) % totalCount)}
+              className="flex items-center gap-2 hover:text-white px-4 py-2 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
+            >
+              <ChevronLeft size={16} />
+              <span>PREV</span>
+            </button>
+
+            <span className="text-[11px] text-white/40 tracking-wider">USE ARROW KEYS</span>
+
+            <button
+              onClick={() => setActiveImageIndex((prev) => (prev + 1) % totalCount)}
+              className="flex items-center gap-2 hover:text-white px-4 py-2 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 cursor-pointer"
+            >
+              <span>NEXT</span>
+              <ChevronRight size={16} />
+            </button>
           </div>
         </div>,
         document.body
       )}
-
     </section>
   );
 }

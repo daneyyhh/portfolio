@@ -3,6 +3,7 @@ import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
 import CaseStudyModal from './components/UI/CaseStudyModal';
 import EasterEggs from './components/UI/EasterEggs';
+import SmoothScrollProvider from './components/UI/SmoothScrollProvider';
 
 import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
@@ -23,64 +24,66 @@ export default function App() {
   const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
-      
-      {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
-      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-
-      {/* Main Portfolio Content — Rendered Live Underneath Loader for Physical Upward Reveal */}
-      <div className="relative w-full opacity-100">
+    <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
+      <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
         
-        {/* Persistent Three.js WebGL Canvas Journey */}
-        <PersistentCanvas />
+        {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
+        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
-        {/* Easter Egg Event Listener */}
-        <EasterEggs />
+        {/* Main Portfolio Content */}
+        <div className="relative w-full opacity-100">
+          
+          {/* Persistent Three.js WebGL Canvas Journey */}
+          <PersistentCanvas />
 
-        {/* Fixed Editorial Header — Always Visible with Subtle Separator */}
-        <Navbar
-          onOpenResume={() => setResumeOpen(true)}
-        />
+          {/* Easter Egg Event Listener */}
+          <EasterEggs />
 
-        {/* Main Editorial Flow with Scroll Snap Proximity */}
-        <main className="relative z-10 scroll-snap-y-proximity">
-          <Hero
+          {/* Fixed Editorial Header */}
+          <Navbar
             onOpenResume={() => setResumeOpen(true)}
           />
-          
-          <Introduction />
-          
-          <AboutResume
-            resumeOpen={resumeOpen}
-            setResumeOpen={setResumeOpen}
-          />
-          
-          <ProcessSection />
-          
-          <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
-          
-          <Architecture />
-          
-          <TechStack />
-          
-          <VisualArchive />
-          
-          <AiLab />
-          
-          <Experience />
-          
-          <Contact />
-        </main>
 
-        {/* Interactive Case Study Modal */}
-        {selectedProject && (
-          <CaseStudyModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        )}
+          {/* Main Editorial Flow */}
+          <main className="relative z-10">
+            <Hero
+              onOpenResume={() => setResumeOpen(true)}
+            />
+            
+            <Introduction />
+            
+            <AboutResume
+              resumeOpen={resumeOpen}
+              setResumeOpen={setResumeOpen}
+            />
+            
+            <ProcessSection />
+            
+            <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
+            
+            <Architecture />
+            
+            <TechStack />
+            
+            <VisualArchive />
+            
+            <AiLab />
+            
+            <Experience />
+            
+            <Contact />
+          </main>
 
+          {/* Interactive Case Study Modal */}
+          {selectedProject && (
+            <CaseStudyModal
+              project={selectedProject}
+              onClose={() => setSelectedProject(null)}
+            />
+          )}
+
+        </div>
       </div>
-    </div>
+    </SmoothScrollProvider>
   );
 }

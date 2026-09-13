@@ -18,20 +18,29 @@ export default function Navbar({ onOpenResume }) {
     { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  // Smooth scroll handler accounting for header height offset
+  // Smooth scroll handler accounting for header height offset and Lenis integration
   const handleNavClick = (e, href) => {
     e.preventDefault();
     const targetId = href.replace('#', '');
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
       const headerOffset = 72;
-      const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      if (window.__lenis) {
+        window.__lenis.scrollTo(targetElement, {
+          offset: -headerOffset,
+          duration: 1.15,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
 
       if (window.history && window.history.pushState) {
         window.history.pushState(null, '', href);
@@ -79,7 +88,7 @@ export default function Navbar({ onOpenResume }) {
   }, []);
 
   return (
-    <header className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip bg-[#F1F0EB] ${scrolled ? 'py-3 shadow-md' : 'py-4'}`}>
+    <header className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 border-b border-[#E4E2DC] overflow-x-clip bg-[#F1F0EB]/95 backdrop-blur-md ${scrolled ? 'py-3 shadow-md' : 'py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
         {/* Brand Logo */}
@@ -88,7 +97,7 @@ export default function Navbar({ onOpenResume }) {
           onClick={(e) => handleNavClick(e, '#hero')}
           className="flex items-center group shrink-0"
         >
-          <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[135px] h-auto" />
+          <ReubgLogo variant="light" className="w-[90px] sm:w-[120px] md:w-[135px] h-auto transition-transform duration-200 group-hover:scale-102" />
         </a>
 
         {/* Desktop Navigation */}
@@ -114,7 +123,7 @@ export default function Navbar({ onOpenResume }) {
         <div className="hidden sm:flex items-center">
           <button
             onClick={onOpenResume}
-            className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider"
+            className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider cursor-pointer"
           >
             RESUME
           </button>
@@ -123,7 +132,7 @@ export default function Navbar({ onOpenResume }) {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-[#111111] hover:text-[#FF1E27]"
+          className="lg:hidden p-2 text-[#111111] hover:text-[#FF1E27] cursor-pointer"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -137,7 +146,7 @@ export default function Navbar({ onOpenResume }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#F1F0EB] border-b border-[#E4E2DC] px-4 sm:px-6 py-6 font-mono"
+            className="lg:hidden bg-[#F1F0EB] border-b border-[#E4E2DC] px-4 sm:px-6 py-6 font-mono overflow-hidden"
           >
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
@@ -163,7 +172,7 @@ export default function Navbar({ onOpenResume }) {
                     onOpenResume();
                     setMobileMenuOpen(false);
                   }}
-                  className="btn-editorial-red w-full py-2.5 text-xs font-bold tracking-wider"
+                  className="btn-editorial-red w-full py-2.5 text-xs font-bold tracking-wider cursor-pointer"
                 >
                   VIEW RESUME
                 </button>

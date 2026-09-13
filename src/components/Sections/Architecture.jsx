@@ -1,8 +1,13 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Layers, Database, Server, Shield, Cpu, Zap, Code, ArrowRight } from 'lucide-react';
+import { MaskHeading, MaskParagraph } from '../UI/TextReveal';
+
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function Architecture({ engineerMode }) {
+  const prefersReduced = useReducedMotion();
+
   const layers = [
     {
       id: "01",
@@ -73,29 +78,37 @@ export default function Architecture({ engineerMode }) {
     <section id="architecture" className="py-24 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] text-white relative border-t border-white/10 font-mono w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto space-y-12 relative z-10 w-full">
         
-        {/* Section Header */}
+        {/* Section Header with Staggered Sequence */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6 sm:pb-8 w-full">
           <div className="w-full max-w-full">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] tracking-widest uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#FF1E27]"></span>
+            <motion.div
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] tracking-widest uppercase mb-2 font-bold"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse" />
               <span>SYSTEM ARCHITECTURE</span>
-            </div>
-            <h2
+            </motion.div>
+
+            <MaskHeading
+              lines={["ARCHITECTURE"]}
               className="font-syne font-extrabold text-white uppercase tracking-tight w-full max-w-full overflow-visible"
               style={{
                 fontSize: 'clamp(1.75rem, 6.8vw, 3.5rem)',
                 letterSpacing: 'clamp(-0.03em, -0.2vw, 0em)',
               }}
-            >
-              ARCHITECTURE
-            </h2>
+              delay={0.15}
+            />
           </div>
-          <p className="font-mono text-xs text-slate-400 max-w-md">
-            "How the pieces connect behind the experience." Static technical architecture breakdown across 7 system layers.
-          </p>
+
+          <MaskParagraph delay={0.3} className="font-mono text-xs text-slate-400 max-w-md">
+            <p>"How the pieces connect behind the experience." Static technical architecture breakdown across 7 system layers.</p>
+          </MaskParagraph>
         </div>
 
-        {/* Static Layer Grid */}
+        {/* Static Layer Grid with Staggered Entry */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
           {layers.map((layer, idx) => {
             const Icon = layer.icon;
@@ -103,11 +116,15 @@ export default function Architecture({ engineerMode }) {
             return (
               <motion.div
                 key={layer.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="bg-[#141414] border border-white/10 p-5 sm:p-6 space-y-4 hover:border-[#FF1E27] transition-colors group flex flex-col justify-between w-full max-w-full overflow-hidden"
+                viewport={{ once: true, margin: "-6% 0px" }}
+                transition={{
+                  duration: prefersReduced ? 0.25 : 0.65,
+                  delay: prefersReduced ? 0 : (idx % 3) * 0.08,
+                  ease: EASE,
+                }}
+                className="bg-[#141414] border border-white/10 p-5 sm:p-6 space-y-4 hover:border-[#FF1E27] transition-all duration-300 group flex flex-col justify-between w-full max-w-full overflow-hidden shadow-lg hover:shadow-[0_4px_24px_rgba(255,30,39,0.12)]"
               >
                 <div className="space-y-3 w-full">
                   <div className="flex justify-between items-center text-xs">
@@ -132,13 +149,13 @@ export default function Architecture({ engineerMode }) {
                 <div className="space-y-3 pt-3 border-t border-white/10 w-full">
                   <div className="flex flex-wrap gap-1 text-[10px] font-mono w-full">
                     {layer.technologies.map(t => (
-                      <span key={t} className="bg-[#0A0A0A] text-slate-300 px-2 py-0.5 border border-white/10 truncate">
+                      <span key={t} className="bg-[#0A0A0A] text-slate-300 px-2 py-0.5 border border-white/10 truncate font-mono">
                         {t}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-1 text-[10px] text-[#FF1E27] w-full overflow-hidden">
+                  <div className="flex flex-wrap items-center gap-1 text-[10px] text-[#FF1E27] w-full overflow-hidden font-mono">
                     {layer.flow.map((f, i) => (
                       <React.Fragment key={i}>
                         <span className="truncate">{f}</span>

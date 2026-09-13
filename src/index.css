@@ -22,7 +22,26 @@
     padding: 0;
     background-color: var(--bg-ivory);
     color: var(--text-black);
-    scroll-behavior: smooth;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
   }
   
   section {
@@ -81,17 +100,13 @@
     @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-all duration-300 active:scale-95 text-center;
   }
 
+  .btn-editorial-outline {
+    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:border-[#FF1E27] hover:text-[#FF1E27] transition-all duration-300 active:scale-95 text-center;
+  }
+
   .btn-editorial-purple,
   .btn-editorial-red {
     @apply bg-[#FF1E27] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#E00208] transition-all duration-300 active:scale-95 shadow-md text-center;
-  }
-
-  .scroll-snap-y-proximity {
-    scroll-snap-type: y proximity;
-  }
-
-  .scroll-snap-start {
-    scroll-snap-align: start;
   }
 }
 
@@ -100,5 +115,6 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

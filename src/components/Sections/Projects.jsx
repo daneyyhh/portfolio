@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 import { projectsData } from '../../data/portfolioData';
+import { MaskHeading } from '../UI/TextReveal';
+
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function Projects({ onSelectProject }) {
   const [activeTab, setActiveTab] = useState('ALL');
+  const prefersReduced = useReducedMotion();
 
   const tabs = ['ALL', 'FULL-STACK', 'AI / ML', 'GAME DEV', 'UI / UX'];
 
@@ -19,68 +23,103 @@ export default function Projects({ onSelectProject }) {
       });
 
   return (
-    <section id="projects" className="min-h-[100svh] scroll-snap-start py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
+    <section id="projects" className="min-h-[100svh] py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
       <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10 relative z-10 w-full">
         
-        {/* Section Header */}
+        {/* Section Header with Masked Text Reveal */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
           <div className="hidden lg:flex lg:col-span-1">
-            <span className="font-mono text-4xl font-extrabold text-[#111111]">04</span>
+            <motion.span
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="font-mono text-4xl font-extrabold text-[#111111]"
+            >
+              04
+            </motion.span>
           </div>
 
           <div className="lg:col-span-7 w-full max-w-full">
-            <div className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest mb-1">
-              FEATURED ENGINEERING
-            </div>
-            <h2
+            <motion.div
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest mb-1 flex items-center gap-2"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+              <span>FEATURED ENGINEERING</span>
+            </motion.div>
+
+            <MaskHeading
+              lines={["SELECTED WORK"]}
               className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full"
               style={{
                 fontSize: 'clamp(1.85rem, 7.5vw, 3.75rem)',
                 letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
               }}
-            >
-              SELECTED WORK
-            </h2>
+              delay={0.15}
+            />
           </div>
 
           <div className="lg:col-span-4 flex justify-start lg:justify-end">
-            <span className="text-[10px] sm:text-xs text-[#555555]">SHOWING {filteredProjects.length} REPOSITORIES</span>
+            <motion.span
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+              className="text-[10px] sm:text-xs text-[#555555]"
+            >
+              SHOWING {filteredProjects.length} REPOSITORIES
+            </motion.span>
           </div>
         </div>
 
-        {/* Sticky Animated Tabs */}
-        <div className="sticky top-16 z-30 bg-[#F1F0EB]/95 backdrop-blur-md py-3.5 border-b border-[#C9C7C0] flex flex-wrap gap-1.5 sm:gap-2 w-full">
+        {/* Sticky Animated Filter Tabs */}
+        <motion.div
+          initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-8% 0px" }}
+          transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+          className="sticky top-16 z-30 bg-[#F1F0EB]/95 backdrop-blur-md py-3.5 border-b border-[#C9C7C0] flex flex-wrap gap-1.5 sm:gap-2 w-full"
+        >
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase cursor-pointer ${
                 activeTab === tab
-                  ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
+                  ? 'bg-[#111111] text-white border-[#111111] shadow-sm scale-102'
                   : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#FF1E27]'
               }`}
             >
               {tab}
             </button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Project Cards Grid */}
+        {/* Project Cards Grid with Staggered Viewport Entrance */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project, idx) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden group hover:border-[#FF1E27] transition-all duration-300 flex flex-col justify-between w-full max-w-full"
+                initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-6% 0px" }}
+                exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                transition={{
+                  duration: prefersReduced ? 0.25 : 0.65,
+                  delay: prefersReduced ? 0 : (idx % 3) * 0.08,
+                  ease: EASE,
+                }}
+                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden group hover:border-[#FF1E27] transition-all duration-300 flex flex-col justify-between w-full max-w-full shadow-sm hover:shadow-lg"
                 data-cursor="VIEW"
               >
                 <div className="w-full">
-                  {/* Card Image Banner */}
+                  {/* Card Image Banner with Controlled Subtle Zoom */}
                   <div
                     onClick={() => onSelectProject(project)}
                     className="relative h-48 sm:h-60 overflow-hidden cursor-pointer bg-[#111111] w-full"
@@ -88,7 +127,7 @@ export default function Projects({ onSelectProject }) {
                     <img
                       src={project.img}
                       alt={project.title}
-                      className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                      className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-103 transition-all duration-700 ease-out select-none"
                     />
                     <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[#111111] text-[#FF1E27] text-[9px] sm:text-[10px] font-bold px-2 sm:px-2.5 py-1 uppercase">
                       {project.category}
@@ -114,7 +153,7 @@ export default function Projects({ onSelectProject }) {
                     {/* Tech Badges */}
                     <div className="flex flex-wrap gap-1 pt-1">
                       {project.technologies.map(t => (
-                        <span key={t} className="bg-[#E4E2DC] text-[#111111] text-[9px] sm:text-[10px] px-2 py-0.5 border border-[#C9C7C0]">
+                        <span key={t} className="bg-[#E4E2DC] text-[#111111] text-[9px] sm:text-[10px] px-2 py-0.5 border border-[#C9C7C0] font-mono">
                           {t}
                         </span>
                       ))}
@@ -126,7 +165,7 @@ export default function Projects({ onSelectProject }) {
                 <div className="p-4 sm:p-6 pt-0 border-t border-[#E4E2DC] mt-4 flex items-center justify-between">
                   <button
                     onClick={() => onSelectProject(project)}
-                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#FF1E27] flex items-center gap-1.5 transition-colors"
+                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#FF1E27] flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <span>CASE STUDY</span>
                     <ArrowUpRight size={14} />
