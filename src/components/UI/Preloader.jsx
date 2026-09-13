@@ -1,118 +1,120 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReubgLogo from './ReubgLogo';
 
-// 5 unique master work images (each appears only once)
-const INTRO_IMAGES = [
-  '/images/posters/poster-01.jpeg',
-  '/images/posters/poster-06.jpeg',
-  '/images/posters/poster-09.jpeg',
-  '/images/posters/poster-15.jpeg',
-  '/images/posters/poster-19.jpeg',
-];
-
-// High-precision cubic-bezier(0.77, 0, 0.175, 1) for physical curtain release
-function easeCurtain(t) {
-  return t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+// Smooth cubic-bezier easing for exit curtain transition
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 export default function Preloader({ onComplete }) {
-  const [animState, setAnimState] = useState({
-    progress: 0,
-    activeIdxA: 0,
-    activeIdxB: 1,
-    opacityA: 1,
-    opacityB: 0,
-    scaleA: 1,
-    scaleB: 1.015,
-    curtainY: 0,
-    artworkScale: 1,
-    currentStep: 1,
-    isComplete: false,
-  });
-
+  const [progress, setProgress] = useState(0);
+  const [statusText, setStatusText] = useState('INITIALIZING CORE');
+  const [exitPhase, setExitPhase] = useState(0); // 0 = loading, 0..1 = exiting
+  const canvasRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
+  // Particle background canvas animation
   useEffect(() => {
-    // 1. Preload all 5 images
-    INTRO_IMAGES.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId;
 
-    const totalDuration = 3200; // 3.2s continuous master timeline
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const particles = Array.from({ length: 32 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.4 + 0.1,
+      baseAlpha: Math.random() * 0.4 + 0.1,
+    }));
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw subtle ambient grid points
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 30, 39, ${p.alpha * 0.6})`;
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
+
+  // Main Loading Timeline
+  useEffect(() => {
+    const totalDuration = 2400; // 2.4s active loading
+    const exitDuration = 650;   // 0.65s smooth curtain transition
     const startTime = performance.now();
     let frameId;
 
     const tick = (now) => {
       const elapsed = now - startTime;
-      const progress = Math.min(1, elapsed / totalDuration);
+      const rawProgress = Math.min(1, elapsed / totalDuration);
 
-      // Phase 1: 0.00 -> 0.82 (Continuous mathematical image cross-dissolve)
-      const imagePhaseEnd = 0.82;
-      let idxA = 0;
-      let idxB = 1;
-      let opA = 1;
-      let opB = 0;
-      let scA = 1;
-      let scB = 1.015;
-      let stepNum = 1;
+      // Smooth custom deceleration curve
+      const easedProgress = Math.min(100, Math.floor(Math.pow(rawProgress, 0.85) * 100));
+      setProgress(easedProgress);
 
-      if (progress < imagePhaseEnd) {
-        const rawIndex = (progress / imagePhaseEnd) * (INTRO_IMAGES.length - 1);
-        idxA = Math.floor(rawIndex);
-        idxB = Math.min(INTRO_IMAGES.length - 1, idxA + 1);
-        const fract = rawIndex - idxA;
-
-        // Smooth cross-dissolve: outgoing scales down 1.00 -> 0.985, incoming settles 1.015 -> 1.00
-        opA = 1 - fract;
-        opB = fract;
-        scA = 1.0 - fract * 0.015;
-        scB = 1.015 - fract * 0.015;
-        stepNum = Math.min(5, Math.floor(rawIndex) + 1);
+      // Dynamic telemetry stages
+      if (easedProgress < 25) {
+        setStatusText('INITIALIZING CORE ENGINE');
+      } else if (easedProgress < 55) {
+        setStatusText('CONFIGURING 3D ENVIRONMENT');
+      } else if (easedProgress < 85) {
+        setStatusText('COMPILING SHADERS & ASSETS');
+      } else if (easedProgress < 100) {
+        setStatusText('CALIBRATING INTERFACE');
       } else {
-        // Hold final 5th image (100% state)
-        idxA = INTRO_IMAGES.length - 1;
-        idxB = INTRO_IMAGES.length - 1;
-        opA = 1;
-        opB = 0;
-        scA = 1;
-        scB = 1;
-        stepNum = 5;
+        setStatusText('SYSTEM READY // LAUNCHING');
       }
 
-      // Phase 2: 0.82 -> 1.00 (Continuous smooth upward curtain release)
-      let curtainY = 0;
-      let artworkScale = 1;
-      if (progress >= imagePhaseEnd) {
-        const exitProgress = (progress - imagePhaseEnd) / (1 - imagePhaseEnd);
-        const eased = easeCurtain(exitProgress);
-        curtainY = -eased * 115; // translateY(-115vh)
-        artworkScale = 1.0 - eased * 0.06; // artwork scales down 1.0 -> 0.94 as it rises
-      }
-
-      setAnimState({
-        progress,
-        activeIdxA: idxA,
-        activeIdxB: idxB,
-        opacityA: opA,
-        opacityB: opB,
-        scaleA: scA,
-        scaleB: scB,
-        curtainY,
-        artworkScale,
-        currentStep: stepNum,
-        isComplete: progress >= 1,
-      });
-
-      if (progress < 1) {
+      if (rawProgress < 1) {
         frameId = requestAnimationFrame(tick);
       } else {
-        if (onCompleteRef.current) {
-          onCompleteRef.current();
-        }
+        // Exit transition phase
+        const exitStartTime = performance.now();
+        const exitTick = (exitNow) => {
+          const exitElapsed = exitNow - exitStartTime;
+          const exitProg = Math.min(1, exitElapsed / exitDuration);
+          setExitPhase(exitProg);
+
+          if (exitProg < 1) {
+            frameId = requestAnimationFrame(exitTick);
+          } else {
+            if (onCompleteRef.current) {
+              onCompleteRef.current();
+            }
+          }
+        };
+        frameId = requestAnimationFrame(exitTick);
       }
     };
 
@@ -120,123 +122,106 @@ export default function Preloader({ onComplete }) {
     return () => cancelAnimationFrame(frameId);
   }, []);
 
-  const {
-    activeIdxA,
-    activeIdxB,
-    opacityA,
-    opacityB,
-    scaleA,
-    scaleB,
-    curtainY,
-    artworkScale,
-    currentStep,
-    progress
-  } = animState;
-
-  const isHundred = progress >= 0.80;
-  const percentage = isHundred ? 100 : Math.round((currentStep / 5) * 100);
+  // Exit interpolation calculations
+  const translateY = easeInOutCubic(exitPhase) * -105;
+  const opacity = 1 - Math.pow(exitPhase, 2);
+  const scale = 1 - exitPhase * 0.05;
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen z-[999999] text-[#111111] flex flex-col justify-between items-center p-6 md:p-10 select-none overflow-hidden font-mono will-change-transform pointer-events-none"
+      className="fixed inset-0 z-[999999] w-screen h-screen bg-[#070709] text-white flex flex-col justify-between p-6 sm:p-10 select-none overflow-hidden font-mono pointer-events-none will-change-transform"
       style={{
-        zIndex: 999999,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100svh',
-        minHeight: '100vh',
-        backgroundColor: '#F1F0EB', // 100% Exact match with landing page background
-        transform: `translate3d(0, ${curtainY}vh, 0)`,
+        transform: `translate3d(0, ${translateY}vh, 0) scale3d(${scale}, ${scale}, 1)`,
+        opacity: opacity,
       }}
-      aria-label="Studio Intro"
+      aria-label="Loading Application"
     >
-      {/* Top Header: Brand Wordmark + Micro Counter */}
-      <div className="w-full max-w-6xl flex items-center justify-between z-20">
-        <div className="flex items-center gap-3">
-          <ReubgLogo variant="light" className="w-[78px] sm:w-[92px] h-auto object-contain" />
-          <span className="text-[10px] text-[#777777] tracking-widest uppercase hidden sm:inline-block">
-            // STUDIO INTRO
-          </span>
+      {/* Background Particle Layer & Subtle Ambient Glow */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70"
+      />
+      
+      {/* Subtle Central Radial Glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(circle, rgba(255, 30, 39, 0.06) 0%, rgba(7, 7, 9, 0) 70%)',
+        }}
+      />
+
+      {/* Top Telemetry Header */}
+      <div className="w-full max-w-6xl mx-auto flex items-center justify-between text-[10px] sm:text-xs text-white/40 z-10 tracking-widest uppercase">
+        <div className="flex items-center gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse shadow-[0_0_8px_#FF1E27]" />
+          <span>REUBG // PORTFOLIO</span>
         </div>
-
-        {/* Small Micro-Counter */}
-        <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="text-[#FF1E27] font-bold tracking-widest">
-            0{currentStep} / 05
-          </span>
-          <span className="text-[#777777] text-[10px] tracking-wider">
-            [{percentage}%]
-          </span>
-        </div>
-      </div>
-
-      {/* Center Frameless Floating Artwork (Zero Box, Pure Floating on Landing Background) */}
-      <div className="my-auto flex items-center justify-center relative z-10 w-full">
-        <div
-          className="relative w-[58vw] sm:w-[30vw] max-w-[380px] aspect-[2/3] sm:aspect-[3/4] max-h-[46vh] sm:max-h-[52vh] flex items-center justify-center bg-transparent border-none outline-none shadow-none"
-          style={{
-            background: 'transparent',
-            border: 'none',
-            outline: 'none',
-            boxShadow: 'none',
-            transform: `scale3d(${artworkScale}, ${artworkScale}, 1)`
-          }}
-        >
-          {/* Layer A */}
-          <div
-            className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform"
-            style={{
-              opacity: opacityA,
-              transform: `scale3d(${scaleA}, ${scaleA}, 1)`,
-            }}
-          >
-            <img
-              src={INTRO_IMAGES[activeIdxA]}
-              alt=""
-              className="w-full h-full object-contain filter contrast-110 brightness-95 select-none"
-              style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}
-            />
-          </div>
-
-          {/* Layer B */}
-          <div
-            className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform"
-            style={{
-              opacity: opacityB,
-              transform: `scale3d(${scaleB}, ${scaleB}, 1)`,
-            }}
-          >
-            <img
-              src={INTRO_IMAGES[activeIdxB]}
-              alt=""
-              className="w-full h-full object-contain filter contrast-110 brightness-95 select-none"
-              style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}
-            />
-          </div>
+        <div className="hidden sm:flex items-center gap-4">
+          <span>LAT 12.97° N</span>
+          <span className="text-white/20">•</span>
+          <span>EST. 2026</span>
         </div>
       </div>
 
-      {/* Bottom Status Bar */}
-      <div className="w-full max-w-6xl flex items-center justify-between z-20 pt-3 border-t border-[#C9C7C0] text-xs">
-        <div className="text-[10px] text-[#777777] tracking-widest uppercase font-mono">
-          VISUAL REEL // 5 STUDIES
+      {/* Center Hero Logo & Minimalist Loading Core */}
+      <div className="my-auto flex flex-col items-center justify-center text-center z-10 space-y-7 sm:space-y-8 max-w-xl mx-auto w-full px-4">
+        
+        {/* Prominent Brand Logo with Subtle Ambient Floating Effect */}
+        <div className="relative group flex items-center justify-center">
+          <div className="absolute -inset-6 bg-[#FF1E27]/10 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity" />
+          <ReubgLogo
+            variant="dark"
+            className="w-[180px] sm:w-[240px] md:w-[280px] h-auto object-contain drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] relative z-10"
+          />
         </div>
 
-        {/* Continuous Progress Track */}
-        <div className="flex items-center gap-3">
-          <div className="w-20 sm:w-32 h-[1.5px] bg-[#D8D6CF] overflow-hidden">
+        {/* Minimal Subtitle */}
+        <div className="space-y-1">
+          <p className="text-[10px] sm:text-xs font-mono text-white/50 tracking-[0.3em] sm:tracking-[0.4em] uppercase font-medium">
+            FULL-STACK × CREATIVE ENGINEER
+          </p>
+        </div>
+
+        {/* Refined Custom Progress Track */}
+        <div className="w-full max-w-[280px] sm:max-w-[340px] space-y-3">
+          
+          {/* 2px Precision Progress Bar */}
+          <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden relative">
             <div
-              className="h-full bg-[#FF1E27] will-change-transform"
-              style={{ width: `${Math.min(100, Math.round((progress / 0.82) * 100))}%` }}
-            />
+              className="h-full bg-gradient-to-r from-[#FF1E27]/60 via-[#FF1E27] to-[#FF4D58] transition-all duration-150 ease-out relative"
+              style={{ width: `${progress}%` }}
+            >
+              {/* Glowing leading head tip */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FF1E27] shadow-[0_0_10px_#FF1E27]" />
+            </div>
           </div>
-          <span className="text-[10px] text-[#666666] font-mono tracking-wider">
-            {isHundred ? 'ENTER' : 'LOAD'}
-          </span>
+
+          {/* Status Text & Numerical Percentage */}
+          <div className="flex items-center justify-between text-[10px] font-mono tracking-wider pt-0.5">
+            <span className="text-white/60 flex items-center gap-1.5 truncate max-w-[190px] sm:max-w-[220px]">
+              <span className="text-[#FF1E27] font-bold">›</span>
+              {statusText}
+            </span>
+            <span className="text-[#FF1E27] font-bold tabular-nums">
+              {progress.toString().padStart(2, '0')}%
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Bottom Telemetry Footer */}
+      <div className="w-full max-w-6xl mx-auto flex items-center justify-between text-[10px] text-white/30 z-10 tracking-widest uppercase border-t border-white/5 pt-3">
+        <div className="flex items-center gap-2">
+          <span>REACT + THREE.JS ENGINE</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400/80 animate-pulse" />
+          <span>ALL SYSTEMS NOMINAL</span>
         </div>
       </div>
+
     </div>
   );
 }
