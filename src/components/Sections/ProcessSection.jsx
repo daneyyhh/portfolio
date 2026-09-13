@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2, ChevronDown, Repeat } from 'lucide-react';
+import { Search, Target, Layout, Code2, Rocket, ShieldCheck, RefreshCw, CheckCircle2, ChevronDown, Repeat, ArrowRight } from 'lucide-react';
 
 const STAGES = [
   {
@@ -112,43 +112,54 @@ const STAGES = [
 
 export default function ProcessSection() {
   const containerRef = useRef(null);
+  const percentRef = useRef(null);
   const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const [scrollPercentage, setScrollPercentage] = useState(0);
   const [mobileExpanded, setMobileExpanded] = useState(false);
 
-  // Framer Motion Scroll Progress for Pinned Container
+  // Framer Motion Scroll Progress for Pinned Track
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Inertia Smooth Progress
+  // Responsive, silky-smooth spring without sluggish lag
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
+    stiffness: 180,
+    damping: 28,
+    mass: 0.2,
     restDelta: 0.0005
   });
 
-  // Track live stage index & percentage for UI updates
+  // Direct DOM update for percentage display to eliminate unneeded full-tree re-renders
   useEffect(() => {
+    let lastComputedIndex = 0;
+    
     const unsubscribe = smoothProgress.on("change", (latest) => {
       const clamped = Math.max(0, Math.min(1, latest));
-      setScrollPercentage(Math.round(clamped * 100));
+      
+      // Update percentage in DOM directly
+      if (percentRef.current) {
+        percentRef.current.textContent = `${Math.round(clamped * 100)}%`;
+      }
 
-      const step = 1 / (STAGES.length - 1);
+      // Calculate active stage with hysteresis for buttery transitions
+      const totalStages = STAGES.length;
+      const rawIndex = clamped * (totalStages - 1);
       const computedIndex = Math.min(
-        STAGES.length - 1,
-        Math.max(0, Math.round(clamped / step))
+        totalStages - 1,
+        Math.max(0, Math.round(rawIndex))
       );
-      if (computedIndex !== activeStageIndex) {
+
+      if (computedIndex !== lastComputedIndex) {
+        lastComputedIndex = computedIndex;
         setActiveStageIndex(computedIndex);
       }
     });
 
     return () => unsubscribe();
-  }, [smoothProgress, activeStageIndex]);
+  }, [smoothProgress]);
 
-  // Click-to-scroll to specific stage
+  // Smooth programmatic scroll to clicked stage
   const handleStageClick = (index) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -172,13 +183,13 @@ export default function ProcessSection() {
     <section
       id="process"
       ref={containerRef}
-      className="relative w-full bg-[#0A0A0A] border-t border-white/10 text-[#F1F0EB] font-mono h-[350vh] sm:h-[400vh]"
+      className="relative w-full bg-[#0A0A0A] border-t border-white/10 text-[#F1F0EB] font-mono h-[380vh] sm:h-[420vh]"
     >
       {/* STICKY PINNED VIEWPORT CONTAINER */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-6 sm:py-8 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] overflow-hidden">
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-5 sm:py-7 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] overflow-hidden select-none">
         
         {/* SECTION HEADER */}
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-b border-white/10 pb-4 shrink-0 z-20">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-b border-white/10 pb-3.5 shrink-0 z-20">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse shadow-[0_0_8px_#FF1E27]" />
             <span className="text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
@@ -191,7 +202,7 @@ export default function ProcessSection() {
           </div>
 
           <div className="flex items-center gap-3 text-xs">
-            <span className="text-[#FF1E27] font-bold tracking-widest font-mono bg-[#FF1E27]/10 px-3 py-1 border border-[#FF1E27]/25 rounded-sm">
+            <span className="text-[#FF1E27] font-bold tracking-widest font-mono bg-[#FF1E27]/10 px-3 py-1 border border-[#FF1E27]/30 rounded-sm">
               STAGE {activeStage.id} / 07
             </span>
           </div>
@@ -205,9 +216,9 @@ export default function ProcessSection() {
               <button
                 key={s.id}
                 onClick={() => handleStageClick(idx)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider shrink-0 rounded-sm cursor-pointer transition-all duration-300 ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider shrink-0 rounded-sm cursor-pointer transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#FF1E27] text-white font-bold shadow-[0_0_10px_rgba(255, 30, 39,0.4)]'
+                    ? 'bg-[#FF1E27] text-white font-bold shadow-[0_0_12px_rgba(255, 30, 39,0.5)] scale-105'
                     : 'bg-[#111111] text-white/50 border border-white/10 hover:text-white'
                 }`}
               >
@@ -218,16 +229,17 @@ export default function ProcessSection() {
           })}
         </div>
 
-        {/* MAIN DESKTOP 3-COLUMN LAYOUT / MOBILE SINGLE CARD */}
+        {/* MAIN 3-COLUMN LAYOUT / MOBILE SINGLE CARD */}
         <div className="max-w-7xl mx-auto w-full flex-1 my-auto py-2 flex items-center justify-center z-10 overflow-hidden">
           
           {/* DESKTOP 3-COLUMN GRID */}
           <div className="w-full hidden lg:grid lg:grid-cols-12 gap-8 items-center">
             
             {/* LEFT COLUMN: Context Panel */}
-            <div className="lg:col-span-4 flex flex-col justify-center bg-[#111111]/80 backdrop-blur-sm border border-white/10 p-6 rounded-none space-y-5 shadow-xl relative min-h-[380px]">
+            <div className="lg:col-span-4 flex flex-col justify-center bg-[#111111]/90 backdrop-blur-md border border-white/10 p-6 rounded-none space-y-5 shadow-2xl relative min-h-[390px]">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase">
+                <span className="text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
                   STAGE METADATA
                 </span>
                 <span className="text-[10px] text-white/40 font-mono">
@@ -235,13 +247,13 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 <motion.div
                   key={activeStage.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                   className="space-y-4"
                 >
                   <div className="space-y-1">
@@ -275,10 +287,10 @@ export default function ProcessSection() {
                   </div>
 
                   <div className="pt-3 border-t border-white/10">
-                    <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold block mb-1">KEY OUTPUT</span>
+                    <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold block mb-1">KEY DELIVERABLE</span>
                     <div className="text-xs text-white font-mono font-bold bg-[#0A0A0A] px-3 py-2 border border-white/10 flex items-center justify-between">
                       <span className="truncate">{activeStage.deliverable}</span>
-                      <span className="text-[#FF1E27] text-[10px] ml-2 shrink-0">✓ READY</span>
+                      <span className="text-[#FF1E27] text-[10px] ml-2 shrink-0">✓ VERIFIED</span>
                     </div>
                   </div>
                 </motion.div>
@@ -286,40 +298,40 @@ export default function ProcessSection() {
             </div>
 
             {/* CENTER COLUMN: Main Stage Card (Primary Visual Focus) */}
-            <div className="lg:col-span-5 flex flex-col justify-center relative min-h-[420px]">
+            <div className="lg:col-span-5 flex flex-col justify-center relative min-h-[430px]">
               
               {/* Subtle Ambient Graphic Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#FF1E27]/10 to-transparent blur-3xl pointer-events-none rounded-full transform -translate-y-4" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FF1E27]/12 to-transparent blur-3xl pointer-events-none rounded-full transform -translate-y-4" />
 
-              <div className="relative bg-[#141414] border border-[#FF1E27]/40 p-8 shadow-[0_0_30px_rgba(255, 30, 39,0.12)] space-y-6">
+              <div className="relative bg-[#141414] border border-[#FF1E27]/40 p-8 shadow-[0_0_35px_rgba(255, 30, 39,0.15)] space-y-6">
                 
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="popLayout">
                   <motion.div
                     key={activeStage.id}
-                    initial={{ opacity: 0, y: 25, scale: 0.98, filter: 'blur(4px)' }}
-                    animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -25, scale: 0.98, filter: 'blur(4px)' }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0, y: 16, scale: 0.99 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -16, scale: 0.99 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     className="space-y-6"
                   >
                     {/* Stage Header Badge */}
                     <div className="flex items-center justify-between border-b border-white/10 pb-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-sm bg-[#FF1E27]/15 border border-[#FF1E27]/40 flex items-center justify-center text-[#FF1E27]">
+                        <div className="w-11 h-11 rounded-sm bg-[#FF1E27]/15 border border-[#FF1E27]/40 flex items-center justify-center text-[#FF1E27] shadow-[0_0_12px_rgba(255, 30, 39,0.25)]">
                           <ActiveIcon size={22} />
                         </div>
                         <div>
                           <span className="text-[10px] text-[#FF1E27] font-mono font-bold tracking-widest block uppercase">
                             STAGE {activeStage.id}
                           </span>
-                          <span className="text-xs text-white/60 uppercase font-mono font-bold">
+                          <span className="text-xs text-white/70 uppercase font-mono font-bold">
                             {activeStage.name}
                           </span>
                         </div>
                       </div>
 
                       {activeStage.id === "07" ? (
-                        <div className="flex items-center gap-1.5 text-[10px] text-[#FF1E27] bg-[#FF1E27]/10 px-2.5 py-1 border border-[#FF1E27]/30 animate-pulse">
+                        <div className="flex items-center gap-1.5 text-[10px] text-[#FF1E27] bg-[#FF1E27]/10 px-2.5 py-1 border border-[#FF1E27]/30 animate-pulse font-mono">
                           <Repeat size={12} />
                           <span className="font-bold">CONTINUOUS LOOP</span>
                         </div>
@@ -346,7 +358,7 @@ export default function ProcessSection() {
                     {/* Focus Pills without Text Truncation */}
                     <div className="pt-2 border-t border-white/10 space-y-2">
                       <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold block">
-                        FOCUS AREAS
+                        CORE FOCUS AREAS
                       </span>
                       <div className="flex flex-wrap gap-2">
                         {activeStage.focus.split('•').map((tag, idx) => (
@@ -364,22 +376,23 @@ export default function ProcessSection() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Fixed Vertical Center Axis Stage Timeline */}
-            <div className="lg:col-span-3 flex flex-col justify-center pl-8 relative min-h-[380px]">
+            {/* RIGHT COLUMN: Interactive Vertical Timeline Axis */}
+            <div className="lg:col-span-3 flex flex-col justify-center pl-8 relative min-h-[390px]">
               
-              <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest mb-4 font-bold">
-                STAGE TIMELINE
+              <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest mb-4 font-bold flex items-center justify-between">
+                <span>STAGE TIMELINE</span>
+                <span className="text-[#FF1E27]">{activeStage.id} / 07</span>
               </div>
 
-              {/* TIMELINE CONTAINER (300px height with exact geometric axis) */}
-              <div className="relative flex flex-col justify-between h-[300px]">
+              {/* TIMELINE CONTAINER */}
+              <div className="relative flex flex-col justify-between h-[310px]">
                 
-                {/* BASE LINE (z-0, left-[11px] center=12px, top-[12px] to bottom-[12px]) */}
+                {/* BASE LINE */}
                 <div className="absolute left-[11px] top-[12px] bottom-[12px] w-[2px] bg-white/15 pointer-events-none z-0" />
 
-                {/* PROGRESS LINE (z-0, left-[11px] center=12px, top-[12px] to bottom-[12px]) */}
+                {/* PROGRESS LINE */}
                 <motion.div
-                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#FF1E27] shadow-[0_0_8px_rgba(255, 30, 39,0.8)] origin-top pointer-events-none z-0"
+                  className="absolute left-[11px] top-[12px] w-[2px] bg-[#FF1E27] shadow-[0_0_10px_rgba(255, 30, 39,0.9)] origin-top pointer-events-none z-0"
                   style={{
                     scaleY: smoothProgress,
                     height: 'calc(100% - 24px)'
@@ -395,17 +408,17 @@ export default function ProcessSection() {
                     <button
                       key={s.id}
                       onClick={() => handleStageClick(idx)}
-                      className="flex items-center gap-3.5 text-left cursor-pointer w-full group relative z-10 py-0.5 focus:outline-none"
+                      className="flex items-center gap-3.5 text-left cursor-pointer w-full group relative z-10 py-1 focus:outline-none"
                     >
-                      {/* FIXED NODE CONTAINER (24px x 24px fixed box, z-10/z-20 over lines) */}
+                      {/* FIXED NODE CONTAINER */}
                       <div className="w-6 h-6 flex items-center justify-center shrink-0 relative z-10">
                         <div
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono transition-all duration-300 transform-gpu origin-center ${
                             isActive
-                              ? 'bg-[#FF1E27] text-white border border-[#FF1E27] shadow-[0_0_10px_rgba(255, 30, 39,0.5)] font-bold scale-115 z-20'
+                              ? 'bg-[#FF1E27] text-white border border-[#FF1E27] shadow-[0_0_14px_rgba(255, 30, 39,0.7)] font-bold scale-125 z-20'
                               : isPassed
-                              ? 'bg-[#FF1E27]/15 text-[#FF1E27] border border-[#FF1E27]/40 z-10'
-                              : 'bg-[#141414] text-white/60 border border-white/20 group-hover:border-white/40 group-hover:text-white z-10'
+                              ? 'bg-[#FF1E27]/20 text-[#FF1E27] border border-[#FF1E27]/50 z-10'
+                              : 'bg-[#141414] text-white/50 border border-white/20 group-hover:border-white/40 group-hover:text-white z-10'
                           }`}
                         >
                           {s.id}
@@ -415,7 +428,7 @@ export default function ProcessSection() {
                       {/* STAGE LABEL AND ITERATE LOOP ICON */}
                       <div className="flex items-center gap-2">
                         <span
-                          className={`text-xs uppercase tracking-wider font-mono transition-colors duration-300 ${
+                          className={`text-xs uppercase tracking-wider font-mono transition-colors duration-200 ${
                             isActive
                               ? 'text-white font-bold'
                               : isPassed
@@ -426,11 +439,10 @@ export default function ProcessSection() {
                           {s.name}
                         </span>
 
-                        {/* SUBTLE LOOP ICON FOR 07 ITERATE */}
                         {s.id === "07" && (
                           <Repeat
                             size={12}
-                            className={`shrink-0 transition-colors duration-300 ${
+                            className={`shrink-0 transition-colors duration-200 ${
                               isActive ? 'text-[#FF1E27]' : 'text-white/30'
                             }`}
                           />
@@ -528,17 +540,20 @@ export default function ProcessSection() {
         </div>
 
         {/* BOTTOM FOOTER INFO */}
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-t border-white/10 pt-4 shrink-0 z-20 text-[10px] sm:text-xs text-white/40 font-mono">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between border-t border-white/10 pt-3.5 shrink-0 z-20 text-[10px] sm:text-xs text-white/40 font-mono">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
             <span className="tracking-widest uppercase">
-              SCROLL PROGRESSION // <span className="text-[#FF1E27] font-bold">{scrollPercentage}%</span> COMPLETED
+              SCROLL PROGRESSION // <span ref={percentRef} className="text-[#FF1E27] font-bold">0%</span> COMPLETED
             </span>
           </div>
 
           <div className="text-right text-white/60 tracking-wider uppercase font-mono">
             {activeStageIndex === STAGES.length - 1 ? (
-              <span className="text-[#FF1E27] font-bold animate-pulse">CONTINUE SCROLLING FOR SELECTED WORK ↓</span>
+              <span className="text-[#FF1E27] font-bold animate-pulse flex items-center gap-1.5 justify-end">
+                <span>CONTINUE SCROLLING FOR SELECTED WORK</span>
+                <ArrowRight size={13} />
+              </span>
             ) : (
               <span>SCROLL DOWN TO ADVANCE STAGE</span>
             )}
