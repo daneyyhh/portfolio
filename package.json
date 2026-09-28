@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "zip": "vite build && powershell -Command \"if (Test-Path dist.zip) { Remove-Item dist.zip }; Get-ChildItem -Path dist -Force | Compress-Archive -DestinationPath dist.zip -Force\"",
+    "zip": "vite build && powershell -Command \"if (Test-Path dist.zip) { Remove-Item dist.zip }; tar.exe -a -c -f dist.zip -C dist .htaccess favicon.png index.html og-image.png reuben-portrait.jpg robots.txt sitemap.xml whoami-portrait.jpg assets brand fonts images\"",
     "deploy": "vite build && node scripts/deploy-hostinger.js"
   },
   "devDependencies": {
