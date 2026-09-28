@@ -56,29 +56,33 @@ export const engineeringDomains = [
 
 export const projectsData = [
   {
-    id: "taskflow",
-    title: "TASKFLOW",
+    id: "nexora",
+    title: "NEXORA",
     category: "Full-Stack Web App",
-    role: "Lead Full-Stack Developer",
-    technologies: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
-    shortDesc: "Real-time collaborative task management platform with drag-and-drop workflow boards and instant activity feeds.",
-    img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
-    challenge: "Handling concurrent state updates across multiple clients while maintaining sub-100ms render response times.",
-    built: "Designed responsive UI in Figma, implemented JWT authentication, WebSocket sync streams, and MongoDB schema optimization.",
-    githubLink: "https://github.com/daneyyhh",
-    demoLink: "https://reubg.in",
+    role: "Full-Stack System Architect",
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Socket.IO", "Tailwind CSS"],
+    shortDesc: "Advanced full-stack MERN e-commerce platform with Socket.IO real-time events, 2-angle physical photography rules, variant swapper, and live dispatch tracking.",
+    desc: "Advanced full-stack MERN e-commerce platform with Socket.IO real-time events, 2-angle physical photography rules, variant swapper, and live dispatch tracking.",
+    year: "2026",
+    img: "/images/nexora-cover.jpg",
+    challenge: "Preventing race conditions during atomic warehouse inventory deductions and delivering sub-50ms WebSocket alert broadcasts under concurrent checkout load.",
+    built: "Engineered bidirectional Socket.IO order pipelines, dual-mode persistent MongoDB engine, 4-step checkout flow, and executive analytics dashboard.",
+    github: "https://github.com/daneyyhh/nexora-mern-ecommerce",
+    githubLink: "https://github.com/daneyyhh/nexora-mern-ecommerce",
+    link: "https://github.com/daneyyhh/nexora-mern-ecommerce",
+    demoLink: "https://github.com/daneyyhh/nexora-mern-ecommerce",
     caseStudy: {
-      overview: "TaskFlow is a high-performance productivity application engineered to streamline team workflows with real-time updates and intuitive task cards.",
-      problem: "Traditional task managers suffer from bloated UI, sluggish state sync, and complex navigation for quick sprint tracking.",
-      approach: "Built a minimalist, zero-latency dashboard leveraging modern React optimistic UI updates and lightweight serverless endpoints.",
+      overview: "NEXORA is an architectural full-stack e-commerce platform engineered with the MERN stack and bidirectional Socket.IO event pipelines, bridging customer storefronts with real-time administrative command.",
+      problem: "Typical e-commerce web applications rely on static polling, lack atomic inventory decrements leading to overselling, and require tedious database configurations to run locally.",
+      approach: "Engineered an event-driven architecture pairing Express REST endpoints with Socket.IO broadcast streams, backed by dual-mode MongoDB with automated local disk storage fallback.",
       architecture: [
-        { node: "Client UI", tech: "React / Tailwind", detail: "Optimistic updates & drag-and-drop state" },
-        { node: "API Gateway", tech: "Node.js REST", detail: "Authentication middleware & rate limiting" },
-        { node: "Database", tech: "MongoDB Atlas", detail: "Indexed document queries & change streams" }
+        { node: "Customer Storefront", tech: "React 18 / Tailwind", detail: "2-angle hover crossfade, color variant swapper, and 7-stage live tracking" },
+        { node: "Express & Socket Gateway", tech: "Node.js / Socket.IO", detail: "JWT auth, promotional coupon validation, and live order broadcast streams" },
+        { node: "Data Persistence", tech: "MongoDB / Mongoose", detail: "Atomic inventory decrements, persistent disk storage, and indexed collections" }
       ],
-      development: "Utilized custom React hooks for state persistence, optimistic UI updates for instant drag response, and Tailwind grid layouts.",
-      uiDesign: "Focused on dark mode glassmorphism, high visual contrast for priority tags, and keyboard shortcuts.",
-      result: "Reduced average task update payload latency to under 45ms with 100% responsiveness on mobile viewports."
+      development: "Implemented modular Express controllers, Axios interceptors, responsive Tailwind layouts with Framer Motion, and embedded database fallback.",
+      uiDesign: "Strict 2-angle physical photography rules, realistic multi-finish swatches, executive dark mode analytics, and step-by-step dispatch timeline.",
+      result: "Sub-50ms WebSocket broadcast latency for incoming orders, zero race conditions on inventory depletion, and seamless instant setup."
     }
   },
   {
@@ -88,10 +92,14 @@ export const projectsData = [
     role: "Systems Architect & Developer",
     technologies: ["LUA", "SQL", "MySQL", "Unity / Game Logic"],
     shortDesc: "Advanced server infrastructure and custom gameplay frameworks for FiveM multiplayer roleplay environments.",
+    desc: "Advanced server infrastructure and custom gameplay frameworks for FiveM multiplayer roleplay environments.",
+    year: "2025",
     img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
     challenge: "Optimizing script CPU tick rates (ms execution time per frame) under 100+ concurrent player server loads.",
     built: "Developed custom inventory systems, economy databases, vehicle persistence engines, and secure permission layers.",
+    github: "https://github.com/daneyyhh",
     githubLink: "https://github.com/daneyyhh",
+    link: "https://reubg.in",
     demoLink: "https://reubg.in",
     caseStudy: {
       overview: "FiveM Chronicles is a complete backend framework engineered for high-concurrency multiplayer roleplay servers built on LUA and MySQL.",
@@ -108,42 +116,20 @@ export const projectsData = [
     }
   },
   {
-    id: "erp-system",
-    title: "ENTERPRISE ERP",
-    category: "Full-Stack Web System",
-    role: "Full-Stack Engineer",
-    technologies: ["React", "PostgreSQL", "PHP", "REST API", "Bootstrap 5"],
-    shortDesc: "Modular Enterprise Resource Planning system featuring student admissions, fee tracking, and transport management.",
-    img: "https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg",
-    challenge: "Handling complex multi-table relational queries while generating automated PDF reports and audit logs.",
-    built: "Engineered database schemas, authentication middleware, dynamic table filters, and administrative analytics dashboards.",
-    githubLink: "https://github.com/daneyyhh",
-    demoLink: "https://reubg.in",
-    caseStudy: {
-      overview: "Custom enterprise management portal built to automate institution admissions, financial ledgers, and transport logistics.",
-      problem: "Legacy manual paperwork created data entry errors, delayed payment tracking, and lacked centralized analytics.",
-      approach: "Designed a centralized relational database schema coupled with a responsive dashboard for multi-role staff access.",
-      architecture: [
-        { node: "Staff Dashboard", tech: "React / Bootstrap 5", detail: "Role-based access control & dynamic search" },
-        { node: "Backend Engine", tech: "PHP REST API", detail: "Data validation, auth tokens, CSV export" },
-        { node: "Database", tech: "PostgreSQL / MySQL", detail: "ACID transactions & automated backup triggers" }
-      ],
-      development: "Implemented parameterized SQL queries to eliminate security risks, built reusable UI components, and export tools.",
-      uiDesign: "Clean enterprise aesthetic focusing on data legibility, quick filters, and responsive tables.",
-      result: "Eliminated manual paper records for admissions, providing instant reporting for administrative staff."
-    }
-  },
-  {
     id: "haunted-code",
     title: "HAUNTED CODE 3D",
     category: "Game Development",
     role: "3D Game Programmer",
     technologies: ["Unity 3D", "C#", "Custom Shaders", "Lighting VFX"],
     shortDesc: "Immersive 3D horror atmosphere experience built in Unity with dynamic lighting systems and physics interactions.",
+    desc: "Immersive 3D horror atmosphere experience built in Unity with dynamic lighting systems and physics interactions.",
+    year: "2025",
     img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
     challenge: "Creating believable real-time volumetric shadows and dynamic audio triggers without dropping target 60FPS frame rates.",
     built: "Programmed player movement mechanics, flashlight volumetric lighting, inventory interactions, and procedural audio cues.",
+    github: "https://github.com/daneyyhh",
     githubLink: "https://github.com/daneyyhh",
+    link: "https://reubg.in",
     demoLink: "https://reubg.in",
     caseStudy: {
       overview: "Haunted Code is a first-person 3D atmospheric exploration game demonstrating Unity 3D engine capabilities and C# system design.",
@@ -157,58 +143,6 @@ export const projectsData = [
       development: "Authored clean object-oriented C# scripts for state machines, door interactions, inventory management, and trigger zones.",
       uiDesign: "Minimalist diegetic in-game UI to preserve player immersion.",
       result: "Maintained stable 60+ FPS playback on target systems with realistic dynamic lighting."
-    }
-  },
-  {
-    id: "neurovision",
-    title: "NEUROVISION ML",
-    category: "AI / Machine Learning",
-    role: "ML Engineer & Developer",
-    technologies: ["Python", "Scikit-Learn", "Classification", "NumPy", "Pandas"],
-    shortDesc: "Machine learning classification model trained to analyze dataset parameters and accurately predict target outcomes.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg",
-    challenge: "Feature selection, handling missing data distributions, and tuning hyper-parameters to avoid model overfitting.",
-    built: "Cleaned raw datasets, evaluated Random Forest & SVM classification algorithms, tuned cross-validation, and visualized metrics.",
-    githubLink: "https://github.com/daneyyhh",
-    demoLink: "https://reubg.in",
-    caseStudy: {
-      overview: "NeuroVision is a data classification pipeline developed using Python and Scikit-Learn for accurate predictive modeling.",
-      problem: "Raw input data contained noisy features and imbalanced classes leading to biased model predictions.",
-      approach: "Implemented feature scaling, SMOTE class balancing, and cross-validated ensemble models.",
-      architecture: [
-        { node: "Data Pipeline", tech: "Pandas / NumPy", detail: "Imputation, encoding, feature scaling" },
-        { node: "ML Core", tech: "Scikit-Learn", detail: "Random Forest Classifier & Hyperparameter tuning" },
-        { node: "Evaluation", tech: "Matplotlib / Seaborn", detail: "Confusion matrix & ROC-AUC curves" }
-      ],
-      development: "Wrote structured Python scripts for model training, feature importance extraction, and validation benchmarks.",
-      uiDesign: "Generated clean visualization charts and summary tables for model diagnostic analysis.",
-      result: "Achieved high classification accuracy with low false-positive rates on test datasets."
-    }
-  },
-  {
-    id: "echosphere",
-    title: "ECHOSPHERE UI",
-    category: "UI/UX & Web Frontend",
-    role: "UI/UX Designer & Frontend Developer",
-    technologies: ["Next.js", "React", "Framer Motion", "Tailwind CSS", "Figma"],
-    shortDesc: "Next-generation music streaming experience with glassmorphism UI, audio visualizers, and fluid animations.",
-    img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=1200&q=80",
-    challenge: "Designing complex micro-interactions and audio spectrum visualizers while maintaining high frame rates during playback.",
-    built: "Designed high-fidelity wireframes in Figma, built animated player controls with Framer Motion, and integrated Web Audio APIs.",
-    githubLink: "https://github.com/daneyyhh",
-    demoLink: "https://reubg.in",
-    caseStudy: {
-      overview: "Echosphere explores futuristic UI/UX trends for digital audio discovery through spatial glassmorphic design.",
-      problem: "Most streaming apps have cluttered interfaces with static album grid layouts.",
-      approach: "Crafted a cinematic player interface with dynamic color extraction and smooth page transitions.",
-      architecture: [
-        { node: "UX Layer", tech: "Figma Mockups", detail: "User journey maps & component variants" },
-        { node: "Frontend App", tech: "Next.js / Tailwind", detail: "Responsive layout & theme engine" },
-        { node: "Audio Engine", tech: "Web Audio API", detail: "Frequency analysis & visualizer canvas" }
-      ],
-      development: "Built reusable React component library with customized CSS keyframe animations and audio context hook.",
-      uiDesign: "Glassmorphism panels, glowing neon sound waves, and smooth cursor interactions.",
-      result: "Demonstrated creative UI/UX excellence combined with functional web audio integration."
     }
   }
 ];
@@ -267,24 +201,24 @@ export const certificationsData = [
 ];
 
 export const skillMatrix = [
-  { domain: "Frontend", name: "HTML5 & CSS3", projects: ["taskflow", "erp-system", "echosphere"] },
-  { domain: "Frontend", name: "JavaScript (ES6+)", projects: ["taskflow", "fivem-chronicles", "erp-system", "echosphere"] },
-  { domain: "Frontend", name: "Bootstrap 5", projects: ["erp-system"] },
-  { domain: "Frontend", name: "React / Next.js", projects: ["taskflow", "erp-system", "echosphere"] },
-  { domain: "Backend", name: "PHP", projects: ["erp-system"] },
-  { domain: "Backend", name: "Node.js", projects: ["taskflow"] },
-  { domain: "Backend", name: "REST APIs", projects: ["taskflow", "erp-system"] },
-  { domain: "Database", name: "MySQL / SQL", projects: ["fivem-chronicles", "erp-system"] },
-  { domain: "Database", name: "Firebase / MongoDB", projects: ["taskflow"] },
-  { domain: "AI / ML", name: "Python", projects: ["neurovision"] },
-  { domain: "AI / ML", name: "Scikit-Learn", projects: ["neurovision"] },
-  { domain: "AI / ML", name: "ML Classification", projects: ["neurovision"] },
+  { domain: "Frontend", name: "HTML5 & CSS3", projects: ["nexora"] },
+  { domain: "Frontend", name: "JavaScript (ES6+)", projects: ["nexora", "fivem-chronicles"] },
+  { domain: "Frontend", name: "Bootstrap 5", projects: [] },
+  { domain: "Frontend", name: "React / Next.js", projects: ["nexora"] },
+  { domain: "Backend", name: "PHP", projects: [] },
+  { domain: "Backend", name: "Node.js", projects: ["nexora"] },
+  { domain: "Backend", name: "REST APIs", projects: ["nexora"] },
+  { domain: "Database", name: "MySQL / SQL", projects: ["fivem-chronicles"] },
+  { domain: "Database", name: "Firebase / MongoDB", projects: ["nexora"] },
+  { domain: "AI / ML", name: "Python", projects: [] },
+  { domain: "AI / ML", name: "Scikit-Learn", projects: [] },
+  { domain: "AI / ML", name: "ML Classification", projects: [] },
   { domain: "Game Dev", name: "Unity 3D", projects: ["haunted-code"] },
   { domain: "Game Dev", name: "C#", projects: ["haunted-code"] },
   { domain: "Game Dev", name: "LUA Scripting", projects: ["fivem-chronicles"] },
-  { domain: "Design", name: "Figma", projects: ["taskflow", "echosphere"] },
-  { domain: "Tools", name: "Git / GitHub", projects: ["taskflow", "fivem-chronicles", "erp-system", "haunted-code", "neurovision", "echosphere"] },
-  { domain: "Tools", name: "Postman & VS Code", projects: ["taskflow", "erp-system"] }
+  { domain: "Design", name: "Figma", projects: [] },
+  { domain: "Tools", name: "Git / GitHub", projects: ["nexora", "fivem-chronicles", "haunted-code"] },
+  { domain: "Tools", name: "Postman & VS Code", projects: ["nexora"] }
 ];
 
 export const journeySteps = [

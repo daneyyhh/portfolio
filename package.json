@@ -9,11 +9,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "zip": "vite build && powershell -Command \"if (Test-Path dist.zip) { Remove-Item dist.zip }; Get-ChildItem -Path dist -Force | Compress-Archive -DestinationPath dist.zip -Force\"",
+    "deploy": "vite build && node scripts/deploy-hostinger.js"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.4",
     "autoprefixer": "^10.4.17",
+    "basic-ftp": "^6.2.1",
     "postcss": "^8.4.35",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

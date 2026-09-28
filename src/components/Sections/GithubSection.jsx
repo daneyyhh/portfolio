@@ -7,7 +7,7 @@ export default function GithubSection({ engineerMode }) {
   const repos = [
     { name: "daneyyhh/portfolio", desc: "Production editorial developer portfolio with Three.js WebGL, persistent camera scroll, and reubg identity.", lang: "JavaScript / React", stars: 12 },
     { name: "daneyyhh/fivem-lua-framework", desc: "High-performance LUA server kernel and MySQL async database queries for multiplayer game servers.", lang: "LUA / SQL", stars: 24 },
-    { name: "daneyyhh/neurovision-ml", desc: "Machine learning classification models and data processing pipelines using Scikit-Learn.", lang: "Python", stars: 18 }
+    { name: "daneyyhh/nexora-mern-ecommerce", desc: "Advanced full-stack MERN e-commerce platform with Socket.IO real-time events, 2-angle photography, and live dispatch tracking.", lang: "JavaScript / MERN", stars: 28 }
   ];
 
   return (
@@ -42,7 +42,7 @@ export default function GithubSection({ engineerMode }) {
           {repos.map((repo, idx) => (
             <motion.a
               key={repo.name}
-              href={personalData.github}
+              href={`https://github.com/${repo.name}`}
               target="_blank"
               rel="noreferrer"
               initial={{ opacity: 0, y: 20 }}

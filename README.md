@@ -38,12 +38,31 @@ An immersive, futuristic digital portfolio built to showcase development project
    npm run dev
    ```
 
-## 📦 Deployment
+## 📦 Deployment to Hostinger
 
-This project is optimized for deployment on **Vercel**. 
-Pushes to the `main` branch will automatically trigger production deployments. 
+This portfolio is fully configured for hosting on **Hostinger** (with Apache `.htaccess` rewrite rules for client-side routing & caching).
 
-*(Note: The project utilizes `.npmrc` with `legacy-peer-deps=true` to handle React 19 compatibility across advanced animation libraries.)*
+### Method 1: Automatic Deployment on `git push` (GitHub Actions)
+Pushes to the `main` branch automatically build and sync production files directly to Hostinger's `public_html`.
+1. Go to your GitHub Repository -> **Settings** -> **Secrets and variables** -> **Actions**.
+2. Add the following secrets from your Hostinger hPanel (*Files* -> *FTP Accounts*):
+   - `FTP_SERVER`: Your Hostinger FTP Hostname or IP.
+   - `FTP_USERNAME`: Your Hostinger FTP Username.
+   - `FTP_PASSWORD`: Your Hostinger FTP Password.
+
+### Method 2: Instant 1-Command Local Deploy
+Run the deploy command locally to build and upload directly:
+```bash
+npm run deploy
+```
+*(Add `HOSTINGER_FTP_HOST`, `HOSTINGER_FTP_USER`, and `HOSTINGER_FTP_PASSWORD` to your `.env` file)*
+
+### Method 3: Direct File Manager Upload
+1. Generate the optimized deployment bundle:
+   ```bash
+   npm run zip
+   ```
+2. Upload and extract `dist.zip` into Hostinger's `public_html` directory via [Hostinger hPanel](https://hpanel.hostinger.com).
 
 ---
 *Architected and Built by [daneyyhh](https://github.com/daneyyhh)*

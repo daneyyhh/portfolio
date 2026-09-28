@@ -10,17 +10,22 @@ export default function Projects({ onSelectProject }) {
   const [activeTab, setActiveTab] = useState('ALL');
   const prefersReduced = useReducedMotion();
 
-  const tabs = ['ALL', 'FULL-STACK', 'AI / ML', 'GAME DEV', 'UI / UX'];
+  const allTabs = ['ALL', 'FULL-STACK', 'AI / ML', 'GAME DEV', 'UI / UX'];
 
-  const filteredProjects = activeTab === 'ALL'
-    ? projectsData
-    : projectsData.filter(p => {
-        if (activeTab === 'FULL-STACK') return p.category.includes('Full-Stack');
-        if (activeTab === 'AI / ML') return p.category.includes('AI') || p.category.includes('ML');
-        if (activeTab === 'GAME DEV') return p.category.includes('Game');
-        if (activeTab === 'UI / UX') return p.category.includes('UI/UX');
-        return true;
-      });
+  const projectMatchesTab = (p, tab) => {
+    if (tab === 'ALL') return true;
+    if (tab === 'FULL-STACK') return p.category.includes('Full-Stack');
+    if (tab === 'AI / ML') return p.category.includes('AI') || p.category.includes('ML');
+    if (tab === 'GAME DEV') return p.category.includes('Game');
+    if (tab === 'UI / UX') return p.category.includes('UI/UX');
+    return false;
+  };
+
+  const tabs = allTabs.filter(tab => 
+    tab === 'ALL' || projectsData.some(p => projectMatchesTab(p, tab))
+  );
+
+  const filteredProjects = projectsData.filter(p => projectMatchesTab(p, activeTab));
 
   return (
     <section id="projects" className="min-h-[100svh] py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative border-t border-[#C9C7C0] font-mono w-full overflow-x-clip">
@@ -77,30 +82,32 @@ export default function Projects({ onSelectProject }) {
         </div>
 
         {/* Sticky Animated Filter Tabs */}
-        <motion.div
-          initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-8% 0px" }}
-          transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
-          className="sticky top-16 z-30 bg-[#F1F0EB]/95 backdrop-blur-md py-3.5 border-b border-[#C9C7C0] flex flex-wrap gap-1.5 sm:gap-2 w-full"
-        >
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase cursor-pointer ${
-                activeTab === tab
-                  ? 'bg-[#111111] text-white border-[#111111] shadow-sm scale-102'
-                  : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#FF1E27]'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </motion.div>
+        {tabs.length > 1 && (
+          <motion.div
+            initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-8% 0px" }}
+            transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
+            className="sticky top-16 z-30 bg-[#F1F0EB]/95 backdrop-blur-md py-3.5 border-b border-[#C9C7C0] flex flex-wrap gap-1.5 sm:gap-2 w-full"
+          >
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold border transition-all uppercase cursor-pointer ${
+                  activeTab === tab
+                    ? 'bg-[#111111] text-white border-[#111111] shadow-sm scale-102'
+                    : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#FF1E27]'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </motion.div>
+        )}
 
         {/* Project Cards Grid with Staggered Viewport Entrance */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+        <div className={`grid grid-cols-1 ${filteredProjects.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6 sm:gap-8 w-full`}>
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
               <motion.div
@@ -143,11 +150,11 @@ export default function Projects({ onSelectProject }) {
                       >
                         {project.title}
                       </h3>
-                      <span className="text-[10px] font-mono text-[#555555]">{project.year}</span>
+                      <span className="text-[10px] font-mono text-[#555555]">{project.year || "2024"}</span>
                     </div>
 
                     <p className="font-sans text-slate-700 text-xs sm:text-sm leading-relaxed">
-                      {project.desc}
+                      {project.desc || project.shortDesc}
                     </p>
 
                     {/* Tech Badges */}
@@ -172,9 +179,9 @@ export default function Projects({ onSelectProject }) {
                   </button>
 
                   <div className="flex items-center gap-3">
-                    {project.github && (
+                    {(project.github || project.githubLink) && (
                       <a
-                        href={project.github}
+                        href={project.github || project.githubLink}
                         target="_blank"
                         rel="noreferrer"
                         className="text-slate-600 hover:text-[#FF1E27] transition-colors"
@@ -183,9 +190,9 @@ export default function Projects({ onSelectProject }) {
                         <Github size={16} />
                       </a>
                     )}
-                    {project.link && (
+                    {(project.link || project.demoLink) && (
                       <a
-                        href={project.link}
+                        href={project.link || project.demoLink}
                         target="_blank"
                         rel="noreferrer"
                         className="text-slate-600 hover:text-[#FF1E27] transition-colors"
