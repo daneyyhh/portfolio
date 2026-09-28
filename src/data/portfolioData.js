@@ -64,7 +64,7 @@ export const projectsData = [
     shortDesc: "Advanced full-stack MERN e-commerce platform with Socket.IO real-time events, 2-angle physical photography rules, variant swapper, and live dispatch tracking.",
     desc: "Advanced full-stack MERN e-commerce platform with Socket.IO real-time events, 2-angle physical photography rules, variant swapper, and live dispatch tracking.",
     year: "2026",
-    img: "/images/nexora-cover-v2.jpg",
+    img: "/images/nexora-cover-v3.jpg",
     challenge: "Preventing race conditions during atomic warehouse inventory deductions and delivering sub-50ms WebSocket alert broadcasts under concurrent checkout load.",
     built: "Engineered bidirectional Socket.IO order pipelines, dual-mode persistent MongoDB engine, 4-step checkout flow, and executive analytics dashboard.",
     github: "https://github.com/daneyyhh/nexora-mern-ecommerce",
