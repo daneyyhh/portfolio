@@ -134,7 +134,7 @@ export default function Projects({ onSelectProject }) {
                     <img
                       src={project.img}
                       alt={project.title}
-                      className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-103 transition-all duration-700 ease-out select-none"
+                      className="w-full h-full object-cover group-hover:scale-103 transition-all duration-700 ease-out select-none"
                     />
                     <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[#111111] text-[#FF1E27] text-[9px] sm:text-[10px] font-bold px-2 sm:px-2.5 py-1 uppercase">
                       {project.category}
