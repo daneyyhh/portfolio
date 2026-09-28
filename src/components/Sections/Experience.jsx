@@ -15,9 +15,9 @@ export default function Experience({ engineerMode }) {
       role: "Full-Stack Developer & Creative Engineer",
       type: "Projects & Freelance Engineering",
       tech: ["React", "Next.js", "Node.js", "MongoDB", "LUA", "Three.js"],
-      summary: "Architecting full-stack web applications, real-time collaboration platforms (TaskFlow), and high-concurrency multiplayer scripts in LUA for FiveM roleplay servers.",
+      summary: "Architecting full-stack MERN platforms (Nexora), real-time WebSocket order systems, and high-concurrency multiplayer scripts in LUA for FiveM roleplay servers.",
       details: [
-        "Engineered TaskFlow collaborative board with optimistic UI updates and real-time socket updates.",
+        "Engineered Nexora MERN e-commerce platform with real-time Socket.IO streams and atomic inventory management.",
         "Refactored FiveM server scripts in LUA and MySQL, reducing script tick times down to 0.02ms.",
         "Built custom responsive UI design systems and glassmorphic micro-interactions."
       ]
@@ -42,7 +42,7 @@ export default function Experience({ engineerMode }) {
       summary: "Specialized in 3D game development with C# physics systems, volumetric lighting, and Python machine learning classification pipelines.",
       details: [
         "Developed Haunted Code 3D horror atmosphere experience in Unity with C# object-oriented architecture.",
-        "Built NeuroVision ML classification pipeline using Python and Scikit-Learn with cross-validated ensemble models.",
+        "Built machine learning classification pipelines using Python and Scikit-Learn with cross-validated ensemble models.",
         "Studied computer graphics theory, shader programming, and data structures."
       ]
     }
