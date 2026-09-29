@@ -36,8 +36,12 @@ export default function ProjectStatusBadge({
       ariaLabel: 'Project Status: Live (Production Active)',
       indicator: (
         <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-reduce:hidden duration-1000" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+          <span
+            className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400/25 animate-pulse motion-reduce:hidden"
+            style={{ animationDuration: '3s' }}
+            aria-hidden="true"
+          />
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
         </span>
       ),
       theme: {

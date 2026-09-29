@@ -440,7 +440,7 @@ export const projectsData = [
   {
     id: "haunted-code",
     number: "03",
-    status: "in development",
+    status: "live",
     title: "HAUNTED CODE 3D",
     category: "Game Development",
     role: "3D Game Programmer",
