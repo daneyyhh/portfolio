@@ -15,6 +15,7 @@ import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
+import MerchLab from './components/Sections/MerchLab';
 import AiLab from './components/Sections/AiLab';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
@@ -67,6 +68,8 @@ export default function App() {
             <TechStack />
             
             <VisualArchive />
+            
+            <MerchLab />
             
             <AiLab />
             
