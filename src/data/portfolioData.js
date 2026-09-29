@@ -58,7 +58,7 @@ export const projectsData = [
   {
     id: "nexora",
     number: "01",
-    status: "PRODUCTION ARCHITECTURE",
+    status: "live",
     title: "NEXORA",
     category: "Full-Stack Web App",
     role: "Full-Stack System Architect",
@@ -249,7 +249,7 @@ export const projectsData = [
   {
     id: "fivem-chronicles",
     number: "02",
-    status: "DEPLOYED SYSTEM",
+    status: "live",
     title: "FIVEM CHRONICLES",
     category: "Game Systems & LUA",
     role: "Systems Architect & Developer",
@@ -440,7 +440,7 @@ export const projectsData = [
   {
     id: "haunted-code",
     number: "03",
-    status: "STABLE BUILD",
+    status: "in development",
     title: "HAUNTED CODE 3D",
     category: "Game Development",
     role: "3D Game Programmer",

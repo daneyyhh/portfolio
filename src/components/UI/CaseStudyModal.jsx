@@ -19,6 +19,7 @@ import {
   Activity,
   Maximize2
 } from 'lucide-react';
+import ProjectStatusBadge from './ProjectStatusBadge';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -253,10 +254,11 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                 <span className="text-white font-bold truncate hidden sm:inline">{project.title}</span>
               </div>
 
-              <div className="hidden lg:flex items-center gap-2 bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10px] font-mono text-emerald-400 uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>{projectStatus}</span>
-              </div>
+              {project.status && (
+                <div className="hidden lg:block">
+                  <ProjectStatusBadge status={project.status} variant="dark" />
+                </div>
+              )}
             </div>
 
             {/* Right Action: [ESC] + Close Button */}
@@ -321,14 +323,19 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                   </span>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
+                <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono text-slate-400 flex-wrap">
                   <span>
                     YEAR: <strong className="text-white font-bold">{project.year || "2026"}</strong>
                   </span>
-                  <span>•</span>
-                  <span>
-                    STATUS: <strong className="text-emerald-400 font-bold">{projectStatus}</strong>
-                  </span>
+                  {project.status && (
+                    <>
+                      <span>•</span>
+                      <div className="flex items-center gap-2">
+                        <span>STATUS:</span>
+                        <ProjectStatusBadge status={project.status} variant="hero" />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -412,9 +419,11 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">LEAD RESPONSIBILITY</span>
                     <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase block truncate">{project.role || "Systems Architect"}</span>
                   </div>
-                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1 min-w-0 overflow-hidden">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">DEPLOYMENT READINESS</span>
-                    <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase block truncate">{projectStatus}</span>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1.5 min-w-0 overflow-hidden flex flex-col justify-between">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">PROJECT STATUS</span>
+                    <div>
+                      <ProjectStatusBadge status={project.status} variant="dark" />
+                    </div>
                   </div>
                 </div>
               </section>
