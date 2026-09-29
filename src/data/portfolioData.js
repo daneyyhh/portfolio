@@ -326,7 +326,7 @@ export const projectsData = [
     shortDesc: "Advanced server infrastructure and custom gameplay frameworks for FiveM multiplayer roleplay environments.",
     desc: "Advanced server infrastructure and custom gameplay frameworks for FiveM multiplayer roleplay environments.",
     year: "2025",
-    img: "/images/fivem-cover-v2.jpg",
+    img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
     challenge: "Optimizing script CPU tick rates (ms execution time per frame) under 100+ concurrent player server loads.",
     built: "Developed custom inventory systems, economy databases, vehicle persistence engines, and secure permission layers.",
     github: "https://github.com/daneyyhh",
@@ -497,7 +497,7 @@ export const projectsData = [
           summary: "Designed a clean-slate framework for FiveM GTA V multiplayer roleplay servers to eradicate synchronous database hitches that stall the main 64-tick game thread.",
           deliverables: ["Frame Budget Analysis", "Thread Bottleneck Audit", "Multiplayer Spec"],
           tech: "CitizenFX / LUA",
-          image: "/images/fivem-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 01",
           details: "Identified that legacy community scripts execute synchronous MySQL calls on the main rendering thread, triggering vehicle teleportation bugs and server timeouts."
         },
@@ -508,7 +508,7 @@ export const projectsData = [
           summary: "Investigated asynchronous message passing between the CitizenFX C++ host process and embedded LUA runtime environments.",
           deliverables: ["Async Thread Benchmark", "LUA JIT Memory Profile", "Worker Queue Prototype"],
           tech: "MariaDB / LUA JIT / Profiler",
-          image: "/images/fivem-cover.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 02",
           details: "Implemented asynchronous connection pooling in MariaDB, reducing per-frame tick overhead from 4.2ms to under 0.02ms."
         },
@@ -519,7 +519,7 @@ export const projectsData = [
           summary: "Designed a 3D coordinate voxel hashing algorithm so players only receive network entity synchronization packets for objects within their visible radius.",
           deliverables: ["3D Spatial Grid Spec", "Network Packet Schema", "Roleplay UI Wireframes"],
           tech: "Spatial Math / Vector3",
-          image: "/images/fivem-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 03",
           details: "Partitioned the Los Santos map into 150m cells, slashing client network synchronization packets by 78%."
         },
@@ -530,7 +530,7 @@ export const projectsData = [
           summary: "Built secure two-phase bank transfers, serialized vehicle health metadata engines, and HMAC-verified client-server event triggers.",
           deliverables: ["Authoritative Inventory", "Vehicle Damage Serializer", "HMAC NetEvent Middleware"],
           tech: "LUA / SQL / Prepared Statements",
-          image: "/images/fivem-cover.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 04",
           details: "Protected server events against client-side memory injectors by validating cryptographically hashed token nonces on every transaction."
         },
@@ -541,7 +541,7 @@ export const projectsData = [
           summary: "Subjected the server infrastructure to simulated player join floods, concurrent bank transfers, and rapid vehicle spawning.",
           deliverables: ["Load Test Telemetry", "Tick Rate Graph Reports", "Zero Deadlock Certification"],
           tech: "Custom Load Injectors / SQL Profiler",
-          image: "/images/fivem-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 05",
           details: "Sustained constant 64 FPS server tick rate with zero SQL deadlocks during 100+ simulated concurrent player interactions."
         },
@@ -552,7 +552,7 @@ export const projectsData = [
           summary: "Packaged the framework with automated crash recovery watchdogs, daily automated database backups, and live server telemetry.",
           deliverables: ["Linux Systemd Daemon", "Automated Database Journal", "Production Server Release"],
           tech: "Linux / Systemd / MariaDB",
-          image: "/images/fivem-cover.jpg",
+          image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 06",
           details: "Deployed to high-performance dedicated Linux nodes with 99.98% uptime and real-time Discord administrator hooks."
         }
@@ -586,7 +586,7 @@ export const projectsData = [
     shortDesc: "Immersive 3D horror atmosphere experience built in Unity with dynamic lighting systems and physics interactions.",
     desc: "Immersive 3D horror atmosphere experience built in Unity with dynamic lighting systems and physics interactions.",
     year: "2025",
-    img: "/images/haunted-code-cover-v2.jpg",
+    img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
     challenge: "Creating believable real-time volumetric shadows and dynamic audio triggers without dropping target 60FPS frame rates.",
     built: "Programmed player movement mechanics, flashlight volumetric lighting, inventory interactions, and procedural audio cues.",
     github: "https://github.com/daneyyhh",
@@ -757,7 +757,7 @@ export const projectsData = [
           summary: "Conceived a first-person horror experience fusing volumetric shadows, dynamic acoustic occlusion, and claustrophobic environmental tension.",
           deliverables: ["Horror Gameplay GDD", "Atmospheric Moodboard", "Target Frame Budget (60 FPS)"],
           tech: "Unity 3D / C#",
-          image: "/images/haunted-code-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 01",
           details: "Established core gameplay mechanics: a dying player flashlight acting as both a visual navigation tool and an acoustic beacon for lurking AI entities."
         },
@@ -768,7 +768,7 @@ export const projectsData = [
           summary: "Researched Unity Universal Render Pipeline (URP) Forward+ lighting passes to sustain 10+ dynamic spotlights without draw-call explosions.",
           deliverables: ["Lighting Performance Audit", "Audio Raycast Research", "Shader Optimization Spec"],
           tech: "URP / Forward+ / DSP Filters",
-          image: "/images/haunted-code-cover.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 02",
           details: "Implemented custom acoustic low-pass filtering that dynamically muffles footsteps and ambient horrors through physics raycast obstacles."
         },
@@ -779,7 +779,7 @@ export const projectsData = [
           summary: "Constructed modular corridor greybox meshes, baked HDR ambient lightmaps, and formulated the Hierarchical Finite State Machine for enemy AI.",
           deliverables: ["Modular Level Greybox", "Lightmap Bake Matrix", "Enemy Behavior Tree"],
           tech: "ProBuilder / Blender",
-          image: "/images/haunted-code-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 03",
           details: "Engineered three distinct enemy behavioral states: Patrol, Stalk (seeking unlit shadows), and Ambush (reacting to player flashlight reflections)."
         },
@@ -790,7 +790,7 @@ export const projectsData = [
           summary: "Authored kinematic player controller with momentum head-bob, custom volumetric fog shaders, and zero-allocation object pools.",
           deliverables: ["Kinematic Controller C#", "Custom Light Shaders", "Acoustic DSP Raycaster"],
           tech: "C# / HLSL / Unity URP",
-          image: "/images/haunted-code-cover.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 04",
           details: "Pre-allocated all sound effects, particle emitters, and raycast hit buffers to eliminate per-frame garbage collector hitches."
         },
@@ -801,7 +801,7 @@ export const projectsData = [
           summary: "Profiled rendering passes across low-end and high-end hardware using Unity Profiler and Frame Debugger.",
           deliverables: ["Frame Debugger Trace", "Occlusion Culling Map", "60 FPS Certification"],
           tech: "Unity Profiler / Frame Debugger",
-          image: "/images/haunted-code-cover-v2.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 05",
           details: "Reduced batch counts from 420 to 68 through static batching, GPU instancing, and cell occlusion culling; sustained unwavering 60+ FPS."
         },
@@ -812,7 +812,7 @@ export const projectsData = [
           summary: "Compiled optimized WebAssembly WebGL build with ASTC texture compression and released standalone Windows binary.",
           deliverables: ["WASM WebGL Distribution", "Standalone Windows Build", "Live Playable Demo"],
           tech: "WebGL / WebAssembly / Unity",
-          image: "/images/haunted-code-cover.jpg",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 06",
           details: "Deployed live interactive build at reubg.in with instant browser loading."
         }
