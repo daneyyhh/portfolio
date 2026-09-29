@@ -127,9 +127,9 @@ export default function Navbar({ onOpenResume }) {
     <header
       className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 overflow-x-clip backdrop-blur-md ${
         isMerchLab
-          ? 'bg-[#070709]/95 border-b border-white/10 text-white'
+          ? 'bg-[#EDECE6]/85 border-b border-[#111111]/10 text-[#111111]'
           : 'bg-[#F1F0EB]/95 border-b border-[#E4E2DC] text-[#111111]'
-      } ${scrolled ? 'py-3 shadow-md' : 'py-4'}`}
+      } ${scrolled ? 'py-3 shadow-sm' : 'py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
@@ -145,7 +145,7 @@ export default function Navbar({ onOpenResume }) {
           title="REUBG DEV"
         >
           <ReubgLogo
-            variant={isMerchLab ? 'dark' : 'light'}
+            variant="light"
             className="w-[90px] sm:w-[120px] md:w-[135px] h-auto transition-transform duration-200 group-hover:scale-102"
           />
         </Link>
@@ -160,12 +160,10 @@ export default function Navbar({ onOpenResume }) {
               className={`transition-all duration-200 flex items-center gap-1.5 py-1 ${
                 !isMerchLab && activeSection === link.id
                   ? 'text-[#FF1E27] font-extrabold border-b-2 border-[#FF1E27]'
-                  : isMerchLab
-                  ? 'text-slate-300 hover:text-white'
                   : 'text-[#111111] hover:text-[#FF1E27]'
               }`}
             >
-              <span className={`text-[10px] ${isMerchLab ? 'text-white/40' : 'text-[#555555]'} font-normal`}>
+              <span className="text-[10px] text-[#555555] font-normal">
                 {link.num}.
               </span>
               <span>{link.name}</span>
@@ -180,7 +178,7 @@ export default function Navbar({ onOpenResume }) {
             to="/merch-lab"
             className={`inline-flex items-center gap-2 py-1.5 px-3 sm:px-3.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all duration-200 cursor-pointer ${
               isMerchLab
-                ? 'bg-[#181212] text-white border-[#FF1E27]/60 shadow-[0_0_14px_rgba(255,30,39,0.3)]'
+                ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
                 : 'bg-[#FAF9F5] hover:bg-[#111111] text-[#111111] hover:text-white border-[#111111] hover:border-[#111111] shadow-sm'
             }`}
             title="Explore Merch Lab — Under Development"
@@ -194,7 +192,7 @@ export default function Navbar({ onOpenResume }) {
             </span>
             <span>MERCH LAB</span>
             {isMerchLab ? (
-              <span className="text-[9px] px-1 bg-[#FF1E27]/20 text-[#FF1E27] font-semibold border border-[#FF1E27]/30 tracking-tight">
+              <span className="text-[9px] px-1 bg-[#FF1E27] text-white font-semibold tracking-tight">
                 ACTIVE
               </span>
             ) : (
@@ -207,11 +205,7 @@ export default function Navbar({ onOpenResume }) {
           {/* Resume Action */}
           <button
             onClick={onOpenResume}
-            className={`py-1.5 px-4 text-xs font-bold tracking-wider transition-all duration-200 cursor-pointer ${
-              isMerchLab
-                ? 'bg-transparent border border-white/20 hover:border-white text-slate-200 hover:text-white'
-                : 'btn-editorial-red'
-            }`}
+            className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider cursor-pointer"
           >
             RESUME
           </button>
@@ -220,9 +214,7 @@ export default function Navbar({ onOpenResume }) {
         {/* Mobile Menu Toggle Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`lg:hidden p-2 transition-colors cursor-pointer ${
-            isMerchLab ? 'text-white hover:text-[#FF1E27]' : 'text-[#111111] hover:text-[#FF1E27]'
-          }`}
+          className="lg:hidden p-2 text-[#111111] hover:text-[#FF1E27] transition-colors cursor-pointer"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -236,11 +228,7 @@ export default function Navbar({ onOpenResume }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className={`lg:hidden px-4 sm:px-6 py-6 font-mono overflow-hidden ${
-              isMerchLab
-                ? 'bg-[#0B0B0E] border-b border-white/15 text-white'
-                : 'bg-[#F1F0EB] border-b border-[#E4E2DC] text-[#111111]'
-            }`}
+            className="lg:hidden px-4 sm:px-6 py-6 font-mono overflow-hidden bg-[#EDECE6] border-b border-[#111111]/15 text-[#111111]"
           >
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
@@ -254,12 +242,10 @@ export default function Navbar({ onOpenResume }) {
                   className={`text-sm tracking-widest flex items-center gap-2.5 py-1.5 ${
                     !isMerchLab && activeSection === link.id
                       ? 'text-[#FF1E27] font-bold'
-                      : isMerchLab
-                      ? 'text-slate-300 hover:text-white'
                       : 'text-[#111111] hover:text-[#FF1E27]'
                   }`}
                 >
-                  <span className={`text-xs ${isMerchLab ? 'text-white/40' : 'text-[#555555]'} font-normal`}>
+                  <span className="text-xs text-[#555555] font-normal">
                     {link.num}.
                   </span>
                   <span>{link.name}</span>
@@ -267,14 +253,14 @@ export default function Navbar({ onOpenResume }) {
               ))}
 
               {/* Action Buttons in Mobile Drawer */}
-              <div className={`pt-4 border-t ${isMerchLab ? 'border-white/10' : 'border-[#E4E2DC]'} mt-2 space-y-2.5`}>
+              <div className="pt-4 border-t border-[#111111]/15 mt-2 space-y-2.5">
                 {/* MERCH LAB Mobile Button Section */}
                 <Link
                   to="/merch-lab"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`w-full flex items-center justify-between py-2.5 px-4 text-xs font-mono font-bold tracking-wider uppercase border transition-all ${
                     isMerchLab
-                      ? 'bg-[#181212] text-white border-[#FF1E27]'
+                      ? 'bg-[#111111] text-white border-[#111111]'
                       : 'bg-[#111111] text-white hover:bg-[#FF1E27] border-[#111111] hover:border-[#FF1E27]'
                   }`}
                 >

@@ -111,7 +111,7 @@ export default function App() {
     <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
       <ScrollToTop />
       
-      <div className={`min-h-screen ${isMerchLab ? 'bg-[#070709] text-[#F1F0EB]' : 'bg-[#F1F0EB] text-[#111111]'} font-sans relative`}>
+      <div className={`min-h-screen ${isMerchLab ? 'bg-[#EDECE6] text-[#111111]' : 'bg-[#F1F0EB] text-[#111111]'} font-sans relative`}>
         
         {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}

@@ -1,43 +1,32 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Lock,
-  EyeOff,
-  Compass,
-  Terminal,
-  Layers,
-  Sparkles,
-  ShieldCheck,
-  CheckCircle2
-} from 'lucide-react';
-import ReubgLogo from '../components/UI/ReubgLogo';
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Plus, Globe } from 'lucide-react';
 import { personalData } from '../data/portfolioData';
 
 const EASE = [0.16, 1, 0.3, 1];
 
 /**
- * MerchLabPage — Dedicated Full-Page "Under Development" Atelier Experience
- * 
- * Strict Guidelines:
- * - NO merchandise revealed (no t-shirts, hoodies, stickers, mockups, products, prices, shopping UI, or product names).
- * - Creates a mysterious "under development" atmosphere.
- * - Abstract development imagery: construction frame, translucent panels, studio lighting,
- *   architectural structure, technical markings, blueprint elements, and partially obscured forms.
- * - Exact official REUBG DEV logo utilized without modification.
- * - Palette: Warm Ivory, Deep Black, Soft Stone, Near Black, Graphite, Controlled Red accent (#FF1E27). Zero purple.
- * - Small FOLLOW UPDATES button directing to real destination (GitHub releases / developer announcements).
- * - Dedicated desktop and mobile layouts with zero horizontal overflow and reduced motion support.
+ * MerchLabPage — Pixel-perfect match to official design reference:
+ * - Architectural studio atelier with concrete floor, scaffold with ribbed 'UNDER DEVELOPMENT ///' panel,
+ *   warm natural sunlight and shadows, concrete pillar, and glowing studio floor lamp.
+ * - Solid black "MERCH" + hollow outlined "LAB" typography.
+ * - "UNDER DEVELOPMENT ." with red square period.
+ * - Exact body copy: "A new chapter is in the works.", "Designed for the same mindset.", "Stay tuned."
+ * - Action row: "FOLLOW UPDATES →" pill button, circular (+) button, and stacked "SAME MINDSET. DIFFERENT MEDIUM."
+ * - Left metadata: "CONCEPT / 2026", "MORE DETAILS SOON."
+ * - Architectural pillar text: "CODE CREATE EXPLORE REPEAT" with red accent dash.
+ * - Full-width bottom editorial ticker:
+ *     Left: REUBG DEV / MERCH LAB —
+ *     Center: CODE / CREATE / EXPLORE / REPEAT. (REPEAT in red)
+ *     Right: CONCEPT / 2026 / IN DEVELOPMENT — 🌐
  */
-export default function MerchLabPage({ onOpenResume }) {
+export default function MerchLabPage() {
   const prefersReduced = useReducedMotion();
+  const [manifestoOpen, setManifestoOpen] = useState(false);
 
-  // Set document title and scroll to top on mount
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = 'MERCH LAB // UNDER DEVELOPMENT — REUBG DEV';
+    document.title = 'MERCH LAB // REUBG DEV';
     window.scrollTo(0, 0);
 
     return () => {
@@ -46,305 +35,188 @@ export default function MerchLabPage({ onOpenResume }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#070709] text-[#F1F0EB] font-mono selection:bg-[#FF1E27] selection:text-white relative overflow-x-hidden flex flex-col justify-between">
+    <div className="min-h-[calc(100vh-72px)] flex flex-col justify-between relative bg-[#EDECE6] text-[#111111] overflow-hidden selection:bg-[#FF1E27] selection:text-white font-sans">
       
       {/* ─────────────────────────────────────────────────────────────
-          ATMOSPHERIC VOLUMETRIC LIGHTING & BLUEPRINT BACKGROUND
+          CINEMATIC STUDIO BACKDROP (RAW ARCHITECTURAL SCENE)
       ───────────────────────────────────────────────────────────── */}
-      {/* Top Overhead Studio Spotlight Cone */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[650px] pointer-events-none opacity-45"
+        className="absolute inset-0 bg-cover bg-right lg:bg-center pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255, 30, 39, 0.11) 0%, rgba(255,255,255,0.02) 45%, transparent 80%)'
+          backgroundImage: `url('/images/merch-lab-backdrop.jpg')`,
         }}
         aria-hidden="true"
       />
 
-      {/* Blueprint Coordinate Drafting Grid */}
+      {/* Subtle responsive gradient overlay to ensure 100% typography contrast on smaller screens */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }}
+        className="absolute inset-0 bg-gradient-to-r from-[#EDECE6] via-[#EDECE6]/90 to-transparent lg:via-[#EDECE6]/40 pointer-events-none"
         aria-hidden="true"
       />
-
-      {/* Atmospheric Vignette Gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#070709]/50 to-[#070709] pointer-events-none" aria-hidden="true" />
 
       {/* ─────────────────────────────────────────────────────────────
-          MAIN ATELIER CHAMBER CONTENT
+          ARCHITECTURAL CONCRETE PILLAR TYPOGRAPHY (CENTER/RIGHT)
       ───────────────────────────────────────────────────────────── */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-10 sm:py-14 md:py-16 relative z-10 w-full flex flex-col justify-center">
-        
-        {/* Top Registration Breadcrumb */}
-        <div className="flex items-center justify-between text-[10px] sm:text-xs text-slate-300 border-b border-white/10 pb-4 mb-8 sm:mb-12">
-          <div className="flex items-center gap-3">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-[#FF1E27] font-semibold transition-colors"
-            >
-              <ArrowLeft size={13} />
-              <span>RETURN TO PORTFOLIO</span>
-            </Link>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span className="text-[#FF1E27] font-bold hidden sm:inline">REUBG ATELIER //</span>
-            <span className="hidden sm:inline">SPEC: ML-2026-CONFIDENTIAL</span>
+      <div
+        className="hidden xl:block absolute right-[10%] top-[45%] -translate-y-1/2 font-mono text-[11px] text-[#555552]/70 uppercase tracking-[0.25em] space-y-1.5 select-none pointer-events-none z-10"
+        aria-hidden="true"
+      >
+        <div>CODE</div>
+        <div>CREATE</div>
+        <div>EXPLORE</div>
+        <div>REPEAT</div>
+        <div className="w-5 h-0.5 bg-[#FF1E27] mt-1.5" />
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          PRIMARY EDITORIAL CONTENT (LEFT COLUMN)
+      ───────────────────────────────────────────────────────────── */}
+      <main className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-12 pt-8 sm:pt-12 md:pt-14 pb-8 flex-1 flex flex-col justify-center">
+        <motion.div
+          initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="max-w-xl lg:max-w-2xl space-y-6 sm:space-y-7"
+        >
+          {/* Top Label: 08 — MERCH LAB */}
+          <div className="flex items-center gap-3 text-xs sm:text-sm font-mono tracking-widest uppercase">
+            <span className="text-[#FF1E27] font-bold">08</span>
+            <span className="w-10 sm:w-14 h-px bg-[#111111]/30" />
+            <span className="text-[#111111] font-bold">MERCH LAB</span>
           </div>
 
-          <div className="flex items-center gap-3 text-slate-300">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-[#181212] border border-[#FF1E27]/40 text-white text-[10px]">
-              <span className="relative flex h-1.5 w-1.5 shrink-0 items-center justify-center">
-                <span className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-[#FF1E27]/25 animate-pulse" />
-                <span className="relative inline-flex rounded-full h-1 w-1 bg-[#FF1E27]" />
-              </span>
-              <span>UNDER DEV</span>
-            </span>
-            <span className="hidden sm:inline">COORD: 09°58&apos;N · 76°17&apos;E</span>
-            <span className="hidden md:inline">•</span>
-            <span className="hidden md:inline">RESTRICTION: LEVEL 01</span>
-          </div>
-        </div>
+          {/* Massive Editorial Headline: Solid MERCH + Outlined LAB */}
+          <div className="space-y-0 select-none">
+            {/* MERCH: Solid Black Ultra-Heavy */}
+            <h1 className="font-syne font-black text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight text-[#111111] leading-[0.88] uppercase block">
+              MERCH
+            </h1>
 
-        {/* Responsive Dual-Pane Composition */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Left Column (6 cols): Primary Editorial Content & Manifesto */}
-          <motion.div
-            initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="lg:col-span-6 space-y-6 sm:space-y-8"
-          >
-            {/* Identity & Status */}
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#FF1E27] tracking-widest uppercase">
-                <Terminal size={14} />
-                <span>EXPERIMENT // 08</span>
-              </div>
-
-              <h1 className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase text-white tracking-tight leading-[0.92]">
-                MERCH LAB
-              </h1>
-
-              <div className="font-syne text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-[#FF1E27] tracking-tight">
-                UNDER DEVELOPMENT.
-              </div>
-            </div>
-
-            {/* Editorial Manifesto Quotes */}
-            <div className="space-y-3 border-l-2 border-white/20 pl-4 sm:pl-6 py-1">
-              <p className="font-sans text-xl sm:text-2xl md:text-3xl text-white font-semibold tracking-tight leading-snug">
-                &ldquo;A new chapter is in the works.&rdquo;
-              </p>
-              <p className="font-sans text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
-                &ldquo;Designed for the same mindset.&rdquo;
-              </p>
-            </div>
-
-            {/* Small Concept Phrase */}
-            <div className="bg-[#101012] border border-white/10 p-5 sm:p-6 space-y-2 max-w-xl">
-              <div className="flex items-center justify-between text-[10px] text-slate-300 uppercase tracking-widest">
-                <span className="text-[#FF1E27] font-bold">ATELIER STATEMENT //</span>
-                <span>STATUS: CLASSIFIED</span>
-              </div>
-              
-              <p className="font-syne text-sm sm:text-base font-extrabold text-white tracking-wider uppercase">
-                &ldquo;SAME MINDSET. DIFFERENT MEDIUM.&rdquo;
-              </p>
-              
-              <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed pt-1">
-                Translating digital precision, procedural game aesthetics, and engineering discipline into tangible reality. Shrouded in secrecy until production tolerances are met.
-              </p>
-            </div>
-
-            {/* Action Bar: Follow Updates */}
-            <div className="pt-2 flex flex-col sm:flex-row sm:items-center gap-4">
-              <a
-                href={personalData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-editorial-red inline-flex items-center justify-center gap-3 px-6 py-3.5 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-xl hover:shadow-[#FF1E27]/25"
-                aria-label="Follow project updates and releases on GitHub"
-              >
-                <span>FOLLOW UPDATES</span>
-                <ArrowUpRight size={15} />
-              </a>
-
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-                <span className="uppercase tracking-widest text-xs font-bold text-white">
-                  MORE DETAILS SOON.
-                </span>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-slate-300 font-mono tracking-wider">
-              No newsletter spam. Development dispatches and pre-release access milestones are announced directly via developer release logs.
-            </p>
-          </motion.div>
-
-          {/* Right Column (6 cols): The Obscured Technical Laboratory Chamber */}
-          <motion.div
-            initial={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
-            className="lg:col-span-6 relative w-full"
-          >
-            {/* Ambient Red Atmospheric Glow */}
+            {/* LAB: Hollow Outline Sans-Serif */}
             <div
-              className="absolute -inset-4 bg-gradient-to-tr from-[#FF1E27]/12 via-transparent to-white/[0.04] rounded-none filter blur-2xl pointer-events-none opacity-70"
-              aria-hidden="true"
-            />
-
-            {/* Main Chamber Frame */}
-            <div className="relative bg-[#0C0C0E] border border-white/20 p-5 sm:p-7 md:p-8 space-y-6 shadow-2xl overflow-hidden">
-              
-              {/* Technical Calibration Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-4 text-xs font-mono">
-                <div className="flex items-center gap-2 text-slate-200">
-                  <Lock size={13} className="text-[#FF1E27]" />
-                  <span className="font-bold tracking-widest uppercase">LAB CHAMBER // 08</span>
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-slate-300 uppercase tracking-widest">
-                  <EyeOff size={12} className="text-stone-400" />
-                  <span>VISUAL OBFUSCATION ACTIVE</span>
-                </div>
-              </div>
-
-              {/* ─────────────────────────────────────────────────────────────
-                  ABSTRACT DEVELOPMENT COMPOSITION (NOT SHOWING ANY PRODUCT)
-                  Features: construction frame, translucent panels, studio lighting,
-                  blueprint crosshairs, technical markings, and draped silhouette
-              ───────────────────────────────────────────────────────────── */}
-              <div className="relative h-72 sm:h-80 md:h-96 w-full bg-[#070709] border border-white/15 overflow-hidden flex items-center justify-center select-none group">
-                
-                {/* 1. Coordinate Crosshairs & Grid Lines */}
-                <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                  <div className="absolute top-1/2 left-0 right-0 h-px bg-white/10" />
-                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10" />
-
-                  {/* Corner Construction Bracket Markers */}
-                  <span className="absolute top-3 left-3 text-[10px] text-white/30 font-mono">┌</span>
-                  <span className="absolute top-3 right-3 text-[10px] text-white/30 font-mono">┐</span>
-                  <span className="absolute bottom-3 left-3 text-[10px] text-white/30 font-mono">└</span>
-                  <span className="absolute bottom-3 right-3 text-[10px] text-white/30 font-mono">┘</span>
-
-                  {/* Overhead Studio Lighting Simulation */}
-                  <div
-                    className="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,30,39,0.05) 45%, transparent 70%)'
-                    }}
-                  />
-                </div>
-
-                {/* 2. Abstract Construction Framework (Scaffold) */}
-                <div className="relative z-10 w-48 sm:w-60 h-48 sm:h-60 flex items-center justify-center" aria-hidden="true">
-                  <div className="absolute inset-0 border border-dashed border-white/20 rotate-45 motion-reduce:rotate-0 transition-transform duration-700" />
-                  <div className="absolute inset-4 border border-white/10 rotate-12 motion-reduce:rotate-0" />
-
-                  {/* 3. Partially Obscured / Draped Monolithic Silhouette */}
-                  <div className="relative w-32 sm:w-40 h-32 sm:h-40 bg-gradient-to-b from-[#1E1E24] to-[#0A0A0E] border border-white/25 shadow-2xl flex flex-col items-center justify-center p-3 text-center backdrop-blur-2xl">
-                    <div className="w-6 h-6 border-t border-l border-[#FF1E27]/80 absolute -top-1 -left-1" />
-                    <div className="w-6 h-6 border-b border-r border-[#FF1E27]/80 absolute -bottom-1 -right-1" />
-
-                    <Lock size={22} className="text-[#FF1E27] mb-2 opacity-90" />
-                    
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-white uppercase block">
-                      PROTOTYPE
-                    </span>
-                    <span className="text-[9px] font-mono text-slate-300 uppercase tracking-wider block mt-0.5">
-                      CLASSIFIED
-                    </span>
-                    <span className="text-[8px] font-mono text-[#FF1E27] uppercase tracking-widest block mt-1">
-                      [RESTRICTED]
-                    </span>
-                  </div>
-                </div>
-
-                {/* 4. Translucent Frosted Glass Overlay Panel */}
-                <div
-                  className="absolute inset-0 bg-black/45 backdrop-blur-[2.5px] pointer-events-none flex flex-col justify-between p-4 sm:p-5 z-20"
-                  aria-hidden="true"
-                >
-                  <div className="flex justify-between items-start text-[9px] font-mono text-slate-300 tracking-wider">
-                    <span>CAD-SPEC: [REDACTED]</span>
-                    <span>TOLERANCE: ±0.04mm</span>
-                  </div>
-
-                  {/* Watermark Calibration Label in Center */}
-                  <div className="text-center space-y-1">
-                    <span className="inline-block px-3.5 py-1 bg-black/85 border border-white/20 text-[10px] sm:text-[11px] font-mono font-bold text-white uppercase tracking-[0.25em]">
-                      PHYSICAL ARCHITECTURE IN PROGRESS
-                    </span>
-                    <span className="block text-[9px] font-mono text-[#FF1E27] tracking-widest">
-                      NON-DISCLOSURE ACTIVE · DO NOT DISTRIBUTE
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between items-end text-[9px] font-mono text-slate-300 tracking-wider">
-                    <span>STAGE: 01 // BLUEPRINTING</span>
-                    <span>REUBG DEV // 2026</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Technical Specifications Grid (Material / Engineering Rigor) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1 text-left font-mono">
-                <div className="bg-white/[0.02] border border-white/10 p-3 space-y-0.5">
-                  <span className="text-[9px] text-slate-300 uppercase tracking-widest block font-semibold">MEDIUM</span>
-                  <span className="text-xs font-bold text-white uppercase">TANGIBLE</span>
-                </div>
-                <div className="bg-white/[0.02] border border-white/10 p-3 space-y-0.5">
-                  <span className="text-[9px] text-slate-300 uppercase tracking-widest block font-semibold">CAD PHASE</span>
-                  <span className="text-xs font-bold text-white uppercase">REFINEMENT</span>
-                </div>
-                <div className="bg-white/[0.02] border border-white/10 p-3 space-y-0.5">
-                  <span className="text-[9px] text-slate-300 uppercase tracking-widest block font-semibold">FORM FACTOR</span>
-                  <span className="text-xs font-bold text-[#FF1E27] uppercase">CLASSIFIED</span>
-                </div>
-                <div className="bg-white/[0.02] border border-white/10 p-3 space-y-0.5">
-                  <span className="text-[9px] text-slate-300 uppercase tracking-widest block font-semibold">TARGET YEAR</span>
-                  <span className="text-xs font-bold text-white uppercase">2026</span>
-                </div>
-              </div>
-
-              {/* Bottom Chamber Telemetry Footer */}
-              <div className="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[10px] text-slate-300 font-mono">
-                <div className="flex items-center gap-2">
-                  <Compass size={12} className="text-[#FF1E27]" />
-                  <span>TEST RIG SPEC: RBG-ATELIER-01</span>
-                </div>
-                <span className="text-[#FF1E27] font-semibold">
-                  SURFACE TESTING · DISCLOSURE IMMINENT
-                </span>
-              </div>
-
+              className="font-syne font-black text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight leading-[0.88] uppercase block text-transparent"
+              style={{
+                WebkitTextStroke: '2.5px #111111',
+                paintOrder: 'stroke fill',
+              }}
+            >
+              LAB
             </div>
-          </motion.div>
+          </div>
 
-        </div>
+          {/* Subheading: UNDER DEVELOPMENT . */}
+          <div className="font-mono text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#111111] flex items-center gap-1.5 pt-0.5">
+            <span>UNDER DEVELOPMENT</span>
+            <span className="inline-block w-1.5 h-1.5 bg-[#FF1E27] shrink-0" />
+          </div>
 
+          {/* Narrative Body Copy */}
+          <div className="space-y-1 font-sans text-sm sm:text-base text-[#383733] font-normal leading-relaxed pt-1 max-w-lg">
+            <p>A new chapter is in the works.</p>
+            <p>Designed for the same mindset.</p>
+            <p>Stay tuned.</p>
+          </div>
+
+          {/* Action Row: Pill Button + Circle (+) + Stacked Text */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
+            {/* FOLLOW UPDATES Rounded Pill Button */}
+            <a
+              href={personalData.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-3.5 px-6 py-3 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
+              aria-label="Follow project updates on GitHub"
+            >
+              <span>FOLLOW UPDATES</span>
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+
+            {/* Circular (+) Button */}
+            <button
+              type="button"
+              onClick={() => setManifestoOpen(!manifestoOpen)}
+              className="w-10 h-10 rounded-full border border-[#111111]/30 hover:border-[#111111] hover:bg-[#111111] hover:text-white flex items-center justify-center text-[#111111] transition-all duration-200 cursor-pointer"
+              title="Atelier statement"
+              aria-label="Toggle atelier statement"
+            >
+              <Plus size={16} className={`transition-transform duration-300 ${manifestoOpen ? 'rotate-45' : ''}`} />
+            </button>
+
+            {/* Stacked Small Monospace Statement */}
+            <div className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#111111] leading-tight select-none">
+              <div>SAME</div>
+              <div>MINDSET.</div>
+              <div>DIFFERENT</div>
+              <div>MEDIUM.</div>
+            </div>
+          </div>
+
+          {/* Expandable Atelier Philosophy Drawer */}
+          <AnimatePresence>
+            {manifestoOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="overflow-hidden"
+              >
+                <div className="p-4 bg-[#EDECE6]/95 border border-[#111111]/20 font-mono text-xs text-[#2A2925] space-y-2 max-w-lg shadow-sm">
+                  <div className="flex items-center justify-between text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase">
+                    <span>ATELIER SPEC // 2026</span>
+                    <span>RESTRICTED ACCESS</span>
+                  </div>
+                  <p className="font-sans leading-relaxed">
+                    Translating procedural craft, computational precision, and engineering discipline into tangible reality. Undergoing rigorous material tests until release criteria are met.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Left Metadata Bar Below Separator Line */}
+          <div className="pt-6 sm:pt-7 border-t border-[#111111]/20 space-y-1 font-mono text-[10px] sm:text-xs uppercase tracking-widest select-none">
+            <div className="font-bold text-[#111111]">
+              CONCEPT &nbsp;/&nbsp; 2026
+            </div>
+            <div className="text-[#555552]">
+              MORE DETAILS SOON.
+            </div>
+          </div>
+        </motion.div>
       </main>
 
       {/* ─────────────────────────────────────────────────────────────
-          EDITORIAL PAGE FOOTER
+          FULL-WIDTH BOTTOM EDITORIAL STRIP / TICKER
       ───────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-white/10 px-4 sm:px-6 md:px-12 py-6 bg-[#050507] text-[10px] sm:text-xs text-slate-300 font-mono">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            © {new Date().getFullYear()} REUBEN BINU GEORGE · REUBG DEV MERCH LAB
+      <footer className="relative z-20 border-t border-[#111111]/15 bg-[#EDECE6]/90 backdrop-blur-sm px-4 sm:px-6 md:px-12 py-4 font-mono text-[10px] sm:text-xs">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full">
+          
+          {/* Left Block: REUBG DEV / MERCH LAB with horizontal line */}
+          <div className="flex items-center gap-4 sm:gap-6 shrink-0">
+            <div className="font-bold uppercase tracking-wider text-[#111111] leading-tight">
+              <div>REUBG DEV</div>
+              <div>MERCH LAB</div>
+            </div>
+            <span className="hidden sm:inline-block w-16 md:w-24 h-px bg-[#111111]/30" />
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/" className="text-white hover:text-[#FF1E27] transition-colors font-bold">
-              ← RETURN TO MAIN SITE
-            </Link>
-            <span>•</span>
-            <span>CONFIDENTIAL ATELIER</span>
+
+          {/* Center Block: CODE / CREATE / EXPLORE / REPEAT. */}
+          <div className="tracking-[0.2em] uppercase font-bold text-[#111111] text-xs sm:text-sm text-center">
+            <span>CODE &nbsp;/&nbsp; CREATE &nbsp;/&nbsp; EXPLORE &nbsp;/&nbsp; </span>
+            <span className="text-[#FF1E27]">REPEAT.</span>
           </div>
+
+          {/* Right Block: CONCEPT / 2026 / IN DEVELOPMENT with Globe */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 self-end md:self-auto">
+            <div className="text-right uppercase font-semibold text-[#111111] leading-tight text-[10px] sm:text-xs">
+              <div>CONCEPT / 2026</div>
+              <div className="text-[#555552]">IN DEVELOPMENT</div>
+            </div>
+            <span className="w-8 sm:w-12 h-px bg-[#111111]/30 hidden sm:inline-block" />
+            <Globe size={18} className="text-[#111111] stroke-[1.5]" />
+          </div>
+
         </div>
       </footer>
 
