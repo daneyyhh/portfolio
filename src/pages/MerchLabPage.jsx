@@ -10,7 +10,18 @@ export default function MerchLabPage() {
   const [manifestoOpen, setManifestoOpen] = useState(false);
   const [reminderModalOpen, setReminderModalOpen] = useState(false);
   const [reminderEmail, setReminderEmail] = useState('');
-  const [reminderSubmitted, setReminderSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Persistent subscriber data loaded from localStorage
+  const [subscriberData, setSubscriberData] = useState(() => {
+    try {
+      const stored = localStorage.getItem('reubg_merch_lab_subscriber');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -35,23 +46,66 @@ export default function MerchLabPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [reminderModalOpen]);
 
-  // Handle email reminder submission
+  // Handle email reminder submission with persistence
   const handleSendEmailReminder = (e) => {
     e.preventDefault();
-    if (!reminderEmail || !reminderEmail.includes('@')) return;
+    const cleanEmail = reminderEmail.trim();
+    if (!cleanEmail || !cleanEmail.includes('@')) return;
 
-    const subject = encodeURIComponent('[REUBG MERCH LAB] Reminder / Drop Dispatch Request (Concept 2026)');
-    const body = encodeURIComponent(
-      `Hi Reuben,\n\nPlease add my email address to the confidential Merch Lab release notification dispatch list.\n\nNotification Email: ${reminderEmail}\nRequested via: https://reubg.in/merch-lab\nDate: ${new Date().toLocaleDateString()}\n\nLooking forward to the release!`
-    );
+    setIsSubmitting(true);
 
-    // Open user's default email client
-    window.location.href = `mailto:${personalData.email}?subject=${subject}&body=${body}`;
-    setReminderSubmitted(true);
+    const newSubscriber = {
+      email: cleanEmail,
+      subscribedAt: new Date().toISOString(),
+      formattedDate: new Date().toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      }),
+      status: 'active',
+      milestone: 'CONCEPT 2026 DROP',
+      tier: 'Tier 01 (Pre-Release Access)',
+    };
+
+    setTimeout(() => {
+      try {
+        localStorage.setItem('reubg_merch_lab_subscriber', JSON.stringify(newSubscriber));
+      } catch (err) {
+        console.error('Failed to save to localStorage', err);
+      }
+
+      setSubscriberData(newSubscriber);
+      setIsSubmitting(false);
+      setIsEditing(false);
+
+      // Trigger optional non-blocking mailto dispatch
+      try {
+        const subject = encodeURIComponent('[REUBG MERCH LAB] Reminder Registration (Concept 2026)');
+        const body = encodeURIComponent(
+          `Hi Reuben,\n\nPlease confirm my launch reminder for the Merch Lab 2026 release.\n\nRegistered Email: ${cleanEmail}\nTimestamp: ${new Date().toISOString()}\n\nLooking forward to the drop!`
+        );
+        window.location.href = `mailto:${personalData.email}?subject=${subject}&body=${body}`;
+      } catch {
+        // Mailto is optional; localStorage already confirmed
+      }
+    }, 400);
+  };
+
+  // Remove subscriber reminder
+  const handleRemoveReminder = () => {
+    try {
+      localStorage.removeItem('reubg_merch_lab_subscriber');
+    } catch (err) {
+      console.error(err);
+    }
+    setSubscriberData(null);
+    setReminderEmail('');
+    setIsEditing(false);
   };
 
   // Download calendar .ics reminder file with email alert trigger
   const handleDownloadIcs = () => {
+    const targetEmail = subscriberData ? subscriberData.email : (reminderEmail || personalData.email);
     const icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -70,12 +124,12 @@ export default function MerchLabPage() {
       'BEGIN:VALARM',
       'TRIGGER:-PT24H',
       'ACTION:DISPLAY',
-      'DESCRIPTION:Reminder: REUBG MERCH LAB release goes live tomorrow.',
+      `DESCRIPTION:Reminder for ${targetEmail}: REUBG MERCH LAB release goes live tomorrow.`,
       'END:VALARM',
       'BEGIN:VALARM',
       'TRIGGER:-PT1H',
       'ACTION:EMAIL',
-      'DESCRIPTION:Reminder: REUBG MERCH LAB drop is releasing soon.',
+      `DESCRIPTION:Reminder: REUBG MERCH LAB drop is releasing soon.`,
       'SUMMARY:REUBG MERCH LAB Release Notification',
       'END:VALARM',
       'END:VEVENT',
@@ -141,6 +195,12 @@ export default function MerchLabPage() {
             <span className="text-[#FF1E27] font-bold">08</span>
             <span className="w-10 sm:w-14 h-px bg-[#111111]/30" />
             <span className="text-[#111111] font-bold">MERCH LAB</span>
+            {subscriberData && (
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 bg-[#111111] text-white text-[10px] font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+                <span>REMINDER CONFIRMED</span>
+              </span>
+            )}
           </div>
 
           {/* Massive Editorial Headline: Solid MERCH + Outlined LAB */}
@@ -177,19 +237,41 @@ export default function MerchLabPage() {
 
           {/* Action Row: Pill Button + Circle (+) + Stacked Text */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
-            {/* FOLLOW UPDATES Rounded Pill Button — Opens Email Reminder Modal */}
-            <button
-              type="button"
-              onClick={() => {
-                setReminderSubmitted(false);
-                setReminderModalOpen(true);
-              }}
-              className="group inline-flex items-center gap-3.5 px-6 py-3 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
-              aria-label="Set email reminder for Merch Lab updates"
-            >
-              <span>FOLLOW UPDATES</span>
-              <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            {/* Active Reminder Pill Button when Subscribed, otherwise Follow Updates Button */}
+            {subscriberData && !isEditing ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditing(false);
+                  setReminderModalOpen(true);
+                }}
+                className="group inline-flex items-center gap-3 px-5 py-3 bg-[#111111] hover:bg-black text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer border border-[#111111]"
+                aria-label="View your active launch reminder"
+              >
+                <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
+                  <span className="absolute inline-flex h-3 w-3 rounded-full bg-[#FF1E27]/40 animate-ping" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF1E27]" />
+                </span>
+                <span className="text-[#FF1E27]">REMINDER ACTIVE:</span>
+                <span className="truncate max-w-[130px] sm:max-w-[200px] text-stone-200 lowercase font-normal">
+                  {subscriberData.email}
+                </span>
+                <Check size={14} className="text-[#FF1E27] shrink-0" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditing(true);
+                  setReminderModalOpen(true);
+                }}
+                className="group inline-flex items-center gap-3.5 px-6 py-3 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
+                aria-label="Set email reminder for Merch Lab updates"
+              >
+                <span>FOLLOW UPDATES</span>
+                <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+            )}
 
             {/* Circular (+) Button */}
             <button
@@ -315,7 +397,7 @@ export default function MerchLabPage() {
                     <span>08 // LAUNCH NOTIFICATION</span>
                   </div>
                   <h2 id="reminder-modal-title" className="font-archivo text-xl sm:text-2xl text-[#111111] uppercase tracking-tight">
-                    GET REMINDER IN MAIL
+                    {subscriberData && !isEditing ? 'LAUNCH REMINDER ACTIVE' : 'GET REMINDER IN MAIL'}
                   </h2>
                 </div>
 
@@ -329,20 +411,79 @@ export default function MerchLabPage() {
                 </button>
               </div>
 
-              {/* Explanatory Narrative */}
-              <div className="font-sans text-xs sm:text-sm text-[#383733] leading-relaxed space-y-1">
-                <p>
-                  Receive an email dispatch the moment production tolerances are met and the first <strong>Concept 2026</strong> drop goes live.
-                </p>
-                <p className="text-[11px] font-mono text-[#555552]">
-                  Strictly zero marketing spam. Direct developer release dispatches only.
-                </p>
-              </div>
+              {/* View 1: Active Registered Subscriber Card */}
+              {subscriberData && !isEditing ? (
+                <div className="space-y-5">
+                  <div className="p-4 sm:p-5 bg-white border border-[#111111] space-y-3.5 shadow-sm">
+                    <div className="flex items-center justify-between border-b border-[#111111]/15 pb-3">
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#111111] uppercase">
+                        <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse" />
+                        <span>DISPATCH QUEUE: CONFIRMED</span>
+                      </div>
+                      <span className="text-[10px] bg-[#111111] text-white px-2 py-0.5 uppercase tracking-wider font-semibold">
+                        ACTIVE
+                      </span>
+                    </div>
 
-              {/* Input Form */}
-              {!reminderSubmitted ? (
+                    <div className="space-y-1.5 text-xs font-mono">
+                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
+                        <span>SUBSCRIBED EMAIL:</span>
+                        <span className="font-bold text-[#111111] lowercase">{subscriberData.email}</span>
+                      </div>
+                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
+                        <span>TARGET RELEASE:</span>
+                        <span className="font-bold text-[#111111]">{subscriberData.milestone}</span>
+                      </div>
+                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
+                        <span>REGISTERED ON:</span>
+                        <span className="text-[#111111]">{subscriberData.formattedDate}</span>
+                      </div>
+                      <div className="flex justify-between py-1 text-stone-600">
+                        <span>NOTIFICATION TIER:</span>
+                        <span className="text-[#FF1E27] font-bold">TIER 01 DISPATCH</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="font-sans text-xs text-[#383733] leading-relaxed">
+                    You are registered. A release alert will be sent directly to <strong>{subscriberData.email}</strong> when the 2026 drop arrives.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setReminderEmail(subscriberData.email);
+                        setIsEditing(true);
+                      }}
+                      className="flex-1 py-3 px-4 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase transition-colors text-center cursor-pointer"
+                    >
+                      UPDATE EMAIL
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleRemoveReminder}
+                      className="py-3 px-4 border border-[#111111]/30 hover:border-[#FF1E27] hover:text-[#FF1E27] text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer text-stone-600"
+                      title="Remove your reminder registration"
+                    >
+                      REMOVE
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* View 2: Registration Input Form */
                 <form onSubmit={handleSendEmailReminder} className="space-y-4">
-                  <div className="space-y-1.5">
+                  <div className="font-sans text-xs sm:text-sm text-[#383733] leading-relaxed space-y-1">
+                    <p>
+                      Receive an email dispatch the moment production tolerances are met and the first <strong>Concept 2026</strong> drop goes live.
+                    </p>
+                    <p className="text-[11px] font-mono text-[#555552]">
+                      Strictly zero marketing spam. Direct developer release alerts only.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5 pt-1">
                     <label htmlFor="reminder-email" className="block text-[10px] uppercase tracking-wider text-[#111111] font-bold">
                       YOUR EMAIL ADDRESS:
                     </label>
@@ -360,24 +501,33 @@ export default function MerchLabPage() {
                     </div>
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center gap-3 py-3.5 px-6 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 shadow-sm cursor-pointer"
-                  >
-                    <span>SET MAIL REMINDER</span>
-                    <ArrowRight size={14} />
-                  </button>
-                </form>
-              ) : (
-                <div className="p-4 bg-white border border-[#111111] space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#111111] uppercase">
-                    <Check size={16} className="text-[#FF1E27]" />
-                    <span>REMINDER REQUEST PREPARED</span>
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 inline-flex items-center justify-center gap-3 py-3.5 px-6 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 shadow-sm cursor-pointer disabled:opacity-75"
+                    >
+                      {isSubmitting ? (
+                        <span>REGISTERING DISPATCH...</span>
+                      ) : (
+                        <>
+                          <span>{subscriberData ? 'SAVE UPDATED EMAIL' : 'CONFIRM MAIL REMINDER'}</span>
+                          <ArrowRight size={14} />
+                        </>
+                      )}
+                    </button>
+
+                    {subscriberData && isEditing && (
+                      <button
+                        type="button"
+                        onClick={() => setIsEditing(false)}
+                        className="py-3.5 px-4 border border-[#111111]/30 hover:border-[#111111] text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer"
+                      >
+                        CANCEL
+                      </button>
+                    )}
                   </div>
-                  <p className="text-xs text-[#383733] font-sans leading-relaxed">
-                    We've opened your mail client to dispatch your request to <strong>{personalData.email}</strong>. Once sent, your address is queued for the 2026 launch dispatch.
-                  </p>
-                </div>
+                </form>
               )}
 
               {/* Additional Reminder Options */}
@@ -400,7 +550,7 @@ export default function MerchLabPage() {
 
                   {/* Direct mailto link */}
                   <a
-                    href={`mailto:${personalData.email}?subject=${encodeURIComponent('[MERCH LAB] Drop Notification 2026')}&body=${encodeURIComponent('Hi Reuben,\nPlease notify me via email when Merch Lab drops.\n\nThank you!')}`}
+                    href={`mailto:${personalData.email}?subject=${encodeURIComponent('[MERCH LAB] Drop Notification 2026')}&body=${encodeURIComponent(`Hi Reuben,\nPlease notify me via email (${subscriberData ? subscriberData.email : reminderEmail || 'my address'}) when Merch Lab drops.\n\nThank you!`)}`}
                     className="inline-flex items-center justify-center gap-2 py-2.5 px-3 border border-[#111111]/30 hover:border-[#111111] hover:bg-white text-[10px] font-mono font-bold tracking-wider uppercase text-[#111111] transition-colors cursor-pointer"
                   >
                     <Mail size={13} className="text-[#FF1E27]" />
