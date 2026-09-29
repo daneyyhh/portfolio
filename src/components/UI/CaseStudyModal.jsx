@@ -20,6 +20,7 @@ import {
   Maximize2
 } from 'lucide-react';
 import ProjectStatusBadge from './ProjectStatusBadge';
+import BuildTimeline from './BuildTimeline';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -194,12 +195,17 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
   const liveUrl = project.link || project.demoLink || cs.liveUrl || null;
   const hasLiveLinks = Boolean(githubUrl || liveUrl);
 
+  // Section: BUILD TIMELINE (Data-Driven Phases)
+  const timelineStages = Array.isArray(cs.timeline) ? cs.timeline : [];
+  const hasTimeline = timelineStages.length > 0;
+
   // Filter only sections for which real information exists
   const availableSections = [
     hasOverview && { id: 'sec-overview', num: '01', title: 'OVERVIEW' },
     hasProblem && { id: 'sec-problem', num: '02', title: 'PROBLEM' },
     hasApproach && { id: 'sec-approach', num: '03', title: 'APPROACH' },
     hasUiUx && { id: 'sec-uiux', num: '04', title: 'UI / UX' },
+    hasTimeline && { id: 'sec-timeline', num: 'TIMELINE', title: 'BUILD TIMELINE' },
     hasDevelopment && { id: 'sec-development', num: '05', title: 'DEVELOPMENT' },
     hasArchitecture && { id: 'sec-architecture', num: '06', title: 'ARCHITECTURE' },
     hasTechnology && { id: 'sec-technology', num: '07', title: 'TECHNOLOGY' },
@@ -514,6 +520,17 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                   </div>
                 </div>
               </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                BUILD TIMELINE (DATA-DRIVEN BUILD PHASES)
+            ───────────────────────────────────────────────────────────── */}
+            {hasTimeline && (
+              <BuildTimeline
+                timeline={timelineStages}
+                projectTitle={project.title}
+                scrollContainerRef={scrollContainerRef}
+              />
             )}
 
             {/* ─────────────────────────────────────────────────────────────
