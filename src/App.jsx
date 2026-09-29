@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
 import CaseStudyModal from './components/UI/CaseStudyModal';
@@ -15,80 +16,145 @@ import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
-import MerchLab from './components/Sections/MerchLab';
 import AiLab from './components/Sections/AiLab';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
+import MerchLabPage from './pages/MerchLabPage';
+
+/**
+ * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
+ */
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true });
+      }
+    }
+  }, [pathname, hash]);
+
+  return null;
+}
+
+/**
+ * HomePage: Main editorial portfolio flow
+ */
+function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        const timer = setTimeout(() => {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -72, duration: 1.15 });
+          } else {
+            const top = el.getBoundingClientRect().top + window.pageYOffset - 72;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [location.hash]);
+
+  return (
+    <>
+      {/* Persistent Three.js WebGL Canvas Journey */}
+      <PersistentCanvas />
+
+      {/* Main Editorial Flow */}
+      <main className="relative z-10">
+        <Hero onOpenResume={onOpenResume} />
+        
+        <Introduction />
+        
+        <AboutResume
+          resumeOpen={resumeOpen}
+          setResumeOpen={setResumeOpen}
+        />
+        
+        <ProcessSection />
+        
+        <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
+        
+        <Architecture />
+        
+        <TechStack />
+        
+        <VisualArchive />
+        
+        <AiLab />
+        
+        <Experience />
+        
+        <Contact />
+      </main>
+    </>
+  );
+}
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const location = useLocation();
+
+  const isMerchLab = location.pathname === '/merch-lab';
 
   return (
     <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
-      <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
+      <ScrollToTop />
+      
+      <div className={`min-h-screen ${isMerchLab ? 'bg-[#070709] text-[#F1F0EB]' : 'bg-[#F1F0EB] text-[#111111]'} font-sans relative`}>
         
         {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
-        {/* Main Portfolio Content */}
-        <div className="relative w-full opacity-100">
-          
-          {/* Persistent Three.js WebGL Canvas Journey */}
-          <PersistentCanvas />
+        {/* Easter Egg Event Listener */}
+        <EasterEggs />
 
-          {/* Easter Egg Event Listener */}
-          <EasterEggs />
+        {/* Site-wide Adaptive Header */}
+        <Navbar
+          onOpenResume={() => setResumeOpen(true)}
+        />
 
-          {/* Fixed Editorial Header */}
-          <Navbar
-            onOpenResume={() => setResumeOpen(true)}
+        {/* Page Routes */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                onOpenResume={() => setResumeOpen(true)}
+                setSelectedProject={setSelectedProject}
+                resumeOpen={resumeOpen}
+                setResumeOpen={setResumeOpen}
+              />
+            }
           />
+          <Route
+            path="/merch-lab"
+            element={<MerchLabPage onOpenResume={() => setResumeOpen(true)} />}
+          />
+          <Route path="/merch" element={<Navigate to="/merch-lab" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
 
-          {/* Main Editorial Flow */}
-          <main className="relative z-10">
-            <Hero
-              onOpenResume={() => setResumeOpen(true)}
-            />
-            
-            <Introduction />
-            
-            <AboutResume
-              resumeOpen={resumeOpen}
-              setResumeOpen={setResumeOpen}
-            />
-            
-            <ProcessSection />
-            
-            <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
-            
-            <Architecture />
-            
-            <TechStack />
-            
-            <VisualArchive />
-            
-            <MerchLab />
-            
-            <AiLab />
-            
-            <Experience />
-            
-            <Contact />
-          </main>
+        {/* Interactive Case Study Modal */}
+        {selectedProject && (
+          <CaseStudyModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+            onSelectProject={(proj) => setSelectedProject(proj)}
+            allProjects={projectsData}
+          />
+        )}
 
-          {/* Interactive Case Study Modal */}
-          {selectedProject && (
-            <CaseStudyModal
-              project={selectedProject}
-              onClose={() => setSelectedProject(null)}
-              onSelectProject={(proj) => setSelectedProject(proj)}
-              allProjects={projectsData}
-            />
-          )}
-
-        </div>
       </div>
     </SmoothScrollProvider>
   );
