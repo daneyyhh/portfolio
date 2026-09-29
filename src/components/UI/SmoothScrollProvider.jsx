@@ -46,15 +46,15 @@ export default function SmoothScrollProvider({ children, disabled = false }) {
       const element = document.querySelector(href);
       if (element) {
         e.preventDefault();
-        const headerOffset = 72;
+        const headerOffset = 74;
         lenis.scrollTo(element, {
           offset: -headerOffset,
-          duration: 1.15,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          duration: 0.85,
+          easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
         });
 
-        if (window.history && window.history.pushState) {
-          window.history.pushState(null, '', href);
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', href);
         }
       }
     };

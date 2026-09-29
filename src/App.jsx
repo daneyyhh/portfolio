@@ -51,10 +51,16 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
       const el = document.getElementById(id);
       if (el) {
         const timer = setTimeout(() => {
+          const headerOffset = 74;
+          const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
           if (window.__lenis) {
-            window.__lenis.scrollTo(el, { offset: -72, duration: 1.15 });
+            window.__lenis.scrollTo(el, {
+              offset: -headerOffset,
+              duration: 0.85,
+              easing: easeInOutCubic,
+            });
           } else {
-            const top = el.getBoundingClientRect().top + window.pageYOffset - 72;
+            const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
             window.scrollTo({ top, behavior: 'smooth' });
           }
         }, 150);

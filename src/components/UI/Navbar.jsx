@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ReubgLogo from './ReubgLogo';
 
+// Smooth cubic easeInOut curve (fluid, responsive, cinematic acceleration & deceleration)
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
 export default function Navbar({ onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const isProgrammaticScrollRef = useRef(false);
+  const scrollLockTimerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,62 +28,92 @@ export default function Navbar({ onOpenResume }) {
     { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  // Smooth scroll handler accounting for header height offset, Lenis, and cross-route navigation
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    const targetId = href.replace('#', '');
+  /**
+   * Universal smooth-scroll executor
+   * - Uses Lenis if initialized, or fallback requestAnimationFrame
+   * - Easing: easeInOutCubic
+   * - Natural duration: 850ms (within 700-1000ms range)
+   * - Target offset: 74px accounting for sticky header height
+   */
+  const performSmoothScroll = (targetElement, customOffset = 74) => {
+    if (!targetElement) return;
 
+    if (window.__lenis) {
+      window.__lenis.scrollTo(targetElement, {
+        offset: -customOffset,
+        duration: 0.85,
+        easing: easeInOutCubic,
+        lock: false,
+      });
+      return;
+    }
+
+    const startY = window.pageYOffset || document.documentElement.scrollTop;
+    const elementY = targetElement.getBoundingClientRect().top + startY;
+    const targetY = Math.max(0, elementY - customOffset);
+    const diff = targetY - startY;
+    const durationMs = 850;
+    let startTime = null;
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      window.scrollTo(0, startY + diff * easedProgress);
+
+      if (elapsed < durationMs) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  /**
+   * Smooth navigation handler
+   * - Locks active state on clicked item to prevent intermediate scroll-spy flickering
+   * - Closes mobile drawer seamlessly
+   * - Preserves clean URL state via replaceState without reloads
+   */
+  const handleNavClick = (e, href) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const targetId = href.replace('#', '');
+    const matchedLink = navLinks.find((l) => l.href === href);
+    const linkId = matchedLink ? matchedLink.id : 'home';
+
+    // Immediately reflect active link and lock scroll-spy during animation
+    setActiveSection(linkId);
+    isProgrammaticScrollRef.current = true;
+    if (scrollLockTimerRef.current) clearTimeout(scrollLockTimerRef.current);
+    scrollLockTimerRef.current = setTimeout(() => {
+      isProgrammaticScrollRef.current = false;
+    }, 920);
+
+    // Cross-route navigation from /merch-lab back to main page
     if (location.pathname !== '/') {
       navigate('/' + href);
       setTimeout(() => {
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          const headerOffset = 72;
-          if (window.__lenis) {
-            window.__lenis.scrollTo(targetElement, {
-              offset: -headerOffset,
-              duration: 1.15,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            });
-          } else {
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
+        const el = document.getElementById(targetId);
+        if (el) {
+          performSmoothScroll(el, 74);
         }
-      }, 150);
+      }, 160);
       return;
     }
 
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      const headerOffset = 72;
-      
-      if (window.__lenis) {
-        window.__lenis.scrollTo(targetElement, {
-          offset: -headerOffset,
-          duration: 1.15,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        });
-      } else {
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      performSmoothScroll(targetElement, 74);
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-
-      if (window.history && window.history.pushState) {
-        window.history.pushState(null, '', href);
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', href);
       }
     }
   };
 
+  // Scroll spy to update active section when user manually scrolls
   useEffect(() => {
     if (isMerchLab) {
       setActiveSection('');
@@ -87,6 +122,9 @@ export default function Navbar({ onOpenResume }) {
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      // Do not override activeSection while smooth scrolling programmatically
+      if (isProgrammaticScrollRef.current) return;
 
       const navSectionMap = [
         { navId: 'home', elementIds: ['hero'] },
@@ -127,13 +165,13 @@ export default function Navbar({ onOpenResume }) {
     <header
       className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 overflow-x-clip backdrop-blur-md ${
         isMerchLab
-          ? 'bg-[#EDECE6]/85 border-b border-[#111111]/10 text-[#111111]'
+          ? 'bg-[#EDECE6]/90 border-b border-[#111111]/10 text-[#111111]'
           : 'bg-[#F1F0EB]/95 border-b border-[#E4E2DC] text-[#111111]'
-      } ${scrolled ? 'py-3 shadow-sm' : 'py-4'}`}
+      } ${scrolled ? 'py-2.5 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'py-3.5 sm:py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
-        {/* Brand Logo */}
+        {/* Brand Logo - 100% Unchanged */}
         <Link
           to="/"
           onClick={(e) => {
@@ -151,24 +189,38 @@ export default function Navbar({ onOpenResume }) {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs font-bold tracking-wider">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className={`transition-all duration-200 flex items-center gap-1.5 py-1 ${
-                !isMerchLab && activeSection === link.id
-                  ? 'text-[#FF1E27] font-extrabold border-b-2 border-[#FF1E27]'
-                  : 'text-[#111111] hover:text-[#FF1E27]'
-              }`}
-            >
-              <span className="text-[10px] text-[#555555] font-normal">
-                {link.num}.
-              </span>
-              <span>{link.name}</span>
-            </a>
-          ))}
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-mono font-bold tracking-wider">
+          {navLinks.map((link) => {
+            const isActive = !isMerchLab && activeSection === link.id;
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`relative transition-colors duration-200 flex items-center gap-1.5 py-1 cursor-pointer group ${
+                  isActive
+                    ? 'text-[#FF1E27]'
+                    : 'text-[#111111] hover:text-[#FF1E27]'
+                }`}
+              >
+                <span
+                  className={`text-[10px] transition-colors duration-200 ${
+                    isActive ? 'text-[#FF1E27]/80 font-bold' : 'text-[#888884] group-hover:text-[#FF1E27]/80'
+                  }`}
+                >
+                  {link.num}.
+                </span>
+                <span>{link.name}</span>
+                {isActive && (
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#FF1E27]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Action Button Section: Merch Lab + Resume */}
@@ -228,32 +280,41 @@ export default function Navbar({ onOpenResume }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="lg:hidden px-4 sm:px-6 py-6 font-mono overflow-hidden bg-[#EDECE6] border-b border-[#111111]/15 text-[#111111]"
           >
-            <div className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    handleNavClick(e, link.href);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`text-sm tracking-widest flex items-center gap-2.5 py-1.5 ${
-                    !isMerchLab && activeSection === link.id
-                      ? 'text-[#FF1E27] font-bold'
-                      : 'text-[#111111] hover:text-[#FF1E27]'
-                  }`}
-                >
-                  <span className="text-xs text-[#555555] font-normal">
-                    {link.num}.
-                  </span>
-                  <span>{link.name}</span>
-                </a>
-              ))}
+            <div className="flex flex-col gap-1.5">
+              {navLinks.map((link) => {
+                const isActive = !isMerchLab && activeSection === link.id;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleNavClick(e, link.href);
+                    }}
+                    className={`text-sm tracking-widest flex items-center justify-between py-2 px-3 transition-colors ${
+                      isActive
+                        ? 'bg-[#111111] text-white font-bold'
+                        : 'text-[#111111] hover:bg-black/5 hover:text-[#FF1E27]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className={`text-xs ${isActive ? 'text-[#FF1E27]' : 'text-[#888884]'}`}>
+                        {link.num}.
+                      </span>
+                      <span>{link.name}</span>
+                    </div>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+                    )}
+                  </a>
+                );
+              })}
 
               {/* Action Buttons in Mobile Drawer */}
-              <div className="pt-4 border-t border-[#111111]/15 mt-2 space-y-2.5">
+              <div className="pt-4 border-t border-[#111111]/15 mt-3 space-y-2.5">
                 {/* MERCH LAB Mobile Button Section */}
                 <Link
                   to="/merch-lab"

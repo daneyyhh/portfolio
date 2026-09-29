@@ -367,18 +367,18 @@ export default function MerchLabPage() {
       </footer>
 
       {/* ─────────────────────────────────────────────────────────────
-          EMAIL REMINDER MODAL DIALOG
+          EMAIL REMINDER MODAL DIALOG — CINEMATIC REUBG DEV ATELIER
       ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {reminderModalOpen && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            {/* Backdrop Overlay */}
+            {/* Backdrop Overlay with Rich Blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setReminderModalOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 bg-black/75 backdrop-blur-md"
               aria-hidden="true"
             />
 
@@ -388,19 +388,19 @@ export default function MerchLabPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.25, ease: EASE }}
-              className="relative w-full max-w-lg bg-[#EDECE6] border-2 border-[#111111] shadow-2xl p-6 sm:p-8 font-mono z-10 space-y-6"
+              className="relative w-full max-w-lg bg-[#0D0D12] text-[#EDECE6] border border-white/10 border-t-2 border-t-[#FF1E27] shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 sm:p-8 font-mono z-10 space-y-6"
               role="dialog"
               aria-modal="true"
               aria-labelledby="reminder-modal-title"
             >
               {/* Header */}
-              <div className="flex items-start justify-between border-b border-[#111111]/15 pb-4">
+              <div className="flex items-start justify-between border-b border-white/10 pb-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 text-[10px] uppercase font-bold text-[#FF1E27] tracking-widest">
-                    <Bell size={12} />
-                    <span>08 // LAUNCH NOTIFICATION</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+                    <span>08 // ATELIER DISPATCH PROTOCOL</span>
                   </div>
-                  <h2 id="reminder-modal-title" className="font-archivo text-xl sm:text-2xl text-[#111111] uppercase tracking-tight">
+                  <h2 id="reminder-modal-title" className="font-archivo text-xl sm:text-2xl text-white uppercase tracking-tight">
                     {subscriberData && !isEditing ? 'LAUNCH REMINDER ACTIVE' : 'GET REMINDER IN MAIL'}
                   </h2>
                 </div>
@@ -408,7 +408,7 @@ export default function MerchLabPage() {
                 <button
                   type="button"
                   onClick={() => setReminderModalOpen(false)}
-                  className="p-1.5 text-[#111111] hover:text-[#FF1E27] border border-[#111111]/20 hover:border-[#111111] transition-colors cursor-pointer"
+                  className="p-1.5 text-stone-400 hover:text-white border border-white/10 hover:border-white/30 transition-colors cursor-pointer"
                   aria-label="Close reminder modal"
                 >
                   <X size={18} />
@@ -418,39 +418,39 @@ export default function MerchLabPage() {
               {/* View 1: Active Registered Subscriber Card */}
               {subscriberData && !isEditing ? (
                 <div className="space-y-5">
-                  <div className="p-4 sm:p-5 bg-white border border-[#111111] space-y-3.5 shadow-sm">
-                    <div className="flex items-center justify-between border-b border-[#111111]/15 pb-3">
-                      <div className="flex items-center gap-2 text-xs font-bold text-[#111111] uppercase">
+                  <div className="p-4 sm:p-5 bg-[#121217] border border-white/10 space-y-3.5 shadow-inner">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                      <div className="flex items-center gap-2 text-xs font-bold text-white uppercase">
                         <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse" />
                         <span>DISPATCH QUEUE: CONFIRMED</span>
                       </div>
-                      <span className="text-[10px] bg-[#111111] text-white px-2 py-0.5 uppercase tracking-wider font-semibold">
-                        ACTIVE
+                      <span className="text-[10px] bg-[#FF1E27] text-white px-2 py-0.5 uppercase tracking-wider font-bold">
+                        TIER 01 ACTIVE
                       </span>
                     </div>
 
                     <div className="space-y-1.5 text-xs font-mono">
-                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
+                      <div className="flex justify-between py-1.5 border-b border-white/5 text-stone-400">
                         <span>SUBSCRIBED EMAIL:</span>
-                        <span className="font-bold text-[#111111] lowercase">{subscriberData.email}</span>
+                        <span className="font-bold text-white lowercase">{subscriberData.email}</span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
+                      <div className="flex justify-between py-1.5 border-b border-white/5 text-stone-400">
                         <span>TARGET RELEASE:</span>
-                        <span className="font-bold text-[#111111]">{subscriberData.milestone}</span>
+                        <span className="font-bold text-[#FF1E27]">{subscriberData.milestone}</span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#111111]/10 text-stone-600">
-                        <span>REGISTERED ON:</span>
-                        <span className="text-[#111111]">{subscriberData.formattedDate}</span>
+                      <div className="flex justify-between py-1.5 border-b border-white/5 text-stone-400">
+                        <span>ENROLLED ON:</span>
+                        <span className="text-white">{subscriberData.formattedDate}</span>
                       </div>
-                      <div className="flex justify-between py-1 text-stone-600">
-                        <span>NOTIFICATION TIER:</span>
-                        <span className="text-[#FF1E27] font-bold">TIER 01 DISPATCH</span>
+                      <div className="flex justify-between py-1.5 text-stone-400">
+                        <span>DISPATCH ACCESS:</span>
+                        <span className="text-stone-200 font-bold">CONFIDENTIAL EARLY ACCESS</span>
                       </div>
                     </div>
                   </div>
 
-                  <p className="font-sans text-xs text-[#383733] leading-relaxed">
-                    You are registered. A release alert will be sent directly to <strong>{subscriberData.email}</strong> when the 2026 drop arrives.
+                  <p className="font-sans text-xs text-stone-300 leading-relaxed">
+                    Your address (<strong className="text-white">{subscriberData.email}</strong>) is confirmed. An automated release dispatch will arrive the moment Concept 2026 drop tolerances are met.
                   </p>
 
                   <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -460,7 +460,7 @@ export default function MerchLabPage() {
                         setReminderEmail(subscriberData.email);
                         setIsEditing(true);
                       }}
-                      className="flex-1 py-3 px-4 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase transition-colors text-center cursor-pointer"
+                      className="flex-1 py-3 px-4 bg-white hover:bg-stone-200 text-[#111111] text-xs font-mono font-bold tracking-wider uppercase transition-colors text-center cursor-pointer shadow-sm"
                     >
                       UPDATE EMAIL
                     </button>
@@ -468,7 +468,7 @@ export default function MerchLabPage() {
                     <button
                       type="button"
                       onClick={handleRemoveReminder}
-                      className="py-3 px-4 border border-[#111111]/30 hover:border-[#FF1E27] hover:text-[#FF1E27] text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer text-stone-600"
+                      className="py-3 px-4 border border-white/20 hover:border-[#FF1E27] hover:text-[#FF1E27] text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer text-stone-400"
                       title="Remove your reminder registration"
                     >
                       REMOVE
@@ -478,17 +478,17 @@ export default function MerchLabPage() {
               ) : (
                 /* View 2: Registration Input Form */
                 <form onSubmit={handleSendEmailReminder} className="space-y-4">
-                  <div className="font-sans text-xs sm:text-sm text-[#383733] leading-relaxed space-y-1">
+                  <div className="font-sans text-xs sm:text-sm text-stone-300 leading-relaxed space-y-1">
                     <p>
-                      Receive an email dispatch the moment production tolerances are met and the first <strong>Concept 2026</strong> drop goes live.
+                      Receive an automated dispatch the moment production tolerances are met and the first <strong>Concept 2026</strong> collection is unlocked.
                     </p>
-                    <p className="text-[11px] font-mono text-[#555552]">
+                    <p className="text-[11px] font-mono text-stone-500">
                       Strictly zero marketing spam. Direct developer release alerts only.
                     </p>
                   </div>
 
                   <div className="space-y-1.5 pt-1">
-                    <label htmlFor="reminder-email" className="block text-[10px] uppercase tracking-wider text-[#111111] font-bold">
+                    <label htmlFor="reminder-email" className="block text-[10px] uppercase tracking-wider text-stone-300 font-bold">
                       YOUR EMAIL ADDRESS:
                     </label>
                     <div className="relative flex items-center">
@@ -500,7 +500,7 @@ export default function MerchLabPage() {
                         value={reminderEmail}
                         onChange={(e) => setReminderEmail(e.target.value)}
                         placeholder="developer@domain.com"
-                        className="w-full bg-white border border-[#111111] pl-10 pr-4 py-3 text-xs font-mono text-[#111111] placeholder:text-stone-400 focus:outline-none focus:ring-1 focus:ring-[#FF1E27] focus:border-[#FF1E27] transition-all"
+                        className="w-full bg-[#15151B] border border-white/15 pl-10 pr-4 py-3 text-xs font-mono text-white placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-[#FF1E27] focus:border-[#FF1E27] transition-all"
                       />
                     </div>
                   </div>
@@ -509,7 +509,7 @@ export default function MerchLabPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 inline-flex items-center justify-center gap-3 py-3.5 px-6 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 shadow-sm cursor-pointer disabled:opacity-75"
+                      className="flex-1 inline-flex items-center justify-center gap-3 py-3.5 px-6 bg-[#FF1E27] hover:bg-[#E00208] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 shadow-sm cursor-pointer disabled:opacity-75"
                     >
                       {isSubmitting ? (
                         <span>REGISTERING DISPATCH...</span>
@@ -525,7 +525,7 @@ export default function MerchLabPage() {
                       <button
                         type="button"
                         onClick={() => setIsEditing(false)}
-                        className="py-3.5 px-4 border border-[#111111]/30 hover:border-[#111111] text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer"
+                        className="py-3.5 px-4 border border-white/20 hover:border-white text-xs font-mono font-bold tracking-wider uppercase transition-colors cursor-pointer text-stone-300"
                       >
                         CANCEL
                       </button>
@@ -535,8 +535,8 @@ export default function MerchLabPage() {
               )}
 
               {/* Additional Reminder Options */}
-              <div className="pt-3 border-t border-[#111111]/15 space-y-2.5">
-                <div className="text-[10px] uppercase tracking-widest text-[#555552] font-bold">
+              <div className="pt-3 border-t border-white/10 space-y-2.5">
+                <div className="text-[10px] uppercase tracking-widest text-stone-400 font-bold">
                   ALTERNATIVE CALENDAR & MAIL OPTIONS:
                 </div>
                 
@@ -545,7 +545,7 @@ export default function MerchLabPage() {
                   <button
                     type="button"
                     onClick={handleDownloadIcs}
-                    className="inline-flex items-center justify-center gap-2 py-2.5 px-3 border border-[#111111]/30 hover:border-[#111111] hover:bg-white text-[10px] font-mono font-bold tracking-wider uppercase text-[#111111] transition-colors cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 py-2.5 px-3 bg-[#131318] border border-white/10 hover:border-white/25 hover:bg-[#181820] text-[10px] font-mono font-bold tracking-wider uppercase text-stone-200 hover:text-white transition-colors cursor-pointer"
                     title="Download .ics calendar event with alarm"
                   >
                     <Calendar size={13} className="text-[#FF1E27]" />
@@ -555,7 +555,7 @@ export default function MerchLabPage() {
                   {/* Direct mailto link */}
                   <a
                     href={`mailto:${personalData.email}?subject=${encodeURIComponent('[MERCH LAB] Drop Notification 2026')}&body=${encodeURIComponent(`Hi Reuben,\nPlease notify me via email (${subscriberData ? subscriberData.email : reminderEmail || 'my address'}) when Merch Lab drops.\n\nThank you!`)}`}
-                    className="inline-flex items-center justify-center gap-2 py-2.5 px-3 border border-[#111111]/30 hover:border-[#111111] hover:bg-white text-[10px] font-mono font-bold tracking-wider uppercase text-[#111111] transition-colors cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 py-2.5 px-3 bg-[#131318] border border-white/10 hover:border-white/25 hover:bg-[#181820] text-[10px] font-mono font-bold tracking-wider uppercase text-stone-200 hover:text-white transition-colors cursor-pointer"
                   >
                     <Mail size={13} className="text-[#FF1E27]" />
                     <span>DIRECT MAIL CLIENT</span>
