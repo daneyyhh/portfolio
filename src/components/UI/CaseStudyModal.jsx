@@ -22,6 +22,18 @@ import {
 
 const EASE = [0.16, 1, 0.3, 1];
 
+function formatMetric(val) {
+  if (!val) return { stat: '', unit: null };
+  if (val.includes('/ 100') || val.includes('/100')) {
+    return { stat: val, unit: null };
+  }
+  const match = val.match(/^([<>]?\s*[\d\.\+\/]+(?:\s*(?:%|ms|FPS|KB))?)\s+([A-Za-z\/][A-Za-z0-9\/\s]*)$/i);
+  if (match) {
+    return { stat: match[1].trim(), unit: match[2].trim() };
+  }
+  return { stat: val, unit: null };
+}
+
 export default function CaseStudyModal({ project, onClose, onSelectProject, allProjects = [] }) {
   const prefersReduced = useReducedMotion();
   const modalRef = useRef(null);
@@ -387,22 +399,22 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                 </div>
 
                 {/* Key Spec highlights */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4">
-                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">ARCHITECTURAL DOMAIN</span>
-                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.category}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4">
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1 min-w-0 overflow-hidden">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">ARCHITECTURAL DOMAIN</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase block truncate">{project.category}</span>
                   </div>
-                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">ENGINEERING TIMELINE</span>
-                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.year || "2026"}</span>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1 min-w-0 overflow-hidden">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">ENGINEERING TIMELINE</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase block truncate">{project.year || "2026"}</span>
                   </div>
-                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">LEAD RESPONSIBILITY</span>
-                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.role || "Systems Architect"}</span>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1 min-w-0 overflow-hidden">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">LEAD RESPONSIBILITY</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase block truncate">{project.role || "Systems Architect"}</span>
                   </div>
-                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">DEPLOYMENT READINESS</span>
-                    <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase">{projectStatus}</span>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1 min-w-0 overflow-hidden">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block truncate">DEPLOYMENT READINESS</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase block truncate">{projectStatus}</span>
                   </div>
                 </div>
               </section>
@@ -933,14 +945,35 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
                       <span>BENCHMARKS & MEASURED TELEMETRY</span>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {metrics.map((m, idx) => (
-                        <div key={idx} className="bg-white/[0.02] border border-white/15 p-5 space-y-2">
-                          <span className="text-[10px] font-mono text-slate-400 uppercase block">{m.label}</span>
-                          <span className="font-syne text-2xl sm:text-3xl font-black text-white block">{m.value}</span>
-                          <span className="text-xs font-sans text-slate-400 block leading-normal">{m.desc}</span>
-                        </div>
-                      ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {metrics.map((m, idx) => {
+                        const { stat, unit } = formatMetric(m.value);
+                        return (
+                          <div
+                            key={idx}
+                            className="bg-white/[0.02] border border-white/15 hover:border-[#FF1E27] transition-all p-5 space-y-3 min-w-0 overflow-hidden flex flex-col justify-between"
+                          >
+                            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block truncate" title={m.label}>
+                              {m.label}
+                            </span>
+
+                            <div className="space-y-1">
+                              <span className="font-syne text-2xl sm:text-3xl font-black text-white block tracking-tight leading-none truncate">
+                                {stat}
+                              </span>
+                              {unit && (
+                                <span className="font-mono text-xs font-bold text-[#FF1E27] uppercase tracking-wider block truncate">
+                                  {unit}
+                                </span>
+                              )}
+                            </div>
+
+                            <span className="text-xs font-sans text-slate-400 block leading-relaxed pt-2 border-t border-white/5">
+                              {m.desc}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
