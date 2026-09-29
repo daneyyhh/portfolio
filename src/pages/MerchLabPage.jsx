@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Plus, Globe } from 'lucide-react';
-import { personalData } from '../data/portfolioData';
+import { Globe } from 'lucide-react';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -88,25 +87,10 @@ export default function MerchLabPage() {
             </div>
           </div>
 
-          {/* Subheading: UNDER DEVELOPMENT . with Single Live Running Status 30% */}
-          <div className="flex flex-wrap items-center gap-3 pt-0.5 font-mono text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#111111]">
-            <div className="flex items-center gap-1.5">
-              <span>UNDER DEVELOPMENT</span>
-              <span className="inline-block w-1.5 h-1.5 bg-[#FF1E27] shrink-0" />
-            </div>
-
-            {/* Single Live Running Status 30% Indicator */}
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#111111] text-white text-xs font-mono tracking-wider shadow-sm select-none">
-              <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF1E27] opacity-80" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF1E27]" />
-              </span>
-              <span className="text-stone-300 font-normal">LIVE RUNNING:</span>
-              <span className="text-[#FF1E27] font-extrabold tracking-widest">STATUS 30%</span>
-              <div className="hidden sm:block w-10 h-1 bg-white/20 rounded-full overflow-hidden ml-0.5">
-                <div className="h-full bg-[#FF1E27] w-[30%] animate-pulse" />
-              </div>
-            </div>
+          {/* Subheading: UNDER DEVELOPMENT . */}
+          <div className="font-mono text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#111111] flex items-center gap-1.5 pt-0.5">
+            <span>UNDER DEVELOPMENT</span>
+            <span className="inline-block w-1.5 h-1.5 bg-[#FF1E27] shrink-0" />
           </div>
 
           {/* Narrative Body Copy */}
@@ -116,34 +100,69 @@ export default function MerchLabPage() {
             <p>Stay tuned.</p>
           </div>
 
-          {/* Action Row: Pill Button + Circle (+) + Stacked Text (Zero Layout Shifts) */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
-            {/* Follow Updates Pill Button (Links to Updates without layout shift or zooming) */}
-            <a
-              href={personalData.github || "https://github.com/daneyyhh"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3.5 px-6 py-3 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
-              title="Follow development updates on GitHub"
-            >
-              <span>FOLLOW UPDATES</span>
-              <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-
-            {/* Circular (+) Mark (Smooth micro-rotation, zero layout shifting) */}
-            <div
-              className="w-10 h-10 rounded-full border border-[#111111]/30 hover:border-[#111111] hover:bg-[#111111] hover:text-white flex items-center justify-center text-[#111111] transition-all duration-200 select-none cursor-default group"
-              title="Atelier Philosophy"
-            >
-              <Plus size={16} className="transition-transform duration-300 group-hover:rotate-90" />
+          {/* ─────────────────────────────────────────────────────────────
+              HIGHLIGHTED LIVE STATUS 30% LOADING BAR WITH RUNNING ANIMATION
+          ───────────────────────────────────────────────────────────── */}
+          <div className="pt-2 max-w-lg space-y-2.5">
+            {/* Telemetry Header */}
+            <div className="flex items-center justify-between font-mono text-xs sm:text-sm font-bold tracking-wider">
+              <div className="flex items-center gap-2.5 text-[#111111]">
+                <span className="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF1E27] opacity-80" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF1E27]" />
+                </span>
+                <span className="tracking-[0.2em] uppercase">LIVE STATUS</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-[#555552] uppercase font-normal tracking-widest hidden sm:inline">PROGRESS:</span>
+                <span className="text-[#FF1E27] text-sm sm:text-base font-extrabold tracking-widest font-mono">30%</span>
+              </div>
             </div>
 
-            {/* Stacked Small Monospace Statement */}
-            <div className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#111111] leading-tight select-none">
-              <div>SAME</div>
-              <div>MINDSET.</div>
-              <div>DIFFERENT</div>
-              <div>MEDIUM.</div>
+            {/* Industrial High-Tech Loading Bar */}
+            <div className="relative w-full h-4 sm:h-5 bg-[#111111]/10 border-2 border-[#111111] p-[2px] shadow-sm overflow-hidden select-none">
+              {/* 30% Progress Fill with Running Animation */}
+              <div
+                className="h-full bg-[#FF1E27] relative overflow-hidden"
+                style={{ width: '30%' }}
+              >
+                {/* Running Diagonal Barber-Pole Stripes */}
+                <div
+                  className="absolute inset-0 opacity-40 animate-running-stripes"
+                  style={{
+                    backgroundImage: 'linear-gradient(45deg, rgba(255, 255, 255, 0.45) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0.45) 75%, transparent 75%, transparent)',
+                    backgroundSize: '20px 20px',
+                  }}
+                />
+
+                {/* Continuous Shimmer Light Beam */}
+                <motion.div
+                  className="absolute top-0 bottom-0 w-10 bg-gradient-to-r from-transparent via-white/70 to-transparent"
+                  animate={{ x: ['-100%', '300%'] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: 'linear' }}
+                />
+              </div>
+
+              {/* Glowing Leading Marker at the 30% Boundary */}
+              <div
+                className="absolute top-0 bottom-0 w-[2px] bg-white shadow-[0_0_8px_#FF1E27] z-10"
+                style={{ left: 'calc(30% - 1px)' }}
+              />
+
+              {/* Remaining Empty Track Grid Markings */}
+              <div
+                className="absolute top-0 bottom-0 right-0 opacity-15 pointer-events-none"
+                style={{
+                  left: '30%',
+                  backgroundImage: 'repeating-linear-gradient(90deg, #111111, #111111 1px, transparent 1px, transparent 12px)',
+                }}
+              />
+            </div>
+
+            {/* Bottom Telemetry Meta */}
+            <div className="flex items-center justify-between font-mono text-[10px] sm:text-[11px] text-[#555552] uppercase tracking-wider">
+              <span>ACTIVE STAGE: PROTOTYPING & MATERIAL SAMPLING</span>
+              <span className="text-[#111111] font-semibold">STAGE 01 // 03</span>
             </div>
           </div>
 
