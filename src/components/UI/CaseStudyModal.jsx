@@ -1,669 +1,1086 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   X,
   ExternalLink,
   Github,
+  ArrowUpRight,
+  ArrowLeft,
+  ArrowRight,
   Layers,
   CheckCircle2,
   GitBranch,
   Cpu,
-  Zap,
   ShieldCheck,
-  ArrowRight,
-  Play,
-  Pause,
-  RotateCcw,
   Code2,
   Scale,
   Gauge,
   Terminal,
-  Activity
+  Activity,
+  Maximize2
 } from 'lucide-react';
 
-export default function CaseStudyModal({ project, onClose }) {
-  const [activeTab, setActiveTab] = useState('flowchart');
+const EASE = [0.16, 1, 0.3, 1];
+
+export default function CaseStudyModal({ project, onClose, onSelectProject, allProjects = [] }) {
+  const prefersReduced = useReducedMotion();
+  const modalRef = useRef(null);
+  const overlayRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const previouslyFocusedElementRef = useRef(null);
+
+  // Optional architecture deep-dive views (for projects with rich pipelines)
+  const [architectureSubTab, setArchitectureSubTab] = useState('nodes');
   const [selectedStepIdx, setSelectedStepIdx] = useState(0);
   const [isPlayingFlow, setIsPlayingFlow] = useState(false);
 
+  // Focus trapping and keyboard management
   useEffect(() => {
-    if (project) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [project, onClose]);
+    previouslyFocusedElementRef.current = document.activeElement;
 
-  // Flow playback simulation
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
+        );
+        const focusable = Array.from(focusableElements).filter(
+          (el) => el.offsetParent !== null && !el.hasAttribute('aria-hidden')
+        );
+
+        if (focusable.length === 0) return;
+
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Initial focus placed on close button
+    const timer = setTimeout(() => {
+      if (closeButtonRef.current) {
+        closeButtonRef.current.focus();
+      }
+    }, 50);
+
+    // Prevent background scrolling while open
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+      clearTimeout(timer);
+      if (previouslyFocusedElementRef.current && previouslyFocusedElementRef.current.focus) {
+        previouslyFocusedElementRef.current.focus();
+      }
+    };
+  }, [onClose]);
+
+  // Flowchart pipeline playback interval (Nexora / FiveM / Haunted Code)
   useEffect(() => {
     let interval;
     if (isPlayingFlow && project?.caseStudy?.flowchart?.length) {
       interval = setInterval(() => {
         setSelectedStepIdx((prev) => (prev + 1) % project.caseStudy.flowchart.length);
-      }, 2400);
+      }, 2500);
     }
     return () => clearInterval(interval);
   }, [isPlayingFlow, project]);
 
+  // Click outside backdrop to close
+  const handleBackdropClick = (e) => {
+    if (e.target === overlayRef.current) {
+      onClose();
+    }
+  };
+
+  // Smooth scroll to a case study section within the modal
+  const scrollToSection = (sectionId) => {
+    const container = scrollContainerRef.current;
+    const targetElement = document.getElementById(sectionId);
+    if (container && targetElement) {
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = targetElement.getBoundingClientRect();
+      const relativeTop = targetRect.top - containerRect.top + container.scrollTop - 130;
+      container.scrollTo({
+        top: relativeTop,
+        behavior: prefersReduced ? 'auto' : 'smooth',
+      });
+    }
+  };
+
   if (!project) return null;
+
   const cs = project.caseStudy || {};
-  const flowchart = cs.flowchart || [];
-  const patterns = cs.patterns || [];
-  const tradeoffs = cs.tradeoffs || [];
-  const metrics = cs.metrics || [];
+  const projectNumber = project.number || "01";
+  const projectStatus = project.status || "PRODUCTION READY";
+
+  // Section 01 — OVERVIEW
+  const overviewText = cs.overview || project.desc || project.shortDesc || null;
+  const hasOverview = Boolean(overviewText);
+
+  // Section 02 — PROBLEM
+  const problemText = cs.problem || project.challenge || null;
+  const hasProblem = Boolean(problemText);
+
+  // Section 03 — APPROACH
+  const approachText = cs.approach || project.built || null;
+  const hasApproach = Boolean(approachText);
+
+  // Section 04 — UI / UX
+  const uiUxText = cs.uiUx || cs.uiDesign || null;
+  const hasUiUx = Boolean(uiUxText);
+
+  // Section 05 — DEVELOPMENT
+  const developmentText = cs.development || null;
+  const hasDevelopment = Boolean(developmentText);
+
+  // Section 06 — ARCHITECTURE
+  const architectureNodes = Array.isArray(cs.architecture) ? cs.architecture : [];
+  const flowchart = Array.isArray(cs.flowchart) ? cs.flowchart : [];
+  const patterns = Array.isArray(cs.patterns) ? cs.patterns : [];
+  const tradeoffs = Array.isArray(cs.tradeoffs) ? cs.tradeoffs : [];
+  const metrics = Array.isArray(cs.metrics) ? cs.metrics : [];
+  const hasArchitecture = Boolean(
+    architectureNodes.length > 0 ||
+    (typeof cs.architecture === 'string' && cs.architecture.trim().length > 0) ||
+    flowchart.length > 0
+  );
+
+  // Section 07 — TECHNOLOGY
+  const techCategories = Array.isArray(cs.technology) ? cs.technology : [];
+  const rawTech = Array.isArray(project.technologies) ? project.technologies : [];
+  const hasTechnology = Boolean(techCategories.length > 0 || rawTech.length > 0);
+
+  // Section 08 — RESULT
+  const resultText = cs.result || null;
+  const hasResult = Boolean(resultText || metrics.length > 0);
+
+  // Section 09 — LIVE PROJECT / GITHUB
+  const githubUrl = project.github || project.githubLink || cs.githubUrl || null;
+  const liveUrl = project.link || project.demoLink || cs.liveUrl || null;
+  const hasLiveLinks = Boolean(githubUrl || liveUrl);
+
+  // Filter only sections for which real information exists
+  const availableSections = [
+    hasOverview && { id: 'sec-overview', num: '01', title: 'OVERVIEW' },
+    hasProblem && { id: 'sec-problem', num: '02', title: 'PROBLEM' },
+    hasApproach && { id: 'sec-approach', num: '03', title: 'APPROACH' },
+    hasUiUx && { id: 'sec-uiux', num: '04', title: 'UI / UX' },
+    hasDevelopment && { id: 'sec-development', num: '05', title: 'DEVELOPMENT' },
+    hasArchitecture && { id: 'sec-architecture', num: '06', title: 'ARCHITECTURE' },
+    hasTechnology && { id: 'sec-technology', num: '07', title: 'TECHNOLOGY' },
+    hasResult && { id: 'sec-result', num: '08', title: 'RESULT' },
+    hasLiveLinks && { id: 'sec-live', num: '09', title: 'LIVE / GITHUB' },
+  ].filter(Boolean);
+
+  // Next / Previous Project Navigation
+  const currentIndex = allProjects.findIndex((p) => p.id === project.id);
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : allProjects[allProjects.length - 1];
+  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : allProjects[0];
 
   const currentStep = flowchart[selectedStepIdx] || flowchart[0] || null;
 
-  const tabs = [
-    { id: 'flowchart', label: '01. ARCHITECTURE FLOWCHART', icon: GitBranch },
-    { id: 'patterns', label: '02. DESIGN PATTERNS', icon: Code2 },
-    { id: 'tradeoffs', label: '03. TRADE-OFFS & METRICS', icon: Scale },
-    { id: 'specs', label: '04. SPECIFICATIONS & LEARNINGS', icon: Terminal },
-  ];
-
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[99999] bg-[#0A0A0A]/95 backdrop-blur-xl flex items-center justify-center p-2 sm:p-4 md:p-8 overflow-y-auto font-mono selection:bg-[#FF1E27] selection:text-white"
+      <div
+        ref={overlayRef}
+        onClick={handleBackdropClick}
+        className="fixed inset-0 z-[999999] bg-[#050505]/95 backdrop-blur-xl flex items-center justify-center p-0 md:p-4 lg:p-6 overflow-hidden selection:bg-[#FF1E27] selection:text-white"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="case-study-title"
+        aria-describedby="case-study-overview"
       >
-        <div className="relative w-full max-w-6xl bg-[#111111] border border-white/15 my-6 overflow-hidden shadow-2xl rounded-none text-slate-200">
-          
-          {/* Top Bar Header */}
-          <div className="sticky top-0 z-30 bg-[#0A0A0A] border-b border-white/10 px-4 sm:px-6 py-3.5 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FF1E27] animate-pulse"></span>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] tracking-widest uppercase">
-                <span className="font-bold">SYSTEM CASE STUDY //</span>
-                <span className="text-white hidden sm:inline">{project.title}</span>
-                <span className="text-slate-500 text-[10px]">[{project.year || "2026"}]</span>
+        <motion.div
+          ref={modalRef}
+          initial={
+            prefersReduced
+              ? { opacity: 0 }
+              : { opacity: 0, y: 40, scale: 0.98 }
+          }
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={
+            prefersReduced
+              ? { opacity: 0 }
+              : { opacity: 0, y: 30, scale: 0.98, transition: { duration: 0.25, ease: EASE } }
+          }
+          transition={{ duration: 0.45, ease: EASE }}
+          className="relative w-full h-full md:h-[94vh] max-w-7xl bg-[#0C0C0D] border-0 md:border md:border-white/15 overflow-hidden shadow-2xl flex flex-col font-mono text-slate-200"
+        >
+          {/* ─────────────────────────────────────────────────────────────
+              STICKY TOP EDITORIAL CONTROL BAR
+          ───────────────────────────────────────────────────────────── */}
+          <header className="sticky top-0 z-40 bg-[#0C0C0D]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 md:px-8 py-3.5 flex items-center justify-between gap-4 shrink-0">
+            {/* Left Project Tag & Status */}
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="flex items-center gap-2 text-xs font-mono tracking-widest uppercase">
+                <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse shrink-0" />
+                <span className="text-[#FF1E27] font-bold shrink-0">PROJECT // {projectNumber}</span>
+                <span className="text-white/40 hidden sm:inline">|</span>
+                <span className="text-white font-bold truncate hidden sm:inline">{project.title}</span>
+              </div>
+
+              <div className="hidden lg:flex items-center gap-2 bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10px] font-mono text-emerald-400 uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>{projectStatus}</span>
               </div>
             </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="hidden md:inline-block text-[10px] text-slate-400 border border-white/10 px-2 py-0.5">
-                ESC TO CLOSE
+
+            {/* Right Action: [ESC] + Close Button */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <span className="hidden sm:inline-block text-[10px] text-slate-400 font-mono tracking-widest border border-white/10 px-2 py-1">
+                ESC KEY
               </span>
+
               <button
+                ref={closeButtonRef}
                 onClick={onClose}
-                className="p-1.5 sm:p-2 bg-white/5 hover:bg-[#FF1E27] hover:text-white border border-white/10 rounded-none transition-all cursor-pointer"
-                title="Close Case Study"
+                aria-label="Close Case Study"
+                className="group flex items-center gap-2 bg-white/5 hover:bg-[#FF1E27] text-white border border-white/15 px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF1E27]"
               >
-                <X size={18} />
+                <span className="hidden xs:inline text-[11px]">CLOSE</span>
+                <X size={16} className="group-hover:rotate-90 transition-transform duration-200" />
               </button>
             </div>
-          </div>
+          </header>
 
-          {/* Modal Scrollable Container */}
-          <div className="p-4 sm:p-8 md:p-10 space-y-8 max-h-[82vh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
-            
-            {/* Hero Title & System Tags */}
-            <div className="space-y-4 border-b border-white/10 pb-8">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="inline-flex items-center gap-2 bg-[#FF1E27]/10 border border-[#FF1E27]/30 text-[#FF1E27] px-3 py-1 text-xs font-mono tracking-widest uppercase">
-                  <Activity size={13} />
-                  <span>{project.category}</span>
-                </div>
-                <div className="text-xs font-mono text-slate-400">
-                  ROLE: <span className="text-white font-bold">{project.role || "System Architect"}</span>
-                </div>
-              </div>
-              
-              <h1 className="font-syne text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tight uppercase">
-                {project.title}
-              </h1>
+          {/* ─────────────────────────────────────────────────────────────
+              STICKY SECTION JUMP PILLS (Shows only sections with real data)
+          ───────────────────────────────────────────────────────────── */}
+          {availableSections.length > 1 && (
+            <nav
+              aria-label="Case Study Section Navigation"
+              className="sticky top-[53px] z-30 bg-[#080809]/95 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 md:px-8 py-2 overflow-x-auto scrollbar-none flex items-center gap-1.5 sm:gap-2 shrink-0"
+            >
+              <span className="text-[10px] text-slate-500 font-mono tracking-widest uppercase hidden md:inline mr-2 shrink-0">
+                JUMP TO:
+              </span>
+              {availableSections.map((sec) => (
+                <button
+                  key={sec.id}
+                  onClick={() => scrollToSection(sec.id)}
+                  className="px-2.5 sm:px-3 py-1 text-[10px] sm:text-[11px] font-mono border border-white/10 bg-white/[0.02] text-slate-300 hover:text-white hover:border-[#FF1E27] hover:bg-[#FF1E27]/10 transition-all uppercase whitespace-nowrap cursor-pointer shrink-0 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF1E27]"
+                >
+                  <span className="text-[#FF1E27] font-bold mr-1">{sec.num}</span>
+                  <span>{sec.title}</span>
+                </button>
+              ))}
+            </nav>
+          )}
 
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans max-w-4xl">
-                {cs.overview || project.shortDesc}
-              </p>
-
-              {/* Technologies Pill Grid */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                {project.technologies.map(tech => (
-                  <span key={tech} className="bg-white/5 border border-white/10 text-xs px-2.5 py-1 text-slate-300 font-mono flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-[#FF1E27]"></span>
-                    {tech}
+          {/* ─────────────────────────────────────────────────────────────
+              SCROLLABLE EDITORIAL CASE STUDY BODY
+          ───────────────────────────────────────────────────────────── */}
+          <div
+            ref={scrollContainerRef}
+            className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-8 md:p-12 lg:p-16 space-y-16 sm:space-y-24 scroll-smooth scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
+          >
+            {/* ── HERO BANNER & TITLE ── */}
+            <header className="space-y-8 border-b border-white/10 pb-12 sm:pb-16 w-full">
+              {/* Meta details bar */}
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <span className="text-xs font-mono font-bold bg-[#FF1E27] text-white px-3 py-1 uppercase tracking-widest">
+                    CASE STUDY // {projectNumber}
                   </span>
-                ))}
+                  <span className="text-xs font-mono text-slate-300 bg-white/5 border border-white/10 px-3 py-1 uppercase tracking-widest">
+                    {project.category}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
+                  <span>
+                    YEAR: <strong className="text-white font-bold">{project.year || "2026"}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    STATUS: <strong className="text-emerald-400 font-bold">{projectStatus}</strong>
+                  </span>
+                </div>
               </div>
 
-              {/* Visual Banner */}
-              <div className="relative h-48 sm:h-72 md:h-80 w-full overflow-hidden border border-white/10 mt-4 group">
+              {/* Large Project Title */}
+              <div className="space-y-3">
+                <h1
+                  id="case-study-title"
+                  className="font-syne text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-white tracking-tight leading-[0.95]"
+                >
+                  {project.title}
+                </h1>
+
+                {project.role && (
+                  <p className="text-xs sm:text-sm font-mono text-slate-400 tracking-wider uppercase">
+                    ENGINEERING ROLE: <span className="text-white font-bold">{project.role}</span>
+                  </p>
+                )}
+              </div>
+
+              {/* Editorial Hero Image with Framed Metadata */}
+              <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] max-h-[520px] overflow-hidden border border-white/15 bg-[#141416] group">
                 <img
                   src={project.img}
-                  alt={project.title}
-                  className="w-full h-full object-cover filter contrast-115"
+                  alt={`Hero capture for ${project.title}`}
+                  className="w-full h-full object-cover filter contrast-110 select-none group-hover:scale-101 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/40 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 sm:left-6 flex items-center gap-2 bg-[#0A0A0A]/90 border border-white/15 px-3 py-1.5 text-xs text-white">
-                  <Cpu size={14} className="text-[#FF1E27]" />
-                  <span className="font-bold tracking-wider">PRODUCTION ARCHITECTURE PROFILE</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0D] via-[#0C0C0D]/20 to-transparent pointer-events-none" />
+
+                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                  <div className="inline-flex items-center gap-2 bg-[#0C0C0D]/90 backdrop-blur-md border border-white/20 px-3 py-1.5 text-[10px] sm:text-xs text-white font-mono">
+                    <Activity size={13} className="text-[#FF1E27]" />
+                    <span className="font-bold tracking-wider">PRODUCTION VERIFIED ARTIFACT</span>
+                  </div>
+
+                  {project.technologies && project.technologies.length > 0 && (
+                    <div className="hidden sm:flex flex-wrap gap-1">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span key={tech} className="bg-[#0C0C0D]/90 backdrop-blur-md border border-white/10 text-[9px] font-mono px-2 py-0.5 text-slate-300">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            </header>
 
-            {/* Navigation Tab Bar */}
-            <div className="sticky top-0 z-20 bg-[#111111]/95 backdrop-blur-md py-2 border-b border-white/15 flex flex-wrap gap-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-3 sm:px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase border transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-[#FF1E27] text-white border-[#FF1E27] shadow-lg shadow-[#FF1E27]/20'
-                        : 'bg-[#0A0A0A] border-white/10 text-slate-300 hover:border-white/30 hover:text-white'
-                    }`}
-                  >
-                    <Icon size={14} />
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* TAB 01: ARCHITECTURE FLOWCHART & PIPELINE */}
-            {activeTab === 'flowchart' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-8"
-              >
-                {/* Intro summary & simulator controls */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0A0A0A] border border-white/10 p-5">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-xs text-[#FF1E27] font-bold tracking-widest uppercase">
-                      <GitBranch size={15} />
-                      <span>END-TO-END DATA EXECUTION PIPELINE</span>
-                    </div>
-                    <p className="text-slate-400 text-xs font-sans">
-                      Interactive sequential dataflow from user interaction, security gateway, concurrency lock, persistence, to real-time event distribution.
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2 self-start md:self-auto">
-                    <button
-                      onClick={() => setIsPlayingFlow(!isPlayingFlow)}
-                      className={`flex items-center gap-2 px-3 py-1.5 text-xs font-mono font-bold border transition-all cursor-pointer ${
-                        isPlayingFlow
-                          ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                          : 'bg-white/5 border-white/20 text-slate-200 hover:bg-white/10'
-                      }`}
-                    >
-                      {isPlayingFlow ? <Pause size={13} /> : <Play size={13} />}
-                      <span>{isPlayingFlow ? 'PAUSE PIPELINE' : 'RUN SIMULATION'}</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsPlayingFlow(false);
-                        setSelectedStepIdx(0);
-                      }}
-                      className="p-1.5 bg-white/5 hover:bg-white/10 border border-white/20 text-slate-300 transition-all cursor-pointer"
-                      title="Reset Pipeline"
-                    >
-                      <RotateCcw size={13} />
-                    </button>
-                  </div>
+            {/* ─────────────────────────────────────────────────────────────
+                01 — OVERVIEW
+            ───────────────────────────────────────────────────────────── */}
+            {hasOverview && (
+              <section id="sec-overview" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    01 — OVERVIEW
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
                 </div>
 
-                {/* Flowchart Horizontal Visualizer Grid */}
-                <div className="space-y-3">
-                  <div className="text-[10px] text-slate-400 font-mono tracking-widest uppercase flex items-center justify-between">
-                    <span>CLICK ANY STAGE TO INSPECT TELEMETRY & I/O</span>
-                    <span>ACTIVE STAGE: {selectedStepIdx + 1} OF {flowchart.length}</span>
-                  </div>
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    SYSTEM SYNOPSIS & SCOPE
+                  </h2>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
-                    {flowchart.map((step, idx) => {
-                      const isSelected = selectedStepIdx === idx;
-                      return (
-                        <button
-                          key={step.id || idx}
-                          onClick={() => {
-                            setIsPlayingFlow(false);
-                            setSelectedStepIdx(idx);
-                          }}
-                          className={`relative text-left p-3.5 border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
-                            isSelected
-                              ? 'bg-[#181818] border-[#FF1E27] shadow-lg shadow-[#FF1E27]/10 -translate-y-1'
-                              : 'bg-[#0A0A0A] border-white/10 hover:border-white/30 opacity-75 hover:opacity-100'
-                          }`}
-                        >
-                          {/* Active Step Indicator Pulse */}
-                          {isSelected && (
-                            <span className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-[#FF1E27] rounded-full animate-ping"></span>
-                          )}
-
-                          <div className="space-y-1.5">
-                            <div className="flex items-center justify-between">
-                              <span className={`text-[10px] font-mono font-bold ${isSelected ? 'text-[#FF1E27]' : 'text-slate-500'}`}>
-                                STEP {step.step}
-                              </span>
-                              <span className="text-[9px] font-mono px-1.5 py-0.2 bg-white/5 border border-white/10 text-slate-400">
-                                {step.type?.split('_')[0] || "NODE"}
-                              </span>
-                            </div>
-
-                            <h4 className="text-xs font-bold text-white uppercase leading-snug line-clamp-2">
-                              {step.title}
-                            </h4>
-                          </div>
-
-                          <div className="pt-3 border-t border-white/5 mt-2 space-y-1">
-                            <div className="text-[9px] font-mono text-[#FF1E27] truncate">
-                              {step.protocol}
-                            </div>
-                            <div className="text-[9px] font-mono text-slate-400 truncate">
-                              {step.latency}
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Animated Pipeline Connector Line Indicator */}
-                <div className="relative h-2 bg-[#0A0A0A] border border-white/10 overflow-hidden">
-                  <motion.div
-                    className="absolute top-0 bottom-0 bg-[#FF1E27]"
-                    animate={{
-                      left: `${(selectedStepIdx / (flowchart.length - 1 || 1)) * 90}%`,
-                      width: '10%'
-                    }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  />
-                </div>
-
-                {/* Selected Node Deep-Dive Inspector Panel */}
-                {currentStep && (
-                  <div className="bg-[#0A0A0A] border-2 border-[#FF1E27] p-5 sm:p-8 space-y-6">
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="bg-[#FF1E27] text-white text-[10px] font-bold px-2 py-0.5">
-                            STAGE {currentStep.step}
-                          </span>
-                          <span className="text-xs font-mono text-slate-400">
-                            {currentStep.type}
-                          </span>
-                        </div>
-                        <h3 className="font-syne text-xl sm:text-2xl font-bold text-white uppercase">
-                          {currentStep.title}
-                        </h3>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <div className="text-right font-mono">
-                          <div className="text-[10px] text-slate-400">EXECUTION SLA</div>
-                          <div className="text-xs font-bold text-[#FF1E27]">{currentStep.latency}</div>
-                        </div>
-                        <div className="text-right font-mono border-l border-white/10 pl-3">
-                          <div className="text-[10px] text-slate-400">PROTOCOL</div>
-                          <div className="text-xs font-bold text-white">{currentStep.protocol}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Operational Action Description */}
-                    <div className="space-y-2">
-                      <div className="text-xs text-[#FF1E27] font-mono tracking-widest">STAGE OPERATION //</div>
-                      <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                        {currentStep.action}
-                      </p>
-                    </div>
-
-                    {/* I/O Payloads Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Input schema */}
-                      <div className="bg-[#141414] border border-white/10 p-4 space-y-2">
-                        <div className="flex items-center justify-between text-[11px] text-slate-400">
-                          <span className="text-emerald-400 font-bold">INPUT DATA PAYLOAD</span>
-                          <span className="font-mono text-[10px]">INGRESS</span>
-                        </div>
-                        <pre className="font-mono text-[11px] text-slate-300 bg-[#0A0A0A] p-3 border border-white/5 overflow-x-auto whitespace-pre-wrap">
-                          {currentStep.inputs}
-                        </pre>
-                      </div>
-
-                      {/* Output schema */}
-                      <div className="bg-[#141414] border border-white/10 p-4 space-y-2">
-                        <div className="flex items-center justify-between text-[11px] text-slate-400">
-                          <span className="text-cyan-400 font-bold">OUTPUT / STATE MUTATION</span>
-                          <span className="font-mono text-[10px]">EGRESS</span>
-                        </div>
-                        <pre className="font-mono text-[11px] text-slate-300 bg-[#0A0A0A] p-3 border border-white/5 overflow-x-auto whitespace-pre-wrap">
-                          {currentStep.outputs}
-                        </pre>
-                      </div>
-                    </div>
-
-                    {/* Tech & Resilience */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                      <div className="flex items-start gap-3 bg-white/5 p-3.5 border border-white/10">
-                        <Cpu size={18} className="text-[#FF1E27] shrink-0 mt-0.5" />
-                        <div className="space-y-1">
-                          <div className="text-[10px] text-slate-400 uppercase font-bold">Technology Stack</div>
-                          <div className="text-xs text-white font-mono">{currentStep.tech}</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-3 bg-white/5 p-3.5 border border-white/10">
-                        <ShieldCheck size={18} className="text-emerald-400 shrink-0 mt-0.5" />
-                        <div className="space-y-1">
-                          <div className="text-[10px] text-slate-400 uppercase font-bold">Failover & Circuit Breaker</div>
-                          <div className="text-xs text-slate-300 font-sans leading-relaxed">{currentStep.failover}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Stepper Navigator Buttons */}
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                      <button
-                        onClick={() => setSelectedStepIdx(Math.max(0, selectedStepIdx - 1))}
-                        disabled={selectedStepIdx === 0}
-                        className="px-4 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed border border-white/15 text-xs font-mono transition-all cursor-pointer"
-                      >
-                        [ ← PREVIOUS STAGE ]
-                      </button>
-
-                      <div className="text-xs font-mono text-slate-400">
-                        STAGE {selectedStepIdx + 1} / {flowchart.length}
-                      </div>
-
-                      <button
-                        onClick={() => setSelectedStepIdx(Math.min(flowchart.length - 1, selectedStepIdx + 1))}
-                        disabled={selectedStepIdx === flowchart.length - 1}
-                        className="px-4 py-2 bg-[#FF1E27] hover:bg-[#E00208] disabled:opacity-30 disabled:cursor-not-allowed text-white text-xs font-mono font-bold transition-all cursor-pointer"
-                      >
-                        [ NEXT STAGE → ]
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            )}
-
-            {/* TAB 02: DESIGN PATTERNS */}
-            {activeTab === 'patterns' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                <div className="bg-[#0A0A0A] border border-white/10 p-5 space-y-1">
-                  <div className="flex items-center gap-2 text-xs text-[#FF1E27] font-bold tracking-widest uppercase">
-                    <Code2 size={15} />
-                    <span>SOFTWARE DESIGN PATTERNS & PRINCIPLES</span>
-                  </div>
-                  <p className="text-slate-400 text-xs font-sans">
-                    Architectural paradigms implemented to solve concurrency, latency, distributed state, and hardware resource constraints.
+                  <p id="case-study-overview" className="font-sans text-slate-200 text-base sm:text-lg md:text-xl leading-relaxed">
+                    {overviewText}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {patterns.map((pat, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-[#0A0A0A] border border-white/15 hover:border-[#FF1E27] transition-all p-6 space-y-4 rounded-none flex flex-col justify-between"
+                {/* Key Spec highlights */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4">
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">ARCHITECTURAL DOMAIN</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.category}</span>
+                  </div>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">ENGINEERING TIMELINE</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.year || "2026"}</span>
+                  </div>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">LEAD RESPONSIBILITY</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase">{project.role || "Systems Architect"}</span>
+                  </div>
+                  <div className="bg-white/[0.03] border border-white/10 p-4 space-y-1">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">DEPLOYMENT READINESS</span>
+                    <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase">{projectStatus}</span>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                02 — PROBLEM
+            ───────────────────────────────────────────────────────────── */}
+            {hasProblem && (
+              <section id="sec-problem" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    02 — PROBLEM
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    CORE ENGINEERING CHALLENGE
+                  </h2>
+
+                  <div className="bg-[#140F0F] border-l-4 border-[#FF1E27] p-5 sm:p-7 md:p-8 space-y-3">
+                    <div className="text-[10px] font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
+                      CRITICAL TECHNICAL BOTTLENECK & CONSTRAINTS //
+                    </div>
+                    <p className="font-sans text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed">
+                      {problemText}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                03 — APPROACH
+            ───────────────────────────────────────────────────────────── */}
+            {hasApproach && (
+              <section id="sec-approach" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    03 — APPROACH
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    ENGINEERING METHODOLOGY & PARADIGM
+                  </h2>
+
+                  <div className="bg-white/[0.02] border border-white/15 p-5 sm:p-7 md:p-8 space-y-3">
+                    <div className="text-[10px] font-mono text-white/50 tracking-widest uppercase font-bold">
+                      ARCHITECTURAL STRATEGY & DECISION MATRIX //
+                    </div>
+                    <p className="font-sans text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed">
+                      {approachText}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                04 — UI / UX
+            ───────────────────────────────────────────────────────────── */}
+            {hasUiUx && (
+              <section id="sec-uiux" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    04 — UI / UX
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    INTERACTION DESIGN & USER INTERFACE DISCIPLINE
+                  </h2>
+
+                  <div className="bg-white/[0.02] border-l-4 border-slate-400 p-5 sm:p-7 md:p-8 space-y-3">
+                    <div className="text-[10px] font-mono text-slate-400 tracking-widest uppercase font-bold">
+                      VISUAL HIERARCHY, ACCESSIBILITY & KINETIC FEEDBACK //
+                    </div>
+                    <p className="font-sans text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed">
+                      {uiUxText}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                05 — DEVELOPMENT
+            ───────────────────────────────────────────────────────────── */}
+            {hasDevelopment && (
+              <section id="sec-development" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    05 — DEVELOPMENT
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    CODE STANDARDS & MODULAR ARCHITECTURE
+                  </h2>
+
+                  <div className="bg-white/[0.02] border border-white/15 p-5 sm:p-7 md:p-8 space-y-3">
+                    <div className="text-[10px] font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
+                      IMPLEMENTATION RIGOR, UNIT TESTS & STATE MANAGEMENT //
+                    </div>
+                    <p className="font-sans text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed">
+                      {developmentText}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                06 — ARCHITECTURE
+            ───────────────────────────────────────────────────────────── */}
+            {hasArchitecture && (
+              <section id="sec-architecture" className="space-y-8 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    06 — ARCHITECTURE
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    SYSTEM TOPOLOGY & PIPELINES
+                  </h2>
+                  <p className="font-sans text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Production architecture mapping the end-to-end flow from client presentation through security boundaries, concurrency locks, persistence layers, to event streams.
+                  </p>
+                </div>
+
+                {/* Architecture Sub-tab switchers if flowchart or patterns exist */}
+                {(flowchart.length > 0 || patterns.length > 0 || tradeoffs.length > 0) && (
+                  <div className="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+                    <button
+                      onClick={() => setArchitectureSubTab('nodes')}
+                      className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all cursor-pointer ${
+                        architectureSubTab === 'nodes'
+                          ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
+                          : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+                      }`}
                     >
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-mono text-[#FF1E27] font-bold">
-                            PATTERN 0{idx + 1}
-                          </span>
-                          <span className="text-[10px] font-mono px-2 py-0.5 bg-white/5 border border-white/10 text-slate-300">
+                      <Layers size={13} className="inline mr-1.5 -mt-0.5" />
+                      <span>PRIMARY NODES</span>
+                    </button>
+
+                    {flowchart.length > 0 && (
+                      <button
+                        onClick={() => setArchitectureSubTab('pipeline')}
+                        className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all cursor-pointer ${
+                          architectureSubTab === 'pipeline'
+                            ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
+                            : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <GitBranch size={13} className="inline mr-1.5 -mt-0.5" />
+                        <span>DATA PIPELINE SIMULATOR</span>
+                      </button>
+                    )}
+
+                    {patterns.length > 0 && (
+                      <button
+                        onClick={() => setArchitectureSubTab('patterns')}
+                        className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all cursor-pointer ${
+                          architectureSubTab === 'patterns'
+                            ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
+                            : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <Code2 size={13} className="inline mr-1.5 -mt-0.5" />
+                        <span>DESIGN PATTERNS ({patterns.length})</span>
+                      </button>
+                    )}
+
+                    {tradeoffs.length > 0 && (
+                      <button
+                        onClick={() => setArchitectureSubTab('tradeoffs')}
+                        className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all cursor-pointer ${
+                          architectureSubTab === 'tradeoffs'
+                            ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
+                            : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <Scale size={13} className="inline mr-1.5 -mt-0.5" />
+                        <span>TRADE-OFF MATRIX</span>
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* VIEW A: Primary Architectural Nodes */}
+                {architectureSubTab === 'nodes' && architectureNodes.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    {architectureNodes.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-white/[0.02] border border-white/15 hover:border-[#FF1E27] transition-all p-6 space-y-3"
+                      >
+                        <div className="flex items-center justify-between text-xs text-[#FF1E27] font-mono">
+                          <span className="font-bold">NODE 0{idx + 1}</span>
+                          <Layers size={15} />
+                        </div>
+                        <h4 className="font-syne text-lg font-bold text-white uppercase">{item.node}</h4>
+                        <div className="text-xs font-mono text-[#FF1E27] font-semibold">{item.tech}</div>
+                        <p className="text-xs sm:text-sm font-sans text-slate-300 leading-relaxed pt-1">
+                          {item.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* VIEW B: Interactive Pipeline Visualizer */}
+                {architectureSubTab === 'pipeline' && flowchart.length > 0 && (
+                  <div className="space-y-6 bg-black/40 border border-white/15 p-4 sm:p-6 md:p-8">
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      <div>
+                        <div className="text-xs font-mono font-bold text-[#FF1E27] uppercase tracking-wider">
+                          INTERACTIVE EXECUTION TELEMETRY
+                        </div>
+                        <p className="text-xs text-slate-400 font-sans mt-0.5">
+                          Select any node to inspect data schema, protocol SLAs, and failover boundaries.
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setIsPlayingFlow(!isPlayingFlow)}
+                          className="px-3 py-1.5 bg-[#FF1E27] hover:bg-[#E00208] text-white text-xs font-mono font-bold transition-all cursor-pointer"
+                        >
+                          {isPlayingFlow ? 'PAUSE PIPELINE' : 'RUN SIMULATION'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setIsPlayingFlow(false);
+                            setSelectedStepIdx(0);
+                          }}
+                          className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 text-xs font-mono transition-all cursor-pointer"
+                        >
+                          RESET
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Pipeline Stage Buttons */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                      {flowchart.map((step, idx) => {
+                        const isCurrent = selectedStepIdx === idx;
+                        return (
+                          <button
+                            key={step.id || idx}
+                            onClick={() => {
+                              setIsPlayingFlow(false);
+                              setSelectedStepIdx(idx);
+                            }}
+                            className={`p-3 border text-left transition-all cursor-pointer ${
+                              isCurrent
+                                ? 'bg-[#181818] border-[#FF1E27] text-white shadow-lg shadow-[#FF1E27]/10'
+                                : 'bg-white/[0.02] border-white/10 text-slate-400 hover:border-white/30'
+                            }`}
+                          >
+                            <span className="text-[10px] font-mono block text-[#FF1E27] font-bold">
+                              STAGE {step.step}
+                            </span>
+                            <span className="text-xs font-bold text-white line-clamp-1 mt-0.5">
+                              {step.title}
+                            </span>
+                            <span className="text-[9px] font-mono text-slate-400 block mt-1">
+                              {step.latency}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Stage Inspector Detail */}
+                    {currentStep && (
+                      <div className="bg-[#101012] border-2 border-[#FF1E27] p-5 sm:p-7 space-y-5">
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                          <div>
+                            <span className="text-[10px] font-mono text-[#FF1E27] font-bold uppercase tracking-widest">
+                              ACTIVE STAGE {currentStep.step} // {currentStep.type}
+                            </span>
+                            <h3 className="font-syne text-xl sm:text-2xl font-bold text-white uppercase mt-0.5">
+                              {currentStep.title}
+                            </h3>
+                          </div>
+
+                          <div className="flex items-center gap-4 text-xs font-mono">
+                            <div className="text-right">
+                              <span className="text-slate-500 block text-[10px]">SLA LATENCY</span>
+                              <span className="text-[#FF1E27] font-bold">{currentStep.latency}</span>
+                            </div>
+                            <div className="text-right border-l border-white/10 pl-4">
+                              <span className="text-slate-500 block text-[10px]">PROTOCOL</span>
+                              <span className="text-white font-bold">{currentStep.protocol}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="text-sm sm:text-base font-sans text-slate-200 leading-relaxed">
+                          {currentStep.action}
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-black/50 border border-white/10 p-4 space-y-1.5">
+                            <span className="text-[10px] font-mono text-emerald-400 font-bold block uppercase">
+                              INPUT INGRESS PAYLOAD
+                            </span>
+                            <pre className="text-xs font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap">
+                              {currentStep.inputs}
+                            </pre>
+                          </div>
+
+                          <div className="bg-black/50 border border-white/10 p-4 space-y-1.5">
+                            <span className="text-[10px] font-mono text-cyan-400 font-bold block uppercase">
+                              OUTPUT EGRESS / MUTATION
+                            </span>
+                            <pre className="text-xs font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap">
+                              {currentStep.outputs}
+                            </pre>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                          <div className="bg-white/5 p-3.5 border border-white/10 space-y-1">
+                            <span className="text-slate-400 font-bold block uppercase">Tech Stack</span>
+                            <span className="text-white font-mono">{currentStep.tech}</span>
+                          </div>
+                          <div className="bg-white/5 p-3.5 border border-white/10 space-y-1">
+                            <span className="text-emerald-400 font-bold block uppercase">Failover Guard</span>
+                            <span className="text-slate-300 font-sans">{currentStep.failover}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* VIEW C: Software Design Patterns */}
+                {architectureSubTab === 'patterns' && patterns.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {patterns.map((pat, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-white/[0.02] border border-white/15 hover:border-[#FF1E27] transition-all p-6 space-y-4"
+                      >
+                        <div className="flex items-center justify-between text-xs font-mono">
+                          <span className="text-[#FF1E27] font-bold">PATTERN 0{idx + 1}</span>
+                          <span className="bg-white/5 border border-white/10 px-2 py-0.5 text-slate-300">
                             {pat.category}
                           </span>
                         </div>
 
-                        <h3 className="font-syne text-lg font-bold text-white uppercase">
-                          {pat.title}
-                        </h3>
+                        <h4 className="font-syne text-xl font-bold text-white uppercase">{pat.title}</h4>
 
-                        <div className="space-y-2 text-xs font-sans text-slate-300">
+                        <div className="space-y-3 text-xs sm:text-sm font-sans">
                           <div>
-                            <span className="font-mono text-[10px] text-rose-400 uppercase font-bold block">
-                              Problem Addressed:
+                            <span className="text-rose-400 font-mono text-[10px] font-bold uppercase block">
+                              Problem:
                             </span>
-                            <p className="leading-relaxed text-slate-300 mt-0.5">{pat.problem}</p>
+                            <p className="text-slate-300 mt-0.5 leading-relaxed">{pat.problem}</p>
                           </div>
-
-                          <div className="pt-1">
-                            <span className="font-mono text-[10px] text-emerald-400 uppercase font-bold block">
+                          <div>
+                            <span className="text-emerald-400 font-mono text-[10px] font-bold uppercase block">
                               Engineering Solution:
                             </span>
-                            <p className="leading-relaxed text-slate-300 mt-0.5">{pat.solution}</p>
+                            <p className="text-slate-300 mt-0.5 leading-relaxed">{pat.solution}</p>
                           </div>
                         </div>
 
-                        {/* Code snippet */}
                         {pat.code && (
-                          <div className="bg-[#141414] border border-white/10 p-3 mt-3">
-                            <div className="text-[9px] font-mono text-slate-500 uppercase pb-1 border-b border-white/5 mb-2">
-                              Implementation Sample
-                            </div>
-                            <pre className="font-mono text-[11px] text-slate-200 overflow-x-auto whitespace-pre leading-relaxed">
+                          <div className="bg-[#111113] border border-white/10 p-3.5">
+                            <pre className="font-mono text-xs text-slate-200 overflow-x-auto whitespace-pre leading-relaxed">
                               {pat.code}
                             </pre>
                           </div>
                         )}
-                      </div>
 
-                      <div className="bg-[#FF1E27]/10 border border-[#FF1E27]/30 p-3 mt-4">
-                        <div className="text-[9px] font-mono text-[#FF1E27] uppercase font-bold">ENGINEERING IMPACT</div>
-                        <div className="text-xs text-white font-sans font-semibold mt-0.5">{pat.impact}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {/* TAB 03: TRADE-OFFS & METRICS */}
-            {activeTab === 'tradeoffs' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-8"
-              >
-                {/* Telemetry Metrics Grid */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-xs text-[#FF1E27] font-bold tracking-widest uppercase">
-                    <Gauge size={15} />
-                    <span>SYSTEM TELEMETRY & VERIFIED BENCHMARKS</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {metrics.map((m, idx) => (
-                      <div key={idx} className="bg-[#0A0A0A] border border-white/15 p-5 space-y-2">
-                        <div className="text-[10px] font-mono text-slate-400 uppercase">{m.label}</div>
-                        <div className="font-syne text-2xl sm:text-3xl font-black text-white">{m.value}</div>
-                        <div className="text-[11px] font-sans text-slate-400">{m.desc}</div>
+                        <div className="bg-[#FF1E27]/10 border border-[#FF1E27]/30 p-3">
+                          <span className="text-[10px] font-mono text-[#FF1E27] font-bold uppercase block">
+                            PROVEN IMPACT
+                          </span>
+                          <span className="text-xs sm:text-sm text-white font-semibold block mt-0.5">
+                            {pat.impact}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                )}
 
-                {/* Architectural Trade-off Matrix */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-xs text-[#FF1E27] font-bold tracking-widest uppercase">
-                    <Scale size={15} />
-                    <span>ARCHITECTURAL TRADE-OFF MATRIX</span>
-                  </div>
-
-                  <div className="border border-white/15 bg-[#0A0A0A] overflow-x-auto">
-                    <table className="w-full text-left border-collapse text-xs font-mono">
+                {/* VIEW D: Architecture Trade-off Matrix */}
+                {architectureSubTab === 'tradeoffs' && tradeoffs.length > 0 && (
+                  <div className="border border-white/15 bg-black/40 overflow-x-auto">
+                    <table className="w-full text-left border-collapse text-xs font-mono min-w-[700px]">
                       <thead>
                         <tr className="border-b border-white/15 bg-white/5 text-slate-300">
-                          <th className="p-3.5 sm:p-4 uppercase">Decision Domain</th>
-                          <th className="p-3.5 sm:p-4 uppercase text-[#FF1E27]">Selected Approach</th>
-                          <th className="p-3.5 sm:p-4 uppercase text-slate-400">Alternative Evaluated</th>
-                          <th className="p-3.5 sm:p-4 uppercase">Trade-off Rationale</th>
-                          <th className="p-3.5 sm:p-4 uppercase text-emerald-400">Verdict</th>
+                          <th className="p-4 uppercase">Decision Domain</th>
+                          <th className="p-4 uppercase text-[#FF1E27]">Selected Approach</th>
+                          <th className="p-4 uppercase text-slate-400">Alternative Evaluated</th>
+                          <th className="p-4 uppercase">Trade-off Rationale</th>
+                          <th className="p-4 uppercase text-emerald-400">Verdict</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/10">
                         {tradeoffs.map((item, idx) => (
                           <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="p-3.5 sm:p-4 font-bold text-white whitespace-nowrap">
-                              {item.area}
-                            </td>
-                            <td className="p-3.5 sm:p-4 text-[#FF1E27] font-bold">
-                              {item.chosen}
-                            </td>
-                            <td className="p-3.5 sm:p-4 text-slate-400">
-                              {item.alternative}
-                            </td>
-                            <td className="p-3.5 sm:p-4 font-sans text-slate-300 min-w-[240px]">
-                              {item.tradeoff}
-                            </td>
-                            <td className="p-3.5 sm:p-4 text-emerald-400 font-sans font-semibold min-w-[180px]">
-                              {item.verdict}
-                            </td>
+                            <td className="p-4 font-bold text-white whitespace-nowrap">{item.area}</td>
+                            <td className="p-4 text-[#FF1E27] font-bold">{item.chosen}</td>
+                            <td className="p-4 text-slate-400">{item.alternative}</td>
+                            <td className="p-4 font-sans text-slate-300 min-w-[240px] leading-relaxed">{item.tradeoff}</td>
+                            <td className="p-4 text-emerald-400 font-sans font-semibold min-w-[180px] leading-relaxed">{item.verdict}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
-                </div>
-              </motion.div>
+                )}
+              </section>
             )}
 
-            {/* TAB 04: FULL SPECIFICATIONS & LEARNINGS */}
-            {activeTab === 'specs' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-8"
-              >
-                {/* 01 OVERVIEW */}
-                <section className="space-y-3 border-l-2 border-[#FF1E27] pl-6">
-                  <div className="text-xs text-[#FF1E27] font-mono tracking-widest">01 — ARCHITECTURAL OVERVIEW</div>
-                  <p className="text-slate-300 text-sm md:text-base leading-relaxed font-sans">
-                    {cs.overview || project.shortDesc}
-                  </p>
-                </section>
+            {/* ─────────────────────────────────────────────────────────────
+                07 — TECHNOLOGY
+            ───────────────────────────────────────────────────────────── */}
+            {hasTechnology && (
+              <section id="sec-technology" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    07 — TECHNOLOGY
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
 
-                {/* 02 PROBLEM & CHALLENGE */}
-                <section className="space-y-3 border-l-2 border-slate-500 pl-6">
-                  <div className="text-xs text-slate-400 font-mono tracking-widest">02 — CORE ENGINEERING CHALLENGE</div>
-                  <p className="text-slate-300 text-sm md:text-base leading-relaxed font-sans">
-                    {cs.problem || project.challenge}
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    VERIFIED TECHNICAL STACK
+                  </h2>
+                  <p className="font-sans text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Production dependencies, frameworks, languages, and protocol libraries implemented in this system.
                   </p>
-                </section>
+                </div>
 
-                {/* 03 APPROACH */}
-                <section className="space-y-3 border-l-2 border-[#FF1E27] pl-6">
-                  <div className="text-xs text-[#FF1E27] font-mono tracking-widest">03 — SYSTEM ARCHITECTURE APPROACH</div>
-                  <p className="text-slate-300 text-sm md:text-base leading-relaxed font-sans">
-                    {cs.approach || project.built}
-                  </p>
-                </section>
+                {techCategories.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {techCategories.map((group, idx) => (
+                      <div key={idx} className="bg-white/[0.02] border border-white/15 p-6 space-y-4">
+                        <div className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] font-bold uppercase tracking-widest">
+                          <Cpu size={14} />
+                          <span>{group.category}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {group.stack.map((item) => (
+                            <span
+                              key={item}
+                              className="bg-white/5 border border-white/10 text-white font-mono text-xs px-3 py-1.5 flex items-center gap-1.5"
+                            >
+                              <span className="w-1.5 h-1.5 bg-[#FF1E27]" />
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2.5 max-w-4xl">
+                    {rawTech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="bg-white/[0.04] border border-white/15 text-white font-mono text-sm px-4 py-2 flex items-center gap-2"
+                      >
+                        <span className="w-1.5 h-1.5 bg-[#FF1E27]" />
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
 
-                {/* Core Architecture Nodes */}
-                {cs.architecture && (
-                  <section className="space-y-4">
-                    <div className="text-xs text-[#FF1E27] font-mono tracking-widest">04 — PRIMARY ARCHITECTURAL NODES</div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {cs.architecture.map((item, idx) => (
-                        <div key={idx} className="bg-[#0A0A0A] border border-white/10 p-5 rounded-none space-y-2">
-                          <div className="flex justify-between items-center text-xs text-[#FF1E27]">
-                            <span className="font-bold">NODE 0{idx + 1}</span>
-                            <Layers size={14} />
-                          </div>
-                          <h4 className="font-bold text-white text-sm uppercase">{item.node}</h4>
-                          <div className="text-xs font-mono text-slate-400">{item.tech}</div>
-                          <p className="text-xs text-slate-400 leading-relaxed font-sans">{item.detail}</p>
+            {/* ─────────────────────────────────────────────────────────────
+                08 — RESULT
+            ───────────────────────────────────────────────────────────── */}
+            {hasResult && (
+              <section id="sec-result" className="space-y-8 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    08 — RESULT
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    VERIFIED ENGINEERING OUTCOMES
+                  </h2>
+
+                  {resultText && (
+                    <div className="bg-[#FF1E27]/10 border border-[#FF1E27]/30 p-6 sm:p-8 space-y-2">
+                      <div className="flex items-center gap-2 text-xs font-mono text-[#FF1E27] tracking-widest uppercase font-bold">
+                        <CheckCircle2 size={16} />
+                        <span>OUTCOME SUMMARY //</span>
+                      </div>
+                      <p className="font-sans text-white text-base sm:text-lg md:text-xl font-semibold leading-relaxed">
+                        {resultText}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Telemetry Metrics Grid if exists */}
+                {metrics.length > 0 && (
+                  <div className="space-y-3">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                      <Gauge size={14} className="text-[#FF1E27]" />
+                      <span>BENCHMARKS & MEASURED TELEMETRY</span>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {metrics.map((m, idx) => (
+                        <div key={idx} className="bg-white/[0.02] border border-white/15 p-5 space-y-2">
+                          <span className="text-[10px] font-mono text-slate-400 uppercase block">{m.label}</span>
+                          <span className="font-syne text-2xl sm:text-3xl font-black text-white block">{m.value}</span>
+                          <span className="text-xs font-sans text-slate-400 block leading-normal">{m.desc}</span>
                         </div>
                       ))}
                     </div>
-                  </section>
-                )}
-
-                {/* 05 DEVELOPMENT */}
-                <section className="space-y-3 bg-[#0A0A0A] border border-white/10 p-6">
-                  <div className="text-xs text-[#FF1E27] font-mono tracking-widest">05 — DEVELOPMENT & CODE STANDARDS</div>
-                  <p className="text-slate-300 text-sm leading-relaxed font-sans">
-                    {cs.development || "Executed modular design pattern with clean component interfaces and strict unit testing constraints."}
-                  </p>
-                </section>
-
-                {/* 06 INTERACTION / UI */}
-                <section className="space-y-3 border-l-2 border-[#FF1E27] pl-6">
-                  <div className="text-xs text-[#FF1E27] font-mono tracking-widest">06 — UI/UX & KINETIC INTERACTION</div>
-                  <p className="text-slate-300 text-sm md:text-base leading-relaxed font-sans">
-                    {cs.uiDesign || "Engineered responsive component layouts with high visual contrast, accessible font sizing, and smooth state updates."}
-                  </p>
-                </section>
-
-                {/* 07 RESULT / LEARNING */}
-                <section className="bg-[#FF1E27]/10 border border-[#FF1E27]/30 p-6 space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-[#FF1E27] font-mono tracking-widest">
-                    <CheckCircle2 size={16} />
-                    <span>07 — RESULTS & VERIFIED ENGINEERING OUTCOMES</span>
                   </div>
-                  <p className="text-white text-sm font-semibold leading-relaxed font-sans">
-                    {cs.result || "Achieved high performance metrics and clean deployment pipeline."}
-                  </p>
-                </section>
-              </motion.div>
+                )}
+              </section>
             )}
 
-            {/* Bottom Action Footer */}
-            <div className="pt-6 border-t border-white/10 flex flex-wrap gap-4 justify-between items-center">
-              <div className="flex flex-wrap gap-3">
-                {(project.github || project.githubLink) && (
-                  <a
-                    href={project.github || project.githubLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 text-white font-mono text-xs px-4 py-2.5 transition-all"
-                  >
-                    <Github size={16} />
-                    <span>SOURCE REPOSITORY</span>
-                  </a>
-                )}
-                {(project.link || project.demoLink) && (
-                  <a
-                    href={project.link || project.demoLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 bg-[#FF1E27] text-white font-mono font-bold text-xs px-4 py-2.5 hover:bg-[#E00208] transition-all"
-                  >
-                    <ExternalLink size={16} />
-                    <span>LIVE DEMO / PREVIEW</span>
-                  </a>
-                )}
+            {/* ─────────────────────────────────────────────────────────────
+                09 — LIVE PROJECT / GITHUB
+            ───────────────────────────────────────────────────────────── */}
+            {hasLiveLinks && (
+              <section id="sec-live" className="space-y-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] tracking-widest">
+                    09 — LIVE PROJECT / GITHUB
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+
+                <div className="space-y-4 max-w-5xl">
+                  <h2 className="font-syne text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-white tracking-tight">
+                    DEPLOYED ARTIFACTS & SOURCE CODE
+                  </h2>
+                  <p className="font-sans text-slate-300 text-sm sm:text-base leading-relaxed">
+                    External verification endpoints for this build. Clicking will open the repository or deployment in a new browser window without disturbing your portfolio session.
+                  </p>
+                </div>
+
+                {/* Dual CTA Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
+                  {liveUrl && (
+                    <a
+                      href={liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-[#FF1E27] hover:bg-[#E00208] text-white p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all duration-300 shadow-xl shadow-[#FF1E27]/15 focus:outline-none focus-visible:ring-4 focus-visible:ring-white"
+                    >
+                      <div className="flex items-start justify-between">
+                        <span className="text-xs font-mono font-bold tracking-widest uppercase bg-black/30 px-3 py-1">
+                          PRODUCTION DEPLOYMENT
+                        </span>
+                        <ExternalLink size={22} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </div>
+
+                      <div className="space-y-1">
+                        <h3 className="font-syne text-2xl sm:text-3xl font-black uppercase tracking-tight">
+                          LAUNCH LIVE PROJECT
+                        </h3>
+                        <p className="text-xs font-mono text-white/80 truncate">
+                          {liveUrl}
+                        </p>
+                      </div>
+                    </a>
+                  )}
+
+                  {githubUrl && (
+                    <a
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-white/[0.04] hover:bg-white/[0.08] border border-white/20 hover:border-white/50 text-white p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#FF1E27]"
+                    >
+                      <div className="flex items-start justify-between">
+                        <span className="text-xs font-mono font-bold tracking-widest uppercase bg-white/10 px-3 py-1 text-slate-300">
+                          PUBLIC REPOSITORY
+                        </span>
+                        <Github size={22} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </div>
+
+                      <div className="space-y-1">
+                        <h3 className="font-syne text-2xl sm:text-3xl font-black uppercase tracking-tight">
+                          VIEW GITHUB REPOSITORY
+                        </h3>
+                        <p className="text-xs font-mono text-slate-400 truncate">
+                          {githubUrl}
+                        </p>
+                      </div>
+                    </a>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* ─────────────────────────────────────────────────────────────
+                PREV / NEXT PROJECT SWITCHER & RETURN FOOTER
+            ───────────────────────────────────────────────────────────── */}
+            <footer className="pt-12 sm:pt-16 border-t border-white/15 space-y-8">
+              {allProjects.length > 1 && onSelectProject && (
+                <div className="space-y-4">
+                  <div className="text-xs font-mono text-slate-500 uppercase tracking-widest text-center">
+                    EXPLORE OTHER REUBEN BINU GEORGE BUILDS
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {prevProject && (
+                      <button
+                        onClick={() => onSelectProject(prevProject)}
+                        className="group text-left p-5 bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 hover:border-[#FF1E27] transition-all cursor-pointer space-y-1"
+                      >
+                        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 group-hover:text-[#FF1E27]">
+                          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                          <span>PREVIOUS BUILD // {prevProject.number || "01"}</span>
+                        </div>
+                        <div className="font-syne text-lg font-bold text-white uppercase group-hover:text-[#FF1E27] transition-colors truncate">
+                          {prevProject.title}
+                        </div>
+                      </button>
+                    )}
+
+                    {nextProject && (
+                      <button
+                        onClick={() => onSelectProject(nextProject)}
+                        className="group text-right p-5 bg-white/[0.02] hover:bg-white/[0.06] border border-white/10 hover:border-[#FF1E27] transition-all cursor-pointer space-y-1"
+                      >
+                        <div className="flex items-center justify-end gap-2 text-xs font-mono text-slate-400 group-hover:text-[#FF1E27]">
+                          <span>NEXT BUILD // {nextProject.number || "03"}</span>
+                          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <div className="font-syne text-lg font-bold text-white uppercase group-hover:text-[#FF1E27] transition-colors truncate">
+                          {nextProject.title}
+                        </div>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/5 text-xs font-mono text-slate-400">
+                <span>PRESS ESC KEY OR CLICK OUTSIDE TO RETURN</span>
+
+                <button
+                  onClick={onClose}
+                  className="px-6 py-2.5 bg-white/5 hover:bg-white/15 border border-white/20 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  [ RETURN TO PORTFOLIO ]
+                </button>
               </div>
-
-              <button
-                onClick={onClose}
-                className="text-xs text-slate-400 hover:text-white uppercase tracking-widest cursor-pointer"
-              >
-                [ CLOSE CASE STUDY ]
-              </button>
-            </div>
-
+            </footer>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </AnimatePresence>
   );
 }

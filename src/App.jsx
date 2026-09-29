@@ -4,6 +4,7 @@ import Navbar from './components/UI/Navbar';
 import CaseStudyModal from './components/UI/CaseStudyModal';
 import EasterEggs from './components/UI/EasterEggs';
 import SmoothScrollProvider from './components/UI/SmoothScrollProvider';
+import { projectsData } from './data/portfolioData';
 
 import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
@@ -79,6 +80,8 @@ export default function App() {
             <CaseStudyModal
               project={selectedProject}
               onClose={() => setSelectedProject(null)}
+              onSelectProject={(proj) => setSelectedProject(proj)}
+              allProjects={projectsData}
             />
           )}
 

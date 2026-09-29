@@ -144,13 +144,29 @@ export default function Projects({ onSelectProject }) {
                   {/* Card Content */}
                   <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                     <div className="flex justify-between items-start">
-                      <h3
-                        onClick={() => onSelectProject(project)}
-                        className="font-syne text-lg sm:text-xl font-bold text-[#111111] group-hover:text-[#FF1E27] transition-colors cursor-pointer"
-                      >
-                        {project.title}
-                      </h3>
-                      <span className="text-[10px] font-mono text-[#555555]">{project.year || "2024"}</span>
+                      <div className="space-y-0.5">
+                        {project.number && (
+                          <span className="text-[10px] font-mono text-[#FF1E27] font-bold tracking-widest block">
+                            PROJECT // {project.number}
+                          </span>
+                        )}
+                        <h3
+                          onClick={() => onSelectProject(project)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              onSelectProject(project);
+                            }
+                          }}
+                          tabIndex={0}
+                          role="button"
+                          aria-label={`View Project: ${project.title}`}
+                          className="font-syne text-lg sm:text-xl font-bold text-[#111111] group-hover:text-[#FF1E27] transition-colors cursor-pointer focus:outline-none focus-visible:underline"
+                        >
+                          {project.title}
+                        </h3>
+                      </div>
+                      <span className="text-[10px] font-mono text-[#555555]">{project.year || "2026"}</span>
                     </div>
 
                     <p className="font-sans text-slate-700 text-xs sm:text-sm leading-relaxed">
@@ -172,10 +188,12 @@ export default function Projects({ onSelectProject }) {
                 <div className="p-4 sm:p-6 pt-0 border-t border-[#E4E2DC] mt-4 flex items-center justify-between">
                   <button
                     onClick={() => onSelectProject(project)}
-                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#FF1E27] flex items-center gap-1.5 transition-colors cursor-pointer"
+                    aria-label={`VIEW PROJECT: ${project.title}`}
+                    aria-haspopup="dialog"
+                    className="text-xs font-mono font-bold text-[#111111] group-hover:text-[#FF1E27] flex items-center gap-1.5 transition-all cursor-pointer py-1 px-1 -ml-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF1E27]"
                   >
-                    <span>CASE STUDY</span>
-                    <ArrowUpRight size={14} />
+                    <span className="tracking-wider">VIEW PROJECT</span>
+                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </button>
 
                   <div className="flex items-center gap-3">

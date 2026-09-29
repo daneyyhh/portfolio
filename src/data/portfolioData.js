@@ -57,6 +57,8 @@ export const engineeringDomains = [
 export const projectsData = [
   {
     id: "nexora",
+    number: "01",
+    status: "PRODUCTION ARCHITECTURE",
     title: "NEXORA",
     category: "Full-Stack Web App",
     role: "Full-Stack System Architect",
@@ -72,8 +74,11 @@ export const projectsData = [
     link: "https://github.com/daneyyhh/nexora-mern-ecommerce",
     demoLink: "https://github.com/daneyyhh/nexora-mern-ecommerce",
     caseStudy: {
+      // 01 — OVERVIEW
       overview: "NEXORA is an architectural full-stack e-commerce platform engineered with the MERN stack and bidirectional Socket.IO event pipelines. Built with production-grade engineering principles, it bridges customer storefronts with real-time administrative command centers, providing instant dispatch status streaming, race-condition-free stock reservations, and an editorial physical-first product experience.",
+      // 02 — PROBLEM
       problem: "Traditional monolithic e-commerce implementations suffer from severe architectural shortcomings: static polling introduces crippling server overhead; concurrent checkout requests trigger overselling due to non-atomic stock verification; and brittle database configs make localized testing and deployment cumbersome for engineering teams.",
+      // 03 — APPROACH
       approach: "Engineered an event-driven distributed pipeline pairing Express REST endpoints with Socket.IO broadcast channels. Backed by dual-mode persistence (MongoDB Atlas primary with automated high-speed local disk JSON fallback) and optimistic atomic inventory decrement operations to guarantee zero inventory oversell under peak concurrency.",
       architecture: [
         { node: "Client Storefront", tech: "React 18 / Zustand / Axios", detail: "Kinetic 2-angle crossfades, multi-colorway swatches, and 7-stage live tracking timeline." },
@@ -223,13 +228,28 @@ export const projectsData = [
         { label: "Network Bandwidth Reduction", value: "92% Saved", desc: "Compared to traditional 5-second polling" },
         { label: "Lighthouse Performance", value: "99 / 100", desc: "Core Web Vitals compliant" }
       ],
+      // 05 — DEVELOPMENT
       development: "Engineered with modular Express controllers, Axios interceptors, responsive Tailwind layouts with Framer Motion, and embedded database fallback. Fully structured Git commit progression with clean separation between store, services, and presentation components.",
+      // 04 — UI / UX
+      uiUx: "Strict 2-angle physical photography rules, realistic multi-finish swatches, executive dark mode analytics, and step-by-step dispatch timeline with fluid micro-interactions.",
       uiDesign: "Strict 2-angle physical photography rules, realistic multi-finish swatches, executive dark mode analytics, and step-by-step dispatch timeline with fluid micro-interactions.",
-      result: "Sub-50ms WebSocket broadcast latency for incoming orders, zero race conditions on inventory depletion, and seamless instant setup."
+      // 07 — TECHNOLOGY
+      technology: [
+        { category: "Frontend Core", stack: ["React 18", "Zustand State", "Axios", "Tailwind CSS", "Framer Motion"] },
+        { category: "Backend Engine", stack: ["Node.js", "Express REST API", "Socket.IO WebSockets", "JWT / Helmet"] },
+        { category: "Data & Persistence", stack: ["MongoDB Atlas", "Mongoose ODM", "Local JSON Disk Fallback"] }
+      ],
+      // 08 — RESULT
+      result: "Sub-50ms WebSocket broadcast latency for incoming orders, zero race conditions on inventory depletion, and seamless instant setup.",
+      // 09 — LIVE PROJECT / GITHUB
+      liveUrl: "https://github.com/daneyyhh/nexora-mern-ecommerce",
+      githubUrl: "https://github.com/daneyyhh/nexora-mern-ecommerce"
     }
   },
   {
     id: "fivem-chronicles",
+    number: "02",
+    status: "DEPLOYED SYSTEM",
     title: "FIVEM CHRONICLES",
     category: "Game Systems & LUA",
     role: "Systems Architect & Developer",
@@ -245,8 +265,11 @@ export const projectsData = [
     link: "https://reubg.in",
     demoLink: "https://reubg.in",
     caseStudy: {
+      // 01 — OVERVIEW
       overview: "FiveM Chronicles is an enterprise-scale backend architecture engineered for high-concurrency multiplayer roleplay servers built on LUA and MariaDB. It powers authoritative gameplay systems—including vehicle persistence, item inventories, and dynamic bank transactions—while maintaining sub-millisecond script tick rates under 100+ simultaneous players.",
+      // 02 — PROBLEM
       problem: "Standard FiveM community scripts suffer from synchronous database blocking. When 100 players generate inventory or position updates, synchronous SQL queries freeze the main server game thread (64 ticks/sec), causing severe frame drops, vehicle desynchronization, and server crashes.",
+      // 03 — APPROACH
       approach: "Architected an asynchronous producer-consumer database pipeline coupled with a localized spatial grid partitioning engine. Offloaded all disk I/O to background worker threads and decoupled client-side prediction from authoritative server reconciliation.",
       architecture: [
         { node: "Game Client Kernel", tech: "LUA Native API / NUI", detail: "Client-side prediction, localized UI rendering, and cached native vector math." },
@@ -396,13 +419,28 @@ export const projectsData = [
         { label: "Network Bandwidth Saved", value: "82% Lower", desc: "Through spatial grid partitioning" },
         { label: "Database Hitching Incidents", value: "0 Freezes", desc: "Via asynchronous worker thread pool" }
       ],
+      // 05 — DEVELOPMENT
       development: "Wrote modular LUA scripts utilizing strict variable scoping, cached native calls, and prepared SQL procedures. Deployed clean unit tests for inventory state transitions and economy math.",
+      // 04 — UI / UX
+      uiUx: "Designed minimalist in-game HUD panels with crisp typography and clean status notifications, rendering via high-performance HTML/CSS NUI overlays.",
       uiDesign: "Designed minimalist in-game HUD panels with crisp typography and clean status notifications, rendering via high-performance HTML/CSS NUI overlays.",
-      result: "Achieved average script tick times under 0.02ms with zero SQL deadlocks during peak player sessions."
+      // 07 — TECHNOLOGY
+      technology: [
+        { category: "Game Scripting Engine", stack: ["LUA 5.4 Native API", "CitizenFX Framework", "HTML/CSS NUI Interface"] },
+        { category: "Database & Queue", stack: ["MariaDB / MySQL Connection Pool", "Async Prepared Queries", "Write-Ahead RAM Journal"] },
+        { category: "Networking & Security", stack: ["CitizenFX NetEvents", "HMAC Cryptographic Tokens", "3D Spatial Grid Partitioning (AOI)"] }
+      ],
+      // 08 — RESULT
+      result: "Achieved average script tick times under 0.02ms with zero SQL deadlocks during peak player sessions.",
+      // 09 — LIVE PROJECT / GITHUB
+      liveUrl: "https://reubg.in",
+      githubUrl: "https://github.com/daneyyhh"
     }
   },
   {
     id: "haunted-code",
+    number: "03",
+    status: "STABLE BUILD",
     title: "HAUNTED CODE 3D",
     category: "Game Development",
     role: "3D Game Programmer",
@@ -418,8 +456,11 @@ export const projectsData = [
     link: "https://reubg.in",
     demoLink: "https://reubg.in",
     caseStudy: {
+      // 01 — OVERVIEW
       overview: "Haunted Code 3D is a first-person atmospheric horror game built in Unity 3D with C#. Engineered to demonstrate advanced rendering optimization, physics-driven interaction architectures, and spatialized acoustic occlusion, the project sustains an unwavering 60+ FPS while delivering volumetric lighting and psychological tension.",
+      // 02 — PROBLEM
       problem: "Creating claustrophobic horror requires high-density volumetric fog, dynamic player flashlight shadows, and acoustic raycasting. In standard Unity configurations, dynamic lighting and per-frame memory allocation trigger garbage collection spikes and drop frame rates below acceptable VR/desktop thresholds.",
+      // 03 — APPROACH
       approach: "Developed a hybrid lighting architecture blending pre-baked HDR lightmaps with dynamic Forward+ spotlight passes. Combined with zero-allocation object pooling and a Hierarchical Finite State Machine (HFSM) to manage enemy AI and player sanity.",
       architecture: [
         { node: "Kinematic Player Controller", tech: "Unity C# / Rigidbody", detail: "Momentum simulation, dynamic head-bob matrices, and LayerMask raycast queries." },
@@ -569,9 +610,22 @@ export const projectsData = [
         { label: "Audio Occlusion Latency", value: "< 0.4ms", desc: "Real-time acoustic raycast modulation" },
         { label: "Lighting Render Pass", value: "< 4.2ms", desc: "Volumetric fog + Forward+ spotlight pass" }
       ],
+      // 05 — DEVELOPMENT
       development: "Authored clean object-oriented C# scripts for state machines, door interactions, inventory management, and trigger zones with full adherence to SOLID principles.",
+      // 04 — UI / UX
+      uiUx: "Minimalist diegetic in-game UI to preserve player immersion—sanity and stamina indicators are conveyed through breathing audio and screen vignette rather than intrusive HUD bars.",
       uiDesign: "Minimalist diegetic in-game UI to preserve player immersion—sanity and stamina indicators are conveyed through breathing audio and screen vignette rather than intrusive HUD bars.",
-      result: "Maintained stable 60+ FPS playback on target systems with realistic dynamic lighting and intense atmospheric tension."
+      // 07 — TECHNOLOGY
+      technology: [
+        { category: "Game Programming", stack: ["Unity 3D Engine", "C# Object-Oriented Programming", "Universal Render Pipeline (URP)"] },
+        { category: "Rendering & Shaders", stack: ["Forward+ Rendering Pass", "Baked HDR Ambient Lightmaps", "Volumetric Shadow Frustums", "Custom HLSL Shaders"] },
+        { category: "Spatial Audio & AI", stack: ["3D Spatial Audio DSP", "Low-Pass Acoustic Raycasting", "Hierarchical State Machines (HFSM)", "Zero-GC Object Pools"] }
+      ],
+      // 08 — RESULT
+      result: "Maintained stable 60+ FPS playback on target systems with realistic dynamic lighting and intense atmospheric tension.",
+      // 09 — LIVE PROJECT / GITHUB
+      liveUrl: "https://reubg.in",
+      githubUrl: "https://github.com/daneyyhh"
     }
   }
 ];
