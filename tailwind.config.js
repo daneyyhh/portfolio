@@ -37,6 +37,8 @@ export default {
                 },
             },
             fontFamily: {
+                archivo: ['"Archivo Black"', 'sans-serif'],
+                chakra: ['"Chakra Petch"', 'sans-serif'],
                 syne: ['Syne', 'sans-serif'],
                 display: ['Space Grotesk', 'sans-serif'],
                 sans: ['Inter', 'sans-serif'],

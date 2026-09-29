@@ -87,14 +87,14 @@ export default function MerchLabPage() {
 
           {/* Massive Editorial Headline: Solid MERCH + Outlined LAB */}
           <div className="space-y-0 select-none">
-            {/* MERCH: Solid Black Ultra-Heavy */}
-            <h1 className="font-syne font-black text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight text-[#111111] leading-[0.88] uppercase block">
+            {/* MERCH: Solid Black Ultra-Heavy Industrial Display */}
+            <h1 className="font-archivo text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight text-[#111111] leading-[0.84] uppercase block">
               MERCH
             </h1>
 
             {/* LAB: Hollow Outline Sans-Serif */}
             <div
-              className="font-syne font-black text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight leading-[0.88] uppercase block text-transparent"
+              className="font-archivo text-6xl sm:text-7xl md:text-8xl lg:text-[7.25rem] xl:text-[8.5rem] tracking-tight leading-[0.84] uppercase block text-transparent"
               style={{
                 WebkitTextStroke: '2.5px #111111',
                 paintOrder: 'stroke fill',
