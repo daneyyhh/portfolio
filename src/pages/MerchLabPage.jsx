@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Plus, Globe } from 'lucide-react';
+import { personalData } from '../data/portfolioData';
 
 const EASE = [0.16, 1, 0.3, 1];
 
 export default function MerchLabPage() {
   const prefersReduced = useReducedMotion();
-  const [manifestoOpen, setManifestoOpen] = useState(false);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -62,15 +62,11 @@ export default function MerchLabPage() {
           transition={{ duration: 0.6, ease: EASE }}
           className="max-w-xl lg:max-w-2xl space-y-6 sm:space-y-7"
         >
-          {/* Top Label: 08 — MERCH LAB // STATUS: 30% */}
+          {/* Top Label: 08 — MERCH LAB */}
           <div className="flex items-center gap-3 text-xs sm:text-sm font-mono tracking-widest uppercase">
             <span className="text-[#FF1E27] font-bold">08</span>
             <span className="w-10 sm:w-14 h-px bg-[#111111]/30" />
             <span className="text-[#111111] font-bold">MERCH LAB</span>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-[#111111] text-white text-[10px] font-mono tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-              <span>STATUS: 30%</span>
-            </span>
           </div>
 
           {/* Massive Editorial Headline: Solid MERCH + Outlined LAB */}
@@ -92,15 +88,25 @@ export default function MerchLabPage() {
             </div>
           </div>
 
-          {/* Subheading: UNDER DEVELOPMENT . // STATUS: 30% */}
+          {/* Subheading: UNDER DEVELOPMENT . with Single Live Running Status 30% */}
           <div className="flex flex-wrap items-center gap-3 pt-0.5 font-mono text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#111111]">
             <div className="flex items-center gap-1.5">
               <span>UNDER DEVELOPMENT</span>
               <span className="inline-block w-1.5 h-1.5 bg-[#FF1E27] shrink-0" />
             </div>
-            <span className="text-[11px] text-[#FF1E27] font-bold tracking-widest bg-[#FF1E27]/10 px-2 py-0.5 border border-[#FF1E27]/30">
-              STATUS: 30%
-            </span>
+
+            {/* Single Live Running Status 30% Indicator */}
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#111111] text-white text-xs font-mono tracking-wider shadow-sm select-none">
+              <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF1E27] opacity-80" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF1E27]" />
+              </span>
+              <span className="text-stone-300 font-normal">LIVE RUNNING:</span>
+              <span className="text-[#FF1E27] font-extrabold tracking-widest">STATUS 30%</span>
+              <div className="hidden sm:block w-10 h-1 bg-white/20 rounded-full overflow-hidden ml-0.5">
+                <div className="h-full bg-[#FF1E27] w-[30%] animate-pulse" />
+              </div>
+            </div>
           </div>
 
           {/* Narrative Body Copy */}
@@ -110,29 +116,27 @@ export default function MerchLabPage() {
             <p>Stay tuned.</p>
           </div>
 
-          {/* Action Row: Pill Button + Circle (+) + Stacked Text */}
+          {/* Action Row: Pill Button + Circle (+) + Stacked Text (Zero Layout Shifts) */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
-            {/* Follow Updates Pill Button */}
-            <button
-              type="button"
-              onClick={() => setManifestoOpen(!manifestoOpen)}
+            {/* Follow Updates Pill Button (Links to Updates without layout shift or zooming) */}
+            <a
+              href={personalData.github || "https://github.com/daneyyhh"}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-3.5 px-6 py-3 bg-[#111111] hover:bg-[#FF1E27] text-white text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
-              aria-label="View development updates and atelier spec"
+              title="Follow development updates on GitHub"
             >
               <span>FOLLOW UPDATES</span>
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            </a>
 
-            {/* Circular (+) Button */}
-            <button
-              type="button"
-              onClick={() => setManifestoOpen(!manifestoOpen)}
-              className="w-10 h-10 rounded-full border border-[#111111]/30 hover:border-[#111111] hover:bg-[#111111] hover:text-white flex items-center justify-center text-[#111111] transition-all duration-200 cursor-pointer"
-              title="Toggle atelier spec and development progress"
-              aria-label="Toggle atelier statement"
+            {/* Circular (+) Mark (Smooth micro-rotation, zero layout shifting) */}
+            <div
+              className="w-10 h-10 rounded-full border border-[#111111]/30 hover:border-[#111111] hover:bg-[#111111] hover:text-white flex items-center justify-center text-[#111111] transition-all duration-200 select-none cursor-default group"
+              title="Atelier Philosophy"
             >
-              <Plus size={16} className={`transition-transform duration-300 ${manifestoOpen ? 'rotate-45' : ''}`} />
-            </button>
+              <Plus size={16} className="transition-transform duration-300 group-hover:rotate-90" />
+            </div>
 
             {/* Stacked Small Monospace Statement */}
             <div className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#111111] leading-tight select-none">
@@ -143,64 +147,10 @@ export default function MerchLabPage() {
             </div>
           </div>
 
-          {/* Expandable Development Status & Atelier Philosophy Drawer */}
-          <AnimatePresence>
-            {manifestoOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: EASE }}
-                className="overflow-hidden"
-              >
-                <div className="p-4 sm:p-5 bg-[#EDECE6]/95 border border-[#111111]/20 font-mono text-xs text-[#2A2925] space-y-3 max-w-lg shadow-sm">
-                  <div className="flex items-center justify-between text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase">
-                    <span>ATELIER SPEC // 2026</span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-                      <span>STATUS: 30% IN PROGRESS</span>
-                    </span>
-                  </div>
-
-                  {/* 30% Progress Bar */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-[10px] font-mono text-[#555552] uppercase">
-                      <span>DEVELOPMENT COMPLETION</span>
-                      <span className="font-bold text-[#111111]">30%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-[#111111]/15 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#FF1E27] w-[30%] transition-all duration-500" />
-                    </div>
-                  </div>
-
-                  <div className="text-[11px] space-y-1.5 text-[#444440] font-mono pt-1.5 border-t border-[#111111]/10">
-                    <div className="flex justify-between">
-                      <span>01. CONCEPT & COMPUTATIONAL ARCHITECTURE</span>
-                      <span className="text-[#111111] font-bold">100% ✓</span>
-                    </div>
-                    <div className="flex justify-between text-[#FF1E27] font-bold">
-                      <span>02. PHYSICAL PROTOTYPING & MATERIAL SAMPLING</span>
-                      <span>30% ●</span>
-                    </div>
-                    <div className="flex justify-between text-[#888884]">
-                      <span>03. TOLERANCE TESTING & PRODUCTION LOCK</span>
-                      <span>QUEUED</span>
-                    </div>
-                  </div>
-
-                  <p className="font-sans leading-relaxed text-[#2A2925] pt-1.5 border-t border-[#111111]/10">
-                    Translating procedural craft, computational precision, and engineering discipline into tangible reality. Undergoing rigorous material tests until release criteria are met.
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           {/* Left Metadata Bar Below Separator Line */}
           <div className="pt-6 sm:pt-7 border-t border-[#111111]/20 space-y-1 font-mono text-[10px] sm:text-xs uppercase tracking-widest select-none">
-            <div className="font-bold text-[#111111] flex items-center gap-3">
-              <span>CONCEPT &nbsp;/&nbsp; 2026</span>
-              <span className="text-[#FF1E27] font-bold">· STATUS: 30%</span>
+            <div className="font-bold text-[#111111]">
+              CONCEPT &nbsp;/&nbsp; 2026
             </div>
             <div className="text-[#555552]">
               MORE DETAILS SOON.
@@ -230,14 +180,11 @@ export default function MerchLabPage() {
             <span className="text-[#FF1E27]">REPEAT.</span>
           </div>
 
-          {/* Right Block: CONCEPT / 2026 / STATUS: 30% with Globe */}
+          {/* Right Block: CONCEPT / 2026 / IN DEVELOPMENT with Globe */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0 self-end md:self-auto">
             <div className="text-right uppercase font-semibold text-[#111111] leading-tight text-[10px] sm:text-xs">
               <div>CONCEPT / 2026</div>
-              <div className="text-[#FF1E27] font-bold flex items-center justify-end gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-                <span>STATUS: 30%</span>
-              </div>
+              <div className="text-[#555552]">IN DEVELOPMENT</div>
             </div>
             <span className="w-8 sm:w-12 h-px bg-[#111111]/30 hidden sm:inline-block" />
             <Globe size={18} className="text-[#111111] stroke-[1.5]" />
