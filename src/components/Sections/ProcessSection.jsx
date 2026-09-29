@@ -19,6 +19,7 @@ const STAGES = [
   {
     id: "01",
     name: "DISCOVER",
+    icon: Search,
     subtitle: "Problem Space & Constraint Audit",
     headline: "Deconstruct the core problem and operational boundaries before writing code.",
     summary: "High-impact engineering begins with domain inquiry. We extract user friction, audit third-party dependencies, analyze competing architectures, and lock down immutable operational parameters.",
@@ -41,6 +42,7 @@ const STAGES = [
   {
     id: "02",
     name: "DEFINE",
+    icon: Target,
     subtitle: "System Architecture & Contract Typing",
     headline: "Translate research into a rigorous system topology, data models, and API contracts.",
     summary: "Ambiguity creates technical debt. In this phase, we author exact entity relationship models, strict TypeScript interfaces, REST & WebSocket contracts, and formal Architectural Decision Records (ADRs).",
@@ -63,6 +65,7 @@ const STAGES = [
   {
     id: "03",
     name: "DESIGN",
+    icon: Layout,
     subtitle: "Design Systems & Spatial Ergonomics",
     headline: "Construct mathematical design tokens, spatial ergonomics, and 60fps motion fidelity.",
     summary: "Interface design is functional psychology. We establish strict typographic scales, cohesive token libraries, ergonomic mobile interactions, WCAG AAA contrast compliance, and buttery 60fps spring physics.",
@@ -85,6 +88,7 @@ const STAGES = [
   {
     id: "04",
     name: "BUILD",
+    icon: Code2,
     subtitle: "Full-Stack Implementation & WebGL",
     headline: "Engineer production-grade software with strict typings and decoupled systems.",
     summary: "Execution is where design vision meets engineering discipline. We build resilient full-stack architectures using modern frameworks, clean state management, modular APIs, and hardware-accelerated graphics.",
@@ -107,6 +111,7 @@ const STAGES = [
   {
     id: "05",
     name: "DEPLOY",
+    icon: Rocket,
     subtitle: "Global Edge Infrastructure & CI/CD",
     headline: "Automate edge distribution, immutable caching, and CI/CD pipelines.",
     summary: "Shipping software reliably demands automated pipelines. We orchestrate automated continuous integration, edge network routing, HTTPS/TLS 1.3 hardening, and asset compression for worldwide speed.",
@@ -129,6 +134,7 @@ const STAGES = [
   {
     id: "06",
     name: "TEST",
+    icon: ShieldCheck,
     subtitle: "System Stress Benchmarks & QA",
     headline: "Subject every user path, viewport, and network condition to rigorous testing.",
     summary: "Quality is non-negotiable. We stress-test cross-browser rendering, audit WCAG accessibility compliance, measure Core Web Vitals under CPU throttling, and verify edge-case recovery.",
@@ -151,6 +157,7 @@ const STAGES = [
   {
     id: "07",
     name: "ITERATE",
+    icon: RefreshCw,
     subtitle: "Live Telemetry & Continuous Evolution",
     headline: "Harness live user telemetry and feedback to continuously evolve the product.",
     summary: "Software launch is Day One. We analyze real user telemetry, identify conversion bottlenecks, profile runtime memory, and push continuous refinements to keep the platform ahead of expectations.",
@@ -204,7 +211,7 @@ export default function ProcessSection() {
     >
       {/* 7 STICKY FULL PAGE SLIDES WITH ELEGANT, UNCONGESTED ARCHITECTURE */}
       {STAGES.map((stage, idx) => {
-        const Icon = stage.icon;
+        const Icon = stage.icon || Layers;
         const isLast = idx === STAGES.length - 1;
 
         return (
@@ -289,7 +296,7 @@ export default function ProcessSection() {
                   {/* Stage Tag */}
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xs bg-[#FF1E27]/15 border border-[#FF1E27]/40 flex items-center justify-center text-[#FF1E27] shadow-[0_0_16px_rgba(255,30,39,0.25)]">
-                      <Icon size={20} />
+                      {Icon && <Icon size={20} />}
                     </div>
                     <div>
                       <span className="text-[11px] text-[#FF1E27] font-mono font-bold tracking-widest block uppercase">
