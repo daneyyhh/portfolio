@@ -46,13 +46,29 @@ export default function MerchLabPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [reminderModalOpen]);
 
-  // Handle email reminder submission with persistence
-  const handleSendEmailReminder = (e) => {
+  // Handle email reminder submission with API dispatch & persistence
+  const handleSendEmailReminder = async (e) => {
     e.preventDefault();
-    const cleanEmail = reminderEmail.trim();
+    const cleanEmail = reminderEmail.trim().toLowerCase();
     if (!cleanEmail || !cleanEmail.includes('@')) return;
 
     setIsSubmitting(true);
+    let deliveredViaApi = false;
+
+    try {
+      const response = await fetch('/api/send-reminder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        deliveredViaApi = result.delivered === true;
+      }
+    } catch (err) {
+      console.warn('API dispatch skipped or offline, persisting locally:', err);
+    }
 
     const newSubscriber = {
       email: cleanEmail,
@@ -63,32 +79,20 @@ export default function MerchLabPage() {
         year: 'numeric',
       }),
       status: 'active',
+      deliveredViaApi,
       milestone: 'CONCEPT 2026 DROP',
       tier: 'Tier 01 (Pre-Release Access)',
     };
 
-    setTimeout(() => {
-      try {
-        localStorage.setItem('reubg_merch_lab_subscriber', JSON.stringify(newSubscriber));
-      } catch (err) {
-        console.error('Failed to save to localStorage', err);
-      }
+    try {
+      localStorage.setItem('reubg_merch_lab_subscriber', JSON.stringify(newSubscriber));
+    } catch (err) {
+      console.error('Failed to save to localStorage', err);
+    }
 
-      setSubscriberData(newSubscriber);
-      setIsSubmitting(false);
-      setIsEditing(false);
-
-      // Trigger optional non-blocking mailto dispatch
-      try {
-        const subject = encodeURIComponent('[REUBG MERCH LAB] Reminder Registration (Concept 2026)');
-        const body = encodeURIComponent(
-          `Hi Reuben,\n\nPlease confirm my launch reminder for the Merch Lab 2026 release.\n\nRegistered Email: ${cleanEmail}\nTimestamp: ${new Date().toISOString()}\n\nLooking forward to the drop!`
-        );
-        window.location.href = `mailto:${personalData.email}?subject=${subject}&body=${body}`;
-      } catch {
-        // Mailto is optional; localStorage already confirmed
-      }
-    }, 400);
+    setSubscriberData(newSubscriber);
+    setIsSubmitting(false);
+    setIsEditing(false);
   };
 
   // Remove subscriber reminder
