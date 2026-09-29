@@ -224,8 +224,8 @@ export const projectsData = [
       ],
       metrics: [
         { label: "Dispatch Broadcast Latency", value: "< 42ms", desc: "Order placement to admin screen ping" },
-        { label: "Inventory Race Conditions", value: "0 Occurrences", desc: "Validated under simulated concurrent test suite" },
-        { label: "Network Bandwidth Reduction", value: "92% Saved", desc: "Compared to traditional 5-second polling" },
+        { label: "Inventory Race Conditions", value: "0", desc: "Zero occurrences validated under simulated concurrent test suite" },
+        { label: "Network Bandwidth Reduction", value: "92%", desc: "Bandwidth saved compared to traditional 5-second polling" },
         { label: "Lighthouse Performance", value: "99 / 100", desc: "Core Web Vitals compliant" }
       ],
       // 05 — DEVELOPMENT
@@ -415,9 +415,9 @@ export const projectsData = [
       ],
       metrics: [
         { label: "Main Thread Tick Time", value: "< 0.02ms", desc: "Per-frame LUA execution budget" },
-        { label: "Concurrent Player Capacity", value: "128 Players", desc: "Tested with zero server tick degradation" },
-        { label: "Network Bandwidth Saved", value: "82% Lower", desc: "Through spatial grid partitioning" },
-        { label: "Database Hitching Incidents", value: "0 Freezes", desc: "Via asynchronous worker thread pool" }
+        { label: "Concurrent Player Capacity", value: "128", desc: "128 players tested with zero server tick degradation" },
+        { label: "Network Bandwidth Saved", value: "82%", desc: "Lower payload through spatial grid partitioning" },
+        { label: "Database Hitching Incidents", value: "0", desc: "Zero freezes via asynchronous worker thread pool" }
       ],
       // 05 — DEVELOPMENT
       development: "Wrote modular LUA scripts utilizing strict variable scoping, cached native calls, and prepared SQL procedures. Deployed clean unit tests for inventory state transitions and economy math.",
@@ -605,8 +605,8 @@ export const projectsData = [
         }
       ],
       metrics: [
-        { label: "Target Frame Rate", value: "60+ FPS Locked", desc: "Tested on standard mid-range desktop GPUs" },
-        { label: "Garbage Collection Spikes", value: "0 KB / Frame", desc: "During active gameplay via object pooling" },
+        { label: "Target Frame Rate", value: "60+ FPS", desc: "Locked 60+ FPS on mid-range desktop GPUs" },
+        { label: "Garbage Collection Spikes", value: "0 KB", desc: "Zero memory allocations per frame via object pooling" },
         { label: "Audio Occlusion Latency", value: "< 0.4ms", desc: "Real-time acoustic raycast modulation" },
         { label: "Lighting Render Pass", value: "< 4.2ms", desc: "Volumetric fog + Forward+ spotlight pass" }
       ],
