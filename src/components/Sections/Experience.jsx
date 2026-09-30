@@ -1,174 +1,244 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Briefcase, GraduationCap, Code2, Gamepad2, Check } from 'lucide-react';
 import { MaskHeading, MaskParagraph } from '../UI/TextReveal';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function Experience({ engineerMode }) {
-  const [expanded, setExpanded] = useState(0);
+export default function Experience() {
   const prefersReduced = useReducedMotion();
 
   const experiences = [
     {
-      year: "2024 — PRESENT",
-      role: "Full-Stack Developer & Creative Engineer",
-      type: "Projects & Freelance Engineering",
-      tech: ["React", "Next.js", "Node.js", "MongoDB", "LUA", "Three.js"],
-      summary: "Architecting full-stack MERN platforms (Nexora), real-time WebSocket order systems, and high-concurrency multiplayer scripts in LUA for FiveM roleplay servers.",
-      details: [
-        "Engineered Nexora MERN e-commerce platform with real-time Socket.IO streams and atomic inventory management.",
-        "Refactored FiveM server scripts in LUA and MySQL, reducing script tick times down to 0.02ms.",
-        "Built custom responsive UI design systems and glassmorphic micro-interactions."
-      ]
+      id: "exp-01",
+      year: "2026",
+      period: "MAR 2026 – APR 2026",
+      category: "INDUSTRY INTERNSHIP",
+      role: "UI/UX DESIGN INTERN",
+      company: "Honeycomb India",
+      location: "Bangalore, India",
+      icon: Briefcase,
+      summary: "Designed 3 complete client websites in Figma adhering to strict client brand identity, typography, and responsive grid layouts.",
+      achievements: [
+        "Crafted 20+ high-fidelity desktop and mobile viewports for Honeycomb and Zenpoint Wellness.",
+        "Built clickable interactive prototypes demonstrating complex navigation workflows and component states.",
+        "Applied user-centred design principles to elevate visual consistency, contrast, and navigation clarity.",
+        "Delivered all sprint milestones on schedule while iterating directly with client stakeholder reviews."
+      ],
+      tech: ["Figma", "UI/UX Design", "Wireframing", "Clickable Prototypes", "Design Systems", "User Research"]
     },
     {
-      year: "2023 — 2024",
-      role: "UI/UX Designer & Frontend Developer",
-      type: "Internship & Project Work",
-      tech: ["Figma", "HTML5", "CSS3", "JavaScript", "Bootstrap 5"],
-      summary: "Designed digital wireframes, user testing prototypes, design systems, and responsive enterprise web interfaces.",
-      details: [
-        "Created high-fidelity Figma prototypes for web and mobile platforms.",
-        "Completed Meta Android UI Design certification and Scrimba UI Design program.",
-        "Implemented clean component layouts with strict accessibility standards."
-      ]
+      id: "exp-02",
+      year: "2024 — 2025",
+      period: "PROJECT ARCHITECTURE",
+      category: "FULL-STACK ENGINEERING",
+      role: "FULL-STACK WEB DEVELOPER",
+      company: "Independent Engineering & Client Platforms",
+      location: "Remote / Kerala, India",
+      icon: Code2,
+      summary: "Architected multi-tier web platforms including the Nexora MERN e-commerce architecture and a College Student Portal with secure data pipelines.",
+      achievements: [
+        "Engineered Nexora MERN platform with Socket.IO real-time event streaming and atomic inventory concurrency control.",
+        "Developed College Student Portal in PHP 8.1, MySQL 8.0, and Bootstrap 5 with Chart.js analytics.",
+        "Designed RESTful API endpoints with JWT session authentication, CRUD data models, and input validation schemas.",
+        "Configured continuous integration, GitHub version control, and production deployments via Vercel."
+      ],
+      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "PHP 8.1", "MySQL 8.0", "Bootstrap 5", "Chart.js", "REST APIs"]
     },
     {
-      year: "2022 — 2023",
-      role: "Game Developer & ML Researcher",
-      type: "BCA Specialization Projects",
-      tech: ["Unity 3D", "C#", "Python", "Scikit-Learn"],
-      summary: "Specialized in 3D game development with C# physics systems, volumetric lighting, and Python machine learning classification pipelines.",
-      details: [
-        "Developed Haunted House horror atmosphere experience in Unity with C# object-oriented architecture.",
-        "Built machine learning classification pipelines using Python and Scikit-Learn with cross-validated ensemble models.",
-        "Studied computer graphics theory, shader programming, and data structures."
-      ]
+      id: "exp-03",
+      year: "2023 — 2025",
+      period: "GAME SYSTEMS PROGRAMMING",
+      category: "INTERACTIVE SYSTEMS",
+      role: "GAME DEVELOPER & SYSTEMS PROGRAMMER",
+      company: "Specialized Game Projects",
+      location: "Bangalore, India",
+      icon: Gamepad2,
+      summary: "Engineered and shipped interactive 2D and 3D games in Unity, developing core mechanics, procedural systems, and environmental audio.",
+      achievements: [
+        "Designed and shipped Haunted House 3D horror atmosphere game with custom C# physics scripting.",
+        "Implemented modular player controllers, raycast interaction triggers, and volumetric lighting scenes.",
+        "Optimized WebGL build pipelines to guarantee smooth 60 FPS execution in modern web browsers.",
+        "Integrated custom audio triggers and atmospheric state management for immersive player feedback."
+      ],
+      tech: ["Unity 3D", "C#", "Game Physics", "Shader Theory", "Level Design", "WebGL", "Audio Systems"]
+    },
+    {
+      id: "exp-04",
+      year: "2023 — 2026",
+      period: "HIGHER EDUCATION",
+      category: "ACADEMIC DEGREE",
+      role: "BACHELOR OF COMPUTER APPLICATIONS (BCA)",
+      company: "Yenepoya (Deemed to be University)",
+      location: "Bangalore, India",
+      icon: GraduationCap,
+      summary: "Undergraduate degree specializing in Game Development, computer systems theory, web development, and software architecture.",
+      achievements: [
+        "Core coursework in Data Structures, Web Technologies, Database Management, and Object-Oriented Programming.",
+        "Completed Meta professional certification in user interface creation with Android Studio.",
+        "Completed Scrimba UI Design certification and DeepLearning.AI ML foundations program.",
+        "Consistently built and deployed practical working software alongside academic curricula."
+      ],
+      tech: ["Game Development", "Data Structures", "Database Management", "OOP", "Mobile UI", "Web Tech"]
     }
   ];
 
   return (
-    <section id="experience" className="min-h-[100svh] py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10 w-full">
+    <section
+      id="experience"
+      className="min-h-[100svh] py-20 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F1F0EB] text-[#111111] relative overflow-x-clip border-t border-[#C9C7C0] font-mono w-full"
+    >
+      <div className="max-w-7xl mx-auto space-y-14 sm:space-y-20 relative z-10 w-full">
         
-        {/* Section Header with Staggered Entrance */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
-          <div className="w-full max-w-full">
+        {/* Section Header with 12-Column Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end border-b border-[#C9C7C0] pb-6 sm:pb-8 w-full">
+          <div className="hidden lg:flex lg:col-span-1">
+            <motion.span
+              initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8% 0px" }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="font-mono text-4xl font-extrabold text-[#111111]"
+            >
+              05
+            </motion.span>
+          </div>
+
+          <div className="lg:col-span-11 space-y-1 w-full max-w-full">
             <motion.div
               initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-8% 0px" }}
               transition={{ duration: 0.6, ease: EASE }}
-              className="flex items-center gap-2 text-xs text-[#FF1E27] tracking-widest uppercase mb-2 font-bold"
+              className="text-xs text-[#FF1E27] font-bold uppercase tracking-widest flex items-center gap-2"
             >
-              <span className="w-2 h-2 rounded-full bg-[#FF1E27]" />
-              <span>VERIFIED CHRONOLOGY</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+              <span>CAREER & ACADEMIC CHRONOLOGY</span>
             </motion.div>
 
             <MaskHeading
               lines={["EXPERIENCE TIMELINE"]}
-              className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full"
+              className="font-syne font-extrabold text-[#111111] uppercase tracking-tight w-full max-w-full overflow-visible"
               style={{
-                fontSize: 'clamp(1.85rem, 7.5vw, 3.75rem)',
-                letterSpacing: 'clamp(-0.03em, -0.2vw, -0.01em)',
+                fontSize: 'clamp(1.75rem, 6.8vw, 3.5rem)',
+                letterSpacing: 'clamp(-0.03em, -0.2vw, 0em)',
               }}
               delay={0.15}
             />
-          </div>
 
-          <MaskParagraph delay={0.3} className="text-xs text-[#555555] max-w-md">
-            <p>Chronological breakdown of practical full-stack projects, UI/UX design work, and game development milestones.</p>
-          </MaskParagraph>
+            <MaskParagraph delay={0.3} className="font-sans text-slate-700 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+              <p>Documented journey across industry design internships, production full-stack engineering, game systems programming, and degree coursework.</p>
+            </MaskParagraph>
+          </div>
         </div>
 
-        {/* Timeline Items List with Staggered Viewport Entrance */}
-        <div className="space-y-4 w-full">
-          {experiences.map((exp, index) => {
-            const isOpen = expanded === index;
+        {/* Editorial Timeline Spine Layout */}
+        <div className="relative w-full">
+          
+          {/* Continuous Vertical Timeline Spine */}
+          <div className="hidden md:block absolute left-8 lg:left-12 top-6 bottom-6 w-[2px] bg-gradient-to-b from-[#FF1E27] via-[#C9C7C0] to-[#C9C7C0]/30" />
 
-            return (
-              <motion.div
-                key={index}
-                initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-6% 0px" }}
-                transition={{ duration: prefersReduced ? 0.25 : 0.6, delay: prefersReduced ? 0 : index * 0.1, ease: EASE }}
-                className="bg-[#FAF9F5] border border-[#C9C7C0] rounded-none overflow-hidden transition-all duration-300 w-full hover:border-[#FF1E27]/60 shadow-sm"
-              >
-                {/* Header Row */}
-                <div
-                  onClick={() => setExpanded(isOpen ? -1 : index)}
-                  className="p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:bg-[#F1F0EB] transition-colors select-none w-full"
+          {/* Timeline Nodes & Editorial Milestone Cards */}
+          <div className="space-y-10 sm:space-y-14 w-full">
+            {experiences.map((exp, index) => {
+              const IconComponent = exp.icon;
+
+              return (
+                <motion.div
+                  key={exp.id}
+                  initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-8% 0px" }}
+                  transition={{ duration: prefersReduced ? 0.25 : 0.65, delay: prefersReduced ? 0 : index * 0.1, ease: EASE }}
+                  className="relative md:pl-24 lg:pl-32 group"
                 >
-                  <div className="flex items-center gap-3 sm:gap-6 flex-wrap">
-                    <span className="font-mono text-xs text-[#FF1E27] font-bold bg-[#FAF9F5] px-2 py-1 border border-[#C9C7C0]">
-                      {exp.year}
-                    </span>
-                    <div>
-                      <h3 className="font-syne text-lg sm:text-xl font-bold text-[#111111]">
+                  {/* Timeline Indicator Node on Spine */}
+                  <div className="hidden md:flex absolute left-8 lg:left-12 -translate-x-1/2 top-8 items-center justify-center">
+                    <div className="w-7 h-7 bg-[#FAF9F5] border-2 border-[#111111] group-hover:border-[#FF1E27] transition-colors duration-300 flex items-center justify-center shadow-xs">
+                      <div className="w-2 h-2 bg-[#111111] group-hover:bg-[#FF1E27] transition-colors duration-300" />
+                    </div>
+                  </div>
+
+                  {/* Main Milestone Card */}
+                  <div className="bg-[#FAF9F5] border border-[#C9C7C0] p-6 sm:p-8 md:p-10 group-hover:border-[#FF1E27] transition-all duration-300 shadow-sm hover:shadow-lg space-y-6 w-full">
+                    
+                    {/* Header Row: Category Badge, Period, Year */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="font-mono text-xs font-bold text-white bg-[#FF1E27] px-2.5 py-0.5 tracking-wider uppercase">
+                          {exp.year}
+                        </span>
+                        <span className="font-mono text-[11px] text-[#555555] uppercase tracking-wider font-semibold">
+                          {exp.category}
+                        </span>
+                        <span className="hidden sm:inline text-stone-300">·</span>
+                        <span className="font-mono text-[11px] text-stone-600 uppercase tracking-widest">
+                          {exp.period}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-stone-600 text-xs font-mono">
+                        <IconComponent size={15} className="text-[#FF1E27]" />
+                        <span>{exp.location}</span>
+                      </div>
+                    </div>
+
+                    {/* Role Title & Organization */}
+                    <div className="space-y-1">
+                      <h3 className="font-syne text-xl sm:text-2xl md:text-3xl font-extrabold text-[#111111] uppercase tracking-tight">
                         {exp.role}
                       </h3>
-                      <div className="text-xs text-[#555555] font-sans">
-                        {exp.type}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
-                    <div className="flex flex-wrap gap-1">
-                      {exp.tech.slice(0, 3).map(t => (
-                        <span key={t} className="bg-[#E4E2DC] text-[#111111] text-[10px] px-2 py-0.5 border border-[#C9C7C0]">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="text-[#FF1E27]">
-                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Expanded Details */}
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.35, ease: EASE }}
-                      className="px-4 sm:px-6 pb-6 pt-2 border-t border-[#C9C7C0] bg-[#FAF9F5] space-y-4 overflow-hidden"
-                    >
-                      <p className="font-sans text-xs sm:text-sm text-[#333333] leading-relaxed">
-                        {exp.summary}
+                      <p className="font-mono text-xs sm:text-sm text-[#FF1E27] font-bold uppercase tracking-wider">
+                        {exp.company}
                       </p>
+                    </div>
 
-                      <div className="space-y-2">
-                        <div className="text-[10px] text-[#555555] uppercase tracking-wider font-bold">KEY ACHIEVEMENTS</div>
-                        <ul className="space-y-1.5 text-xs font-sans text-[#444444]">
-                          {exp.details.map((d, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <CheckCircle2 size={14} className="text-[#FF1E27] shrink-0 mt-0.5" />
-                              <span>{d}</span>
-                            </li>
-                          ))}
-                        </ul>
+                    {/* Summary Narrative */}
+                    <p className="font-sans text-xs sm:text-sm md:text-[15px] text-[#333333] leading-relaxed max-w-4xl">
+                      {exp.summary}
+                    </p>
+
+                    {/* Key Deliverables & Achievements Grid */}
+                    <div className="space-y-3 pt-2">
+                      <span className="font-mono text-[10px] text-[#777777] font-bold uppercase tracking-widest block">
+                        KEY DELIVERABLES & OUTCOMES
+                      </span>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                        {exp.achievements.map((item, i) => (
+                          <div
+                            key={i}
+                            className="flex items-start gap-2.5 text-xs font-sans text-[#444444] bg-[#F1F0EB]/60 p-2.5 border border-[#C9C7C0]/60"
+                          >
+                            <span className="w-1.5 h-1.5 bg-[#FF1E27] mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{item}</span>
+                          </div>
+                        ))}
                       </div>
+                    </div>
 
-                      <div className="pt-2 flex flex-wrap gap-1 text-[10px]">
-                        {exp.tech.map(t => (
-                          <span key={t} className="bg-[#E4E2DC] text-[#111111] px-2 py-0.5 border border-[#C9C7C0]">
+                    {/* Technology Stack Pills */}
+                    <div className="space-y-2 pt-2 border-t border-[#C9C7C0]/60">
+                      <span className="font-mono text-[10px] text-[#777777] font-bold uppercase tracking-widest block">
+                        APPLIED TECHNOLOGIES & TOOLS
+                      </span>
+                      <div className="flex flex-wrap gap-2 pt-0.5">
+                        {exp.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="font-mono text-[10px] sm:text-[11px] bg-[#E4E2DC] text-[#111111] px-2.5 py-1 border border-[#C9C7C0] font-medium"
+                          >
                             {t}
                           </span>
                         ))}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+                    </div>
+
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
         </div>
 
       </div>

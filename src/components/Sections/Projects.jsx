@@ -42,7 +42,7 @@ export default function Projects({ onSelectProject }) {
               transition={{ duration: 0.6, ease: EASE }}
               className="font-mono text-4xl font-extrabold text-[#111111]"
             >
-              04
+              03
             </motion.span>
           </div>
 
