@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
 import CaseStudyModal from './components/UI/CaseStudyModal';
@@ -17,6 +17,7 @@ import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import AiLab from './components/Sections/AiLab';
+import InteractiveResume from './components/Sections/InteractiveResume';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
 import MerchLabPage from './pages/MerchLabPage';
@@ -83,6 +84,7 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
         <AboutResume
           resumeOpen={resumeOpen}
           setResumeOpen={setResumeOpen}
+          onOpenResume={onOpenResume}
         />
         
         <ProcessSection />
@@ -97,6 +99,8 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
         
         <AiLab />
         
+        <InteractiveResume />
+        
         <Experience />
         
         <Contact />
@@ -110,8 +114,40 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isMerchLab = location.pathname === '/merch-lab';
+
+  const handleOpenResume = () => {
+    if (location.pathname !== '/') {
+      navigate('/#resume');
+      setTimeout(() => {
+        const el = document.getElementById('resume');
+        if (el) {
+          const headerOffset = 74;
+          if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -headerOffset, duration: 0.85 });
+          } else {
+            const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }
+      }, 150);
+      return;
+    }
+    const el = document.getElementById('resume');
+    if (el) {
+      const headerOffset = 74;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(el, { offset: -headerOffset, duration: 0.85 });
+      } else {
+        const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    } else {
+      setResumeOpen(true);
+    }
+  };
 
   return (
     <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
@@ -127,7 +163,7 @@ export default function App() {
 
         {/* Site-wide Adaptive Header */}
         <Navbar
-          onOpenResume={() => setResumeOpen(true)}
+          onOpenResume={handleOpenResume}
         />
 
         {/* Page Routes */}
@@ -136,7 +172,7 @@ export default function App() {
             path="/"
             element={
               <HomePage
-                onOpenResume={() => setResumeOpen(true)}
+                onOpenResume={handleOpenResume}
                 setSelectedProject={setSelectedProject}
                 resumeOpen={resumeOpen}
                 setResumeOpen={setResumeOpen}
@@ -145,7 +181,7 @@ export default function App() {
           />
           <Route
             path="/merch-lab"
-            element={<MerchLabPage onOpenResume={() => setResumeOpen(true)} />}
+            element={<MerchLabPage onOpenResume={handleOpenResume} />}
           />
           <Route path="/merch" element={<Navigate to="/merch-lab" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -7,7 +7,7 @@ import { ParallaxElement } from '../UI/ParallaxImage';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function AboutResume({ resumeOpen, setResumeOpen }) {
+export default function AboutResume({ resumeOpen, setResumeOpen, onOpenResume }) {
   const prefersReduced = useReducedMotion();
 
   const stats = [
@@ -97,7 +97,13 @@ export default function AboutResume({ resumeOpen, setResumeOpen }) {
           {/* Action CTAs */}
           <FadeInUp delay={0.8} className="flex flex-wrap gap-3 sm:gap-4 pt-2">
             <button
-              onClick={() => setResumeOpen(true)}
+              onClick={() => {
+                if (onOpenResume) {
+                  onOpenResume();
+                } else {
+                  setResumeOpen(true);
+                }
+              }}
               className="btn-editorial-red flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
             >
               <FileText size={16} />
@@ -105,10 +111,9 @@ export default function AboutResume({ resumeOpen, setResumeOpen }) {
             </button>
 
             <a
-              href={personalData.domain}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm"
+              href="/Reuben-Binu-George-CV.pdf"
+              download="Reuben-Binu-George-CV.pdf"
+              className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
             >
               <Download size={16} />
               <span>DOWNLOAD PDF</span>
@@ -177,8 +182,8 @@ export default function AboutResume({ resumeOpen, setResumeOpen }) {
                 <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">EDUCATION</div>
                 <div className="bg-[#0A0A0A] p-4 border border-white/10 space-y-1">
                   <div className="font-bold text-white text-xs sm:text-sm">Bachelor of Computer Applications (BCA)</div>
-                  <div className="text-xs text-slate-400">Yenepoya Deemed-to-be University · 2022 — 2025</div>
-                  <div className="text-[11px] text-[#FF1E27]">CGPA: 8.5 / 10 · Cloud Computing & Cyber Security</div>
+                  <div className="text-xs text-slate-400">Yenepoya (Deemed to be University), Bangalore · 2023 — 2026</div>
+                  <div className="text-[11px] text-[#FF1E27]">Specialization: Game Development</div>
                 </div>
               </div>
 
