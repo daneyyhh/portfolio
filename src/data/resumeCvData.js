@@ -66,10 +66,10 @@ export const resumeProjects = [
   },
   {
     number: "02",
-    title: "ANDROID STUDENT PORTAL",
+    title: "COLLEGE STUDENT PORTAL",
     period: "2025",
-    technologies: ["Java", "Firebase", "Android Studio"],
-    description: "Developed an Android portal with Firebase authentication and real-time data storage.",
+    technologies: ["HTML5", "CSS3", "Bootstrap 5", "JavaScript", "Chart.js", "PHP 8.1", "MySQL 8.0"],
+    description: "Multi-tier student web portal featuring secure user authentication, academic record management, and interactive performance charts.",
     github: "https://github.com/daneyyhh"
   },
   {
@@ -99,7 +99,7 @@ export const resumeProjects = [
 export const resumeSkills = [
   {
     category: "FRONTEND",
-    skills: ["React.js", "JavaScript (ES6+)", "HTML5", "CSS3", "Bootstrap 5"]
+    skills: ["React.js", "JavaScript (ES6+)", "HTML5", "CSS3", "Bootstrap 5", "Chart.js"]
   },
   {
     category: "BACKEND",
@@ -178,7 +178,7 @@ export const resumeTimelineData = [
   {
     year: "2025",
     items: [
-      { title: "Android Student Portal", category: "Mobile App", details: "Java & Firebase real-time data storage in Android Studio" },
+      { title: "College Student Portal", category: "Web App", details: "PHP 8.1, MySQL 8.0, Bootstrap 5, JavaScript & Chart.js data portal" },
       { title: "ML Classification Model", category: "Machine Learning", details: "Logistic Regression & Decision Trees with Scikit-learn" },
       { title: "Unity Game Development Projects", category: "Game Dev", details: "2D and 3D games with C# physics and gameplay systems" }
     ]
