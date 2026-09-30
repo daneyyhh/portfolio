@@ -576,10 +576,10 @@ export const projectsData = [
     }
   },
   {
-    id: "haunted-code",
+    id: "haunted-house",
     number: "03",
     status: "live",
-    title: "HAUNTED CODE 3D",
+    title: "HAUNTED HOUSE",
     category: "Game Development",
     role: "3D Game Programmer",
     technologies: ["Unity 3D", "C#", "Custom Shaders", "Lighting VFX"],
@@ -591,11 +591,11 @@ export const projectsData = [
     built: "Programmed player movement mechanics, flashlight volumetric lighting, inventory interactions, and procedural audio cues.",
     github: "https://github.com/daneyyhh",
     githubLink: "https://github.com/daneyyhh",
-    link: "https://reubg.in",
-    demoLink: "https://reubg.in",
+    link: "https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house",
+    demoLink: "https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house",
     caseStudy: {
       // 01 — OVERVIEW
-      overview: "Haunted Code 3D is a first-person atmospheric horror game built in Unity 3D with C#. Engineered to demonstrate advanced rendering optimization, physics-driven interaction architectures, and spatialized acoustic occlusion, the project sustains an unwavering 60+ FPS while delivering volumetric lighting and psychological tension.",
+      overview: "Haunted House is a first-person atmospheric horror game built in Unity 3D with C#. Engineered to demonstrate advanced rendering optimization, physics-driven interaction architectures, and spatialized acoustic occlusion, the project sustains an unwavering 60+ FPS while delivering volumetric lighting and psychological tension.",
       // 02 — PROBLEM
       problem: "Creating claustrophobic horror requires high-density volumetric fog, dynamic player flashlight shadows, and acoustic raycasting. In standard Unity configurations, dynamic lighting and per-frame memory allocation trigger garbage collection spikes and drop frame rates below acceptable VR/desktop thresholds.",
       // 03 — APPROACH
@@ -814,7 +814,7 @@ export const projectsData = [
           tech: "WebGL / WebAssembly / Unity",
           image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
           duration: "Phase 06",
-          details: "Deployed live interactive build at reubg.in with instant browser loading."
+          details: "Deployed live playable build on Unity Play (play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house) with instant browser loading."
         }
       ],
       // 05 — DEVELOPMENT
@@ -831,7 +831,7 @@ export const projectsData = [
       // 08 — RESULT
       result: "Maintained stable 60+ FPS playback on target systems with realistic dynamic lighting and intense atmospheric tension.",
       // 09 — LIVE PROJECT / GITHUB
-      liveUrl: "https://reubg.in",
+      liveUrl: "https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house",
       githubUrl: "https://github.com/daneyyhh"
     }
   }
@@ -903,11 +903,11 @@ export const skillMatrix = [
   { domain: "AI / ML", name: "Python", projects: [] },
   { domain: "AI / ML", name: "Scikit-Learn", projects: [] },
   { domain: "AI / ML", name: "ML Classification", projects: [] },
-  { domain: "Game Dev", name: "Unity 3D", projects: ["haunted-code"] },
-  { domain: "Game Dev", name: "C#", projects: ["haunted-code"] },
+  { domain: "Game Dev", name: "Unity 3D", projects: ["haunted-house"] },
+  { domain: "Game Dev", name: "C#", projects: ["haunted-house"] },
   { domain: "Game Dev", name: "LUA Scripting", projects: ["fivem-chronicles"] },
   { domain: "Design", name: "Figma", projects: [] },
-  { domain: "Tools", name: "Git / GitHub", projects: ["nexora", "fivem-chronicles", "haunted-code"] },
+  { domain: "Tools", name: "Git / GitHub", projects: ["nexora", "fivem-chronicles", "haunted-house"] },
   { domain: "Tools", name: "Postman & VS Code", projects: ["nexora"] }
 ];
 

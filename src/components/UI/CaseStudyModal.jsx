@@ -110,7 +110,7 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
     };
   }, [onClose]);
 
-  // Flowchart pipeline playback interval (Nexora / FiveM / Haunted Code)
+  // Flowchart pipeline playback interval (Nexora / FiveM / Haunted House)
   useEffect(() => {
     let interval;
     if (isPlayingFlow && project?.caseStudy?.flowchart?.length) {

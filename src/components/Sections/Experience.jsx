@@ -41,7 +41,7 @@ export default function Experience({ engineerMode }) {
       tech: ["Unity 3D", "C#", "Python", "Scikit-Learn"],
       summary: "Specialized in 3D game development with C# physics systems, volumetric lighting, and Python machine learning classification pipelines.",
       details: [
-        "Developed Haunted Code 3D horror atmosphere experience in Unity with C# object-oriented architecture.",
+        "Developed Haunted House horror atmosphere experience in Unity with C# object-oriented architecture.",
         "Built machine learning classification pipelines using Python and Scikit-Learn with cross-validated ensemble models.",
         "Studied computer graphics theory, shader programming, and data structures."
       ]
