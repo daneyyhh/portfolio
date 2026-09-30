@@ -14,6 +14,7 @@ import AboutResume from './components/Sections/AboutResume';
 import ProcessSection from './components/Sections/ProcessSection';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
+import Performance from './components/Sections/Performance';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import AiLab from './components/Sections/AiLab';
@@ -90,6 +91,8 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
         <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
         
         <Architecture />
+        
+        <Performance onSelectProject={(proj) => setSelectedProject(proj)} />
         
         <TechStack />
         

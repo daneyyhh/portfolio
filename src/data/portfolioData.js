@@ -948,13 +948,3 @@ export const journeySteps = [
     icon: "🤖"
   }
 ];
-
-export const performanceMetrics = {
-  performance: 99,
-  accessibility: 100,
-  bestPractices: 100,
-  seo: 100,
-  speedIndex: "0.6s",
-  firstContentfulPaint: "0.4s",
-  tagline: "Built for speed. Designed for interaction."
-};
