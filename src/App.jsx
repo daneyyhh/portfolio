@@ -11,7 +11,6 @@ import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
 import Introduction from './components/Sections/Introduction';
 import AboutResume from './components/Sections/AboutResume';
-import ProcessSection from './components/Sections/ProcessSection';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
@@ -84,8 +83,6 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
           resumeOpen={resumeOpen}
           setResumeOpen={setResumeOpen}
         />
-        
-        <ProcessSection />
         
         <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
         

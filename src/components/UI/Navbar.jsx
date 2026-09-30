@@ -21,11 +21,10 @@ export default function Navbar({ onOpenResume }) {
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
     { num: '02', name: 'ABOUT', href: '#introduction', id: 'about' },
-    { num: '03', name: 'PROCESS', href: '#process', id: 'process' },
-    { num: '04', name: 'WORK', href: '#projects', id: 'work' },
-    { num: '05', name: 'SKILLS', href: '#techstack', id: 'skills' },
-    { num: '06', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
-    { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
+    { num: '03', name: 'WORK', href: '#projects', id: 'work' },
+    { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
+    { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
+    { num: '06', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
   /**
@@ -129,7 +128,6 @@ export default function Navbar({ onOpenResume }) {
       const navSectionMap = [
         { navId: 'home', elementIds: ['hero'] },
         { navId: 'about', elementIds: ['introduction', 'about'] },
-        { navId: 'process', elementIds: ['process'] },
         { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive', 'ailab'] },
         { navId: 'experience', elementIds: ['experience'] },
