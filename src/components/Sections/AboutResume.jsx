@@ -7,7 +7,7 @@ import { ParallaxElement } from '../UI/ParallaxImage';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function AboutResume({ resumeOpen, setResumeOpen, onOpenResume }) {
+export default function AboutResume({ resumeOpen, setResumeOpen }) {
   const prefersReduced = useReducedMotion();
 
   const stats = [
@@ -97,13 +97,7 @@ export default function AboutResume({ resumeOpen, setResumeOpen, onOpenResume })
           {/* Action CTAs */}
           <FadeInUp delay={0.8} className="flex flex-wrap gap-3 sm:gap-4 pt-2">
             <button
-              onClick={() => {
-                if (onOpenResume) {
-                  onOpenResume();
-                } else {
-                  setResumeOpen(true);
-                }
-              }}
+              onClick={() => setResumeOpen(true)}
               className="btn-editorial-red flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
             >
               <FileText size={16} />

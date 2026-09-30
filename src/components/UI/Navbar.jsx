@@ -132,7 +132,7 @@ export default function Navbar({ onOpenResume }) {
         { navId: 'process', elementIds: ['process'] },
         { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive', 'ailab'] },
-        { navId: 'experience', elementIds: ['resume', 'experience'] },
+        { navId: 'experience', elementIds: ['experience'] },
         { navId: 'contact', elementIds: ['contact'] }
       ];
 
