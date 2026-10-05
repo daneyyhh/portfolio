@@ -28,11 +28,11 @@ export const RESEARCH_CATEGORIES = [
 
 export const RESEARCH_STATUSES = [
   "ALL",
-  "Completed",
-  "In Research",
-  "Experimental",
-  "Updated",
-  "Planned"
+  "DOCUMENTED",
+  "RESEARCHING",
+  "EXPERIMENTING",
+  "UPDATED",
+  "PLANNED"
 ];
 
 export const RESEARCH_DIFFICULTIES = [
@@ -46,11 +46,12 @@ export const researchTopics = [
   {
     id: "RBG-RES-02",
     slug: "transformers-attention",
+    aliases: ["transformers","transformer","attention"],
     title: "TRANSFORMERS & ATTENTION",
     subtitle: "Mathematical Foundations, Self-Attention Mechanics, and Global Context Modeling",
     category: "LLMs",
     secondaryCategory: "DEEP LEARNING",
-    status: "Completed",
+    status: "UPDATED",
     startedDate: "2024-03-12",
     lastUpdated: "2026-09-28",
     difficulty: "Advanced",
@@ -547,11 +548,12 @@ class MultiHeadAttention(nn.Module):
   {
     id: "RBG-RES-01",
     slug: "how-llms-work",
+    aliases: ["large-language-models","llms"],
     title: "HOW LARGE LANGUAGE MODELS WORK",
     subtitle: "From Autoregressive Probability Distributions to Emergent In-Context Reasoning",
     category: "LLMs",
     secondaryCategory: "AI FUNDAMENTALS",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-02-10",
     lastUpdated: "2026-09-20",
     difficulty: "Intermediate",
@@ -856,11 +858,12 @@ def sample_next_token(logits: torch.Tensor, temperature: float = 0.7, top_p: flo
   {
     id: "RBG-RES-03",
     slug: "retrieval-augmented-generation",
+    aliases: ["rag","retrieval"],
     title: "RETRIEVAL-AUGMENTED GENERATION (RAG)",
     subtitle: "Vector Search, Dense Retrieval, Embedding Indexing, and Grounded Generation",
     category: "AI SYSTEMS",
     secondaryCategory: "LLMs",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-04-15",
     lastUpdated: "2026-08-14",
     difficulty: "Intermediate",
@@ -1094,11 +1097,12 @@ def reciprocal_rank_fusion(ranking_lists: list, k: int = 60) -> list:
   {
     id: "RBG-RES-04",
     slug: "ai-agents",
+    aliases: ["agents"],
     title: "AI AGENTS",
     subtitle: "Autonomous Planning, Tool Execution, ReAct Loops, and Environment Interaction",
     category: "AI AGENTS",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "EXPERIMENTING",
     startedDate: "2024-05-01",
     lastUpdated: "2026-08-30",
     difficulty: "Advanced",
@@ -1355,11 +1359,12 @@ class ReActAgent:
   {
     id: "RBG-RES-05",
     slug: "ai-agents-vs-chatbots",
+    aliases: ["agents-vs-chatbots","chatbots"],
     title: "AI AGENTS vs CHATBOTS",
     subtitle: "Architectural Differentiation: Passive Generation vs Stateful Environment Feedback",
     category: "AI AGENTS",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-06-10",
     lastUpdated: "2026-08-01",
     difficulty: "Beginner",
@@ -1413,11 +1418,12 @@ class ReActAgent:
   {
     id: "RBG-RES-06",
     slug: "ai-memory",
+    aliases: ["memory"],
     title: "AI MEMORY",
     subtitle: "Short-Term KV Caching, Working Context, Episodic Retrieval, and Parametric Consolidation",
     category: "AI MEMORY",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "EXPERIMENTING",
     startedDate: "2024-06-25",
     lastUpdated: "2026-07-15",
     difficulty: "Advanced",
@@ -1467,11 +1473,12 @@ class ReActAgent:
   {
     id: "RBG-RES-07",
     slug: "slms-vs-llms",
+    aliases: ["small-language-models","slms"],
     title: "SMALL LANGUAGE MODELS vs LARGE LANGUAGE MODELS",
     subtitle: "Compute Efficiency, Distillation, Quantization, and Edge Deployment Trade-offs",
     category: "LLMs",
     secondaryCategory: "AI INFRASTRUCTURE",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-07-05",
     lastUpdated: "2026-08-10",
     difficulty: "Intermediate",
@@ -1521,11 +1528,12 @@ class ReActAgent:
   {
     id: "RBG-RES-08",
     slug: "local-ai",
+    aliases: ["edge-ai","local-models"],
     title: "LOCAL AI",
     subtitle: "Private, Offline Model Execution: llama.cpp, Apple Silicon Metal, and Ollama",
     category: "AI INFRASTRUCTURE",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-07-20",
     lastUpdated: "2026-08-05",
     difficulty: "Intermediate",
@@ -1575,11 +1583,12 @@ class ReActAgent:
   {
     id: "RBG-RES-09",
     slug: "ai-model-quantization",
+    aliases: ["quantization"],
     title: "AI MODEL QUANTIZATION",
     subtitle: "FP16 to INT8, INT4, and 1.58-Bit: Post-Training Quantization (PTQ) and QLoRA",
     category: "AI INFRASTRUCTURE",
     secondaryCategory: "DEEP LEARNING",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-08-01",
     lastUpdated: "2026-07-28",
     difficulty: "Advanced",
@@ -1629,11 +1638,12 @@ class ReActAgent:
   {
     id: "RBG-RES-10",
     slug: "ai-hallucination",
+    aliases: ["hallucination"],
     title: "AI HALLUCINATION",
     subtitle: "Etiology, Detection, Mitigation, and Mathematical Limits of Factuality in Generative Models",
     category: "AI SAFETY",
     secondaryCategory: "LLMs",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-08-15",
     lastUpdated: "2026-07-20",
     difficulty: "Advanced",
@@ -1685,11 +1695,12 @@ class ReActAgent:
   {
     id: "RBG-RES-11",
     slug: "ai-evaluation",
+    aliases: ["evaluation"],
     title: "AI EVALUATION",
     subtitle: "LLM-as-a-Judge, Evals Harnesses, Arena Elo, and Deterministic Rubrics",
     category: "AI SYSTEMS",
     secondaryCategory: "AI SAFETY",
-    status: "In Research",
+    status: "RESEARCHING",
     startedDate: "2024-09-01",
     lastUpdated: "2026-09-15",
     difficulty: "Intermediate",
@@ -1722,11 +1733,12 @@ class ReActAgent:
   {
     id: "RBG-RES-12",
     slug: "benchmarks-and-saturation",
+    aliases: ["benchmarks","saturation"],
     title: "BENCHMARKS & BENCHMARK SATURATION",
     subtitle: "Goodhart's Law, Data Contamination, and the Race for Frontier Evaluation",
     category: "AI SAFETY",
     secondaryCategory: "AI SYSTEMS",
-    status: "In Research",
+    status: "RESEARCHING",
     startedDate: "2024-09-10",
     lastUpdated: "2026-09-01",
     difficulty: "Intermediate",
@@ -1759,11 +1771,12 @@ class ReActAgent:
   {
     id: "RBG-RES-13",
     slug: "multimodal-ai",
+    aliases: ["multimodal","vision-language"],
     title: "MULTIMODAL AI",
     subtitle: "Vision-Language Projection, Audio Spectrogram Tokens, and Unified Representation Spaces",
     category: "GENERATIVE AI",
     secondaryCategory: "COMPUTER VISION",
-    status: "In Research",
+    status: "RESEARCHING",
     startedDate: "2024-10-01",
     lastUpdated: "2026-08-20",
     difficulty: "Advanced",
@@ -1796,11 +1809,12 @@ class ReActAgent:
   {
     id: "RBG-RES-14",
     slug: "computer-vision",
+    aliases: ["vision","cv"],
     title: "COMPUTER VISION",
     subtitle: "From Convolutional Kernels to Vision Transformers and Diffusion Latents",
     category: "COMPUTER VISION",
     secondaryCategory: "DEEP LEARNING",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-04-01",
     lastUpdated: "2026-07-01",
     difficulty: "Intermediate",
@@ -1833,11 +1847,12 @@ class ReActAgent:
   {
     id: "RBG-RES-15",
     slug: "ai-for-game-development",
+    aliases: ["game-ai","gaming"],
     title: "AI FOR GAME DEVELOPMENT",
     subtitle: "Procedural Content Generation, Neural NPC Brains, Navmesh Agents, and Shader Synthesis",
     category: "AI × GAME DEVELOPMENT",
     secondaryCategory: "REINFORCEMENT LEARNING",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-05-15",
     lastUpdated: "2026-07-10",
     difficulty: "Intermediate",
@@ -1870,11 +1885,12 @@ class ReActAgent:
   {
     id: "RBG-RES-16",
     slug: "reinforcement-learning",
+    aliases: ["rl","rlhf"],
     title: "REINFORCEMENT LEARNING",
     subtitle: "Markov Decision Processes, Policy Gradients, PPO, and Q-Learning",
     category: "REINFORCEMENT LEARNING",
     secondaryCategory: "MACHINE LEARNING",
-    status: "Completed",
+    status: "UPDATED",
     startedDate: "2024-03-20",
     lastUpdated: "2026-06-30",
     difficulty: "Advanced",
@@ -1907,11 +1923,12 @@ class ReActAgent:
   {
     id: "RBG-RES-17",
     slug: "ai-safety-and-alignment",
+    aliases: ["ai-safety","alignment"],
     title: "AI SAFETY & ALIGNMENT",
     subtitle: "RLHF, Direct Preference Optimization (DPO), Constitutional AI, and Mechanistic Interpretability",
     category: "AI SAFETY",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "PLANNED",
     startedDate: "2024-04-10",
     lastUpdated: "2026-06-25",
     difficulty: "Advanced",
@@ -1944,11 +1961,12 @@ class ReActAgent:
   {
     id: "RBG-RES-18",
     slug: "ai-red-teaming",
+    aliases: ["red-teaming","jailbreaking"],
     title: "AI RED TEAMING & FAILURE ANALYSIS",
     subtitle: "Adversarial Suffix Attacks, Jailbreaks, Prompt Injection, and Model Extraction",
     category: "AI SAFETY",
     secondaryCategory: "AI SYSTEMS",
-    status: "In Research",
+    status: "RESEARCHING",
     startedDate: "2024-10-15",
     lastUpdated: "2026-08-01",
     difficulty: "Advanced",
@@ -1981,11 +1999,12 @@ class ReActAgent:
   {
     id: "RBG-RES-19",
     slug: "ai-compute-infrastructure",
+    aliases: ["infrastructure","compute"],
     title: "AI ENERGY, COMPUTE & INFRASTRUCTURE",
     subtitle: "GPU Cluster Interconnects, Megawatt Power Demands, NVLink, and Cooling Systems",
     category: "AI INFRASTRUCTURE",
     secondaryCategory: "AI SYSTEMS",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-06-01",
     lastUpdated: "2026-07-25",
     difficulty: "Advanced",
@@ -2018,11 +2037,12 @@ class ReActAgent:
   {
     id: "RBG-RES-20",
     slug: "ai-x-science",
+    aliases: ["science","alphafold"],
     title: "AI × SCIENCE",
     subtitle: "AlphaFold 3, Crystal Diffusion, Protein Engineering, and Quantum Chemistry",
     category: "AI × SCIENCE",
     secondaryCategory: "DEEP LEARNING",
-    status: "Completed",
+    status: "DOCUMENTED",
     startedDate: "2024-08-01",
     lastUpdated: "2026-07-15",
     difficulty: "Advanced",
@@ -2058,20 +2078,24 @@ class ReActAgent:
  */
 export function getResearchStats() {
   const totalTopics = researchTopics.length;
-  const completed = researchTopics.filter(t => t.status === "Completed").length;
-  const inResearch = researchTopics.filter(t => t.status === "In Research").length;
-  const experimental = researchTopics.filter(t => t.status === "Experimental").length;
+  const documented = researchTopics.filter(t => t.status === "DOCUMENTED").length;
+  const researching = researchTopics.filter(t => t.status === "RESEARCHING").length;
+  const experimenting = researchTopics.filter(t => t.status === "EXPERIMENTING").length;
+  const updated = researchTopics.filter(t => t.status === "UPDATED").length;
+  const planned = researchTopics.filter(t => t.status === "PLANNED").length;
   const totalExperiments = researchTopics.reduce((acc, t) => acc + (t.experiments ? t.experiments.length : 0), 0);
   const totalReferences = researchTopics.reduce((acc, t) => acc + (t.references ? t.references.length : 0), 0);
 
   return {
     totalResearches: totalTopics,
-    completedTopics: completed,
-    inResearchTopics: inResearch,
-    experimentalTopics: experimental,
+    documentedTopics: documented,
+    researchingTopics: researching,
+    experimentingTopics: experimenting,
+    updatedTopics: updated,
+    plannedTopics: planned,
     totalExperiments,
     totalReferences,
-    lastUpdated: "SEPTEMBER 2026",
+    lastUpdated: "OCTOBER 2026",
     activeFieldLead: "REUBG DEV // AI SYSTEMS & ARCHITECTURE"
   };
 }
