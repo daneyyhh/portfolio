@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, Github, MapPin, Send, CheckCircle2, Copy, Check } from 'lucide-react';
+import { Mail, Github, MapPin, Send, CheckCircle2, Copy, Check, ExternalLink } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
 import ReubgLogo from '../UI/ReubgLogo';
 import { MaskHeading, FadeInUp } from '../UI/TextReveal';
@@ -43,7 +43,7 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: EASE }}
               className="font-mono text-4xl font-extrabold text-[#FF1E27]"
             >
-              08
+              06
             </motion.span>
           </div>
 
@@ -268,7 +268,17 @@ export default function Contact() {
         <div>
           © {new Date().getFullYear()} REUBEN BINU GEORGE · ALL RIGHTS RESERVED
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
+          <a
+            href="https://buymeacoffee.com/reubg.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-[#FF1E27] transition-colors flex items-center gap-1.5 font-bold"
+          >
+            <span>☕ SUPPORT</span>
+            <ExternalLink size={12} className="opacity-70" />
+          </a>
+          <span>•</span>
           <span>PORTFOLIO V2.4</span>
           <span>•</span>
           <span>BUILT WITH REACT + THREE.JS</span>

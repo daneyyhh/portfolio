@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Coffee, ExternalLink } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import ReubgLogo from './ReubgLogo';
 
 // Smooth cubic easeInOut curve (fluid, responsive, cinematic acceleration & deceleration)
@@ -17,7 +17,6 @@ export default function Navbar({ onOpenResume }) {
   const navigate = useNavigate();
 
   const isResearch = location.pathname.startsWith('/research');
-  const isSupport = location.pathname === '/support';
 
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
@@ -26,8 +25,7 @@ export default function Navbar({ onOpenResume }) {
     { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
     { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
     { num: '06', name: 'RESEARCH', href: '/research', id: 'research', isRoute: true },
-    { num: '07', name: 'SUPPORT', href: '#support', id: 'support' },
-    { num: '08', name: 'CONTACT', href: '#contact', id: 'contact' },
+    { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
   /**
@@ -129,10 +127,6 @@ export default function Navbar({ onOpenResume }) {
       setActiveSection('research');
       return;
     }
-    if (isSupport) {
-      setActiveSection('support');
-      return;
-    }
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -146,7 +140,6 @@ export default function Navbar({ onOpenResume }) {
         { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive'] },
         { navId: 'experience', elementIds: ['experience'] },
-        { navId: 'support', elementIds: ['support'] },
         { navId: 'contact', elementIds: ['contact'] }
       ];
 
@@ -173,7 +166,7 @@ export default function Navbar({ onOpenResume }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isResearch, isSupport]);
+  }, [isResearch]);
 
   return (
     <header
@@ -201,7 +194,7 @@ export default function Navbar({ onOpenResume }) {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-2 xl:gap-4 text-[11px] xl:text-xs font-mono font-bold tracking-wider">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs font-mono font-bold tracking-wider">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -238,23 +231,11 @@ export default function Navbar({ onOpenResume }) {
           })}
         </nav>
 
-        {/* Action Button Section: Direct Support & Resume */}
-        <div className="hidden sm:flex items-center gap-2 xl:gap-3">
-          <a
-            href="https://buymeacoffee.com/reubg.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 py-1.5 px-2.5 sm:px-3 text-xs font-mono font-bold tracking-wider text-[#111111] hover:text-[#FF1E27] bg-[#EDECE6] hover:bg-[#E4E2DC] border border-[#C9C7C0] transition-colors cursor-pointer group"
-            title="Support REUBG DEV on Buy Me a Coffee"
-          >
-            <Coffee size={14} className="text-[#FF1E27] group-hover:scale-110 transition-transform" />
-            <span className="hidden xl:inline text-[11px]">SUPPORT</span>
-            <ExternalLink size={11} className="opacity-60" />
-          </a>
-
+        {/* Action Button Section: Resume */}
+        <div className="hidden sm:flex items-center gap-3">
           <button
             onClick={onOpenResume}
-            className="btn-editorial-red py-1.5 px-3.5 sm:px-4 text-xs font-bold tracking-wider cursor-pointer"
+            className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider cursor-pointer"
           >
             RESUME
           </button>
@@ -309,28 +290,13 @@ export default function Navbar({ onOpenResume }) {
                       <span className="text-[10px] px-1.5 py-0.5 bg-[#FF1E27] text-white font-bold">
                         AI LAB
                       </span>
-                    ) : link.id === 'support' ? (
-                      <span className="text-[10px] px-1.5 py-0.5 bg-[#111111] text-white font-bold">
-                        ☕ COFFEE
-                      </span>
                     ) : null}
                   </a>
                 );
               })}
 
               {/* Action Buttons in Mobile Drawer */}
-              <div className="pt-4 border-t border-[#111111]/15 mt-3 space-y-2">
-                <a
-                  href="https://buymeacoffee.com/reubg.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-editorial w-full py-2.5 text-xs font-bold tracking-wider flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Coffee size={15} className="text-[#FF1E27]" />
-                  <span>☕ SUPPORT REUBG DEV</span>
-                  <ExternalLink size={13} />
-                </a>
-
+              <div className="pt-4 border-t border-[#111111]/15 mt-3">
                 <button
                   onClick={() => {
                     onOpenResume();
