@@ -1,13 +1,13 @@
 import React from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { FileText, Download, X } from 'lucide-react';
-import { personalData } from '../../data/portfolioData';
+import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { MaskHeading, MaskParagraph, FadeInUp } from '../UI/TextReveal';
 import { ParallaxElement } from '../UI/ParallaxImage';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function AboutResume({ resumeOpen, setResumeOpen }) {
+export default function AboutSection() {
   const prefersReduced = useReducedMotion();
 
   const stats = [
@@ -94,24 +94,23 @@ export default function AboutResume({ resumeOpen, setResumeOpen }) {
             ))}
           </div>
 
-          {/* Action CTAs */}
+          {/* Action CTAs: Direct connection to Projects & Research */}
           <FadeInUp delay={0.8} className="flex flex-wrap gap-3 sm:gap-4 pt-2">
-            <button
-              onClick={() => setResumeOpen(true)}
+            <a
+              href="#projects"
               className="btn-editorial-red flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
             >
-              <FileText size={16} />
-              <span>VIEW RESUME</span>
-            </button>
-
-            <a
-              href="/Reuben-Binu-George-CV.pdf"
-              download="Reuben-Binu-George-CV.pdf"
-              className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
-            >
-              <Download size={16} />
-              <span>DOWNLOAD PDF</span>
+              <span>SELECTED WORKS</span>
+              <ArrowRight size={16} />
             </a>
+
+            <Link
+              to="/research"
+              className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm cursor-pointer group"
+            >
+              <span>RESEARCH LAB</span>
+              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+            </Link>
           </FadeInUp>
         </div>
 
@@ -131,68 +130,6 @@ export default function AboutResume({ resumeOpen, setResumeOpen }) {
         </div>
 
       </div>
-
-      {/* Interactive Resume Modal */}
-      <AnimatePresence>
-        {resumeOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3, ease: EASE }}
-              className="relative w-full max-w-3xl bg-[#141414] border border-white/20 p-6 md:p-8 max-h-[90vh] overflow-y-auto space-y-6 text-slate-200 shadow-2xl"
-            >
-              <button
-                onClick={() => setResumeOpen(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white cursor-pointer"
-              >
-                <X size={20} />
-              </button>
-
-              <div className="border-b border-white/10 pb-4">
-                <div className="text-xs text-[#FF1E27] uppercase tracking-widest font-bold">CURRICULUM VITAE</div>
-                <h2 className="font-syne text-2xl sm:text-3xl font-bold text-white uppercase">{personalData.name}</h2>
-                <div className="text-xs text-slate-400 mt-1">{personalData.title} · {personalData.location}</div>
-              </div>
-
-              <div className="space-y-4 text-xs sm:text-sm font-sans">
-                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">CAREER OBJECTIVE</div>
-                <p className="leading-relaxed text-slate-300">{personalData.bio}</p>
-              </div>
-
-              <div className="space-y-3">
-                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">CORE COMPETENCIES</div>
-                <div className="flex flex-wrap gap-1.5 text-xs font-mono">
-                  {['React', 'Next.js', 'Node.js', 'Python', 'Three.js', 'Tailwind CSS', 'MongoDB', 'PostgreSQL', 'LUA', 'Figma', 'UI/UX'].map((skill) => (
-                    <span key={skill} className="bg-[#0A0A0A] border border-white/10 px-2.5 py-1 text-slate-300">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div className="font-mono text-xs text-[#FF1E27] font-bold uppercase tracking-wider">EDUCATION</div>
-                <div className="bg-[#0A0A0A] p-4 border border-white/10 space-y-1">
-                  <div className="font-bold text-white text-xs sm:text-sm">Bachelor of Computer Applications (BCA)</div>
-                  <div className="text-xs text-slate-400">Yenepoya (Deemed to be University), Bangalore · 2023 — 2026</div>
-                  <div className="text-[11px] text-[#FF1E27]">Specialization: Game Development</div>
-                </div>
-              </div>
-
-              <div className="flex justify-end pt-2">
-                <button
-                  onClick={() => setResumeOpen(false)}
-                  className="btn-editorial-red text-xs cursor-pointer"
-                >
-                  CLOSE PREVIEW
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

@@ -7,7 +7,7 @@ import ReubgLogo from './ReubgLogo';
 // Smooth cubic easeInOut curve (fluid, responsive, cinematic acceleration & deceleration)
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-export default function Navbar({ onOpenResume }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -20,7 +20,7 @@ export default function Navbar({ onOpenResume }) {
 
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
-    { num: '02', name: 'ABOUT', href: '#introduction', id: 'about' },
+    { num: '02', name: 'ABOUT', href: '#about', id: 'about' },
     { num: '03', name: 'WORK', href: '#projects', id: 'work' },
     { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
     { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
@@ -231,14 +231,15 @@ export default function Navbar({ onOpenResume }) {
           })}
         </nav>
 
-        {/* Action Button Section: Resume */}
+        {/* Action Button Section: Direct Contact CTA */}
         <div className="hidden sm:flex items-center gap-3">
-          <button
-            onClick={onOpenResume}
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
             className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider cursor-pointer"
           >
-            RESUME
-          </button>
+            GET IN TOUCH
+          </a>
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -297,15 +298,16 @@ export default function Navbar({ onOpenResume }) {
 
               {/* Action Buttons in Mobile Drawer */}
               <div className="pt-4 border-t border-[#111111]/15 mt-3">
-                <button
-                  onClick={() => {
-                    onOpenResume();
+                <a
+                  href="#contact"
+                  onClick={(e) => {
                     setMobileMenuOpen(false);
+                    handleNavClick(e, '#contact');
                   }}
-                  className="btn-editorial-red w-full py-2.5 text-xs font-bold tracking-wider cursor-pointer"
+                  className="btn-editorial-red w-full py-2.5 text-xs font-bold tracking-wider cursor-pointer text-center block"
                 >
-                  VIEW RESUME
-                </button>
+                  GET IN TOUCH
+                </a>
               </div>
             </div>
           </motion.div>

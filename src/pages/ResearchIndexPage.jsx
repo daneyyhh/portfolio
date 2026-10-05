@@ -41,7 +41,7 @@ import KnowledgeGraph from '../components/Research/KnowledgeGraph';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function ResearchIndexPage({ onOpenResume }) {
+export default function ResearchIndexPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
@@ -746,13 +746,6 @@ export default function ResearchIndexPage({ onOpenResume }) {
               <span>☕ SUPPORT</span>
               <ExternalLink size={11} />
             </a>
-            <span>•</span>
-            <button
-              onClick={onOpenResume}
-              className="text-[#FF1E27] hover:underline cursor-pointer"
-            >
-              VIEW RESUME
-            </button>
             <span>•</span>
             <a
               href="https://github.com/daneyyhh"

@@ -44,7 +44,7 @@ import ActiveResearchBoard from '../components/Research/ActiveResearchBoard';
 import FutureMap from '../components/Research/FutureMap';
 import BenchmarkExplorer from '../components/Research/BenchmarkExplorer';
 
-export default function ResearchDetailPage({ onOpenResume }) {
+export default function ResearchDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('overview');
@@ -828,13 +828,6 @@ export default function ResearchDetailPage({ onOpenResume }) {
               <span>☕ SUPPORT</span>
               <ExternalLink size={11} />
             </a>
-            <span>•</span>
-            <button
-              onClick={onOpenResume}
-              className="text-[#111111] hover:text-[#FF1E27] cursor-pointer"
-            >
-              RESUME
-            </button>
           </div>
         </div>
       </footer>

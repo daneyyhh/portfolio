@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { personalData } from '../../data/portfolioData';
 
 const EASE = [0.16, 1, 0.3, 1];
 
-export default function Hero({ onOpenResume }) {
+export default function Hero() {
   const prefersReduced = useReducedMotion();
 
   const headlineLines = [
@@ -91,12 +92,13 @@ export default function Hero({ onOpenResume }) {
                 <ArrowRight size={16} />
               </a>
 
-              <button
-                onClick={onOpenResume}
-                className="btn-editorial-outline flex items-center gap-2 text-xs sm:text-sm"
+              <Link
+                to="/research"
+                className="btn-editorial-outline flex items-center gap-2 text-xs sm:text-sm group"
               >
-                <span>RESUME PDF</span>
-              </button>
+                <span>RESEARCH LAB</span>
+                <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </motion.div>
           </div>
         </div>

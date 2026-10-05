@@ -10,7 +10,7 @@ import { projectsData } from './data/portfolioData';
 import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
 import Introduction from './components/Sections/Introduction';
-import AboutResume from './components/Sections/AboutResume';
+import AboutSection from './components/Sections/AboutSection';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
@@ -43,7 +43,7 @@ function ScrollToTop() {
 /**
  * HomePage: Main editorial portfolio flow
  */
-function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen }) {
+function HomePage({ setSelectedProject }) {
   const location = useLocation();
 
   useEffect(() => {
@@ -77,14 +77,11 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
 
       {/* Main Editorial Flow */}
       <main className="relative z-10">
-        <Hero onOpenResume={onOpenResume} />
+        <Hero />
         
         <Introduction />
         
-        <AboutResume
-          resumeOpen={resumeOpen}
-          setResumeOpen={setResumeOpen}
-        />
+        <AboutSection />
         
         <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
         
@@ -105,7 +102,6 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
     <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
@@ -120,9 +116,7 @@ export default function App() {
         <EasterEggs />
 
         {/* Site-wide Adaptive Header */}
-        <Navbar
-          onOpenResume={() => setResumeOpen(true)}
-        />
+        <Navbar />
 
         {/* Page Routes */}
         <Routes>
@@ -130,10 +124,7 @@ export default function App() {
             path="/"
             element={
               <HomePage
-                onOpenResume={() => setResumeOpen(true)}
                 setSelectedProject={setSelectedProject}
-                resumeOpen={resumeOpen}
-                setResumeOpen={setResumeOpen}
               />
             }
           />
@@ -141,11 +132,11 @@ export default function App() {
           {/* Dedicated AI Research Laboratory Routes */}
           <Route
             path="/research"
-            element={<ResearchIndexPage onOpenResume={() => setResumeOpen(true)} />}
+            element={<ResearchIndexPage />}
           />
           <Route
             path="/research/:slug"
-            element={<ResearchDetailPage onOpenResume={() => setResumeOpen(true)} />}
+            element={<ResearchDetailPage />}
           />
 
           {/* Fallback to Home */}
