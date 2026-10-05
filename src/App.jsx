@@ -16,11 +16,13 @@ import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import Experience from './components/Sections/Experience';
+import Support from './components/Sections/Support';
 import Contact from './components/Sections/Contact';
 
 // Dedicated AI Research Laboratory Pages
 import ResearchIndexPage from './pages/ResearchIndexPage';
 import ResearchDetailPage from './pages/ResearchDetailPage';
+import SupportPage from './pages/SupportPage';
 
 /**
  * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
@@ -96,6 +98,8 @@ function HomePage({ onOpenResume, setSelectedProject, resumeOpen, setResumeOpen 
         
         <Experience />
         
+        <Support />
+        
         <Contact />
       </main>
     </>
@@ -146,6 +150,10 @@ export default function App() {
           <Route
             path="/research/:slug"
             element={<ResearchDetailPage onOpenResume={() => setResumeOpen(true)} />}
+          />
+          <Route
+            path="/support"
+            element={<SupportPage onOpenResume={() => setResumeOpen(true)} />}
           />
 
           {/* Fallback to Home */}

@@ -43,7 +43,7 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: EASE }}
               className="font-mono text-4xl font-extrabold text-[#FF1E27]"
             >
-              06
+              08
             </motion.span>
           </div>
 

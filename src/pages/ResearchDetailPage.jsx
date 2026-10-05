@@ -1046,7 +1046,7 @@ export default function ResearchDetailPage({ onOpenResume }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-bold">
+          <div className="flex items-center gap-4 text-xs font-bold flex-wrap">
             <Link to="/research" className="text-[#FF1E27] hover:underline">
               ALL TOPICS
             </Link>
@@ -1054,6 +1054,16 @@ export default function ResearchDetailPage({ onOpenResume }) {
             <Link to="/" className="text-[#111111] hover:text-[#FF1E27] transition-colors">
               PORTFOLIO HOME
             </Link>
+            <span>•</span>
+            <a
+              href="https://buymeacoffee.com/reubg.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#111111] hover:text-[#FF1E27] transition-colors flex items-center gap-1"
+            >
+              <span>☕ SUPPORT</span>
+              <ExternalLink size={11} />
+            </a>
             <span>•</span>
             <button
               onClick={onOpenResume}

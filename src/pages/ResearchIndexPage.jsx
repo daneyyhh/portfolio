@@ -16,7 +16,8 @@ import {
   CheckCircle2,
   Clock,
   FlaskConical,
-  X
+  X,
+  ExternalLink
 } from 'lucide-react';
 import { 
   researchTopics, 
@@ -424,6 +425,36 @@ export default function ResearchIndexPage({ onOpenResume }) {
       </main>
 
       {/* ─────────────────────────────────────────────────────────────
+          SUPPORT AI RESEARCH STRIP
+      ───────────────────────────────────────────────────────────── */}
+      <section className="border-t border-[#C9C7C0] bg-[#EDECE6]/60 py-10 px-4 sm:px-6 md:px-12 font-mono">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <div className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+              <span>SUPPORT REUBG DEV RESEARCH & LABORATORY</span>
+            </div>
+            <div className="font-syne font-bold text-lg sm:text-xl text-[#111111] uppercase">
+              Independent AI Research Built From First Principles
+            </div>
+            <p className="font-sans text-xs text-[#555555] max-w-xl">
+              Support continuous paper evaluations, GPU model benchmarks, and open technical dissertations.
+            </p>
+          </div>
+
+          <a
+            href="https://buymeacoffee.com/reubg.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-editorial-red text-xs py-2.5 px-5 flex items-center gap-2 font-bold cursor-pointer shrink-0"
+          >
+            <span>☕ SUPPORT ON BUY ME A COFFEE</span>
+            <ExternalLink size={13} />
+          </a>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
           ARCHIVAL LEGAL & TECHNICAL CITATION FOOTER
       ───────────────────────────────────────────────────────────── */}
       <footer className="border-t border-[#C9C7C0] bg-[#FAF9F5] py-12 px-4 sm:px-6 md:px-12 font-mono text-xs text-[#555555]">
@@ -437,10 +468,20 @@ export default function ResearchIndexPage({ onOpenResume }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-bold">
+          <div className="flex items-center gap-4 text-xs font-bold flex-wrap">
             <Link to="/" className="text-[#111111] hover:text-[#FF1E27] transition-colors">
               PORTFOLIO HOME
             </Link>
+            <span>•</span>
+            <a
+              href="https://buymeacoffee.com/reubg.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#111111] hover:text-[#FF1E27] transition-colors flex items-center gap-1"
+            >
+              <span>☕ SUPPORT</span>
+              <ExternalLink size={11} />
+            </a>
             <span>•</span>
             <button
               onClick={onOpenResume}
