@@ -18,6 +18,10 @@ import VisualArchive from './components/Sections/VisualArchive';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
 
+// Dedicated AI Research Laboratory Pages
+import ResearchIndexPage from './pages/ResearchIndexPage';
+import ResearchDetailPage from './pages/ResearchDetailPage';
+
 /**
  * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
  */
@@ -133,6 +137,18 @@ export default function App() {
               />
             }
           />
+
+          {/* Dedicated AI Research Laboratory Routes */}
+          <Route
+            path="/research"
+            element={<ResearchIndexPage onOpenResume={() => setResumeOpen(true)} />}
+          />
+          <Route
+            path="/research/:slug"
+            element={<ResearchDetailPage onOpenResume={() => setResumeOpen(true)} />}
+          />
+
+          {/* Fallback to Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 

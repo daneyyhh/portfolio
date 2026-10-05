@@ -16,13 +16,16 @@ export default function Navbar({ onOpenResume }) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isResearch = location.pathname.startsWith('/research');
+
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
     { num: '02', name: 'ABOUT', href: '#introduction', id: 'about' },
     { num: '03', name: 'WORK', href: '#projects', id: 'work' },
     { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
     { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
-    { num: '06', name: 'CONTACT', href: '#contact', id: 'contact' },
+    { num: '06', name: 'RESEARCH', href: '/research', id: 'research', isRoute: true },
+    { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
   /**
@@ -70,12 +73,20 @@ export default function Navbar({ onOpenResume }) {
 
   /**
    * Smooth navigation handler
+   * - Handles dedicated route transitions (/research) vs homepage hash scrolling
    * - Locks active state on clicked item to prevent intermediate scroll-spy flickering
    * - Closes mobile drawer seamlessly
    * - Preserves clean URL state via replaceState without reloads
    */
-  const handleNavClick = (e, href) => {
+  const handleNavClick = (e, href, isRoute = false) => {
     if (e && e.preventDefault) e.preventDefault();
+
+    if (isRoute || href.startsWith('/')) {
+      setActiveSection('research');
+      navigate(href);
+      return;
+    }
+
     const targetId = href.replace('#', '');
     const matchedLink = navLinks.find((l) => l.href === href);
     const linkId = matchedLink ? matchedLink.id : 'home';
@@ -88,7 +99,7 @@ export default function Navbar({ onOpenResume }) {
       isProgrammaticScrollRef.current = false;
     }, 920);
 
-    // Cross-route navigation back to main page if needed
+    // Cross-route navigation back to main page if on /research
     if (location.pathname !== '/') {
       navigate('/' + href);
       setTimeout(() => {
@@ -110,8 +121,13 @@ export default function Navbar({ onOpenResume }) {
     }
   };
 
-  // Scroll spy to update active section when user manually scrolls
+  // Scroll spy to update active section when user manually scrolls on homepage
   useEffect(() => {
+    if (isResearch) {
+      setActiveSection('research');
+      return;
+    }
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
@@ -150,7 +166,7 @@ export default function Navbar({ onOpenResume }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isResearch]);
 
   return (
     <header
@@ -178,14 +194,14 @@ export default function Navbar({ onOpenResume }) {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-mono font-bold tracking-wider">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs font-mono font-bold tracking-wider">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
+                onClick={(e) => handleNavClick(e, link.href, link.isRoute)}
                 className={`relative transition-colors duration-200 flex items-center gap-1.5 py-1 cursor-pointer group ${
                   isActive
                     ? 'text-[#FF1E27]'
@@ -200,6 +216,9 @@ export default function Navbar({ onOpenResume }) {
                   {link.num}.
                 </span>
                 <span>{link.name}</span>
+                {link.id === 'research' && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+                )}
                 {isActive && (
                   <motion.span
                     layoutId="activeNavIndicator"
@@ -251,7 +270,7 @@ export default function Navbar({ onOpenResume }) {
                     href={link.href}
                     onClick={(e) => {
                       setMobileMenuOpen(false);
-                      handleNavClick(e, link.href);
+                      handleNavClick(e, link.href, link.isRoute);
                     }}
                     className={`text-sm tracking-widest flex items-center justify-between py-2 px-3 transition-colors ${
                       isActive
@@ -265,9 +284,13 @@ export default function Navbar({ onOpenResume }) {
                       </span>
                       <span>{link.name}</span>
                     </div>
-                    {isActive && (
+                    {isActive ? (
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-                    )}
+                    ) : link.id === 'research' ? (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-[#FF1E27] text-white font-bold">
+                        AI LAB
+                      </span>
+                    ) : null}
                   </a>
                 );
               })}
