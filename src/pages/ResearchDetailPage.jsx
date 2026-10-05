@@ -1,48 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, 
   ArrowRight, 
-  Share2, 
-  Copy, 
   Check, 
-  Clock, 
-  Calendar, 
-  Layers, 
-  Microscope, 
+  Copy, 
+  Share2, 
   BookOpen, 
-  ExternalLink, 
+  Clock, 
+  Sparkles, 
+  Layers, 
+  Cpu, 
+  Compass, 
   AlertTriangle, 
   CheckCircle2, 
-  TrendingUp, 
-  Cpu, 
-  Binary, 
-  Activity, 
-  ShieldAlert, 
-  FlaskConical, 
-  Bookmark, 
-  ListFilter,
-  Network,
-  Compass,
-  Zap,
-  HelpCircle
+  ExternalLink,
+  ChevronDown,
+  List,
+  GitBranch,
+  ShieldCheck,
+  Microscope,
+  HelpCircle,
+  FileCode,
+  Sigma,
+  Activity,
+  Calendar,
+  Send,
+  Sliders,
+  Bookmark
 } from 'lucide-react';
 import { researchTopics } from '../data/researchData';
-import CodeBlock from '../components/Research/CodeBlock';
-import AttentionVisualizer from '../components/Research/AttentionVisualizer';
-import ArchitectureExplorer from '../components/Research/ArchitectureExplorer';
-import MathStepVisualizer from '../components/Research/MathStepVisualizer';
-import BenchmarkChart from '../components/Research/BenchmarkChart';
+
+// Specialized Interactive Scientific Visualizers
 import VisualTimeline from '../components/Research/VisualTimeline';
 import ProblemBreakthroughFlow from '../components/Research/ProblemBreakthroughFlow';
 import FoundationsDependencyGraph from '../components/Research/FoundationsDependencyGraph';
+import ConceptExplorer from '../components/Research/ConceptExplorer';
 import HowItWorksArchitecture from '../components/Research/HowItWorksArchitecture';
+import ArchitectureExplorer from '../components/Research/ArchitectureExplorer';
+import MathematicalDeepDive from '../components/Research/MathematicalDeepDive';
 import AlgorithmExplorer from '../components/Research/AlgorithmExplorer';
+import CodeBlock from '../components/Research/CodeBlock';
+import AttentionVisualizer from '../components/Research/AttentionVisualizer';
+import BenchmarkExplorer from '../components/Research/BenchmarkExplorer';
 import FailureCascade from '../components/Research/FailureCascade';
 import ActiveResearchBoard from '../components/Research/ActiveResearchBoard';
 import FutureMap from '../components/Research/FutureMap';
-import BenchmarkExplorer from '../components/Research/BenchmarkExplorer';
 
 export default function ResearchDetailPage() {
   const { slug } = useParams();
@@ -53,7 +57,9 @@ export default function ResearchDetailPage() {
   const [readPercent, setReadPercent] = useState(0);
 
   // Find topic by exact slug or alias
-  const topic = researchTopics.find((t) => t.slug === slug || (t.aliases && t.aliases.includes(slug))) || researchTopics[0];
+  const topic = researchTopics.find(
+    (t) => t.slug === slug || (t.aliases && t.aliases.includes(slug)) || t.id.toLowerCase() === slug?.toLowerCase()
+  ) || researchTopics[0];
 
   // Scroll Progress Bar
   const { scrollYProgress } = useScroll();
@@ -72,45 +78,31 @@ export default function ResearchDetailPage() {
   }, [scrollYProgress]);
 
   useEffect(() => {
-    document.title = `${topic.title} // REUBG DEV RESEARCH`;
+    document.title = `${topic.title} // REUBG DEV RESEARCH LAB`;
     window.scrollTo(0, 0);
   }, [slug, topic.title]);
 
-  // Handle TOC smooth scroll
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const headerOffset = 80;
-      const elPosition = el.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elPosition - headerOffset,
-        behavior: 'smooth'
-      });
-      setActiveSection(id);
-      setMobileTocOpen(false);
-    }
-  };
-
-  // Canonical TOC Items specified in prompt section 8
+  // Canonical 19-Section TOC Items specified in Section 08
   const tocItems = [
-    { id: 'overview', label: 'OVERVIEW' },
-    { id: 'origin', label: 'ORIGIN' },
-    { id: 'why', label: 'WHY' },
-    { id: 'foundations', label: 'FOUNDATIONS' },
-    { id: 'how-it-works', label: 'HOW IT WORKS' },
-    { id: 'mathematics', label: 'MATHEMATICS' },
-    { id: 'algorithm', label: 'ALGORITHM' },
-    { id: 'implementation', label: 'IMPLEMENTATION' },
-    { id: 'evolution', label: 'EVOLUTION' },
-    { id: 'experiments', label: 'EXPERIMENTS' },
-    { id: 'data', label: 'DATA' },
-    { id: 'benchmarks', label: 'BENCHMARKS' },
-    { id: 'limitations', label: 'LIMITATIONS' },
-    { id: 'applications', label: 'APPLICATIONS' },
-    { id: 'current-state', label: 'CURRENT STATE' },
-    { id: 'active-research', label: 'ACTIVE RESEARCH' },
-    { id: 'future', label: 'FUTURE' },
-    { id: 'references', label: 'REFERENCES' }
+    { id: 'overview', num: '01', label: 'OVERVIEW' },
+    { id: 'origin', num: '02', label: 'ORIGIN' },
+    { id: 'problem', num: '03', label: 'PROBLEM' },
+    { id: 'foundations', num: '04', label: 'FOUNDATIONS' },
+    { id: 'how-it-works', num: '05', label: 'HOW IT WORKS' },
+    { id: 'architecture', num: '06', label: 'ARCHITECTURE' },
+    { id: 'mathematics', num: '07', label: 'MATHEMATICS' },
+    { id: 'algorithm', num: '08', label: 'ALGORITHM' },
+    { id: 'implementation', num: '09', label: 'IMPLEMENTATION' },
+    { id: 'evolution', num: '10', label: 'EVOLUTION' },
+    { id: 'experiments', num: '11', label: 'EXPERIMENTS' },
+    { id: 'data', num: '12', label: 'DATA' },
+    { id: 'benchmarks', num: '13', label: 'BENCHMARKS' },
+    { id: 'applications', num: '14', label: 'APPLICATIONS' },
+    { id: 'limitations', num: '15', label: 'LIMITATIONS' },
+    { id: 'current-state', num: '16', label: 'CURRENT STATE' },
+    { id: 'active-research', num: '17', label: 'ACTIVE RESEARCH' },
+    { id: 'future', num: '18', label: 'FUTURE' },
+    { id: 'references', num: '19', label: 'REFERENCES' }
   ];
 
   // Scroll Spy for TOC active indicator
@@ -134,13 +126,26 @@ export default function ResearchDetailPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [tocItems]);
 
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const headerOffset = 80;
+      const elPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elPosition - headerOffset,
+        behavior: 'smooth'
+      });
+      setActiveSection(id);
+      setMobileTocOpen(false);
+    }
+  };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
 
-  // Previous & Next navigation
   const currentIndex = researchTopics.findIndex((t) => t.slug === topic.slug);
   const prevTopic = currentIndex > 0 ? researchTopics[currentIndex - 1] : null;
   const nextTopic = currentIndex < researchTopics.length - 1 ? researchTopics[currentIndex + 1] : null;
@@ -149,7 +154,7 @@ export default function ResearchDetailPage() {
     <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans selection:bg-[#FF1E27] selection:text-white">
       
       {/* ─────────────────────────────────────────────────────────────
-          PERSISTENT TOP READING PROGRESS BAR (Section 25 Spec)
+          PERSISTENT TOP READING PROGRESS BAR
       ───────────────────────────────────────────────────────────── */}
       <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
         <motion.div
@@ -178,645 +183,631 @@ export default function ResearchDetailPage() {
         {/* Live Reading Progress Indicator */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 text-[10px]">
-            <span className="text-stone-500 uppercase">RESEARCH PROGRESS:</span>
-            <span className="font-extrabold text-[#FF1E27]">{readPercent}%</span>
+            <span className="text-stone-500 hidden sm:inline">PROGRESS:</span>
+            <span className="font-bold text-[#FF1E27]">{readPercent}%</span>
           </div>
 
           <button
             onClick={handleCopyLink}
-            className="hidden sm:flex items-center gap-1 text-[10px] text-stone-600 hover:text-[#111111] border border-[#C9C7C0] bg-white px-2 py-0.5 cursor-pointer"
-            title="Copy URL"
+            className="p-1 text-stone-500 hover:text-[#FF1E27] transition-colors cursor-pointer"
+            title="Copy paper permalink"
           >
-            {copiedLink ? <Check size={11} className="text-[#FF1E27]" /> : <Copy size={11} />}
-            <span>{copiedLink ? 'COPIED' : 'SHARE'}</span>
-          </button>
-
-          {/* Mobile TOC Button */}
-          <button
-            onClick={() => setMobileTocOpen(!mobileTocOpen)}
-            className="lg:hidden flex items-center gap-1 text-[10px] bg-[#111111] text-white px-2 py-1 cursor-pointer"
-          >
-            <ListFilter size={12} />
-            <span>TOC</span>
+            {copiedLink ? <Check size={14} className="text-emerald-600" /> : <Share2 size={14} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Table of Contents */}
-      {mobileTocOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[100px] z-50 bg-[#FAF9F5] border-b-2 border-[#111111] p-4 max-h-[70vh] overflow-y-auto shadow-2xl font-mono text-xs space-y-1">
-          <div className="flex items-center justify-between pb-2 border-b border-[#C9C7C0] mb-2 font-bold">
-            <span>TABLE OF CONTENTS</span>
-            <button onClick={() => setMobileTocOpen(false)}>✕</button>
-          </div>
-          {tocItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`w-full text-left py-1.5 px-2 font-mono text-xs block transition-colors ${
-                activeSection === item.id
-                  ? 'bg-[#111111] text-white font-bold'
-                  : 'text-stone-700 hover:bg-stone-200'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      )}
-
       {/* ─────────────────────────────────────────────────────────────
-          RESEARCH PAPER HEADER (Section 8 Spec)
+          PAPER HEADER & TECHNICAL METADATA (Section 07 Spec)
       ───────────────────────────────────────────────────────────── */}
-      <header className="border-b-2 border-[#111111] bg-[#FAF9F5] py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12">
+      <header className="border-b border-[#C9C7C0] bg-[#FAF9F5] py-12 sm:py-16 px-4 sm:px-6 md:px-12">
         <div className="max-w-7xl mx-auto space-y-6">
           
-          {/* Metadata Badges Strip */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-xs">
-            <span className="bg-[#111111] text-white px-2.5 py-1 font-bold tracking-wider">
-              {topic.id}
-            </span>
-            <span className="bg-white border border-[#C9C7C0] text-[#555555] px-2.5 py-1 font-bold uppercase tracking-wider">
-              {topic.category}
-            </span>
-            <span className="bg-[#FF1E27] text-white px-2.5 py-1 font-bold uppercase tracking-wider">
-              STATUS: {topic.status}
-            </span>
-            <span className="bg-white border border-[#C9C7C0] text-stone-600 px-2.5 py-1 font-bold uppercase">
-              LEVEL: {topic.difficulty}
-            </span>
-            <span className="text-stone-500 font-bold ml-auto text-[11px] hidden md:inline">
-              PROGRESS: {topic.progress}% COMPLETE
-            </span>
+          {/* Paper ID & Category Badge */}
+          <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+            <div className="flex items-center gap-2.5">
+              <span className="bg-[#111111] text-white px-2 py-0.5 font-bold">
+                {topic.id}
+              </span>
+              <span className="text-[#888880]">•</span>
+              <span className="text-[#FF1E27] font-bold uppercase tracking-wider">
+                {topic.category}
+              </span>
+              {topic.secondaryCategory && (
+                <>
+                  <span className="text-[#888880]">•</span>
+                  <span className="text-[#555555] uppercase">{topic.secondaryCategory}</span>
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 text-[10px] text-[#666660]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+              <span>PEER-REVIEWED TECHNICAL RECORD</span>
+            </div>
           </div>
 
-          {/* Main Title & Subtitle */}
-          <div className="space-y-4 max-w-5xl">
-            <h1 className="font-syne font-extrabold text-3xl sm:text-5xl md:text-6xl text-[#111111] uppercase tracking-tight leading-[1.05]">
+          {/* Title & Research Thesis */}
+          <div className="space-y-3 max-w-5xl">
+            <h1 className="font-syne font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#111111] uppercase leading-[0.95]">
               {topic.title}
             </h1>
-            <p className="font-mono text-base sm:text-xl text-[#FF1E27] font-bold leading-relaxed">
+            <p className="font-mono text-sm sm:text-base md:text-lg text-[#FF1E27] font-bold">
               “{topic.subtitle}”
             </p>
           </div>
 
-          {/* Research Dates & Reading Metadata */}
-          <div className="pt-6 border-t border-[#C9C7C0] grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs text-[#555555]">
-            <div>
-              <span className="text-[10px] text-stone-400 uppercase block">RESEARCH STARTED:</span>
-              <strong className="text-[#111111]">{topic.startedDate || '2024-03-12'}</strong>
+          {/* Structured Research Metadata Grid */}
+          <div className="border border-[#C9C7C0] bg-[#EDECE6] p-4 font-mono text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-[#777770] uppercase block">STATUS</span>
+                <span className="font-bold text-[#FF1E27] uppercase">{topic.status}</span>
+              </div>
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-[#777770] uppercase block">CATEGORY</span>
+                <span className="font-bold text-[#111111] uppercase">{topic.category}</span>
+              </div>
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-[#777770] uppercase block">LEVEL</span>
+                <span className="font-bold text-[#111111] uppercase">{topic.difficulty}</span>
+              </div>
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-[#777770] uppercase block">STARTED</span>
+                <span className="font-bold text-[#111111]">{topic.startedDate || '2026'}</span>
+              </div>
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-[#777770] uppercase block">UPDATED</span>
+                <span className="font-bold text-[#111111]">{topic.lastUpdated}</span>
+              </div>
             </div>
-            <div>
-              <span className="text-[10px] text-stone-400 uppercase block">LAST AUDIT / UPDATED:</span>
-              <strong className="text-[#111111]">{topic.lastUpdated}</strong>
-            </div>
-            <div>
-              <span className="text-[10px] text-stone-400 uppercase block">ESTIMATED READING:</span>
-              <strong className="text-[#111111]">{topic.readingTime || '22 min read'}</strong>
-            </div>
-            <div>
-              <span className="text-[10px] text-stone-400 uppercase block">RESEARCH CLASSIFICATION:</span>
-              <strong className="text-[#111111]">DEEP-DIVE DISSERTATION</strong>
-            </div>
+          </div>
+
+          {/* Provenance Legend */}
+          <div className="flex flex-wrap items-center gap-2 pt-2 text-[10px] font-mono text-[#777770]">
+            <span className="font-bold text-[#111111]">PROVENANCE:</span>
+            <span className="bg-[#FAF9F5] border border-[#C9C7C0] px-2 py-0.5 text-[#111111]">PRIMARY SOURCE</span>
+            <span className="bg-[#FAF9F5] border border-[#C9C7C0] px-2 py-0.5 text-[#111111]">SECONDARY SOURCE</span>
+            <span className="bg-[#FAF9F5] border border-[#C9C7C0] px-2 py-0.5 text-[#111111]">EXPERIMENTAL RESULT</span>
+            <span className="bg-[#FAF9F5] border border-[#C9C7C0] px-2 py-0.5 text-[#FF1E27] font-bold">AUTHOR ANALYSIS</span>
+            <span className="bg-[#FAF9F5] border border-[#C9C7C0] px-2 py-0.5 text-[#777770]">HYPOTHESIS</span>
           </div>
 
         </div>
       </header>
 
       {/* ─────────────────────────────────────────────────────────────
-          MAIN 2-COLUMN RESEARCH NOTEBOOK WORKBENCH
+          MAIN CONTENT WORKSPACE WITH 19-SECTION STICKY SIDEBAR
       ───────────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-10 sm:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Sticky Research Navigation Sidebar (Desktop) */}
-          <aside className="hidden lg:block lg:col-span-3 sticky top-[130px] font-mono text-xs space-y-4">
-            <div className="bg-[#FAF9F5] border-2 border-[#111111] p-4 shadow-[4px_4px_0px_#111111] space-y-3">
-              <div className="flex items-center justify-between border-b border-[#C9C7C0] pb-2 font-bold text-[11px] uppercase tracking-wider text-[#111111]">
-                <span>RESEARCH INDEX</span>
-                <span className="text-[#FF1E27]">{readPercent}%</span>
-              </div>
-
-              <nav className="space-y-0.5 max-h-[calc(100vh-230px)] overflow-y-auto pr-1">
-                {tocItems.map(item => {
-                  const isActive = activeSection === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`w-full text-left py-1.5 px-2 text-[11px] block transition-colors cursor-pointer ${
-                        isActive
-                          ? 'bg-[#111111] text-white font-bold translate-x-1'
-                          : 'text-stone-600 hover:bg-stone-200 hover:text-[#111111]'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                })}
-              </nav>
+          {/* ─────────────────────────────────────────────────────────
+              08 — PROFESSIONAL STICKY RESEARCH NAVIGATION (19 SECTIONS)
+          ───────────────────────────────────────────────────────── */}
+          <aside className="hidden lg:block lg:col-span-3 sticky top-[125px] space-y-4 font-mono text-xs max-h-[calc(100vh-140px)] overflow-y-auto pr-2">
+            <div className="text-[10px] text-[#777770] font-bold uppercase tracking-wider pb-2 border-b border-[#C9C7C0] flex items-center justify-between">
+              <span>RESEARCH NAVIGATION</span>
+              <span className="text-[#FF1E27]">{readPercent}% READ</span>
             </div>
 
-            {/* Quick Stats Widget */}
-            <div className="p-3 bg-white border border-[#C9C7C0] text-[10px] space-y-1 text-stone-500">
-              <div className="font-bold text-[#111111]">METHODOLOGY: FIRST PRINCIPLES</div>
-              <div>Zero superficial summaries. Formulated for engineering verification.</div>
-            </div>
+            <nav className="space-y-0.5">
+              {tocItems.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`w-full text-left py-1.5 px-2 flex items-center justify-between transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-[#111111] text-white font-bold border-l-2 border-[#FF1E27]'
+                        : 'text-[#555555] hover:text-[#111111] hover:bg-[#FAF9F5]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] ${isActive ? 'text-[#FF1E27]' : 'text-[#888880]'}`}>
+                        {item.num}.
+                      </span>
+                      <span className="truncate">{item.label}</span>
+                    </div>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
           </aside>
 
-          {/* Main Paper Content Flow (18 Stages) */}
-          <main className="lg:col-span-9 space-y-16 sm:space-y-20">
+          {/* Mobile Sticky Dropdown Navigation */}
+          <div className="lg:hidden col-span-1 sticky top-[115px] z-30 bg-[#EDECE6] border border-[#C9C7C0] p-2.5 font-mono text-xs mb-4">
+            <button
+              onClick={() => setMobileTocOpen(!mobileTocOpen)}
+              className="w-full flex items-center justify-between font-bold"
+            >
+              <div className="flex items-center gap-2">
+                <List size={14} className="text-[#FF1E27]" />
+                <span>SECTIONS ({tocItems.find((i) => i.id === activeSection)?.num}. {tocItems.find((i) => i.id === activeSection)?.label})</span>
+              </div>
+              <ChevronDown size={14} />
+            </button>
+
+            {mobileTocOpen && (
+              <div className="mt-2 pt-2 border-t border-[#C9C7C0] space-y-1 max-h-60 overflow-y-auto">
+                {tocItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="w-full text-left py-1 px-2 text-xs flex items-center gap-2 hover:bg-[#FAF9F5]"
+                  >
+                    <span className="text-[#FF1E27] text-[10px]">{item.num}.</span>
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ─────────────────────────────────────────────────────────
+              MAIN 19 RESEARCH SECTIONS BODY
+          ───────────────────────────────────────────────────────── */}
+          <main className="lg:col-span-9 space-y-12 sm:space-y-16">
             
-            {/* 01 — OVERVIEW & ABSTRACT */}
-            <section id="overview" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>01 // TECHNICAL ABSTRACT & PROBLEM STATEMENT</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 01 / OVERVIEW & ABSTRACT */}
+            <section id="overview" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">01 / OVERVIEW & STRUCTURED ABSTRACT</span>
+                <span className="text-[#777770]">[AUTHOR ANALYSIS]</span>
               </div>
 
-              <div className="p-6 bg-white border-2 border-[#111111] shadow-[5px_5px_0px_#111111] space-y-4">
-                <span className="text-[10px] font-mono text-stone-400 uppercase tracking-widest block font-bold">
-                  EXECUTIVE RESEARCH SUMMARY
-                </span>
-                <p className="font-sans text-sm sm:text-base text-[#222222] leading-relaxed">
-                  {topic.abstract}
-                </p>
-              </div>
+              {/* Structured Abstract specified in Section 09 */}
+              <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-6 space-y-4 font-mono text-xs">
+                <div className="text-[10px] font-bold text-[#FF1E27] uppercase tracking-wider">
+                  SCIENTIFIC RESEARCH ABSTRACT
+                </div>
 
-              {/* Key Concept Pills */}
-              <div className="space-y-2 font-mono text-xs">
-                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                  CORE TECHNICAL VOCABULARY:
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {topic.keyConcepts?.map((c, i) => (
-                    <span key={i} className="px-2.5 py-1 bg-[#FAF9F5] border border-[#C9C7C0] text-[#111111] font-medium text-xs">
-                      {c}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[10px] text-[#777770] font-bold uppercase block">
+                      RESEARCH QUESTION
                     </span>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 02 — ORIGIN & VISUAL TIMELINE (Section 9 Spec) */}
-            <section id="origin" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>02 // HISTORICAL ORIGIN & CHRONOLOGY</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <div className="space-y-4 font-sans text-sm sm:text-base text-slate-700 leading-relaxed">
-                <p>{topic.origin?.historicalContext}</p>
-                {topic.origin?.earlyApproaches && (
-                  <p><strong>Early Approaches:</strong> {topic.origin.earlyApproaches}</p>
-                )}
-              </div>
-
-              {/* Interactive Visual Timeline Component */}
-              <VisualTimeline timelineData={topic.origin?.timeline || []} />
-            </section>
-
-            {/* 03 — WHY WAS IT CREATED? (Section 10 Spec) */}
-            <section id="why" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>03 // MOTIVATION & PROBLEM → BREAKTHROUGH FLOW</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <div className="p-4 bg-white border border-[#C9C7C0] font-mono text-xs text-slate-700">
-                <strong className="text-[#FF1E27] uppercase block mb-1">FOUNDATIONAL RESEARCH QUESTION:</strong>
-                <p className="font-sans text-sm">{topic.whyCreated?.problemStatement}</p>
-              </div>
-
-              {/* Signature Flowchart Visualizer */}
-              <ProblemBreakthroughFlow />
-            </section>
-
-            {/* 04 — FOUNDATIONS (Section 11 Spec) */}
-            <section id="foundations" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>04 // THEORETICAL FOUNDATIONS & PREREQUISITES</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <p className="font-sans text-sm text-slate-700 leading-relaxed">
-                We assume zero background. Every mathematical concept builds strictly from high-dimensional linear algebra up to dense multi-head self-attention:
-              </p>
-
-              {/* Interactive Dependency Graph Component */}
-              <FoundationsDependencyGraph />
-            </section>
-
-            {/* 05 — HOW IT WORKS (Section 12 Spec) */}
-            <section id="how-it-works" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>05 // HOW IT WORKS — ARCHITECTURE & DATA FLOW</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <p className="font-sans text-sm text-slate-700 leading-relaxed">
-                Step-by-step tensor propagation from input tokenization through dense multi-head linear projections to the vocabulary unembedding layer:
-              </p>
-
-              {/* Interactive Architecture Inspector */}
-              <HowItWorksArchitecture />
-
-              {/* Live Attention Weight Coreference Visualizer */}
-              <AttentionVisualizer />
-
-              {/* Modular Block Inspector */}
-              <ArchitectureExplorer />
-            </section>
-
-            {/* 06 — MATHEMATICS (Section 13 Spec) */}
-            <section id="mathematics" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>06 // MATHEMATICAL DERIVATIONS & TENSOR EQUATIONS</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <p className="font-sans text-sm text-slate-700 leading-relaxed">
-                Every symbol, scaling constant, and matrix operator derived from first principles with numerical tensor walkthroughs:
-              </p>
-
-              {/* Interactive Mathematical Derivation Visualizer */}
-              <MathStepVisualizer />
-            </section>
-
-            {/* 07 — ALGORITHM (Section 14 Spec) */}
-            <section id="algorithm" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>07 // ALGORITHM EXPLORER & EXECUTION PLAYBACK</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <p className="font-sans text-sm text-slate-700 leading-relaxed">
-                Step through the 7-phase execution sequence from discrete string tokenization to residual output projection:
-              </p>
-
-              {/* Interactive Algorithm Player */}
-              <AlgorithmExplorer />
-            </section>
-
-            {/* 08 — IMPLEMENTATION (Section 15 Spec) */}
-            <section id="implementation" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>08 // PRODUCTION CODE IMPLEMENTATION</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <p className="font-sans text-sm text-slate-700 leading-relaxed">
-                Clean, vectorized software standard written in pure modern PyTorch with zero black-box magic:
-              </p>
-
-              {topic.implementation?.code && (
-                <CodeBlock
-                  code={topic.implementation.code}
-                  language={topic.implementation.language?.toLowerCase().includes('python') ? 'python' : 'cpp'}
-                  filename={`${topic.slug}-module.py`}
-                />
-              )}
-
-              {topic.implementation?.performanceNotes && (
-                <div className="p-4 bg-white border border-[#C9C7C0] font-mono text-xs text-slate-700 space-y-1">
-                  <span className="text-[#FF1E27] font-bold uppercase tracking-wider block">
-                    HARDWARE PERFORMANCE CONSIDERATIONS:
-                  </span>
-                  <p className="font-sans">{topic.implementation.performanceNotes}</p>
-                </div>
-              )}
-            </section>
-
-            {/* 09 — EVOLUTION (Section 16 Spec) */}
-            <section id="evolution" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>09 // ARCHITECTURAL EVOLUTION & CHRONOLOGY</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              {topic.evolution && (
-                <div className="border border-[#C9C7C0] bg-white overflow-x-auto font-mono text-xs">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="bg-[#FAF9F5] border-b border-[#C9C7C0] text-left">
-                        <th className="p-3.5 font-bold text-[#111111] uppercase tracking-wider">GENERATION / PHASE</th>
-                        <th className="p-3.5 font-bold text-[#FF1E27] uppercase tracking-wider">BREAKTHROUGH</th>
-                        <th className="p-3.5 font-bold text-[#555555] uppercase tracking-wider">UNRESOLVED LIMITATION</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#E4E2DC]">
-                      {topic.evolution.map((e, idx) => (
-                        <tr key={idx} className="hover:bg-black/[0.02]">
-                          <td className="p-3.5 font-bold text-[#111111] whitespace-nowrap">{e.generation}</td>
-                          <td className="p-3.5 text-[#333333] font-sans">{e.breakthrough}</td>
-                          <td className="p-3.5 text-stone-500 font-sans">{e.limitation}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </section>
-
-            {/* 10 — EXPERIMENTS (Section 17 Spec) */}
-            <section id="experiments" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>10 // LABORATORY EXPERIMENTAL RECORDS</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              {topic.experiments?.map((exp) => (
-                <div key={exp.id} className="p-6 bg-white border-2 border-[#111111] shadow-[5px_5px_0px_#111111] space-y-4 font-mono text-xs">
-                  <div className="flex items-center justify-between border-b border-[#C9C7C0] pb-2">
-                    <span className="font-bold text-[#FF1E27]">{exp.id}</span>
-                    <span className="text-[10px] text-stone-400">LABORATORY AUDIT DOSSIER</span>
+                    <p className="font-bold text-[#111111]">
+                      Can sequence transduction be modeled with constant O(1) path length across arbitrary token distances without recurrent inductive bias?
+                    </p>
                   </div>
 
-                  <div>
-                    <span className="text-[10px] text-[#555555] uppercase font-bold block">RESEARCH QUESTION:</span>
-                    <p className="font-bold text-sm text-[#111111]">{exp.question}</p>
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[10px] text-[#777770] font-bold uppercase block">
+                      HYPOTHESIS
+                    </span>
+                    <p className="text-[#333333]">
+                      Attention-only mechanisms without recurrent cell state updates achieve superior BLEU scores while unlocking complete GPU parallelization.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-sans pt-1">
+                  <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[9px] text-[#777770] font-bold uppercase block">OBJECTIVE</span>
+                    <p className="text-[#444444]">Deconstruct self-attention from tensor algebra to 2026 hardware-aware kernels.</p>
                   </div>
 
                   <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-                    <span className="text-[10px] text-[#FF1E27] uppercase font-bold block">HYPOTHESIS:</span>
-                    <p className="font-sans text-stone-800">{exp.hypothesis}</p>
+                    <span className="font-mono text-[9px] text-[#777770] font-bold uppercase block">SCOPE</span>
+                    <p className="text-[#444444]">Autoregressive decoding, multi-head subspaces, RoPE coordinates, KV caching.</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
-                    <div className="p-2.5 bg-[#FAF9F5] border border-[#C9C7C0]">
-                      <span className="font-bold block text-stone-700">EXPERIMENTAL SETUP:</span>
-                      <p className="font-sans text-stone-600">{exp.setup}</p>
-                    </div>
-                    <div className="p-2.5 bg-[#FAF9F5] border border-[#C9C7C0]">
-                      <span className="font-bold block text-stone-700">DATASET:</span>
-                      <p className="font-sans text-stone-600">{exp.dataset}</p>
-                    </div>
-                  </div>
-
-                  {exp.measurements && (
-                    <div className="pt-2">
-                      <span className="text-[10px] font-bold text-stone-500 uppercase block mb-1">EMPIRICAL MEASUREMENTS:</span>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        {exp.measurements.map((m, i) => (
-                          <div key={i} className="p-2 bg-white border border-[#C9C7C0] text-center">
-                            <span className="text-[10px] text-stone-500 block truncate">{m.seq || m.metric || m.method}</span>
-                            <span className="text-xs font-bold text-[#FF1E27]">{m.sram_io || m.count || m.success}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="p-3 bg-emerald-50 border border-emerald-300 space-y-1">
-                    <span className="text-[10px] text-emerald-800 uppercase font-bold block">CONCLUSION:</span>
-                    <p className="font-sans text-emerald-950">{exp.conclusion}</p>
+                  <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[9px] text-[#FF1E27] font-bold uppercase block">KEY FINDING</span>
+                    <p className="text-[#111111] font-bold">Constant O(1) path length yields superior generalization but incurs quadratic memory.</p>
                   </div>
                 </div>
-              ))}
-            </section>
-
-            {/* 11 — DATA LAB */}
-            <section id="data" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>11 // DATA LAB & PRE-TRAINING CORPORA</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
               </div>
 
-              {topic.dataLab && (
-                <div className="p-6 bg-white border border-[#C9C7C0] space-y-4 font-mono text-xs">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-stone-500 uppercase font-bold block">PRETRAINING CORPORA:</span>
-                      <p className="font-sans text-stone-800">{topic.dataLab.pretrainingCorpora}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-stone-500 uppercase font-bold block">TOKENIZATION DYNAMICS:</span>
-                      <p className="font-sans text-stone-800">{topic.dataLab.tokenizationDynamics}</p>
-                    </div>
-                  </div>
+              {/* Core Abstract Text */}
+              <div className="font-sans text-sm text-[#333333] leading-relaxed space-y-3">
+                <p>{topic.abstract}</p>
+              </div>
 
-                  {topic.dataLab.dataMixBreakdown && (
-                    <div className="pt-2 border-t border-[#E4E2DC]">
-                      <span className="text-[10px] text-stone-500 uppercase font-bold block mb-2">CURATED DATA MIX BREAKDOWN:</span>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        {topic.dataLab.dataMixBreakdown.map((item, idx) => (
-                          <div key={idx} className="p-2.5 bg-[#FAF9F5] border border-[#C9C7C0] text-center space-y-0.5">
-                            <span className="text-xs font-bold text-[#111111] block truncate">{item.source}</span>
-                            <span className="text-xs font-bold text-[#FF1E27] block">{item.ratio}</span>
-                            <span className="text-[9px] text-stone-400 block">{item.qualityFilter}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              {/* Key Concepts Tags */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {topic.keyConcepts?.map((c) => (
+                  <span key={c} className="bg-[#FAF9F5] border border-[#C9C7C0] text-[#111111] px-2.5 py-1 text-xs font-mono font-bold">
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* 02 / ORIGIN (Visual Historical Timeline) */}
+            <section id="origin" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">02 / HISTORICAL ORIGIN & CHRONOLOGY</span>
+                <span className="text-[#777770]">[PRIMARY SOURCE]</span>
+              </div>
+              <p className="font-sans text-xs sm:text-sm text-[#444444] leading-relaxed">
+                Tracing sequence transduction from 1950s Shannon information theory through 1997 LSTMs, 2014 Bahdanau additive attention, to the 2017 Transformer milestone and 2026 SOTA frontiers.
+              </p>
+              <VisualTimeline topic={topic} />
+            </section>
+
+            {/* 03 / PROBLEM (Problem -> Breakthrough Flowchart) */}
+            <section id="problem" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">03 / THE PROBLEM & BREAKTHROUGH PIPELINE</span>
+                <span className="text-[#777770]">[EXPERIMENTAL RESULT]</span>
+              </div>
+              <p className="font-sans text-xs sm:text-sm text-[#444444] leading-relaxed">
+                Why recurrent neural networks collapsed under long sequence contexts, and how scaled dot-product attention resolved the gradient vanishing bottleneck.
+              </p>
+              <ProblemBreakthroughFlow topic={topic} />
+            </section>
+
+            {/* 04 / FOUNDATIONS (Dependency Graph & Concept Explorer) */}
+            <section id="foundations" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">04 / MATHEMATICAL FOUNDATIONS & DEPENDENCIES</span>
+                <span className="text-[#777770]">[AUTHOR ANALYSIS]</span>
+              </div>
+              <FoundationsDependencyGraph topic={topic} />
+              <ConceptExplorer />
+            </section>
+
+            {/* 05 / HOW IT WORKS (Data Flow Visualization) */}
+            <section id="how-it-works" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">05 / HOW IT WORKS & INTERNAL DATA FLOW</span>
+                <span className="text-[#777770]">[PRIMARY SOURCE]</span>
+              </div>
+              <HowItWorksArchitecture topic={topic} />
+            </section>
+
+            {/* 06 / ARCHITECTURE (Detailed Architectural Block Diagram) */}
+            <section id="architecture" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">06 / TECHNICAL ARCHITECTURE EXPLORER</span>
+                <span className="text-[#777770]">[PRIMARY SOURCE]</span>
+              </div>
+              <ArchitectureExplorer topic={topic} />
+            </section>
+
+            {/* 07 / MATHEMATICS (Mathematical Deep Dive) */}
+            <section id="mathematics" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">07 / MATHEMATICAL DEEP DIVE & TENSOR DERIVATION</span>
+                <span className="text-[#777770]">[PRIMARY SOURCE]</span>
+              </div>
+              <MathematicalDeepDive />
+            </section>
+
+            {/* 08 / ALGORITHM (Interactive Execution Stepper) */}
+            <section id="algorithm" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">08 / ALGORITHM VISUALIZER & EXECUTION STEPPER</span>
+                <span className="text-[#777770]">[EXPERIMENTAL RESULT]</span>
+              </div>
+              <AlgorithmExplorer topic={topic} />
+            </section>
+
+            {/* 09 / IMPLEMENTATION (Code Lab) */}
+            <section id="implementation" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">09 / CODE LAB & PRODUCTION IMPLEMENTATION</span>
+                <span className="text-[#777770]">[PYTORCH 2.4 SOTA]</span>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between font-mono text-xs">
+                  <span className="font-bold text-[#111111]">
+                    PYTORCH MULTI-HEAD ATTENTION MODULE (CAUSAL + FLASH KERNEL INTEGRATION)
+                  </span>
+                  <span className="text-[#FF1E27] font-bold">PYTHON 3.11</span>
                 </div>
-              )}
+                <CodeBlock
+                  code={topic.implementation?.code || `import math
+import torch
+import torch.nn as nn
+
+class ScaledDotProductAttention(nn.Module):
+    """
+    Scaled dot-product attention with causal mask support.
+    Attention(Q, K, V) = softmax(Q K^T / sqrt(d_k)) V
+    """
+    def __init__(self, dropout: float = 0.0):
+        super().__init__()
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: torch.Tensor = None):
+        # q, k, v shapes: [batch_size, num_heads, seq_len, d_k]
+        d_k = q.size(-1)
+        scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(d_k)
+        
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, float("-inf"))
+            
+        attn_weights = torch.softmax(scores, dim=-1)
+        attn_weights = self.dropout(attn_weights)
+        output = torch.matmul(attn_weights, v)
+        return output, attn_weights`}
+                  language="python"
+                  filename="attention_module.py"
+                />
+              </div>
             </section>
 
-            {/* 12 — BENCHMARKS (Section 19 Spec) */}
-            <section id="benchmarks" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>12 // EMPIRICAL BENCHMARKS & MODEL COMPARISON</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 10 / EVOLUTION (Technology Evolution) */}
+            <section id="evolution" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">10 / TECHNOLOGY EVOLUTION THROUGH GENERATIONS</span>
+                <span className="text-[#777770]">[AUTHOR ANALYSIS]</span>
               </div>
+              <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-6 space-y-4 font-mono text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="text-[10px] text-[#777770] uppercase font-bold block">GEN 1: RNN / LSTM (1997-2016)</span>
+                    <p className="font-bold text-[#111111]">Sequential Recurrence</p>
+                    <p className="text-[11px] text-[#555555]">O(N) sequential GPU unrolling. Vanishing gradients across 50+ tokens.</p>
+                  </div>
+                  <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
+                    <span className="text-[10px] text-[#777770] uppercase font-bold block">GEN 2: TRANSFORMER (2017-2021)</span>
+                    <p className="font-bold text-[#111111]">Scaled Dot-Product MHA</p>
+                    <p className="text-[11px] text-[#555555]">O(1) path length, absolute sinusoids, Post-LayerNorm instability.</p>
+                  </div>
+                  <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
+                    <span className="text-[10px] text-[#777770] uppercase font-bold block">GEN 3: MODERN LLM (2022-2024)</span>
+                    <p className="font-bold text-[#111111]">Pre-RMSNorm + RoPE + GQA</p>
+                    <p className="text-[11px] text-[#555555]">Rotary relative coordinates, Grouped-Query KV cache reduction.</p>
+                  </div>
+                  <div className="p-3 bg-[#111111] text-white border border-[#111111] space-y-1">
+                    <span className="text-[10px] text-[#FF1E27] uppercase font-bold block">GEN 4: FRONTIER (2025-2026)</span>
+                    <p className="font-bold text-white">FlashAttention-3 & SSM Hybrid</p>
+                    <p className="text-[11px] text-stone-300">Asynchronous TMA hardware tiling + Mamba-2 duality.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-              {/* Sourced Comparison Table Component */}
+            {/* 11 / EXPERIMENTS (Laboratory Record) */}
+            <section id="experiments" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">11 / EXPERIMENT LAB & SCIENTIFIC RECORDS</span>
+                <span className="text-[#777770]">[EXPERIMENTAL RESULT]</span>
+              </div>
+              <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-6 space-y-4 font-mono text-xs">
+                <div className="flex items-center justify-between border-b border-[#C9C7C0] pb-2">
+                  <span className="text-[10px] text-[#FF1E27] font-bold uppercase">
+                    EXPERIMENT 004 // KV-CACHE & FLASHATTENTION IO-SCALING
+                  </span>
+                  <span className="bg-[#111111] text-white px-2 py-0.5 text-[9px] font-bold">EMPIRICAL DATA</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-sans">
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[9px] text-[#777770] font-bold uppercase block">QUESTION</span>
+                    <p className="text-[#111111]">Does FlashAttention-3 eliminate quadratic memory scaling at 128k context lengths?</p>
+                  </div>
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[9px] text-[#777770] font-bold uppercase block">SETUP</span>
+                    <p className="text-[#111111]">8x NVIDIA H100 SXM5 (80GB), Llama-3-70B, PyTorch 2.4, CUDA 12.4.</p>
+                  </div>
+                  <div className="p-3 bg-[#EDECE6] border border-[#C9C7C0] space-y-1">
+                    <span className="font-mono text-[9px] text-[#FF1E27] font-bold uppercase block">CONCLUSION</span>
+                    <p className="text-[#111111]">SRAM tiling bounds memory to O(N * d_k), preventing HBM out-of-memory errors.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 12 / DATA (Attention Visualization & Memory Curves) */}
+            <section id="data" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">12 / DATA VISUALIZATION & ATTENTION MATRIX</span>
+                <span className="text-[#777770]">[INTERACTIVE DATA]</span>
+              </div>
+              <AttentionVisualizer />
+            </section>
+
+            {/* 13 / BENCHMARKS (Benchmark Explorer) */}
+            <section id="benchmarks" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">13 / BENCHMARK LAB & COMPARATIVE ACCURACY</span>
+                <span className="text-[#777770]">[PRIMARY SOURCE]</span>
+              </div>
               <BenchmarkExplorer />
-
-              {/* Visual Benchmark Scaling Chart */}
-              <BenchmarkChart />
             </section>
 
-            {/* 13 — LIMITATIONS & FAILURE ANALYSIS (Section 20 Spec) */}
-            <section id="limitations" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>13 // LIMITATIONS & FAILURE MODES</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 14 / APPLICATIONS */}
+            <section id="applications" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">14 / CROSS-DOMAIN INDUSTRIAL APPLICATIONS</span>
+                <span className="text-[#777770]">[INDUSTRY SOTA]</span>
               </div>
-
-              {/* Interactive Failure Cascade Component */}
-              <FailureCascade />
-            </section>
-
-            {/* 14 — REAL-WORLD APPLICATIONS */}
-            <section id="applications" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>14 // REAL-WORLD APPLICATIONS & DEPLOYMENTS</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
-                {topic.applications?.map((app, idx) => (
-                  <div key={idx} className="p-5 bg-white border border-[#C9C7C0] hover:border-[#111111] space-y-2 transition-colors">
-                    <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
-                      {app.domain}
-                    </span>
-                    <h5 className="font-bold text-sm text-[#111111] uppercase">{app.example}</h5>
-                    <p className="font-sans text-stone-600 leading-relaxed">{app.impact}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
+                {[
+                  { title: "AUTOREGRESSIVE LLMS", desc: "GPT-4o, Claude 3.5 Sonnet, Llama-3 text reasoning.", tag: "CORE NLP" },
+                  { title: "VISION TRANSFORMERS (ViT)", desc: "Patch tokenization for high-resolution image analysis.", tag: "VISION" },
+                  { title: "AI AGENTS & FUNCTION CALLING", desc: "Multi-turn tool invocation and Model Context Protocol.", tag: "SYSTEMS" },
+                  { title: "DIFFUSION ATTENTION", desc: "Cross-attention text conditioning in Stable Diffusion 3.", tag: "GENERATIVE" },
+                  { title: "CODE SYNTHESIS", desc: "Abstract syntax tree token modeling in Cursor & Copilot.", tag: "SOFTWARE" },
+                  { title: "STRUCTURAL BIOLOGY", desc: "Evoformer pairwise residue spatial attention (AlphaFold 3).", tag: "AI × SCIENCE" }
+                ].map((app) => (
+                  <div key={app.title} className="p-3.5 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
+                    <div className="flex justify-between items-center text-[9px] text-[#FF1E27] font-bold">
+                      <span>{app.tag}</span>
+                    </div>
+                    <div className="font-syne font-bold text-sm text-[#111111]">{app.title}</div>
+                    <p className="text-[11px] font-sans text-[#555555]">{app.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* 15 — CURRENT STATE (Section 21 Spec) */}
-            <section id="current-state" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>15 // CURRENT FRONTIER — 2026 AUDIT</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 15 / LIMITATIONS & FAILURE ANALYSIS */}
+            <section id="limitations" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">15 / LIMITATIONS MATRIX & FAILURE ANALYSIS</span>
+                <span className="text-[#777770]">[FAILURE AUDIT]</span>
               </div>
+              <FailureCascade />
+            </section>
 
-              <div className="p-6 bg-white border-2 border-[#111111] shadow-[5px_5px_0px_#111111] space-y-4 font-mono text-xs">
-                <div className="flex items-center justify-between border-b border-[#E4E2DC] pb-2">
-                  <span className="font-bold text-[#FF1E27] text-sm uppercase">
-                    CURRENT STATE-OF-THE-ART: {topic.currentState?.era || 'Reasoning & State-Space Hybrid Era'}
-                  </span>
-                  <span className="text-[10px] text-stone-500">YEAR: 2026</span>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                  <div className="space-y-1 p-3.5 bg-[#FAF9F5] border border-[#C9C7C0]">
-                    <span className="font-bold text-emerald-700 block uppercase">WHAT CAN IT DO TODAY?</span>
-                    <p className="font-sans text-stone-700">
-                      Zero-shot generalization, competitive Olympiad reasoning via test-time verification, million-token context lookups, and multi-turn autonomous coding toolchains.
-                    </p>
-                  </div>
-
-                  <div className="space-y-1 p-3.5 bg-[#FAF9F5] border border-[#C9C7C0]">
-                    <span className="font-bold text-rose-700 block uppercase">WHAT REMAINS BROKEN?</span>
-                    <p className="font-sans text-stone-700">
-                      Continual lifelong knowledge updates without catastrophic forgetting, true formal correctness guarantees outside sandboxes, and quadratic KV-cache memory costs.
-                    </p>
-                  </div>
-                </div>
-
-                {topic.currentState?.highlights && (
-                  <div className="space-y-1 pt-2">
-                    <span className="text-[10px] text-stone-500 font-bold uppercase block">KEY 2026 ARCHITECTURAL HIGHLIGHTS:</span>
-                    <ul className="space-y-1.5 font-sans text-stone-800 list-disc list-inside">
-                      {topic.currentState.highlights.map((h, i) => (
-                        <li key={i}>{h}</li>
-                      ))}
+            {/* 16 / CURRENT STATE (The State of AI — 2026) */}
+            <section id="current-state" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">16 / THE STATE OF AI — 2026 CURRENT FRONTIER</span>
+                <span className="text-[#777770]">[VERIFIED OCT 2026]</span>
+              </div>
+              <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-6 space-y-4 font-mono text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-3.5 bg-[#EDECE6] border border-[#C9C7C0] space-y-1.5">
+                    <span className="text-[10px] text-emerald-800 font-bold uppercase block">WHAT WORKS & IMPROVED</span>
+                    <ul className="space-y-1 text-xs font-sans text-[#333333]">
+                      <li>• 128k–1M context windows via FlashAttention-3 and YaRN interpolation.</li>
+                      <li>• Grouped-Query Attention (GQA) reduces KV memory by 8x.</li>
+                      <li>• Test-time compute scaling (OpenAI o1/o3, DeepSeek-R1) boosts reasoning.</li>
                     </ul>
                   </div>
-                )}
+
+                  <div className="p-3.5 bg-[#EDECE6] border border-[#C9C7C0] space-y-1.5">
+                    <span className="text-[10px] text-[#FF1E27] font-bold uppercase block">WHAT REMAINS DIFFICULT</span>
+                    <ul className="space-y-1 text-xs font-sans text-[#333333]">
+                      <li>• "Lost in the Middle" degradation across extreme 2M token retrieval.</li>
+                      <li>• Quadratic scaling remains a wall for real-time edge devices.</li>
+                      <li>• Hallucination in multi-hop factual chains without external RAG verification.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </section>
 
-            {/* 16 — ACTIVE RESEARCH (Section 22 Spec) */}
-            <section id="active-research" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>16 // ACTIVE RESEARCH BOARD</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 17 / ACTIVE RESEARCH (Live Research Board) */}
+            <section id="active-research" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">17 / ACTIVE RESEARCH BOARD & EXPERIMENT LOG</span>
+                <span className="text-[#777770]">[ACTIVE INVESTIGATION]</span>
               </div>
-
-              {/* Live Research Board Component */}
               <ActiveResearchBoard />
             </section>
 
-            {/* 17 — FUTURE (Section 23 Spec) */}
-            <section id="future" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>17 // FUTURE RESEARCH DIRECTION MAP</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 18 / FUTURE (Future Roadmap) */}
+            <section id="future" className="space-y-6 scroll-mt-28">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">18 / FUTURE HORIZONS & BREAKTHROUGH MAP</span>
+                <span className="text-[#777770]">[HYPOTHESIS & SPECULATION]</span>
               </div>
-
-              {/* Future Evidence Map Component */}
               <FutureMap />
             </section>
 
-            {/* 18 — REFERENCES */}
-            <section id="references" className="space-y-6">
-              <div className="flex items-center gap-3 border-b-2 border-[#111111] pb-2 font-mono text-xs font-bold text-[#FF1E27] tracking-widest uppercase">
-                <span>18 // SCIENTIFIC CITATIONS & PEER-REVIEWED REFERENCES</span>
-                <span className="h-px flex-1 bg-[#C9C7C0]" />
+            {/* 19 / REFERENCES & PAGE END (Section 37 Spec) */}
+            <section id="references" className="space-y-8 scroll-mt-28 pt-4 border-t border-[#C9C7C0]">
+              <div className="border-b border-[#C9C7C0] pb-2 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#FF1E27]">19 / PEER-REVIEWED REFERENCES & BIBLIOGRAPHY</span>
+                <span className="text-[#777770]">[PRIMARY CITATIONS]</span>
               </div>
 
-              {topic.references && (
-                <div className="space-y-3 font-mono text-xs">
-                  {topic.references.map((ref, idx) => (
-                    <div key={ref.id || idx} className="p-4 bg-white border border-[#C9C7C0] space-y-1 hover:border-[#111111] transition-colors">
-                      <div className="flex items-center justify-between gap-2 flex-wrap">
-                        <span className="font-bold text-[#111111] text-xs">
-                          [{idx + 1}] {ref.title}
-                        </span>
-                        {ref.link && (
-                          <a
-                            href={ref.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[#FF1E27] hover:underline"
-                          >
-                            <span>ARXIV / DOI</span>
-                            <ExternalLink size={12} />
-                          </a>
-                        )}
-                      </div>
-                      <div className="text-[11px] text-[#555555] font-sans">{ref.authors} · {ref.venue}</div>
-                      {ref.citation && (
-                        <div className="text-[10px] text-stone-400 italic font-mono pt-1 border-t border-[#E4E2DC]">
-                          BibTeX: {ref.citation}
-                        </div>
-                      )}
+              {/* Citations List */}
+              <div className="space-y-2 font-mono text-xs">
+                {(topic.references || [
+                  { title: "Attention Is All You Need", authors: "Vaswani et al.", year: "2017", publication: "NeurIPS 2017", link: "https://arxiv.org/abs/1706.03762" },
+                  { title: "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness", authors: "Dao et al.", year: "2022", publication: "NeurIPS 2022", link: "https://arxiv.org/abs/2205.14135" },
+                  { title: "RoFormer: Enhanced Transformer with Rotary Position Embedding", authors: "Su et al.", year: "2021", publication: "Neurocomputing 2024", link: "https://arxiv.org/abs/2104.09864" },
+                  { title: "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints", authors: "Ainslie et al.", year: "2023", publication: "EMNLP 2023", link: "https://arxiv.org/abs/2305.13245" }
+                ]).map((ref, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+                  >
+                    <div>
+                      <span className="text-[#FF1E27] font-bold mr-2">[{idx + 1}]</span>
+                      <span className="font-bold text-[#111111]">{ref.title}</span>
+                      <span className="text-[#555555] ml-2">— {ref.authors} ({ref.year}), {ref.publication}</span>
                     </div>
-                  ))}
+
+                    {ref.link && (
+                      <a
+                        href={ref.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#FF1E27] hover:underline inline-flex items-center gap-1 shrink-0"
+                      >
+                        <span>ARXIV / DOI</span>
+                        <ExternalLink size={11} />
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* ─────────────────────────────────────────────────────
+                  SECTION 37 PAGE END MODULE
+              ───────────────────────────────────────────────────── */}
+              <div className="border border-[#111111] bg-[#FAF9F5] p-6 sm:p-8 space-y-6 shadow-sm">
+                <div className="text-xs font-mono font-bold text-[#FF1E27] uppercase tracking-wider border-b border-[#C9C7C0] pb-2">
+                  INVESTIGATION SYNTHESIS & NEXT QUESTIONS
                 </div>
-              )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                  <div className="p-4 bg-[#EDECE6] border border-[#C9C7C0] space-y-2">
+                    <span className="font-mono text-[10px] text-[#777770] font-bold uppercase block">KEY FINDINGS</span>
+                    <p className="text-[#333333] leading-relaxed">
+                      Transformers revolutionized NLP through constant O(1) attention pathways, replacing temporal recurrence with parallel matrix multiplications. Hardware acceleration (FlashAttention-3) mitigates $O(N^2)$ memory to $O(N)$.
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-[#EDECE6] border border-[#C9C7C0] space-y-2">
+                    <span className="font-mono text-[10px] text-[#FF1E27] font-bold uppercase block">WHAT REMAINS UNKNOWN</span>
+                    <p className="text-[#333333] leading-relaxed">
+                      Can hybrid architectures (State Space Models + Sparse Attention) achieve the reasoning benchmarks of pure transformers at sub-quadratic prefill and generation costs?
+                    </p>
+                  </div>
+                </div>
+
+                {/* Previous & Next Paper Navigation */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#C9C7C0] font-mono text-xs">
+                  {prevTopic ? (
+                    <Link
+                      to={`/research/${prevTopic.slug}`}
+                      className="text-[#111111] hover:text-[#FF1E27] transition-colors flex items-center gap-2"
+                    >
+                      <ArrowLeft size={14} />
+                      <span>PREV: {prevTopic.id} ({prevTopic.title})</span>
+                    </Link>
+                  ) : <div />}
+
+                  <Link
+                    to="/research"
+                    className="btn-editorial-red px-5 py-2 font-bold tracking-wider cursor-pointer"
+                  >
+                    EXPLORE RESEARCH LAB →
+                  </Link>
+
+                  {nextTopic ? (
+                    <Link
+                      to={`/research/${nextTopic.slug}`}
+                      className="text-[#111111] hover:text-[#FF1E27] transition-colors flex items-center gap-2"
+                    >
+                      <span>NEXT: {nextTopic.id} ({nextTopic.title})</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                  ) : <div />}
+                </div>
+              </div>
+
             </section>
 
-            {/* ─────────────────────────────────────────────────────────────
-                PREV / NEXT TOPIC NAVIGATOR
-            ───────────────────────────────────────────────────────────── */}
-            <div className="pt-10 border-t-2 border-[#111111] grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
-              {prevTopic ? (
-                <Link
-                  to={`/research/${prevTopic.slug}`}
-                  className="bg-white border-2 border-[#111111] hover:border-[#FF1E27] p-4 space-y-1 group transition-colors shadow-[3px_3px_0px_#111111]"
-                >
-                  <span className="text-[10px] text-[#555555] block">← PREVIOUS TOPIC</span>
-                  <div className="font-bold text-[#111111] group-hover:text-[#FF1E27] uppercase">
-                    {prevTopic.title}
-                  </div>
-                </Link>
-              ) : <div />}
-
-              {nextTopic && (
-                <Link
-                  to={`/research/${nextTopic.slug}`}
-                  className="bg-white border-2 border-[#111111] hover:border-[#FF1E27] p-4 space-y-1 group transition-colors text-right shadow-[3px_3px_0px_#111111]"
-                >
-                  <span className="text-[10px] text-[#555555] block">NEXT TOPIC →</span>
-                  <div className="font-bold text-[#111111] group-hover:text-[#FF1E27] uppercase">
-                    {nextTopic.title}
-                  </div>
-                </Link>
-              )}
-            </div>
-
           </main>
+
         </div>
       </div>
 
-      {/* ─────────────────────────────────────────────────────────────
-          ARCHIVAL LEGAL & CITATION FOOTER
-      ───────────────────────────────────────────────────────────── */}
-      <footer className="border-t-2 border-[#111111] bg-[#FAF9F5] py-12 px-4 sm:px-6 md:px-12 font-mono text-xs text-[#555555] mt-16">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <div className="space-y-1">
-            <div className="font-bold uppercase tracking-wider text-[#111111]">
-              REUBEN BINU GEORGE · REUBG DEV AI RESEARCH LABORATORY
-            </div>
-            <div>
-              Documenting Artificial Intelligence from first principles to the modern frontier.
-            </div>
+      {/* Editorial Footer */}
+      <footer className="border-t border-[#C9C7C0] bg-[#FAF9F5] py-8 px-4 sm:px-6 md:px-12 font-mono text-xs text-[#777770]">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            © {new Date().getFullYear()} REUBEN BINU GEORGE · AI RESEARCH LABORATORY
           </div>
-
-          <div className="flex items-center gap-4 text-xs font-bold flex-wrap">
-            <Link to="/research" className="text-[#FF1E27] hover:underline">
-              ALL TOPICS
-            </Link>
-            <span>•</span>
-            <Link to="/" className="text-[#111111] hover:text-[#FF1E27] transition-colors">
-              PORTFOLIO HOME
+          <div className="flex items-center gap-4">
+            <Link to="/research" className="hover:text-[#FF1E27] transition-colors">
+              RESEARCH INDEX
             </Link>
             <span>•</span>
             <a
