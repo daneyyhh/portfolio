@@ -110,19 +110,6 @@
   }
 }
 
-@keyframes runningStripes {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 28px 0;
-  }
-}
-
-.animate-running-stripes {
-  animation: runningStripes 0.85s linear infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

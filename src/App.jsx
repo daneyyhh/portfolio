@@ -17,7 +17,6 @@ import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import Experience from './components/Sections/Experience';
 import Contact from './components/Sections/Contact';
-import MerchLabPage from './pages/MerchLabPage';
 
 /**
  * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
@@ -103,15 +102,12 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [resumeOpen, setResumeOpen] = useState(false);
-  const location = useLocation();
-
-  const isMerchLab = location.pathname === '/merch-lab';
 
   return (
     <SmoothScrollProvider disabled={isLoading || !!selectedProject}>
       <ScrollToTop />
       
-      <div className={`min-h-screen ${isMerchLab ? 'bg-[#EDECE6] text-[#111111]' : 'bg-[#F1F0EB] text-[#111111]'} font-sans relative`}>
+      <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
         
         {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
@@ -137,11 +133,6 @@ export default function App() {
               />
             }
           />
-          <Route
-            path="/merch-lab"
-            element={<MerchLabPage onOpenResume={() => setResumeOpen(true)} />}
-          />
-          <Route path="/merch" element={<Navigate to="/merch-lab" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 

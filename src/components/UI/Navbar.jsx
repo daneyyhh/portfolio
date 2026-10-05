@@ -16,8 +16,6 @@ export default function Navbar({ onOpenResume }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isMerchLab = location.pathname === '/merch-lab';
-
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
     { num: '02', name: 'ABOUT', href: '#introduction', id: 'about' },
@@ -90,7 +88,7 @@ export default function Navbar({ onOpenResume }) {
       isProgrammaticScrollRef.current = false;
     }, 920);
 
-    // Cross-route navigation from /merch-lab back to main page
+    // Cross-route navigation back to main page if needed
     if (location.pathname !== '/') {
       navigate('/' + href);
       setTimeout(() => {
@@ -114,11 +112,6 @@ export default function Navbar({ onOpenResume }) {
 
   // Scroll spy to update active section when user manually scrolls
   useEffect(() => {
-    if (isMerchLab) {
-      setActiveSection('');
-      return;
-    }
-
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
@@ -157,15 +150,13 @@ export default function Navbar({ onOpenResume }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isMerchLab]);
+  }, []);
 
   return (
     <header
-      className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 overflow-x-clip backdrop-blur-md ${
-        isMerchLab
-          ? 'bg-[#EDECE6]/90 border-b border-[#111111]/10 text-[#111111]'
-          : 'bg-[#F1F0EB]/95 border-b border-[#E4E2DC] text-[#111111]'
-      } ${scrolled ? 'py-2.5 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'py-3.5 sm:py-4'}`}
+      className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 overflow-x-clip backdrop-blur-md bg-[#F1F0EB]/95 border-b border-[#E4E2DC] text-[#111111] ${
+        scrolled ? 'py-2.5 sm:py-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)]' : 'py-3.5 sm:py-4'
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between font-mono w-full">
         
@@ -189,7 +180,7 @@ export default function Navbar({ onOpenResume }) {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs font-mono font-bold tracking-wider">
           {navLinks.map((link) => {
-            const isActive = !isMerchLab && activeSection === link.id;
+            const isActive = activeSection === link.id;
             return (
               <a
                 key={link.name}
@@ -221,38 +212,8 @@ export default function Navbar({ onOpenResume }) {
           })}
         </nav>
 
-        {/* Action Button Section: Merch Lab + Resume */}
+        {/* Action Button Section: Resume */}
         <div className="hidden sm:flex items-center gap-3">
-          {/* Dedicated MERCH LAB Button Section */}
-          <Link
-            to="/merch-lab"
-            className={`inline-flex items-center gap-2 py-1.5 px-3 sm:px-3.5 text-xs font-mono font-bold tracking-wider uppercase border transition-all duration-200 cursor-pointer ${
-              isMerchLab
-                ? 'bg-[#111111] text-white border-[#111111] shadow-sm'
-                : 'bg-[#FAF9F5] hover:bg-[#111111] text-[#111111] hover:text-white border-[#111111] hover:border-[#111111] shadow-sm'
-            }`}
-            title="Explore Merch Lab — Under Development"
-          >
-            <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-              <span
-                className="absolute inline-flex h-3 w-3 rounded-full bg-[#FF1E27]/40 animate-pulse motion-reduce:hidden"
-                style={{ animationDuration: '2.5s' }}
-              />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF1E27]" />
-            </span>
-            <span>MERCH LAB</span>
-            {isMerchLab ? (
-              <span className="text-[9px] px-1 bg-[#FF1E27] text-white font-semibold tracking-tight">
-                ACTIVE
-              </span>
-            ) : (
-              <span className="text-[9px] text-[#FF1E27] font-semibold tracking-tight hidden xl:inline">
-                DEV
-              </span>
-            )}
-          </Link>
-
-          {/* Resume Action */}
           <button
             onClick={onOpenResume}
             className="btn-editorial-red py-1.5 px-4 text-xs font-bold tracking-wider cursor-pointer"
@@ -283,7 +244,7 @@ export default function Navbar({ onOpenResume }) {
           >
             <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => {
-                const isActive = !isMerchLab && activeSection === link.id;
+                const isActive = activeSection === link.id;
                 return (
                   <a
                     key={link.name}
@@ -312,28 +273,7 @@ export default function Navbar({ onOpenResume }) {
               })}
 
               {/* Action Buttons in Mobile Drawer */}
-              <div className="pt-4 border-t border-[#111111]/15 mt-3 space-y-2.5">
-                {/* MERCH LAB Mobile Button Section */}
-                <Link
-                  to="/merch-lab"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`w-full flex items-center justify-between py-2.5 px-4 text-xs font-mono font-bold tracking-wider uppercase border transition-all ${
-                    isMerchLab
-                      ? 'bg-[#111111] text-white border-[#111111]'
-                      : 'bg-[#111111] text-white hover:bg-[#FF1E27] border-[#111111] hover:border-[#FF1E27]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                      <span className="absolute inline-flex h-3 w-3 rounded-full bg-[#FF1E27]/40 animate-pulse motion-reduce:hidden" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#FF1E27]" />
-                    </span>
-                    <span>MERCH LAB</span>
-                  </div>
-                  <span className="text-[10px] text-stone-300 font-normal">UNDER DEV →</span>
-                </Link>
-
-                {/* View Resume Mobile Button */}
+              <div className="pt-4 border-t border-[#111111]/15 mt-3">
                 <button
                   onClick={() => {
                     onOpenResume();
