@@ -16,6 +16,7 @@ import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import Experience from './components/Sections/Experience';
+import ResearchPreview from './components/Sections/ResearchPreview';
 import Contact from './components/Sections/Contact';
 
 // Dedicated AI Research Laboratory Pages
@@ -92,6 +93,8 @@ function HomePage({ setSelectedProject }) {
         <VisualArchive />
         
         <Experience />
+        
+        <ResearchPreview />
         
         <Contact />
       </main>

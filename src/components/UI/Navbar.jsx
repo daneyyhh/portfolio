@@ -136,10 +136,11 @@ export default function Navbar() {
 
       const navSectionMap = [
         { navId: 'home', elementIds: ['hero'] },
-        { navId: 'about', elementIds: ['introduction', 'about'] },
+        { navId: 'about', elementIds: ['about', 'introduction'] },
         { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive'] },
         { navId: 'experience', elementIds: ['experience'] },
+        { navId: 'research', elementIds: ['research-preview'] },
         { navId: 'contact', elementIds: ['contact'] }
       ];
 

@@ -548,7 +548,7 @@ class MultiHeadAttention(nn.Module):
   {
     id: "RBG-RES-01",
     slug: "how-llms-work",
-    aliases: ["large-language-models","llms"],
+    aliases: ["how-large-language-models-work", "large-language-models", "llms"],
     title: "HOW LARGE LANGUAGE MODELS WORK",
     subtitle: "From Autoregressive Probability Distributions to Emergent In-Context Reasoning",
     category: "LLMs",
