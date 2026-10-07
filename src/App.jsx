@@ -22,6 +22,7 @@ import Contact from './components/Sections/Contact';
 // Dedicated AI Research Laboratory Pages
 import ResearchIndexPage from './pages/ResearchIndexPage';
 import ResearchDetailPage from './pages/ResearchDetailPage';
+import LinkBioPage from './pages/LinkBioPage';
 
 /**
  * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
@@ -103,6 +104,8 @@ function HomePage({ setSelectedProject }) {
 }
 
 export default function App() {
+  const location = useLocation();
+  const isLinkBio = location.pathname.startsWith('/link');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -113,13 +116,13 @@ export default function App() {
       <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
         
         {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
-        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+        {!isLinkBio && isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
         {/* Easter Egg Event Listener */}
-        <EasterEggs />
+        {!isLinkBio && <EasterEggs />}
 
         {/* Site-wide Adaptive Header */}
-        <Navbar />
+        {!isLinkBio && <Navbar />}
 
         {/* Page Routes */}
         <Routes>
@@ -137,10 +140,10 @@ export default function App() {
             path="/research"
             element={<ResearchIndexPage />}
           />
-          <Route
-            path="/research/:slug"
-            element={<ResearchDetailPage />}
-          />
+          <Route path="/research/:slug" element={<ResearchDetailPage />} />
+
+          {/* Dedicated Link In Bio Page */}
+          <Route path="/link" element={<LinkBioPage />} />
 
           {/* Fallback to Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
