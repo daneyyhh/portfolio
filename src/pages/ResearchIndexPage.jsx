@@ -17,7 +17,9 @@ import {
   Filter,
   X,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  AlertTriangle,
+  RefreshCw
 } from 'lucide-react';
 import { 
   researchTopics, 
@@ -27,6 +29,7 @@ import {
   RESEARCH_STATUSES, 
   RESEARCH_DIFFICULTIES 
 } from '../data/researchData';
+import { useResearchData } from '../hooks/useResearchData';
 import ResearchHeader from '../components/Research/ResearchHeader';
 import ScientificHeroVisual from '../components/Research/ScientificHeroVisual';
 import { 
@@ -47,9 +50,10 @@ export default function ResearchIndexPage() {
   const [selectedDifficulty, setSelectedDifficulty] = useState('ALL');
   const [selectedStatus, setSelectedStatus] = useState('ALL');
   const [sortBy, setSortBy] = useState('progress');
-  const [activeTab, setActiveTab] = useState('papers'); // 'papers' | 'taxonomy'
-
-  const stats = useMemo(() => getResearchStats(), []);
+  // Asynchronous Data Lifecycle Management (Loading, Success, Empty, Error)
+  const { status, topics, stats: hookStats, error, retry, isLoading, isSuccess, isEmpty, isError } = useResearchData();
+  const sourceTopics = topics.length > 0 ? topics : researchTopics;
+  const activeStats = hookStats || getResearchStats();
 
   useEffect(() => {
     document.title = 'RESEARCH LAB // REUBG.DEV';
@@ -72,7 +76,7 @@ export default function ResearchIndexPage() {
 
   // Filter and sort research papers
   const filteredTopics = useMemo(() => {
-    let result = researchTopics.filter((topic) => {
+    let result = sourceTopics.filter((topic) => {
       const parentCat = getParentCategory(topic);
 
       // Primary Category Filter
@@ -125,7 +129,7 @@ export default function ResearchIndexPage() {
     });
 
     return result;
-  }, [searchQuery, selectedCategory, selectedDifficulty, selectedStatus, sortBy]);
+  }, [sourceTopics, searchQuery, selectedCategory, selectedDifficulty, selectedStatus, sortBy]);
 
   const hasActiveFilters = searchQuery || selectedCategory !== 'ALL' || selectedDifficulty !== 'ALL' || selectedStatus !== 'ALL';
 
@@ -273,11 +277,11 @@ export default function ResearchIndexPage() {
             <div className="pt-2 border-t border-[#E2E0D8] grid grid-cols-2 gap-3 text-center font-mono">
               <div className="bg-[#FAF9F5] p-2 border border-[#E2E0D8]">
                 <div className="text-[9px] text-[#555555] uppercase">TOPICS</div>
-                <div className="text-lg font-bold text-[#000000]">{stats.totalResearches}</div>
+                <div className="text-lg font-bold text-[#000000]">{activeStats.totalResearches}</div>
               </div>
               <div className="bg-[#FAF9F5] p-2 border border-[#E2E0D8]">
                 <div className="text-[9px] text-[#555555] uppercase">VERIFIED</div>
-                <div className="text-lg font-bold text-[#FF0000]">{stats.documentedTopics + stats.updatedTopics}</div>
+                <div className="text-lg font-bold text-[#FF0000]">{activeStats.documentedTopics + activeStats.updatedTopics}</div>
               </div>
             </div>
 
@@ -609,10 +613,10 @@ export default function ResearchIndexPage() {
                           : 'bg-[#FFFFFF] text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
                       }`}
                     >
-                      ALL CATEGORIES ({researchTopics.length})
+                      ALL CATEGORIES ({sourceTopics.length})
                     </button>
                     {PRIMARY_RESEARCH_CATEGORIES.map((cat) => {
-                      const count = researchTopics.filter((t) => getParentCategory(t).toUpperCase() === cat.title).length;
+                      const count = sourceTopics.filter((t) => getParentCategory(t).toUpperCase() === cat.title).length;
                       const isSelected = selectedCategory === cat.title;
                       return (
                         <button
@@ -699,23 +703,116 @@ export default function ResearchIndexPage() {
 
               </div>
 
-              {/* Research Topic Cards Grid */}
-              {filteredTopics.length === 0 ? (
+              {/* ── 04 RELIABLE UI STATES (LOADING, ERROR, EMPTY, SUCCESS) ── */}
+
+              {/* 1. LOADING STATE */}
+              {isLoading && (
+                <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-8 sm:p-12 space-y-6">
+                  <div className="flex items-center gap-2 font-mono text-xs text-[#555555]">
+                    <span className="w-2 h-2 rounded-full bg-[#FF0000] animate-pulse" />
+                    <span className="font-bold text-[#000000]">RETRIEVING RESEARCH ARCHIVE...</span>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="bg-[#FFFFFF] border border-[#E2E0D8] p-6 space-y-4 animate-pulse">
+                        <div className="h-4 bg-[#E2E0D8] w-1/4 rounded-xs" />
+                        <div className="h-6 bg-[#E2E0D8] w-3/4 rounded-xs" />
+                        <div className="h-14 bg-[#E2E0D8]/60 w-full rounded-xs" />
+                        <div className="h-4 bg-[#E2E0D8]/40 w-1/2 rounded-xs" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 2. ERROR STATE (WITH RETRY & DIAGNOSTICS) */}
+              {!isLoading && isError && (
+                <div className="bg-[#FAF9F5] border border-[#FF0000]/40 p-10 sm:p-14 text-center space-y-5">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-[#FF0000]/10 border border-[#FF0000]/30 flex items-center justify-center text-[#FF0000]">
+                    <AlertTriangle size={24} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#FF0000] font-bold tracking-widest uppercase">
+                      ARCHIVE REPOSITORY SYNC ERROR
+                    </span>
+                    <h3 className="font-sans font-black text-2xl text-[#000000] uppercase tracking-tight">
+                      Research couldn't be loaded. Please try again.
+                    </h3>
+                    <p className="text-xs text-[#555555] max-w-md mx-auto leading-relaxed">
+                      An error occurred while fetching technical research publications. Technical diagnostic details have been logged for inspection.
+                    </p>
+                  </div>
+                  {error && (
+                    <div className="max-w-lg mx-auto bg-[#FFFFFF] border border-[#E2E0D8] p-3 text-left text-[11px] font-mono text-[#FF0000] overflow-x-auto">
+                      <code>{error.message || String(error)}</code>
+                    </div>
+                  )}
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <button
+                      onClick={retry}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#000000] text-[#FFFFFF] hover:bg-[#FF0000] font-mono text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                    >
+                      <RefreshCw size={13} />
+                      <span>Retry</span>
+                    </button>
+                    <Link
+                      to="/"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFFFFF] border border-[#E2E0D8] text-[#000000] hover:border-[#000000] font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+                    >
+                      <span>Explore Portfolio</span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* 3. EMPTY STATE (DATABASE/SOURCE RETURNS ZERO RECORDS) */}
+              {!isLoading && !isError && isEmpty && (
+                <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-12 text-center space-y-5">
+                  <div className="w-10 h-10 mx-auto rounded-full bg-[#FAF9F5] border border-[#E2E0D8] flex items-center justify-center text-[#555555]">
+                    <BookOpen size={20} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#555555] font-bold tracking-widest uppercase">
+                      RESEARCH REPOSITORY
+                    </span>
+                    <h3 className="font-sans font-black text-2xl text-[#000000] uppercase tracking-tight">
+                      No research published yet.
+                    </h3>
+                    <p className="text-xs text-[#555555] max-w-md mx-auto leading-relaxed">
+                      Technical investigations and deep notebooks are currently being compiled. Explore engineering case studies or creative projects.
+                    </p>
+                  </div>
+                  <div className="pt-2">
+                    <Link
+                      to="/#projects"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#000000] text-[#FFFFFF] hover:bg-[#FF0000] font-mono text-xs font-bold uppercase tracking-wider transition-colors"
+                    >
+                      <span>Explore Other Sections →</span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* 4. SUCCESS STATE (WITH ACTIVE FILTER FALLBACK) */}
+              {!isLoading && !isError && !isEmpty && filteredTopics.length === 0 && (
                 <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-12 text-center space-y-4">
                   <div className="font-mono text-xs text-[#FF0000] font-bold uppercase tracking-wider">
                     NO TECHNICAL PAPERS MATCH QUERY
                   </div>
                   <p className="text-sm text-[#555555] max-w-md mx-auto">
-                    Try broadening your search term or resetting your filter criteria.
+                    No investigations match the active filter criteria. Try broadening your search or resetting filters.
                   </p>
                   <button
                     onClick={resetFilters}
-                    className="px-4 py-2 bg-[#000000] text-[#FFFFFF] font-mono text-xs font-bold uppercase"
+                    className="px-5 py-2.5 bg-[#000000] text-[#FFFFFF] hover:bg-[#FF0000] font-mono text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
                   >
-                    RESET FILTERS
+                    RESET ALL FILTERS
                   </button>
                 </div>
-              ) : (
+              )}
+
+              {/* SUCCESS TOPIC CARDS GRID */}
+              {!isLoading && !isError && !isEmpty && filteredTopics.length > 0 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {filteredTopics.map((topic) => {
                     const parentCat = getParentCategory(topic);

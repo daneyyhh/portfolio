@@ -18,6 +18,8 @@ import Experience from './components/Sections/Experience';
 import ResearchPreview from './components/Sections/ResearchPreview';
 import Contact from './components/Sections/Contact';
 
+import ResearchErrorBoundary from './components/Research/ResearchErrorBoundary';
+
 // Code-Split Dynamic Imports for Secondary Routes & Modal
 const ResearchIndexPage = lazy(() => import('./pages/ResearchIndexPage'));
 const ResearchDetailPage = lazy(() => import('./pages/ResearchDetailPage'));
@@ -26,9 +28,9 @@ const CaseStudyModal = lazy(() => import('./components/UI/CaseStudyModal'));
 
 function RouteFallback() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[#09090b] text-slate-100">
-      <div className="w-10 h-10 border-2 border-white/10 border-t-[#ccff00] rounded-full animate-spin mb-4" />
-      <span className="font-mono text-xs tracking-widest uppercase text-slate-400">Loading Module...</span>
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[#F1F0EA] text-[#000000] font-mono">
+      <div className="w-8 h-8 border-2 border-[#E2E0D8] border-t-[#FF0000] rounded-full animate-spin mb-4" />
+      <span className="text-xs tracking-widest uppercase font-bold text-[#555555]">Loading Module...</span>
     </div>
   );
 }
@@ -149,9 +151,20 @@ export default function App() {
             {/* Dedicated AI Research Laboratory Routes */}
             <Route
               path="/research"
-              element={<ResearchIndexPage />}
+              element={
+                <ResearchErrorBoundary>
+                  <ResearchIndexPage />
+                </ResearchErrorBoundary>
+              }
             />
-            <Route path="/research/:slug" element={<ResearchDetailPage />} />
+            <Route
+              path="/research/:slug"
+              element={
+                <ResearchErrorBoundary>
+                  <ResearchDetailPage />
+                </ResearchErrorBoundary>
+              }
+            />
 
             {/* Dedicated Link In Bio Page */}
             <Route path="/link" element={<LinkBioPage />} />

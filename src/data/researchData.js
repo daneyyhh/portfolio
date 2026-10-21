@@ -71,19 +71,70 @@ export const PRIMARY_RESEARCH_CATEGORIES = [
 
 export function getParentCategory(topic) {
   if (topic.parentCategory) return topic.parentCategory;
-  const cat = (topic.category || '').toUpperCase();
+  const id = topic.id || '';
   const slug = (topic.slug || '').toLowerCase();
+  const cat = (topic.category || '').toUpperCase();
 
-  if (cat.includes('MEMORY') || slug.includes('memory') || slug.includes('cognition')) {
+  // 02 — HUMAN COGNITION
+  if (
+    ['RBG-RES-06', 'RBG-RES-10', 'RBG-RES-11'].includes(id) ||
+    slug.includes('memory') ||
+    slug.includes('cognition') ||
+    slug.includes('hallucination') ||
+    cat.includes('MEMORY')
+  ) {
     return 'HUMAN COGNITION';
   }
-  if (cat.includes('GAME') || slug.includes('game') || slug.includes('agents-vs') || slug.includes('tools')) {
+
+  // 04 — REAL-WORLD APPLICATIONS
+  if (
+    ['RBG-RES-05', 'RBG-RES-15', 'RBG-RES-17', 'RBG-RES-18'].includes(id) ||
+    slug.includes('game') ||
+    slug.includes('agents-vs') ||
+    slug.includes('red-teaming') ||
+    slug.includes('safety') ||
+    cat.includes('GAME')
+  ) {
     return 'REAL-WORLD APPLICATIONS';
   }
-  if (cat.includes('INFRASTRUCTURE') || cat.includes('SYSTEMS') || cat.includes('SCIENCE') || slug.includes('benchmarks') || slug.includes('scaling')) {
+
+  // 03 — SYSTEMS & PATTERNS
+  if (
+    ['RBG-RES-03', 'RBG-RES-08', 'RBG-RES-09', 'RBG-RES-12', 'RBG-RES-19', 'RBG-RES-20'].includes(id) ||
+    slug.includes('rag') ||
+    slug.includes('retrieval') ||
+    slug.includes('local') ||
+    slug.includes('quantization') ||
+    slug.includes('benchmarks') ||
+    slug.includes('compute') ||
+    slug.includes('science') ||
+    cat.includes('INFRASTRUCTURE') ||
+    cat.includes('SCIENCE')
+  ) {
     return 'SYSTEMS & PATTERNS';
   }
+
+  // 01 — ARTIFICIAL INTELLIGENCE
   return 'ARTIFICIAL INTELLIGENCE';
+}
+
+/**
+ * Asynchronous data retrieval service for research updates
+ * Validates, normalizes, and retrieves all genuine research records
+ */
+export async function fetchResearchTopics() {
+  return new Promise((resolve, reject) => {
+    try {
+      if (!Array.isArray(researchTopics) || researchTopics.length === 0) {
+        throw new Error('Research repository records are unavailable.');
+      }
+      setTimeout(() => {
+        resolve([...researchTopics]);
+      }, 40);
+    } catch (err) {
+      reject(err);
+    }
+  });
 }
 
 export const RESEARCH_CATEGORIES = [
