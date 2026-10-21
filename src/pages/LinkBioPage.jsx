@@ -9,10 +9,9 @@ import {
   Copy,
   Check,
   FileText,
-  Mail,
-  Play,
-  Pause
+  Mail
 } from 'lucide-react';
+import MinimalistMusicPlayer from '../components/MusicPlayer/MinimalistMusicPlayer';
 
 const BRAND_INFO = {
   name: 'REUBEN BINU GEORGE',
@@ -133,36 +132,7 @@ export default function LinkBioPage() {
   const [qrUrl, setQrUrl] = useState('');
   const [copiedLink, setCopiedLink] = useState(false);
   const [savedVcf, setSavedVcf] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [progressSecs, setProgressSecs] = useState(137);
-  const totalSecs = 200;
   const cardsRef = useRef(null);
-
-  useEffect(() => {
-    document.title = "REUBG DEV — Reuben Binu George";
-    window.scrollTo(0, 0);
-
-    QRCodeLib.toDataURL(
-      BRAND_INFO.canonicalUrl,
-      { width: 280, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } },
-      (err, url) => {
-        if (!err && url) setQrUrl(url);
-      }
-    );
-
-    if (cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('[data-card]');
-      gsap.fromTo(cards, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.6, ease: 'power3.out' });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isPlaying) return;
-    const interval = setInterval(() => {
-      setProgressSecs((prev) => (prev >= totalSecs ? 0 : prev + 1));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [isPlaying]);
 
   const handleDownloadVcf = () => {
     const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:${BRAND_INFO.name}\nORG:REUBG DEV\nTITLE:${BRAND_INFO.tagline}\nEMAIL;TYPE=INTERNET,PREF:${BRAND_INFO.email}\nURL;TYPE=PREF:${BRAND_INFO.canonicalUrl}\nURL;TYPE=PORTFOLIO:${BRAND_INFO.portfolioUrl}\nX-SOCIALPROFILE;TYPE=github:${BRAND_INFO.githubUrl}\nX-SOCIALPROFILE;TYPE=instagram:https://instagram.com/reubg.dev\nEND:VCARD`;
@@ -190,8 +160,6 @@ export default function LinkBioPage() {
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
-
-  const formatTime = (s) => `${Math.floor(s / 60)}:${s % 60 < 10 ? '0' : ''}${s % 60}`;
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-[#FF0000] selection:text-white font-sans overflow-x-hidden">
@@ -365,6 +333,9 @@ export default function LinkBioPage() {
                     </div>
                   ))}
                 </div>
+                <div className="pt-2">
+                  <MinimalistMusicPlayer />
+                </div>
               </div>
             </div>
           </div>
@@ -394,25 +365,9 @@ export default function LinkBioPage() {
                 ))}
               </div>
 
-              {/* Spotify Player */}
-              <div className="mt-3 p-3 bg-[#111111]/90 border border-white/10 rounded-sm">
-                <div className="flex items-center gap-3">
-                  <button onClick={() => setIsPlaying(!isPlaying)} className="relative w-11 h-11 shrink-0 rounded-sm overflow-hidden border border-white/10">
-                    <img src="/brand/thumb_the_weeknd.jpg" alt="The Weeknd" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      {isPlaying ? <Pause className="w-3.5 h-3.5 text-white" /> : <Play className="w-3.5 h-3.5 text-[#FF0000] fill-current" />}
-                    </div>
-                  </button>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-neutral-200 text-[11px] font-sans font-medium truncate">The Weeknd - Blinding Lights</div>
-                    <div className="mt-2 space-y-1">
-                      <div className="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#FF0000]" style={{ width: `${(progressSecs / totalSecs) * 100}%` }} />
-                      </div>
-                      <div className="text-[10px] text-neutral-500 text-right">{formatTime(progressSecs)} / {formatTime(totalSecs)}</div>
-                    </div>
-                  </div>
-                </div>
+              {/* Minimalist Music Player (Brand Warm Cream Card, No Play/Pause Buttons) */}
+              <div className="mt-3">
+                <MinimalistMusicPlayer />
               </div>
             </div>
 
