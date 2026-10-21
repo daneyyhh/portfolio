@@ -115,6 +115,7 @@ function HomePage({ setSelectedProject }) {
 export default function App() {
   const location = useLocation();
   const isLinkBio = location.pathname.startsWith('/link');
+  const isResearch = location.pathname.startsWith('/research');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -130,8 +131,8 @@ export default function App() {
         {/* Easter Egg Event Listener */}
         {!isLinkBio && <EasterEggs />}
 
-        {/* Site-wide Adaptive Header */}
-        {!isLinkBio && <Navbar />}
+        {/* Site-wide Adaptive Header (Hidden on dedicated Research and Link views) */}
+        {!isLinkBio && !isResearch && <Navbar />}
 
         {/* Page Routes with Code-Split Suspense Boundary */}
         <Suspense fallback={<RouteFallback />}>

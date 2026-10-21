@@ -32,12 +32,12 @@ export default function BenchmarkChart() {
   ];
 
   return (
-    <div className="border border-white/20 bg-[#07070A] p-5 sm:p-7 font-mono text-slate-200 my-8 shadow-2xl">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 font-mono text-[#000000] my-8">
       {/* Top Header & Tab Switcher */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-white/10 gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-[#E2E0D8] gap-3">
         <div className="flex items-center gap-2">
-          <BarChart3 size={16} className="text-[#FF1E27]" />
-          <span className="font-bold text-xs uppercase tracking-wider text-white">
+          <BarChart3 size={16} className="text-[#FF0000]" />
+          <span className="font-bold text-xs uppercase tracking-wider text-[#000000]">
             EMPIRICAL BENCHMARKS & SCALING EVIDENCE
           </span>
         </div>
@@ -48,8 +48,8 @@ export default function BenchmarkChart() {
             onClick={() => setActiveTab('memory')}
             className={`px-2.5 py-1 text-[11px] font-bold border transition-colors cursor-pointer ${
               activeTab === 'memory'
-                ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             VRAM SCALING: FLASHATTENTION
@@ -58,8 +58,8 @@ export default function BenchmarkChart() {
             onClick={() => setActiveTab('mmlu')}
             className={`px-2.5 py-1 text-[11px] font-bold border transition-colors cursor-pointer ${
               activeTab === 'mmlu'
-                ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             MMLU PROGRESSION
@@ -68,8 +68,8 @@ export default function BenchmarkChart() {
             onClick={() => setActiveTab('gsm8k')}
             className={`px-2.5 py-1 text-[11px] font-bold border transition-colors cursor-pointer ${
               activeTab === 'gsm8k'
-                ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             GSM8K MATH SATURATION
@@ -82,14 +82,14 @@ export default function BenchmarkChart() {
         <div className="py-5 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-xs">
             <div>
-              <span className="font-bold text-white uppercase text-sm block">
+              <span className="font-bold text-[#000000] uppercase text-sm block">
                 Peak Activation VRAM Footprint vs Sequence Length (A100 80GB)
               </span>
-              <span className="text-[11px] text-slate-300">
+              <span className="text-[11px] text-[#555555]">
                 Units: Gigabytes (GB) VRAM · Batch size = 1 · 32 Heads · d_k = 128 · FP16
               </span>
             </div>
-            <div className="text-[10px] text-slate-300">
+            <div className="text-[10px] text-[#555555]">
               Source: Dao et al., NeurIPS 2022
             </div>
           </div>
@@ -97,23 +97,23 @@ export default function BenchmarkChart() {
           {/* Visual Bar Comparison */}
           <div className="space-y-4 pt-2">
             {memoryData.map((d) => (
-              <div key={d.seqLen} className="space-y-1.5 bg-white/[0.02] border border-white/10 p-3">
+              <div key={d.seqLen} className="space-y-1.5 bg-white border border-[#E2E0D8] p-3">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-white">Sequence Length: {d.seqLen} Tokens</span>
-                  <span className="text-emerald-400 font-bold text-[11px]">{d.speedup}</span>
+                  <span className="font-bold text-[#000000]">Sequence Length: {d.seqLen} Tokens</span>
+                  <span className="text-[#FF0000] font-bold text-[11px]">{d.speedup}</span>
                 </div>
 
                 {/* Standard Attention Bar */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] text-slate-300">
+                  <div className="flex justify-between text-[10px] text-[#555555]">
                     <span>Standard PyTorch Attention (O(N²))</span>
-                    <span className={d.isOom ? 'text-red-500 font-bold' : 'text-slate-300'}>
+                    <span className={d.isOom ? 'text-[#FF0000] font-bold' : 'text-[#555555]'}>
                       {d.isOom ? 'OUT OF MEMORY (>80 GB)' : `${d.standardVram} GB`}
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-white/10 overflow-hidden">
+                  <div className="w-full h-2 bg-[#E2E0D8] overflow-hidden">
                     <motion.div
-                      className={`h-full ${d.isOom ? 'bg-red-500/80' : 'bg-slate-400'}`}
+                      className={`h-full ${d.isOom ? 'bg-[#FF0000]' : 'bg-[#555555]'}`}
                       initial={{ width: 0 }}
                       animate={{ width: d.isOom ? '100%' : `${(d.standardVram / 80) * 100}%` }}
                       transition={{ duration: 0.5 }}
@@ -123,13 +123,13 @@ export default function BenchmarkChart() {
 
                 {/* FlashAttention Bar */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] text-slate-300">
-                    <span className="text-emerald-400 font-bold">FlashAttention (O(N) in SRAM)</span>
-                    <span className="text-emerald-400 font-bold">{d.flashVram} GB</span>
+                  <div className="flex justify-between text-[10px] text-[#555555]">
+                    <span className="text-[#000000] font-bold">FlashAttention (O(N) in SRAM)</span>
+                    <span className="text-[#FF0000] font-bold">{d.flashVram} GB</span>
                   </div>
-                  <div className="w-full h-2 bg-white/10 overflow-hidden">
+                  <div className="w-full h-2 bg-[#E2E0D8] overflow-hidden">
                     <motion.div
-                      className="h-full bg-emerald-500"
+                      className="h-full bg-[#FF0000]"
                       initial={{ width: 0 }}
                       animate={{ width: `${(d.flashVram / 80) * 100}%` }}
                       transition={{ duration: 0.5 }}
@@ -140,8 +140,8 @@ export default function BenchmarkChart() {
             ))}
           </div>
 
-          <div className="p-3 bg-black/50 border border-white/10 text-xs text-slate-300">
-            <span className="text-[#FF1E27] font-bold mr-1">INTERPRETATION:</span>
+          <div className="p-3 bg-[#F1F0EA] border border-[#E2E0D8] text-xs text-[#555555]">
+            <span className="text-[#FF0000] font-bold mr-1">INTERPRETATION:</span>
             Standard attention allocates an N×N matrix in High Bandwidth Memory (HBM), crashing an 80GB GPU at 32k tokens. FlashAttention-2 reorganizes softmax into SRAM tiles without materializing the N×N intermediate tensor, scaling linearly to 65,536 tokens on only 8.8 GB VRAM.
           </div>
         </div>
@@ -152,28 +152,28 @@ export default function BenchmarkChart() {
         <div className="py-5 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-xs">
             <div>
-              <span className="font-bold text-white uppercase text-sm block">
+              <span className="font-bold text-[#000000] uppercase text-sm block">
                 MMLU (Massive Multitask Language Understanding) Progression
               </span>
-              <span className="text-[11px] text-slate-300">
+              <span className="text-[11px] text-[#555555]">
                 Units: 5-Shot Benchmark Accuracy (%) across 57 humanities, STEM, and social science subjects
               </span>
             </div>
-            <div className="text-[10px] text-slate-300">
+            <div className="text-[10px] text-[#555555]">
               Source: Hendrycks et al. / Stanford HELM
             </div>
           </div>
 
           <div className="space-y-3 pt-2">
             {mmluData.map((m) => (
-              <div key={m.model} className="space-y-1 bg-white/[0.02] border border-white/10 p-2.5">
+              <div key={m.model} className="space-y-1 bg-white border border-[#E2E0D8] p-2.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-white">{m.model}</span>
-                  <span className="text-[#FF1E27] font-bold">{m.score}%</span>
+                  <span className="font-bold text-[#000000]">{m.model}</span>
+                  <span className="text-[#FF0000] font-bold">{m.score}%</span>
                 </div>
-                <div className="w-full h-2.5 bg-white/10 overflow-hidden">
+                <div className="w-full h-2.5 bg-[#E2E0D8] overflow-hidden">
                   <motion.div
-                    className="h-full bg-[#FF1E27]"
+                    className="h-full bg-[#000000]"
                     initial={{ width: 0 }}
                     animate={{ width: `${m.score}%` }}
                     transition={{ duration: 0.5 }}
@@ -183,8 +183,8 @@ export default function BenchmarkChart() {
             ))}
           </div>
 
-          <div className="p-3 bg-black/50 border border-white/10 text-xs text-slate-300">
-            <span className="text-[#FF1E27] font-bold mr-1">INTERPRETATION:</span>
+          <div className="p-3 bg-[#F1F0EA] border border-[#E2E0D8] text-xs text-[#555555]">
+            <span className="text-[#FF0000] font-bold mr-1">INTERPRETATION:</span>
             Over 8 years, identical Transformer backbones scaled from 24.2% (near random 25% 4-choice baseline) to 88.7% (expert human domain baseline). The primary driver was pre-training data volume (from 1B words to 15T tokens) and synthetic refinement.
           </div>
         </div>
@@ -195,28 +195,28 @@ export default function BenchmarkChart() {
         <div className="py-5 space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-xs">
             <div>
-              <span className="font-bold text-white uppercase text-sm block">
+              <span className="font-bold text-[#000000] uppercase text-sm block">
                 GSM8K Grade School Math 8K Saturation Curve
               </span>
-              <span className="text-[11px] text-slate-300">
+              <span className="text-[11px] text-[#555555]">
                 Units: Execution Accuracy (%) on multi-step arithmetic word problems
               </span>
             </div>
-            <div className="text-[10px] text-slate-300">
+            <div className="text-[10px] text-[#555555]">
               Source: OpenAI / DeepMind / DeepSeek
             </div>
           </div>
 
           <div className="space-y-3 pt-2">
             {gsm8kData.map((m) => (
-              <div key={m.model} className="space-y-1 bg-white/[0.02] border border-white/10 p-2.5">
+              <div key={m.model} className="space-y-1 bg-white border border-[#E2E0D8] p-2.5">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-bold text-white">{m.model}</span>
-                  <span className="text-[#FF1E27] font-bold">{m.score}%</span>
+                  <span className="font-bold text-[#000000]">{m.model}</span>
+                  <span className="text-[#FF0000] font-bold">{m.score}%</span>
                 </div>
-                <div className="w-full h-2.5 bg-white/10 overflow-hidden">
+                <div className="w-full h-2.5 bg-[#E2E0D8] overflow-hidden">
                   <motion.div
-                    className="h-full bg-emerald-500"
+                    className="h-full bg-[#000000]"
                     initial={{ width: 0 }}
                     animate={{ width: `${m.score}%` }}
                     transition={{ duration: 0.5 }}
@@ -226,8 +226,8 @@ export default function BenchmarkChart() {
             ))}
           </div>
 
-          <div className="p-3 bg-black/50 border border-white/10 text-xs text-slate-300">
-            <span className="text-[#FF1E27] font-bold mr-1">INTERPRETATION:</span>
+          <div className="p-3 bg-[#F1F0EA] border border-[#E2E0D8] text-xs text-[#555555]">
+            <span className="text-[#FF0000] font-bold mr-1">INTERPRETATION:</span>
             GSM8K has achieved near 100% saturation (DeepSeek R1 at 97.3%). The benchmark no longer discriminates between leading models, prompting the research community to transition to FrontierMath and AIME 2024 for mathematical frontier evaluation.
           </div>
         </div>

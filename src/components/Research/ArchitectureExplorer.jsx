@@ -88,10 +88,10 @@ export default function ArchitectureExplorer() {
   const activeComp = components.find((c) => c.id === activeComponentId) || components[2];
 
   return (
-    <div className="border border-white/20 bg-[#07070A] p-5 sm:p-7 font-mono text-slate-200 my-8 shadow-2xl">
-      <div className="flex items-center gap-2 pb-4 border-b border-white/10 mb-6">
-        <Cpu size={16} className="text-[#FF1E27]" />
-        <span className="font-bold text-xs uppercase tracking-wider text-white">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 font-mono text-[#000000] my-8">
+      <div className="flex items-center gap-2 pb-4 border-b border-[#E2E0D8] mb-6">
+        <Cpu size={16} className="text-[#FF0000]" />
+        <span className="font-bold text-xs uppercase tracking-wider text-[#000000]">
           INTERACTIVE TRANSFORMER LAYER ARCHITECTURE EXPLORER
         </span>
       </div>
@@ -99,8 +99,8 @@ export default function ArchitectureExplorer() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Interactive Layer Stack Pipeline */}
         <div className="lg:col-span-5 space-y-2">
-          <div className="text-[10px] text-slate-300 uppercase tracking-widest font-bold mb-3">
-            Click any block to inspect tensor tensors & mechanics:
+          <div className="text-[10px] text-[#555555] uppercase tracking-widest font-bold mb-3">
+            Click any block to inspect tensor shapes & mechanics:
           </div>
 
           {components.map((comp) => {
@@ -111,77 +111,77 @@ export default function ArchitectureExplorer() {
                 onClick={() => setActiveComponentId(comp.id)}
                 className={`w-full text-left p-3 text-xs font-bold border transition-all flex items-center justify-between cursor-pointer ${
                   isActive
-                    ? 'bg-[#FF1E27] text-white border-[#FF1E27] shadow-[0_0_15px_rgba(255,30,39,0.3)] translate-x-1'
-                    : 'bg-white/[0.02] text-slate-300 border-white/10 hover:border-white/30 hover:bg-white/[0.04]'
+                    ? 'bg-[#000000] text-white border-[#000000] translate-x-1'
+                    : 'bg-white text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
                 }`}
               >
                 <div>
                   <div className="text-[11px] uppercase tracking-wider">{comp.title}</div>
-                  <div className={`text-[10px] font-normal ${isActive ? 'text-white/80' : 'text-slate-300'}`}>
+                  <div className={`text-[10px] font-normal ${isActive ? 'text-neutral-300' : 'text-[#555555]'}`}>
                     {comp.type}
                   </div>
                 </div>
-                <ChevronRight size={14} className={isActive ? 'text-white' : 'text-slate-300'} />
+                <ChevronRight size={14} className={isActive ? 'text-[#FF0000]' : 'text-[#555555]'} />
               </button>
             );
           })}
         </div>
 
         {/* Right Column: Deep Architectural Telemetry & Formula Inspector */}
-        <div className="lg:col-span-7 bg-[#0E0E14] border border-white/15 p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="lg:col-span-7 bg-white border border-[#E2E0D8] p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E2E0D8] pb-3">
             <div>
-              <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+              <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
                 COMPONENT INSPECTOR
               </span>
-              <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-tight mt-0.5">
+              <h3 className="text-sm sm:text-base font-bold text-[#000000] uppercase tracking-tight mt-0.5">
                 {activeComp.title}
               </h3>
             </div>
-            <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-[10px] text-slate-300 uppercase">
+            <span className="px-2 py-0.5 bg-[#F1F0EA] border border-[#E2E0D8] text-[10px] text-[#555555] uppercase">
               {activeComp.type}
             </span>
           </div>
 
           {/* Mathematical Transformation Formula */}
-          <div className="bg-black/60 border border-white/10 p-3.5 space-y-1">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest block font-bold">
+          <div className="bg-[#F1F0EA] border border-[#E2E0D8] p-3.5 space-y-1">
+            <span className="text-[10px] text-[#555555] uppercase tracking-widest block font-bold">
               MATHEMATICAL FORMULATION:
             </span>
-            <div className="font-mono text-xs sm:text-sm font-bold text-[#FF1E27] break-words">
+            <div className="font-mono text-xs sm:text-sm font-bold text-[#FF0000] break-words">
               {activeComp.formula}
             </div>
           </div>
 
           {/* Tensor Dimensions Grid */}
           <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-white/[0.03] border border-white/10 p-3">
-              <span className="text-[10px] text-slate-300 uppercase tracking-widest block">INPUT SHAPE:</span>
-              <span className="font-mono font-bold text-white text-xs">{activeComp.tensorIn}</span>
+            <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-3">
+              <span className="text-[10px] text-[#555555] uppercase tracking-widest block">INPUT SHAPE:</span>
+              <span className="font-mono font-bold text-[#000000] text-xs">{activeComp.tensorIn}</span>
             </div>
-            <div className="bg-white/[0.03] border border-white/10 p-3">
-              <span className="text-[10px] text-slate-300 uppercase tracking-widest block">OUTPUT SHAPE:</span>
-              <span className="font-mono font-bold text-emerald-400 text-xs">{activeComp.tensorOut}</span>
+            <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-3">
+              <span className="text-[10px] text-[#555555] uppercase tracking-widest block">OUTPUT SHAPE:</span>
+              <span className="font-mono font-bold text-[#000000] text-xs">{activeComp.tensorOut}</span>
             </div>
           </div>
 
           {/* Narrative Role */}
-          <div className="space-y-1 text-xs text-slate-300 leading-relaxed pt-1">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest block font-bold">
+          <div className="space-y-1 text-xs text-[#555555] leading-relaxed pt-1">
+            <span className="text-[10px] text-[#000000] uppercase tracking-widest block font-bold">
               INTERNAL MECHANISM:
             </span>
             <p>{activeComp.description}</p>
           </div>
 
           {/* Parameter Overhead & Hardware Role */}
-          <div className="pt-3 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+          <div className="pt-3 border-t border-[#E2E0D8] grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
             <div>
-              <span className="text-slate-300 uppercase tracking-wider block text-[10px]">PARAMETER VOLUME:</span>
-              <span className="font-bold text-white">{activeComp.params}</span>
+              <span className="text-[#555555] uppercase tracking-wider block text-[10px]">PARAMETER VOLUME:</span>
+              <span className="font-bold text-[#000000]">{activeComp.params}</span>
             </div>
             <div>
-              <span className="text-slate-300 uppercase tracking-wider block text-[10px]">HARDWARE FUNCTION:</span>
-              <span className="font-bold text-slate-200">{activeComp.computationalRole}</span>
+              <span className="text-[#555555] uppercase tracking-wider block text-[10px]">HARDWARE FUNCTION:</span>
+              <span className="font-bold text-[#000000]">{activeComp.computationalRole}</span>
             </div>
           </div>
         </div>

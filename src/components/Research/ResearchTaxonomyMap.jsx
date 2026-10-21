@@ -209,33 +209,33 @@ export default function ResearchTaxonomyMap() {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'DOCUMENTED':
-        return <span className="bg-[#111111] text-white px-2 py-0.5 text-[9px] font-bold">DOCUMENTED</span>;
+        return <span className="bg-[#000000] text-white px-2 py-0.5 text-[9px] font-bold">DOCUMENTED</span>;
       case 'UPDATED':
-        return <span className="bg-[#FF1E27] text-white px-2 py-0.5 text-[9px] font-bold">UPDATED</span>;
+        return <span className="bg-[#FF0000] text-white px-2 py-0.5 text-[9px] font-bold">UPDATED</span>;
       case 'EXPERIMENTING':
-        return <span className="bg-[#FAF9F5] border border-[#FF1E27] text-[#FF1E27] px-2 py-0.5 text-[9px] font-bold">EXPERIMENTING</span>;
+        return <span className="bg-[#FAF9F5] border border-[#FF0000] text-[#FF0000] px-2 py-0.5 text-[9px] font-bold">EXPERIMENTING</span>;
       default:
-        return <span className="bg-[#EDECE6] border border-[#C9C7C0] text-[#555555] px-2 py-0.5 text-[9px] font-bold">{status}</span>;
+        return <span className="bg-[#F1F0EA] border border-[#E2E0D8] text-[#555555] px-2 py-0.5 text-[9px] font-bold">{status}</span>;
     }
   };
 
   return (
-    <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#111111]">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#000000]">
       
       {/* Top Header Strip */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E0D8] pb-4">
         <div>
-          <div className="flex items-center gap-2 text-[#FF1E27] text-xs font-bold uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[#FF0000] text-xs font-bold uppercase tracking-widest">
             <Network size={14} />
             <span>04 / RESEARCH TOPOLOGICAL MAP</span>
           </div>
-          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#111111] mt-1">
+          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#000000] mt-1">
             HIERARCHICAL AI KNOWLEDGE ECOSYSTEM
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px] text-[#666660]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
+        <div className="flex items-center gap-2 text-[10px] text-[#555555]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF0000] animate-pulse" />
           <span>INTERACTIVE NODES · CLICK TO INSPECT TELEMETRY</span>
         </div>
       </div>
@@ -244,13 +244,13 @@ export default function ResearchTaxonomyMap() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Left Side: Visual Interactive Tree Canvas */}
-        <div className="lg:col-span-8 bg-[#F1F0EB] border border-[#C9C7C0] p-4 sm:p-6 space-y-6 relative overflow-x-auto">
+        <div className="lg:col-span-8 bg-[#F1F0EA] border border-[#E2E0D8] p-4 sm:p-6 space-y-6 relative overflow-x-auto">
           
           {/* Subtle Technical Grid Marks */}
-          <div className="absolute top-2 left-2 text-[9px] text-[#999990] select-none font-mono">
+          <div className="absolute top-2 left-2 text-[9px] text-[#555555] select-none font-mono">
             SYS_REF: 0x4F8A // AI_MAP_GRID
           </div>
-          <div className="absolute top-2 right-2 text-[9px] text-[#999990] select-none font-mono">
+          <div className="absolute top-2 right-2 text-[9px] text-[#555555] select-none font-mono">
             COORDS: [N 12.9716, E 77.5946]
           </div>
 
@@ -262,14 +262,14 @@ export default function ResearchTaxonomyMap() {
               onMouseLeave={() => setHoveredNodeId(null)}
               className={`px-6 py-2.5 border transition-all text-xs font-bold uppercase tracking-widest cursor-pointer ${
                 selectedNodeId === 'ai'
-                  ? 'bg-[#111111] text-white border-[#111111] shadow-md scale-105'
+                  ? 'bg-[#000000] text-white border-[#000000] scale-105'
                   : isLineage('ai')
-                  ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                  : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+                  ? 'bg-[#FF0000] text-white border-[#FF0000]'
+                  : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#FF1E27]" />
+                <span className="w-2 h-2 rounded-full bg-[#FF0000]" />
                 <span>ARTIFICIAL INTELLIGENCE</span>
               </div>
             </button>
@@ -277,12 +277,12 @@ export default function ResearchTaxonomyMap() {
 
           {/* Down Connector */}
           <div className="flex justify-center">
-            <div className="w-[1px] h-6 bg-[#C9C7C0]" />
+            <div className="w-[1px] h-6 bg-[#E2E0D8]" />
           </div>
 
           {/* Level 1: ML / DL / GenAI */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
-            <div className="hidden sm:block absolute -top-3 left-[16.6%] right-[16.6%] h-[1px] bg-[#C9C7C0]" />
+            <div className="hidden sm:block absolute -top-3 left-[16.6%] right-[16.6%] h-[1px] bg-[#E2E0D8]" />
             
             {[
               { id: 'ml', label: 'MACHINE LEARNING', code: 'ML' },
@@ -299,13 +299,13 @@ export default function ResearchTaxonomyMap() {
                   onMouseLeave={() => setHoveredNodeId(null)}
                   className={`p-3 border text-left transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#111111] text-white border-[#111111] shadow-md scale-102'
+                      ? 'bg-[#000000] text-white border-[#000000]'
                       : isHighlighted
-                      ? 'bg-[#FF1E27]/10 border-[#FF1E27] text-[#111111]'
-                      : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#111111]'
+                      ? 'bg-[#FF0000]/10 border-[#FF0000] text-[#000000]'
+                      : 'bg-[#FAF9F5] border-[#E2E0D8] text-[#000000] hover:border-[#000000]'
                   }`}
                 >
-                  <div className="text-[9px] text-[#777770] font-mono">{node.code}</div>
+                  <div className="text-[9px] text-[#555555] font-mono">{node.code}</div>
                   <div className="text-xs font-bold mt-0.5">{node.label}</div>
                 </button>
               );
@@ -314,9 +314,9 @@ export default function ResearchTaxonomyMap() {
 
           {/* Down Connectors */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#C9C7C0]" /></div>
-            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#C9C7C0]" /></div>
-            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#C9C7C0]" /></div>
+            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#E2E0D8]" /></div>
+            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#E2E0D8]" /></div>
+            <div className="flex justify-center"><div className="w-[1px] h-6 bg-[#E2E0D8]" /></div>
           </div>
 
           {/* Level 2: RL / Transformers / LLMs */}
@@ -336,13 +336,13 @@ export default function ResearchTaxonomyMap() {
                   onMouseLeave={() => setHoveredNodeId(null)}
                   className={`p-3 border text-left transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#111111] text-white border-[#111111] shadow-md scale-102'
+                      ? 'bg-[#000000] text-white border-[#000000]'
                       : isHighlighted
-                      ? 'bg-[#FF1E27]/10 border-[#FF1E27] text-[#111111]'
-                      : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#111111]'
+                      ? 'bg-[#FF0000]/10 border-[#FF0000] text-[#000000]'
+                      : 'bg-[#FAF9F5] border-[#E2E0D8] text-[#000000] hover:border-[#000000]'
                   }`}
                 >
-                  <div className="text-[9px] text-[#FF1E27] font-mono font-bold">{node.code}</div>
+                  <div className="text-[9px] text-[#FF0000] font-mono font-bold">{node.code}</div>
                   <div className="text-xs font-bold mt-0.5">{node.label}</div>
                 </button>
               );
@@ -350,9 +350,9 @@ export default function ResearchTaxonomyMap() {
           </div>
 
           {/* LLM Sub-tree Branching Down */}
-          <div className="pt-2 border-t border-[#C9C7C0]/60 space-y-3">
-            <div className="text-[10px] text-[#777770] font-bold uppercase tracking-wider flex items-center gap-2">
-              <GitBranch size={12} className="text-[#FF1E27]" />
+          <div className="pt-2 border-t border-[#E2E0D8] space-y-3">
+            <div className="text-[10px] text-[#555555] font-bold uppercase tracking-wider flex items-center gap-2">
+              <GitBranch size={12} className="text-[#FF0000]" />
               <span>FRONTIER FOUNDATION SUBSYSTEMS (DERIVED FROM LLMS)</span>
             </div>
 
@@ -372,15 +372,15 @@ export default function ResearchTaxonomyMap() {
                     onMouseLeave={() => setHoveredNodeId(null)}
                     className={`p-3 border text-left transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#111111] text-white border-[#111111] shadow-md scale-102'
+                        ? 'bg-[#000000] text-white border-[#000000]'
                         : isHighlighted
-                        ? 'bg-[#FF1E27]/10 border-[#FF1E27] text-[#111111]'
-                        : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#111111]'
+                        ? 'bg-[#FF0000]/10 border-[#FF0000] text-[#000000]'
+                        : 'bg-[#FAF9F5] border-[#E2E0D8] text-[#000000] hover:border-[#000000]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[9px] text-[#FF1E27] font-mono font-bold">{node.code}</span>
-                      <span className="text-[8px] bg-[#EDECE6] px-1 py-0.2 border border-[#C9C7C0]">{node.sub}</span>
+                      <span className="text-[9px] text-[#FF0000] font-mono font-bold">{node.code}</span>
+                      <span className="text-[8px] bg-[#FAF9F5] px-1 py-0.2 border border-[#E2E0D8]">{node.sub}</span>
                     </div>
                     <div className="text-xs font-bold mt-1">{node.label}</div>
                   </button>
@@ -403,11 +403,11 @@ export default function ResearchTaxonomyMap() {
                     onMouseLeave={() => setHoveredNodeId(null)}
                     className={`p-2.5 border text-left transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#111111] text-white border-[#111111]'
-                        : 'bg-[#FAF9F5] border-[#C9C7C0] text-[#111111] hover:border-[#111111]'
+                        ? 'bg-[#000000] text-white border-[#000000]'
+                        : 'bg-[#FAF9F5] border-[#E2E0D8] text-[#000000] hover:border-[#000000]'
                     }`}
                   >
-                    <div className="text-[8px] text-[#777770] font-mono">LEAF // {node.code}</div>
+                    <div className="text-[8px] text-[#555555] font-mono">LEAF // {node.code}</div>
                     <div className="text-[11px] font-bold">{node.label}</div>
                   </button>
                 );
@@ -418,34 +418,34 @@ export default function ResearchTaxonomyMap() {
         </div>
 
         {/* Right Side: Active Node Inspector Panel */}
-        <div className="lg:col-span-4 bg-[#F1F0EB] border border-[#C9C7C0] p-5 sm:p-6 space-y-5">
-          <div className="border-b border-[#C9C7C0] pb-3 space-y-1">
+        <div className="lg:col-span-4 bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-6 space-y-5">
+          <div className="border-b border-[#E2E0D8] pb-3 space-y-1">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-[#FF1E27] font-mono font-bold uppercase tracking-wider">
+              <span className="text-[10px] text-[#FF0000] font-mono font-bold uppercase tracking-wider">
                 NODE TELEMETRY AUDIT
               </span>
               {getStatusBadge(activeNode.status)}
             </div>
-            <h4 className="font-syne text-lg font-bold text-[#111111] uppercase tracking-tight">
+            <h4 className="font-syne text-lg font-bold text-[#000000] uppercase tracking-tight">
               {activeNode.title}
             </h4>
-            <div className="text-[10px] text-[#777770]">
-              CATEGORY: <span className="font-bold text-[#111111]">{activeNode.category}</span>
+            <div className="text-[10px] text-[#555555]">
+              CATEGORY: <span className="font-bold text-[#000000]">{activeNode.category}</span>
             </div>
           </div>
 
-          <div className="space-y-2 text-xs font-sans text-[#444444] leading-relaxed">
+          <div className="space-y-2 text-xs font-sans text-[#555555] leading-relaxed">
             <p>{activeNode.description}</p>
           </div>
 
           {/* Prerequisite Chains */}
-          <div className="space-y-2 pt-2 border-t border-[#C9C7C0]">
-            <div className="text-[10px] text-[#777770] font-bold uppercase tracking-wider">
+          <div className="space-y-2 pt-2 border-t border-[#E2E0D8]">
+            <div className="text-[10px] text-[#555555] font-bold uppercase tracking-wider">
               MATHEMATICAL & ALGORITHMIC PREREQUISITES
             </div>
             <div className="flex flex-wrap gap-1.5">
               {activeNode.prereqs.map((p) => (
-                <span key={p} className="bg-[#FAF9F5] border border-[#C9C7C0] text-[#111111] text-[10px] px-2 py-0.5">
+                <span key={p} className="bg-[#F1F0EA] border border-[#E2E0D8] text-[#000000] text-[10px] px-2 py-0.5">
                   {p}
                 </span>
               ))}

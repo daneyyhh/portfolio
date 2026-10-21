@@ -87,36 +87,36 @@ export default function MathematicalDeepDive() {
   ];
 
   return (
-    <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#111111]">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#000000]">
       
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <div className="flex items-center gap-2 text-[#FF1E27] text-xs font-bold uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[#FF0000] text-xs font-bold uppercase tracking-widest">
             <Sigma size={14} />
             <span>16 / MATHEMATICAL DEEP DIVE & TENSOR ALGEBRA</span>
           </div>
-          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#111111] mt-1">
+          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#000000] mt-1">
             FORMAL FORMULATION & STEP-BY-STEP CALCULATION
           </h3>
         </div>
-        <div className="text-[10px] text-[#666660]">
+        <div className="text-[10px] text-[#555555]">
           CLICK VARIABLES TO INSPECT DERIVATION & INTUITION
         </div>
       </div>
 
       {/* Prominent Formal Equation Box */}
-      <div className="bg-[#EDECE6] border border-[#C9C7C0] p-6 text-center space-y-4">
-        <div className="text-[11px] text-[#777770] font-bold uppercase tracking-widest">
+      <div className="bg-[#F1F0EA] border border-[#E2E0D8] p-6 text-center space-y-4">
+        <div className="text-[11px] text-[#555555] font-bold uppercase tracking-widest">
           CANONICAL EQUATION (VASWANI ET AL., 2017)
         </div>
         
-        <div className="font-syne text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#111111] flex items-center justify-center gap-2 flex-wrap select-none">
+        <div className="font-syne text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide text-[#000000] flex items-center justify-center gap-2 flex-wrap select-none">
           <span>Attention(</span>
           <button
             onClick={() => setSelectedVar('Q')}
             className={`px-2 py-0.5 border cursor-pointer transition-colors ${
-              selectedVar === 'Q' ? 'bg-[#FF1E27] text-white border-[#FF1E27]' : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+              selectedVar === 'Q' ? 'bg-[#FF0000] text-white border-[#FF0000]' : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             Q
@@ -125,7 +125,7 @@ export default function MathematicalDeepDive() {
           <button
             onClick={() => setSelectedVar('K')}
             className={`px-2 py-0.5 border cursor-pointer transition-colors ${
-              selectedVar === 'K' ? 'bg-[#FF1E27] text-white border-[#FF1E27]' : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+              selectedVar === 'K' ? 'bg-[#FF0000] text-white border-[#FF0000]' : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             K
@@ -134,7 +134,7 @@ export default function MathematicalDeepDive() {
           <button
             onClick={() => setSelectedVar('V')}
             className={`px-2 py-0.5 border cursor-pointer transition-colors ${
-              selectedVar === 'V' ? 'bg-[#FF1E27] text-white border-[#FF1E27]' : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+              selectedVar === 'V' ? 'bg-[#FF0000] text-white border-[#FF0000]' : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             V
@@ -144,21 +144,21 @@ export default function MathematicalDeepDive() {
             <span>
               <button
                 onClick={() => setSelectedVar('Q')}
-                className={`font-bold ${selectedVar === 'Q' ? 'text-[#FF1E27]' : 'text-[#111111]'}`}
+                className={`font-bold ${selectedVar === 'Q' ? 'text-[#FF0000]' : 'text-[#000000]'}`}
               >
                 Q
               </button>
               <button
                 onClick={() => setSelectedVar('K')}
-                className={`font-bold ${selectedVar === 'K' ? 'text-[#FF1E27]' : 'text-[#111111]'}`}
+                className={`font-bold ${selectedVar === 'K' ? 'text-[#FF0000]' : 'text-[#000000]'}`}
               >
                 Kᵀ
               </button>
             </span>
-            <span className="w-full border-t border-[#111111]" />
+            <span className="w-full border-t border-[#000000]" />
             <button
               onClick={() => setSelectedVar('dk')}
-              className={`font-bold text-xs sm:text-base ${selectedVar === 'dk' ? 'text-[#FF1E27]' : 'text-[#111111]'}`}
+              className={`font-bold text-xs sm:text-base ${selectedVar === 'dk' ? 'text-[#FF0000]' : 'text-[#000000]'}`}
             >
               √dₖ
             </button>
@@ -167,7 +167,7 @@ export default function MathematicalDeepDive() {
           <button
             onClick={() => setSelectedVar('V')}
             className={`px-2 py-0.5 border cursor-pointer transition-colors ${
-              selectedVar === 'V' ? 'bg-[#FF1E27] text-white border-[#FF1E27]' : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+              selectedVar === 'V' ? 'bg-[#FF0000] text-white border-[#FF0000]' : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             V
@@ -176,30 +176,30 @@ export default function MathematicalDeepDive() {
       </div>
 
       {/* Selected Variable Telemetry Card */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start bg-[#F1F0EB] border border-[#C9C7C0] p-5">
-        <div className="md:col-span-4 space-y-2 border-r border-[#C9C7C0] pr-4">
-          <div className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start bg-[#FAF9F5] border border-[#E2E0D8] p-5">
+        <div className="md:col-span-4 space-y-2 border-r border-[#E2E0D8] pr-4">
+          <div className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider">
             VARIABLE TELEMETRY
           </div>
-          <div className="font-syne text-2xl font-bold text-[#111111] flex items-center gap-2">
+          <div className="font-syne text-2xl font-bold text-[#000000] flex items-center gap-2">
             <span>{activeData.symbol}</span>
             <span className="text-xs font-mono font-normal text-[#555555]">• {activeData.name}</span>
           </div>
-          <div className="text-[11px] text-[#444444] font-mono">
-            SHAPE: <span className="font-bold text-[#111111]">{activeData.shape}</span>
+          <div className="text-[11px] text-[#555555] font-mono">
+            SHAPE: <span className="font-bold text-[#000000]">{activeData.shape}</span>
           </div>
         </div>
 
         <div className="md:col-span-8 space-y-3 pl-0 md:pl-2 text-xs font-sans">
           <div className="space-y-1">
-            <span className="text-[10px] font-mono font-bold text-[#777770] uppercase block">
+            <span className="text-[10px] font-mono font-bold text-[#555555] uppercase block">
               INTUITION & ROLE
             </span>
             <p className="text-[#333333] leading-relaxed">{activeData.intuition}</p>
           </div>
 
-          <div className="space-y-1 pt-2 border-t border-[#C9C7C0]/60">
-            <span className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase block">
+          <div className="space-y-1 pt-2 border-t border-[#E2E0D8]">
+            <span className="text-[10px] font-mono font-bold text-[#FF0000] uppercase block">
               PRACTICAL GRADIENT & CAPACITY EFFECT
             </span>
             <p className="text-[#333333] leading-relaxed">{activeData.practicalEffect}</p>
@@ -208,14 +208,14 @@ export default function MathematicalDeepDive() {
       </div>
 
       {/* Numerical Matrix Walkthrough (3-Token Example) */}
-      <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-3">
+      <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-3">
           <div>
-            <div className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <div className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider flex items-center gap-1.5">
               <Calculator size={12} />
               <span>NUMERICAL TENSOR STEPPER (N = 3 TOKENS, d_k = 4)</span>
             </div>
-            <div className="font-syne text-base font-bold text-[#111111]">
+            <div className="font-syne text-base font-bold text-[#000000]">
               {steps[activeStep].title}
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function MathematicalDeepDive() {
                 key={i}
                 onClick={() => setActiveStep(i)}
                 className={`w-7 h-7 text-xs font-mono font-bold border transition-colors cursor-pointer ${
-                  activeStep === i ? 'bg-[#111111] text-white border-[#111111]' : 'bg-[#FAF9F5] text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+                  activeStep === i ? 'bg-[#000000] text-white border-[#000000]' : 'bg-[#FAF9F5] text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
                 }`}
               >
                 0{i + 1}
@@ -236,40 +236,40 @@ export default function MathematicalDeepDive() {
           </div>
         </div>
 
-        <p className="text-xs font-sans text-[#444444]">
+        <p className="text-xs font-sans text-[#555555]">
           {steps[activeStep].desc}
         </p>
 
         {/* Matrix Display */}
-        <div className="bg-[#EDECE6] p-4 border border-[#C9C7C0] overflow-x-auto">
+        <div className="bg-[#F1F0EA] p-4 border border-[#E2E0D8] overflow-x-auto">
           <div className="inline-block min-w-full font-mono text-xs">
-            <div className="text-[10px] text-[#777770] pb-1 uppercase font-bold">
+            <div className="text-[10px] text-[#555555] pb-1 uppercase font-bold">
               TENSOR VALUES:
             </div>
             <div className="space-y-1">
               {steps[activeStep].matrix.map((row, rIdx) => (
                 <div key={rIdx} className="flex items-center gap-2">
-                  <span className="text-[10px] text-[#999990] w-6">T{rIdx + 1}:</span>
-                  <span className="text-[#666660]">[</span>
+                  <span className="text-[10px] text-[#555555] w-6">T{rIdx + 1}:</span>
+                  <span className="text-[#555555]">[</span>
                   {row.map((val, cIdx) => (
                     <span
                       key={cIdx}
                       className={`px-2 py-0.5 ${
-                        val >= 0.7 ? 'bg-[#FF1E27] text-white font-bold' : val >= 0.4 ? 'bg-[#111111] text-white font-bold' : 'text-[#222222]'
+                        val >= 0.7 ? 'bg-[#FF0000] text-white font-bold' : val >= 0.4 ? 'bg-[#000000] text-white font-bold' : 'text-[#333333]'
                       }`}
                     >
                       {val.toFixed(2)}
                     </span>
                   ))}
-                  <span className="text-[#666660]">]</span>
+                  <span className="text-[#555555]">]</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="text-[11px] font-sans text-[#555555] bg-[#F1F0EB] p-2.5 border border-[#C9C7C0]">
-          <span className="font-bold text-[#111111]">Observation: </span>
+        <div className="text-[11px] font-sans text-[#555555] bg-[#F1F0EA] p-2.5 border border-[#E2E0D8]">
+          <span className="font-bold text-[#000000]">Observation: </span>
           {steps[activeStep].note}
         </div>
       </div>

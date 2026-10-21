@@ -72,19 +72,19 @@ export default function HowItWorksArchitecture({ stages = null, title = "SYSTEM 
   const activeStage = pipelineStages.find(s => s.id === selectedStageId) || pipelineStages[0];
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             INTERACTIVE SYSTEM ARCHITECTURE // DATA FLOW
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             {title}
           </h3>
         </div>
-        <div className="text-[10px] text-stone-500 bg-white border border-[#C9C7C0] px-3 py-1">
+        <div className="text-[10px] text-[#555555] bg-white border border-[#E2E0D8] px-3 py-1">
           HOVER / CLICK COMPONENT TO AUDIT TENSORS
         </div>
       </div>
@@ -100,27 +100,27 @@ export default function HowItWorksArchitecture({ stages = null, title = "SYSTEM 
               key={stage.id}
               type="button"
               onClick={() => setSelectedStageId(stage.id)}
-              className={`p-3.5 border-2 text-left transition-all flex flex-col justify-between cursor-pointer relative group ${
+              className={`p-3.5 border text-left transition-all flex flex-col justify-between cursor-pointer relative group ${
                 isSelected
-                  ? 'bg-[#111111] text-white border-[#FF1E27] shadow-[3px_3px_0px_#FF1E27]'
-                  : 'bg-white text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+                  ? 'bg-[#000000] text-white border-[#000000]'
+                  : 'bg-white text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className={`text-[10px] font-bold ${isSelected ? 'text-[#FF1E27]' : 'text-[#888884]'}`}>
+                  <span className={`text-[10px] font-bold ${isSelected ? 'text-[#FF0000]' : 'text-[#555555]'}`}>
                     {stage.name}
                   </span>
-                  <Icon size={13} className={isSelected ? 'text-[#FF1E27]' : 'text-stone-400'} />
+                  <Icon size={13} className={isSelected ? 'text-[#FF0000]' : 'text-[#555555]'} />
                 </div>
                 <div className="text-[11px] font-bold uppercase tracking-wide leading-tight line-clamp-2">
                   {stage.label}
                 </div>
               </div>
 
-              <div className="mt-4 pt-2 border-t border-stone-200/40 text-[9px] flex items-center justify-between">
-                <span className={isSelected ? 'text-stone-300' : 'text-stone-500'}>AUDIT TENSOR</span>
-                <ChevronRight size={12} className={isSelected ? 'text-[#FF1E27]' : 'text-stone-400'} />
+              <div className="mt-4 pt-2 border-t border-neutral-200/60 text-[9px] flex items-center justify-between">
+                <span className={isSelected ? 'text-neutral-300' : 'text-[#555555]'}>AUDIT TENSOR</span>
+                <ChevronRight size={12} className={isSelected ? 'text-[#FF0000]' : 'text-[#555555]'} />
               </div>
             </button>
           );
@@ -135,18 +135,18 @@ export default function HowItWorksArchitecture({ stages = null, title = "SYSTEM 
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="bg-white border-2 border-[#111111] p-6 shadow-[5px_5px_0px_#111111] space-y-5"
+          className="bg-white border border-[#E2E0D8] p-6 space-y-5"
         >
-          <div className="flex items-center justify-between border-b border-[#E4E2DC] pb-3 flex-wrap gap-2">
+          <div className="flex items-center justify-between border-b border-[#E2E0D8] pb-3 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold bg-[#111111] text-white px-2 py-0.5 uppercase tracking-wider">
+              <span className="text-xs font-bold bg-[#000000] text-white px-2 py-0.5 uppercase tracking-wider">
                 {activeStage.name}
               </span>
-              <h4 className="font-syne font-extrabold text-base sm:text-lg text-[#111111] uppercase">
+              <h4 className="font-syne font-extrabold text-base sm:text-lg text-[#000000] uppercase">
                 {activeStage.label}
               </h4>
             </div>
-            <span className="text-[10px] font-mono text-[#FF1E27] font-bold">
+            <span className="text-[10px] font-mono text-[#FF0000] font-bold">
               [ COMPONENT_TELEMETRY ]
             </span>
           </div>
@@ -154,38 +154,38 @@ export default function HowItWorksArchitecture({ stages = null, title = "SYSTEM 
           {/* 4-Box Technical Audit Grid (What is this, Why it exists, What goes in, What comes out) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <div className="p-4 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-              <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
+            <div className="p-4 bg-[#FAF9F5] border border-[#E2E0D8] space-y-1">
+              <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider block">
                 01 // WHAT IS THIS?
               </span>
-              <p className="font-sans text-xs text-[#333333] leading-relaxed">
+              <p className="font-sans text-xs text-[#555555] leading-relaxed">
                 {activeStage.whatIsThis}
               </p>
             </div>
 
-            <div className="p-4 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-              <span className="text-[10px] text-[#111111] font-bold uppercase tracking-wider block">
+            <div className="p-4 bg-[#FAF9F5] border border-[#E2E0D8] space-y-1">
+              <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
                 02 // WHY DOES IT EXIST?
               </span>
-              <p className="font-sans text-xs text-[#333333] leading-relaxed">
+              <p className="font-sans text-xs text-[#555555] leading-relaxed">
                 {activeStage.whyExists}
               </p>
             </div>
 
-            <div className="p-4 bg-[#EDECE6]/50 border border-[#C9C7C0] space-y-1">
-              <span className="text-[10px] text-stone-600 font-bold uppercase tracking-wider block">
+            <div className="p-4 bg-[#F1F0EA] border border-[#E2E0D8] space-y-1">
+              <span className="text-[10px] text-[#555555] font-bold uppercase tracking-wider block">
                 03 // WHAT GOES IN (INPUT TENSOR)
               </span>
-              <div className="font-mono text-xs text-[#111111] bg-white p-2 border border-[#C9C7C0]/60 overflow-x-auto">
+              <div className="font-mono text-xs text-[#000000] bg-white p-2 border border-[#E2E0D8] overflow-x-auto">
                 {activeStage.whatGoesIn}
               </div>
             </div>
 
-            <div className="p-4 bg-[#EDECE6]/50 border border-[#C9C7C0] space-y-1">
-              <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">
+            <div className="p-4 bg-[#F1F0EA] border border-[#E2E0D8] space-y-1">
+              <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
                 04 // WHAT COMES OUT (OUTPUT TENSOR)
               </span>
-              <div className="font-mono text-xs text-[#111111] bg-white p-2 border border-[#C9C7C0]/60 overflow-x-auto">
+              <div className="font-mono text-xs text-[#000000] bg-white p-2 border border-[#E2E0D8] overflow-x-auto">
                 {activeStage.whatComesOut}
               </div>
             </div>

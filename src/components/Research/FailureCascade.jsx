@@ -45,19 +45,19 @@ export default function FailureCascade({ failures = null }) {
   const activeCase = failureCases.find(c => c.id === selectedCaseId) || failureCases[0];
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             LIMITATIONS & FAILURE ANALYSIS // EMPIRICAL STRESS TESTS
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Failure Cascade Architecture
           </h3>
         </div>
-        <div className="text-[10px] text-stone-500 bg-white border border-[#C9C7C0] px-3 py-1">
+        <div className="text-[10px] text-[#555555] bg-white border border-[#E2E0D8] px-3 py-1">
           SEPARATION OF EMPIRICAL OBSERVATION & THEORETICAL INTERPRETATION
         </div>
       </div>
@@ -68,10 +68,10 @@ export default function FailureCascade({ failures = null }) {
           <button
             key={fc.id}
             onClick={() => setSelectedCaseId(fc.id)}
-            className={`px-3 py-2 border-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            className={`px-3 py-2 border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
               selectedCaseId === fc.id
-                ? 'bg-[#111111] text-white border-[#FF1E27] shadow-[3px_3px_0px_#FF1E27]'
-                : 'bg-white text-[#111111] border-[#C9C7C0] hover:border-[#111111]'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#000000] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             {fc.title.split('&')[0].trim()}
@@ -84,41 +84,41 @@ export default function FailureCascade({ failures = null }) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           
           {/* Step 1: Input */}
-          <div className="p-4 bg-white border border-[#C9C7C0] space-y-1">
-            <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+          <div className="p-4 bg-white border border-[#E2E0D8] space-y-1">
+            <span className="text-[10px] text-[#555555] font-bold uppercase tracking-wider block">
               01 // INPUT TRIGGER
             </span>
-            <p className="font-sans text-xs text-[#333333] leading-relaxed">
+            <p className="font-sans text-xs text-[#555555] leading-relaxed">
               {activeCase.inputPrompt}
             </p>
           </div>
 
           {/* Step 2: Model Processing */}
-          <div className="p-4 bg-white border border-[#C9C7C0] space-y-1">
-            <span className="text-[10px] text-[#111111] font-bold uppercase tracking-wider block">
+          <div className="p-4 bg-white border border-[#E2E0D8] space-y-1">
+            <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
               02 // MODEL INTERNAL STATE
             </span>
-            <p className="font-sans text-xs text-[#333333] leading-relaxed">
+            <p className="font-sans text-xs text-[#555555] leading-relaxed">
               {activeCase.modelProcessing}
             </p>
           </div>
 
           {/* Step 3: Failure Condition */}
-          <div className="p-4 bg-white border-2 border-[#FF1E27] space-y-1">
-            <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
+          <div className="p-4 bg-white border border-[#FF0000] space-y-1">
+            <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider block">
               03 // FAILURE CONDITION
             </span>
-            <p className="font-sans text-xs text-[#111111] font-bold leading-relaxed">
+            <p className="font-sans text-xs text-[#000000] font-bold leading-relaxed">
               {activeCase.failureCondition}
             </p>
           </div>
 
           {/* Step 4: Incorrect Output */}
-          <div className="p-4 bg-[#111111] text-white border border-[#111111] space-y-1">
-            <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
+          <div className="p-4 bg-[#000000] text-white border border-[#000000] space-y-1">
+            <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider block">
               04 // INCORRECT OUTPUT
             </span>
-            <p className="font-sans text-xs text-stone-200 leading-relaxed">
+            <p className="font-sans text-xs text-neutral-300 leading-relaxed">
               {activeCase.incorrectOutput}
             </p>
           </div>
@@ -128,22 +128,22 @@ export default function FailureCascade({ failures = null }) {
         {/* Observation vs Interpretation Rigorous Breakdown */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
           
-          <div className="p-4 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-            <div className="flex items-center gap-1.5 text-[10px] text-[#111111] font-bold uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#111111]" />
+          <div className="p-4 bg-[#FAF9F5] border border-[#E2E0D8] space-y-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-[#000000] font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#000000]" />
               <span>EMPIRICAL OBSERVATION (WHAT HAPPENED IN BENCHMARK)</span>
             </div>
-            <p className="font-sans text-xs text-[#333333] leading-relaxed pt-1">
+            <p className="font-sans text-xs text-[#555555] leading-relaxed pt-1">
               {activeCase.observation}
             </p>
           </div>
 
-          <div className="p-4 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-            <div className="flex items-center gap-1.5 text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27]" />
+          <div className="p-4 bg-[#FAF9F5] border border-[#E2E0D8] space-y-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-[#FF0000] font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF0000]" />
               <span>THEORETICAL ROOT CAUSE (WHY IT FAILED)</span>
             </div>
-            <p className="font-sans text-xs text-[#333333] leading-relaxed pt-1">
+            <p className="font-sans text-xs text-[#555555] leading-relaxed pt-1">
               {activeCase.interpretation}
             </p>
           </div>
@@ -151,13 +151,13 @@ export default function FailureCascade({ failures = null }) {
         </div>
 
         {/* Recommended Mitigation */}
-        <div className="p-4 bg-emerald-50 border border-emerald-300 flex items-start gap-3">
-          <CheckCircle2 size={16} className="text-emerald-700 shrink-0 mt-0.5" />
+        <div className="p-4 bg-[#F1F0EA] border border-[#E2E0D8] flex items-start gap-3">
+          <CheckCircle2 size={16} className="text-[#000000] shrink-0 mt-0.5" />
           <div className="space-y-0.5 text-xs font-mono">
-            <span className="font-bold text-emerald-800 uppercase tracking-wider">
+            <span className="font-bold text-[#000000] uppercase tracking-wider">
               VERIFIED ARCHITECTURAL MITIGATION:
             </span>
-            <p className="font-sans text-emerald-950">
+            <p className="font-sans text-[#555555]">
               {activeCase.mitigation}
             </p>
           </div>

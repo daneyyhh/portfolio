@@ -75,25 +75,25 @@ export default function AttentionVisualizer() {
     currentSentence.reduce((acc, t) => ({ ...acc, [t.id]: t.id === activeQueryIndex ? 0.6 : 0.4 / (currentSentence.length - 1) }), {});
 
   return (
-    <div className="border border-white/20 bg-[#0A0A0E] p-5 sm:p-6 font-mono text-slate-200 my-8 shadow-2xl">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-6 font-mono text-[#000000] my-8">
       {/* Visualizer Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-white/10 gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-[#E2E0D8] gap-3">
         <div className="flex items-center gap-2">
-          <Layers size={16} className="text-[#FF1E27]" />
-          <span className="font-bold text-xs uppercase tracking-wider text-white">
+          <Layers size={16} className="text-[#FF0000]" />
+          <span className="font-bold text-xs uppercase tracking-wider text-[#000000]">
             INTERACTIVE SELF-ATTENTION WEIGHT MATRIX EXPLORER
           </span>
         </div>
 
         {/* Context Sentence Toggle */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-[11px] text-slate-300">CONTEXT:</span>
+          <span className="text-[11px] text-[#555555]">CONTEXT:</span>
           <button
             onClick={() => setSelectedContext('tired')}
             className={`px-2.5 py-1 text-[11px] font-bold border transition-colors cursor-pointer ${
               selectedContext === 'tired'
-                ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                ? 'bg-[#FF0000] text-white border-[#FF0000]'
+                : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             "...because it was too tired."
@@ -102,8 +102,8 @@ export default function AttentionVisualizer() {
             onClick={() => setSelectedContext('wide')}
             className={`px-2.5 py-1 text-[11px] font-bold border transition-colors cursor-pointer ${
               selectedContext === 'wide'
-                ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                ? 'bg-[#FF0000] text-white border-[#FF0000]'
+                : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             "...because it was too wide."
@@ -112,12 +112,12 @@ export default function AttentionVisualizer() {
       </div>
 
       {/* Explanatory Prompt */}
-      <div className="py-3 text-xs text-slate-300 border-b border-white/5 flex items-center justify-between">
+      <div className="py-3 text-xs text-[#555555] border-b border-[#E2E0D8] flex items-center justify-between">
         <div>
-          Click any token below to act as the <span className="text-[#FF1E27] font-bold">Query Token (q_i)</span>.
-          Current Query: <span className="text-white font-bold bg-white/10 px-1.5 py-0.5 ml-1">"{currentSentence[activeQueryIndex]?.text}"</span>
+          Click any token below to act as the <span className="text-[#FF0000] font-bold">Query Token (q_i)</span>.
+          Current Query: <span className="text-[#000000] font-bold bg-[#F1F0EA] border border-[#E2E0D8] px-1.5 py-0.5 ml-1">"{currentSentence[activeQueryIndex]?.text}"</span>
         </div>
-        <div className="text-[10px] text-slate-300 hidden md:block">
+        <div className="text-[10px] text-[#555555] hidden md:block">
           Softmax temperature: τ = 1.0 · Head 04 / 32
         </div>
       </div>
@@ -127,7 +127,6 @@ export default function AttentionVisualizer() {
         {currentSentence.map((token) => {
           const isQuery = token.id === activeQueryIndex;
           const weight = queryWeights[token.id] || 0;
-          const opacityScore = Math.max(0.15, weight);
 
           return (
             <button
@@ -135,14 +134,14 @@ export default function AttentionVisualizer() {
               onClick={() => setActiveQueryIndex(token.id)}
               className={`relative px-3 py-2 text-xs font-bold transition-all duration-200 border cursor-pointer ${
                 isQuery
-                  ? 'bg-[#FF1E27] text-white border-[#FF1E27] shadow-[0_0_15px_rgba(255,30,39,0.5)] scale-105 z-10'
-                  : 'hover:border-white/40 text-white'
+                  ? 'bg-[#FF0000] text-white border-[#FF0000] scale-105 z-10'
+                  : 'text-[#000000] hover:border-[#000000]'
               }`}
               style={
                 !isQuery
                   ? {
-                      backgroundColor: `rgba(255, 30, 39, ${weight * 0.75})`,
-                      borderColor: weight > 0.4 ? '#FF1E27' : 'rgba(255, 255, 255, 0.15)',
+                      backgroundColor: weight > 0.05 ? `rgba(255, 0, 0, ${Math.min(0.25, weight * 0.3)})` : '#FFFFFF',
+                      borderColor: weight > 0.4 ? '#FF0000' : '#E2E0D8',
                     }
                   : {}
               }
@@ -157,8 +156,8 @@ export default function AttentionVisualizer() {
       </div>
 
       {/* Dynamic Key Attention Bar Breakdown */}
-      <div className="pt-4 border-t border-white/10 space-y-2">
-        <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-3">
+      <div className="pt-4 border-t border-[#E2E0D8] space-y-2">
+        <div className="text-[11px] font-bold text-[#555555] uppercase tracking-wider mb-3">
           Top Attention Weights for Query Token "{currentSentence[activeQueryIndex]?.text}":
         </div>
 
@@ -168,16 +167,16 @@ export default function AttentionVisualizer() {
             .sort((a, b) => b.weight - a.weight)
             .slice(0, 6)
             .map((t) => (
-              <div key={t.id} className="bg-white/[0.03] border border-white/10 p-2.5">
+              <div key={t.id} className="bg-white border border-[#E2E0D8] p-2.5">
                 <div className="flex justify-between items-center text-xs mb-1">
-                  <span className="font-bold text-white">"{t.text}"</span>
-                  <span className="text-[#FF1E27] font-bold font-mono">
+                  <span className="font-bold text-[#000000]">"{t.text}"</span>
+                  <span className="text-[#FF0000] font-bold font-mono">
                     {(t.weight * 100).toFixed(1)}%
                   </span>
                 </div>
-                <div className="w-full h-1.5 bg-white/10 overflow-hidden">
+                <div className="w-full h-1.5 bg-[#E2E0D8] overflow-hidden">
                   <motion.div
-                    className="h-full bg-[#FF1E27]"
+                    className="h-full bg-[#FF0000]"
                     initial={{ width: 0 }}
                     animate={{ width: `${t.weight * 100}%` }}
                     transition={{ duration: 0.4 }}
@@ -189,8 +188,8 @@ export default function AttentionVisualizer() {
       </div>
 
       {/* Semantic Takeaway Note */}
-      <div className="mt-5 p-3.5 bg-black/40 border border-white/10 text-xs text-slate-300 space-y-1">
-        <span className="text-[#FF1E27] font-bold uppercase tracking-wider block text-[10px]">
+      <div className="mt-5 p-3.5 bg-[#F1F0EA] border border-[#E2E0D8] text-xs text-[#555555] space-y-1">
+        <span className="text-[#FF0000] font-bold uppercase tracking-wider block text-[10px]">
           THEORETICAL INSIGHT:
         </span>
         <p className="leading-relaxed">

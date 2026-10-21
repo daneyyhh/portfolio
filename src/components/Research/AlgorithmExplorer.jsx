@@ -141,25 +141,25 @@ export default function AlgorithmExplorer() {
   };
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar with Control Palette */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             INTERACTIVE ALGORITHM STEPPER // 7-PHASE EXECUTION
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Attention Algorithm Explorer
           </h3>
         </div>
 
         {/* Player Controls Bar */}
-        <div className="flex items-center gap-1.5 bg-white border-2 border-[#111111] p-1 shadow-[2px_2px_0px_#111111]">
+        <div className="flex items-center gap-1.5 bg-white border border-[#E2E0D8] p-1">
           <button
             onClick={handlePrev}
             disabled={currentStep === 1}
-            className="p-1.5 hover:bg-[#111111] hover:text-white transition-colors disabled:opacity-30 cursor-pointer"
+            className="p-1.5 hover:bg-[#000000] hover:text-white transition-colors disabled:opacity-30 cursor-pointer"
             title="Previous Step"
           >
             <ChevronLeft size={16} />
@@ -167,7 +167,7 @@ export default function AlgorithmExplorer() {
 
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="px-2.5 py-1 text-xs font-bold flex items-center gap-1.5 bg-[#FF1E27] text-white hover:bg-[#111111] transition-colors cursor-pointer"
+            className="px-2.5 py-1 text-xs font-bold flex items-center gap-1.5 bg-[#FF0000] text-white hover:bg-[#000000] transition-colors cursor-pointer"
             title={isPlaying ? "Pause Execution" : "Play Algorithm"}
           >
             {isPlaying ? <Pause size={12} /> : <Play size={12} />}
@@ -177,7 +177,7 @@ export default function AlgorithmExplorer() {
           <button
             onClick={handleNext}
             disabled={currentStep === ALGO_STEPS.length}
-            className="p-1.5 hover:bg-[#111111] hover:text-white transition-colors disabled:opacity-30 cursor-pointer"
+            className="p-1.5 hover:bg-[#000000] hover:text-white transition-colors disabled:opacity-30 cursor-pointer"
             title="Next Step"
           >
             <ChevronRight size={16} />
@@ -185,7 +185,7 @@ export default function AlgorithmExplorer() {
 
           <button
             onClick={handleReset}
-            className="p-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 hover:bg-[#000000] hover:text-white transition-colors cursor-pointer"
             title="Reset Execution to Step 1"
           >
             <RotateCcw size={14} />
@@ -208,10 +208,10 @@ export default function AlgorithmExplorer() {
               }}
               className={`p-2 border transition-all text-left cursor-pointer ${
                 isCurrent
-                  ? 'bg-[#111111] text-white border-[#FF1E27] shadow-[2px_2px_0px_#FF1E27]'
+                  ? 'bg-[#000000] text-white border-[#000000]'
                   : isPassed
-                  ? 'bg-[#EDECE6] text-[#111111] border-[#C9C7C0]'
-                  : 'bg-white text-stone-400 border-[#E4E2DC]'
+                  ? 'bg-[#F1F0EA] text-[#000000] border-[#E2E0D8]'
+                  : 'bg-white text-[#555555] border-[#E2E0D8]'
               }`}
             >
               <div className="text-[9px] font-bold">0{s.step}</div>
@@ -231,32 +231,32 @@ export default function AlgorithmExplorer() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="bg-white border-2 border-[#111111] p-5 sm:p-7 shadow-[5px_5px_0px_#111111] space-y-5"
+          className="bg-white border border-[#E2E0D8] p-5 sm:p-7 space-y-5"
         >
           {/* Step Title & Dimensions */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E4E2DC] pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2E0D8] pb-3">
             <div>
-              <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+              <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
                 EXECUTION STEP 0{stepData.step} / 07
               </span>
-              <h4 className="font-bold text-base sm:text-lg text-[#111111] uppercase">
+              <h4 className="font-bold text-base sm:text-lg text-[#000000] uppercase">
                 {stepData.title}
               </h4>
             </div>
 
-            <div className="text-[10px] bg-[#FAF9F5] border border-[#C9C7C0] px-2.5 py-1">
-              <span className="text-stone-500">TENSOR DIMENSIONS: </span>
-              <span className="font-bold text-[#111111]">{stepData.dimensions}</span>
+            <div className="text-[10px] bg-[#FAF9F5] border border-[#E2E0D8] px-2.5 py-1">
+              <span className="text-[#555555]">TENSOR DIMENSIONS: </span>
+              <span className="font-bold text-[#000000]">{stepData.dimensions}</span>
             </div>
           </div>
 
-          <p className="font-sans text-xs sm:text-sm text-[#333333] leading-relaxed max-w-3xl">
+          <p className="font-sans text-xs sm:text-sm text-[#555555] leading-relaxed max-w-3xl">
             {stepData.description}
           </p>
 
           {/* Dynamic Visual Content */}
-          <div className="p-4 bg-[#FAF9F5] border border-[#C9C7C0] space-y-3">
-            <div className="flex items-center justify-between text-[10px] font-mono text-[#888884] border-b border-[#E4E2DC] pb-2">
+          <div className="p-4 bg-[#FAF9F5] border border-[#E2E0D8] space-y-3">
+            <div className="flex items-center justify-between text-[10px] font-mono text-[#555555] border-b border-[#E2E0D8] pb-2">
               <span>LIVE TENSOR STATE REPRESENTATION</span>
               <span>{stepData.tensorName}</span>
             </div>
@@ -269,10 +269,10 @@ export default function AlgorithmExplorer() {
                     key={idx}
                     className={`px-2.5 py-1.5 border text-xs ${
                       item.highlight
-                        ? 'bg-[#FF1E27] text-white border-[#111111] font-bold scale-105'
+                        ? 'bg-[#FF0000] text-white border-[#FF0000] font-bold'
                         : item.target
-                        ? 'bg-[#111111] text-white border-[#111111] font-bold'
-                        : 'bg-white text-[#111111] border-[#C9C7C0]'
+                        ? 'bg-[#000000] text-white border-[#000000] font-bold'
+                        : 'bg-white text-[#000000] border-[#E2E0D8]'
                     }`}
                   >
                     <span className="block font-bold">"{item.token}"</span>
@@ -288,12 +288,12 @@ export default function AlgorithmExplorer() {
                 {stepData.visualization.map((item, idx) => (
                   <div key={idx} className="space-y-1">
                     <div className="flex items-center justify-between text-[11px] font-mono">
-                      <span className="font-bold text-[#111111]">{item.pair}</span>
-                      <span className="text-[#FF1E27] font-bold">{item.weight}</span>
+                      <span className="font-bold text-[#000000]">{item.pair}</span>
+                      <span className="text-[#FF0000] font-bold">{item.weight}</span>
                     </div>
-                    <div className="w-full h-3 bg-[#E4E2DC] overflow-hidden">
+                    <div className="w-full h-2.5 bg-[#E2E0D8] overflow-hidden">
                       <div
-                        className="h-full bg-[#FF1E27] transition-all duration-500"
+                        className="h-full bg-[#FF0000] transition-all duration-500"
                         style={{ width: `${item.bar}%` }}
                       />
                     </div>
@@ -306,9 +306,9 @@ export default function AlgorithmExplorer() {
             {currentStep !== 1 && currentStep !== 5 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs font-mono">
                 {stepData.visualization.map((item, idx) => (
-                  <div key={idx} className="p-2.5 bg-white border border-[#C9C7C0] flex items-center justify-between gap-2">
-                    <span className="font-bold text-[#111111] truncate">{item.name || item.pair || item.stage || item.token}</span>
-                    <span className="text-[#FF1E27] font-semibold text-[11px] truncate">{item.vector || item.score || item.composition || item.norm || item.dim}</span>
+                  <div key={idx} className="p-2.5 bg-white border border-[#E2E0D8] flex items-center justify-between gap-2">
+                    <span className="font-bold text-[#000000] truncate">{item.name || item.pair || item.stage || item.token}</span>
+                    <span className="text-[#FF0000] font-semibold text-[11px] truncate">{item.vector || item.score || item.composition || item.norm || item.dim}</span>
                   </div>
                 ))}
               </div>
@@ -316,9 +316,9 @@ export default function AlgorithmExplorer() {
           </div>
 
           {/* Mathematical Snippet */}
-          <div className="p-3 bg-[#EDECE6]/60 border border-[#C9C7C0] flex items-center justify-between text-xs font-mono flex-wrap gap-2">
-            <span className="text-[10px] text-stone-500 uppercase font-bold">PYTORCH VECTORIZED TENSOR CALL:</span>
-            <code className="text-[#111111] font-bold bg-white px-2 py-0.5 border border-[#C9C7C0]">
+          <div className="p-3 bg-[#F1F0EA] border border-[#E2E0D8] flex items-center justify-between text-xs font-mono flex-wrap gap-2">
+            <span className="text-[10px] text-[#555555] uppercase font-bold">PYTORCH VECTORIZED TENSOR CALL:</span>
+            <code className="text-[#000000] font-bold bg-white px-2 py-0.5 border border-[#E2E0D8]">
               {stepData.mathSnippet}
             </code>
           </div>

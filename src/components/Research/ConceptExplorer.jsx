@@ -72,18 +72,18 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
   };
 
   return (
-    <div className="border border-[#C9C7C0] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#111111]">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 space-y-6 font-mono text-[#000000]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <div className="flex items-center gap-2 text-[#FF1E27] text-xs font-bold uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[#FF0000] text-xs font-bold uppercase tracking-widest">
             <Layers size={14} />
             <span>13 / CONCEPT EXPLORER & PROGRESSIVE DISCLOSURE</span>
           </div>
-          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#111111] mt-1">
+          <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#000000] mt-1">
             CORE MATHEMATICAL & ARCHITECTURAL ABSTRACTIONS
           </h3>
         </div>
-        <div className="text-[10px] text-[#666660]">
+        <div className="text-[10px] text-[#555555]">
           CLICK CONCEPT TO UNROLL DEEP TECHNICAL TELEMETRY
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
             <div
               key={concept.id}
               className={`border transition-all ${
-                isExpanded ? 'border-[#111111] bg-[#F1F0EB] shadow-sm' : 'border-[#C9C7C0] bg-[#FAF9F5] hover:border-[#111111]'
+                isExpanded ? 'border-[#000000] bg-[#F1F0EA]' : 'border-[#E2E0D8] bg-[#FAF9F5] hover:border-[#000000]'
               }`}
             >
               {/* Header Bar */}
@@ -104,15 +104,15 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                 className="w-full p-4 flex items-center justify-between text-left cursor-pointer gap-4"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono font-bold text-[#FF1E27]">
+                  <span className="text-xs font-mono font-bold text-[#FF0000]">
                     0{index + 1}.
                   </span>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-syne text-sm sm:text-base font-bold text-[#111111] uppercase">
+                      <span className="font-syne text-sm sm:text-base font-bold text-[#000000] uppercase">
                         {concept.title}
                       </span>
-                      <span className="bg-[#111111] text-white text-[9px] px-2 py-0.5 font-bold">
+                      <span className="bg-[#000000] text-white text-[9px] px-2 py-0.5 font-bold">
                         {concept.badge}
                       </span>
                     </div>
@@ -135,10 +135,10 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3, ease: EASE }}
-                    className="border-t border-[#C9C7C0] p-4 sm:p-6 space-y-5"
+                    className="border-t border-[#E2E0D8] p-4 sm:p-6 space-y-5"
                   >
                     {/* Navigation Tabs */}
-                    <div className="flex flex-wrap gap-2 border-b border-[#C9C7C0] pb-3 text-xs font-bold">
+                    <div className="flex flex-wrap gap-2 border-b border-[#E2E0D8] pb-3 text-xs font-bold">
                       {[
                         { id: 'what', label: '01 / WHAT & WHY IT EXISTS' },
                         { id: 'math', label: '02 / MATHEMATICS & TENSORS' },
@@ -150,8 +150,8 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                           onClick={() => setActiveTab(tab.id)}
                           className={`px-3 py-1.5 transition-colors cursor-pointer ${
                             activeTab === tab.id
-                              ? 'bg-[#111111] text-white'
-                              : 'bg-[#FAF9F5] border border-[#C9C7C0] text-[#555555] hover:text-[#111111]'
+                              ? 'bg-[#000000] text-white'
+                              : 'bg-[#FAF9F5] border border-[#E2E0D8] text-[#555555] hover:text-[#000000]'
                           }`}
                         >
                           {tab.label}
@@ -162,19 +162,19 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                     {/* Tab 1: What is it & Why created */}
                     {activeTab === 'what' && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                             WHAT IS IT?
                           </div>
-                          <p className="text-[#333333] leading-relaxed">{concept.whatIsIt}</p>
+                          <p className="text-[#555555] leading-relaxed">{concept.whatIsIt}</p>
                         </div>
 
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                             WHY WAS IT CREATED & PROBLEM SOLVED
                           </div>
-                          <p className="text-[#333333] leading-relaxed">{concept.whyCreated}</p>
-                          <div className="pt-2 border-t border-[#C9C7C0]/50 text-[11px] text-[#111111] font-bold">
+                          <p className="text-[#555555] leading-relaxed">{concept.whyCreated}</p>
+                          <div className="pt-2 border-t border-[#E2E0D8] text-[11px] text-[#000000] font-bold">
                             Resolved: {concept.problemSolved}
                           </div>
                         </div>
@@ -184,31 +184,31 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                     {/* Tab 2: Mathematics & Mechanism */}
                     {activeTab === 'math' && (
                       <div className="space-y-4">
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                             FORMAL MATHEMATICAL REPRESENTATION
                           </div>
-                          <div className="font-mono text-xs sm:text-sm bg-[#EDECE6] p-3 border border-[#C9C7C0] text-[#111111] font-bold overflow-x-auto">
+                          <div className="font-mono text-xs sm:text-sm bg-[#F1F0EA] p-3 border border-[#E2E0D8] text-[#000000] font-bold overflow-x-auto">
                             {concept.math}
                           </div>
                         </div>
 
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2 text-xs font-sans">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2 text-xs font-sans">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                             HOW THE TENSORS INTERACT
                           </div>
-                          <p className="text-[#333333] leading-relaxed">{concept.howItWorks}</p>
+                          <p className="text-[#555555] leading-relaxed">{concept.howItWorks}</p>
                         </div>
                       </div>
                     )}
 
                     {/* Tab 3: Worked Example */}
                     {activeTab === 'example' && (
-                      <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2 text-xs font-sans">
-                        <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                      <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2 text-xs font-sans">
+                        <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                           CONCRETE NUMERICAL & LINGUISTIC APPLICATION
                         </div>
-                        <p className="text-[#333333] leading-relaxed font-mono bg-[#EDECE6] p-3 border border-[#C9C7C0]">
+                        <p className="text-[#555555] leading-relaxed font-mono bg-[#F1F0EA] p-3 border border-[#E2E0D8]">
                           {concept.example}
                         </p>
                       </div>
@@ -217,21 +217,21 @@ export default function ConceptExplorer({ concepts = DEFAULT_CONCEPTS }) {
                     {/* Tab 4: Limitations & Related Concepts */}
                     {activeTab === 'limits' && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase flex items-center gap-1.5">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase flex items-center gap-1.5">
                             <AlertTriangle size={12} />
                             <span>COMPUTATIONAL & MEMORY BOTTLENECKS</span>
                           </div>
-                          <p className="text-[#333333] leading-relaxed">{concept.limitations}</p>
+                          <p className="text-[#555555] leading-relaxed">{concept.limitations}</p>
                         </div>
 
-                        <div className="bg-[#FAF9F5] p-4 border border-[#C9C7C0] space-y-2">
-                          <div className="text-[10px] font-mono font-bold text-[#FF1E27] uppercase">
+                        <div className="bg-[#FAF9F5] p-4 border border-[#E2E0D8] space-y-2">
+                          <div className="text-[10px] font-mono font-bold text-[#FF0000] uppercase">
                             CONNECTED ARCHITECTURAL ABSTRACTIONS
                           </div>
                           <div className="flex flex-wrap gap-2 pt-1 font-mono">
                             {concept.relatedConcepts.map((c) => (
-                              <span key={c} className="bg-[#EDECE6] border border-[#C9C7C0] text-[#111111] px-2.5 py-1 text-[11px] font-bold">
+                              <span key={c} className="bg-[#F1F0EA] border border-[#E2E0D8] text-[#000000] px-2.5 py-1 text-[11px] font-bold">
                                 {c}
                               </span>
                             ))}

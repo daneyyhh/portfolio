@@ -77,15 +77,15 @@ export default function FutureMap() {
     : MAP_LAYERS.filter(l => l.type === selectedType);
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             EVIDENCE-BASED TRAJECTORY MAPPING
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Future Research Direction Map
           </h3>
         </div>
@@ -98,8 +98,8 @@ export default function FutureMap() {
               onClick={() => setSelectedType(type)}
               className={`px-2 py-1 uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
                 selectedType === type
-                  ? 'bg-[#111111] text-white border-[#111111]'
-                  : 'bg-white text-stone-600 border-[#C9C7C0] hover:border-[#111111]'
+                  ? 'bg-[#000000] text-white border-[#000000]'
+                  : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               {type}
@@ -113,24 +113,21 @@ export default function FutureMap() {
         {visibleLayers.map((layer) => (
           <div
             key={layer.level}
-            className="p-5 bg-white border-2 border-[#111111] shadow-[3px_3px_0px_#111111] space-y-3"
+            className="p-5 bg-white border border-[#E2E0D8] space-y-3"
           >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E4E2DC] pb-2.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E2E0D8] pb-2.5">
               <div className="flex items-center gap-2.5">
-                <span className="text-xs font-bold bg-[#111111] text-white px-2 py-0.5">
+                <span className="text-xs font-bold bg-[#000000] text-white px-2 py-0.5">
                   STAGE {layer.level}
                 </span>
-                <span className="font-syne font-bold text-sm text-[#111111] uppercase tracking-wide">
+                <span className="font-syne font-bold text-sm text-[#000000] uppercase tracking-wide">
                   {layer.stage}
                 </span>
               </div>
 
               <span className={`text-[10px] font-bold px-2 py-0.5 border ${
-                layer.type === 'FACT' ? 'bg-emerald-50 text-emerald-800 border-emerald-300' :
-                layer.type === 'EVIDENCE' ? 'bg-rose-50 text-[#FF1E27] border-rose-200' :
-                layer.type === 'UNSOLVED' ? 'bg-amber-50 text-amber-800 border-amber-300' :
-                layer.type === 'HYPOTHESIS' ? 'bg-sky-50 text-sky-800 border-sky-300' :
-                'bg-purple-50 text-purple-800 border-purple-300'
+                layer.type === 'EVIDENCE' ? 'bg-[#F1F0EA] text-[#FF0000] border-[#FF0000]' :
+                'bg-[#F1F0EA] text-[#000000] border-[#E2E0D8]'
               }`}>
                 {layer.type} (STRICTLY LABELED)
               </span>
@@ -143,9 +140,9 @@ export default function FutureMap() {
             {/* Bullets */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1 text-xs">
               {layer.items.map((item, idx) => (
-                <div key={idx} className="p-2.5 bg-[#FAF9F5] border border-[#C9C7C0] flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] mt-1.5 shrink-0" />
-                  <span className="font-sans text-[#333333] leading-relaxed">{item}</span>
+                <div key={idx} className="p-2.5 bg-[#FAF9F5] border border-[#E2E0D8] flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF0000] mt-1.5 shrink-0" />
+                  <span className="font-sans text-[#555555] leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>

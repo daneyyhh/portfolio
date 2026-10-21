@@ -6,10 +6,10 @@
 
 @layer base {
   :root {
-    --bg-ivory: #F1F0EB;
-    --text-black: #111111;
-    --accent-red: #FF1E27;
-    --accent-purple: #FF1E27;
+    --bg-ivory: #F1F0EA;
+    --text-black: #000000;
+    --accent-red: #FF0000;
+    --accent-purple: #FF0000;
   }
 
   *, *::before, *::after {
@@ -52,7 +52,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    @apply bg-[#F1F0EB] text-[#111111] font-sans antialiased selection:bg-[#FF1E27] selection:text-white;
+    @apply bg-[#F1F0EA] text-[#000000] font-sans antialiased selection:bg-[#FF0000] selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -71,24 +71,24 @@
     width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #F1F0EB;
+    background: #F1F0EA;
   }
   ::-webkit-scrollbar-thumb {
-    background: #C9C7C0;
+    background: #E2E0D8;
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #FF1E27;
+    background: #FF0000;
   }
 }
 
 @layer components {
   .editorial-card {
-    @apply bg-[#FAF9F5] border border-[#C9C7C0] hover:border-[#FF1E27] transition-all duration-300 shadow-sm;
+    @apply bg-[#FAF9F5] border border-[#E2E0D8] hover:border-[#FF0000] transition-all duration-300;
   }
 
   .editorial-card-dark {
-    @apply bg-[#141414] border border-white/10 hover:border-[#FF1E27]/50 transition-all duration-300 shadow-lg text-white;
+    @apply bg-[#141414] border border-white/10 hover:border-[#FF0000]/50 transition-all duration-300 shadow-lg text-white;
   }
 
   .vertical-tag {
@@ -97,16 +97,16 @@
   }
 
   .btn-editorial {
-    @apply bg-[#111111] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:bg-[#FF1E27] hover:border-[#FF1E27] transition-all duration-300 active:scale-95 text-center;
+    @apply bg-[#000000] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#000000] hover:bg-[#FF0000] hover:border-[#FF0000] transition-all duration-300 active:scale-95 text-center;
   }
 
   .btn-editorial-outline {
-    @apply bg-transparent text-[#111111] font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#111111] hover:border-[#FF1E27] hover:text-[#FF1E27] transition-all duration-300 active:scale-95 text-center;
+    @apply bg-transparent text-[#000000] font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 border border-[#000000] hover:border-[#FF0000] hover:text-[#FF0000] transition-all duration-300 active:scale-95 text-center;
   }
 
   .btn-editorial-purple,
   .btn-editorial-red {
-    @apply bg-[#FF1E27] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#E00208] transition-all duration-300 active:scale-95 shadow-md text-center;
+    @apply bg-[#FF0000] text-white font-mono text-xs uppercase font-bold tracking-wider px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#CC0000] transition-all duration-300 active:scale-95 text-center;
   }
 }
 

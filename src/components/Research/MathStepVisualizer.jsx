@@ -47,11 +47,11 @@ export default function MathStepVisualizer() {
   const active = steps[currentStep];
 
   return (
-    <div className="border border-white/20 bg-[#08080C] p-5 sm:p-7 font-mono text-slate-200 my-8 shadow-2xl">
-      <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6 flex-wrap gap-2">
+    <div className="border border-[#E2E0D8] bg-[#FAF9F5] p-5 sm:p-7 font-mono text-[#000000] my-8 shadow-xs">
+      <div className="flex items-center justify-between pb-4 border-b border-[#E2E0D8] mb-6 flex-wrap gap-2">
         <div className="flex items-center gap-2">
-          <Binary size={16} className="text-[#FF1E27]" />
-          <span className="font-bold text-xs uppercase tracking-wider text-white">
+          <Binary size={16} className="text-[#FF0000]" />
+          <span className="font-bold text-xs uppercase tracking-wider text-[#000000]">
             STEP-BY-STEP MATHEMATICAL DERIVATION: Attention(Q, K, V)
           </span>
         </div>
@@ -64,8 +64,8 @@ export default function MathStepVisualizer() {
               onClick={() => setCurrentStep(idx)}
               className={`w-7 h-7 text-xs font-bold border transition-colors cursor-pointer flex items-center justify-center ${
                 currentStep === idx
-                  ? 'bg-[#FF1E27] text-white border-[#FF1E27]'
-                  : 'bg-white/5 text-slate-300 border-white/10 hover:border-white/30'
+                  ? 'bg-[#FF0000] text-[#FFFFFF] border-[#FF0000]'
+                  : 'bg-[#FFFFFF] text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               0{s.step}
@@ -85,69 +85,69 @@ export default function MathStepVisualizer() {
         >
           {/* Step Header */}
           <div className="flex items-center justify-between">
-            <h4 className="text-sm sm:text-base font-bold text-white uppercase tracking-tight">
+            <h4 className="text-sm sm:text-base font-bold text-[#000000] uppercase tracking-tight">
               STAGE 0{active.step} // {active.title}
             </h4>
-            <span className="text-[10px] text-[#FF1E27] font-bold tracking-widest uppercase">
+            <span className="text-[10px] text-[#FF0000] font-bold tracking-widest uppercase">
               TENSOR STEP {active.step} OF 4
             </span>
           </div>
 
           {/* Formula Display Box */}
-          <div className="bg-[#101018] border border-white/15 p-4 rounded-none space-y-1">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest block font-bold">
+          <div className="bg-[#FFFFFF] border border-[#E2E0D8] p-4 rounded-none space-y-1">
+            <span className="text-[10px] text-[#555555] uppercase tracking-widest block font-bold">
               EQUATION:
             </span>
-            <div className="text-base sm:text-lg font-bold text-[#FF1E27] font-mono">
+            <div className="text-base sm:text-lg font-bold text-[#FF0000] font-mono">
               {active.latex}
             </div>
-            <div className="text-xs text-emerald-400 font-mono pt-1">
-              Dimension Flow: {active.shapeEquation}
+            <div className="text-xs text-[#555555] font-mono pt-1">
+              Dimension Flow: <strong className="text-[#000000]">{active.shapeEquation}</strong>
             </div>
           </div>
 
           {/* Explanation */}
-          <div className="text-xs text-slate-300 leading-relaxed space-y-1">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest block font-bold">
+          <div className="text-xs text-[#444444] leading-relaxed space-y-1 font-sans">
+            <span className="text-[10px] font-mono text-[#555555] uppercase tracking-widest block font-bold">
               THEORETICAL EXPLANATION:
             </span>
             <p>{active.explanation}</p>
           </div>
 
           {/* Concrete Numerical Example */}
-          <div className="bg-white/[0.02] border border-white/10 p-3.5 space-y-1 text-xs">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest block font-bold">
+          <div className="bg-[#FFFFFF] border border-[#E2E0D8] p-3.5 space-y-1 text-xs">
+            <span className="text-[10px] text-[#555555] uppercase tracking-widest block font-bold">
               WORKED NUMERICAL EXAMPLE:
             </span>
-            <p className="text-slate-200">{active.numericalExample}</p>
+            <p className="text-[#000000]">{active.numericalExample}</p>
           </div>
 
           {/* Core Takeaway Insight */}
-          <div className="p-3 bg-[#FF1E27]/10 border border-[#FF1E27]/30 text-xs text-slate-200 flex items-start gap-2">
-            <span className="text-[#FF1E27] font-bold shrink-0">KEY TAKEAWAY:</span>
+          <div className="p-3 bg-[#FFFFFF] border border-[#FF0000] text-xs text-[#000000] flex items-start gap-2">
+            <span className="text-[#FF0000] font-bold shrink-0">KEY TAKEAWAY:</span>
             <span>{active.insight}</span>
           </div>
         </motion.div>
       </AnimatePresence>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between items-center pt-6 mt-6 border-t border-white/10 text-xs">
+      <div className="flex justify-between items-center pt-6 mt-6 border-t border-[#E2E0D8] text-xs font-mono">
         <button
           onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
           disabled={currentStep === 0}
-          className="px-3 py-1.5 bg-white/5 border border-white/10 text-slate-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+          className="px-3 py-1.5 bg-[#FFFFFF] border border-[#E2E0D8] text-[#555555] hover:text-[#000000] hover:border-[#000000] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
         >
           ← PREVIOUS STEP
         </button>
 
-        <span className="text-[11px] text-slate-300 font-mono">
+        <span className="text-[11px] text-[#555555]">
           {currentStep + 1} / {steps.length}
         </span>
 
         <button
           onClick={() => setCurrentStep((prev) => Math.min(steps.length - 1, prev + 1))}
           disabled={currentStep === steps.length - 1}
-          className="px-3 py-1.5 bg-[#FF1E27] border border-[#FF1E27] text-white font-bold hover:bg-[#E00208] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+          className="px-3 py-1.5 bg-[#000000] border border-[#000000] text-[#FFFFFF] font-bold hover:bg-[#FF0000] hover:border-[#FF0000] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
         >
           NEXT STEP →
         </button>

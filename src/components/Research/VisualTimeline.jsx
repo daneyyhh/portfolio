@@ -81,19 +81,19 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
   ]);
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             HISTORICAL GENEALOGY // 1950 — 2026
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Visual Historical Timeline
           </h3>
         </div>
-        <div className="text-[10px] text-stone-500 bg-white border border-[#C9C7C0] px-3 py-1">
+        <div className="text-[10px] text-[#555555] bg-white border border-[#E2E0D8] px-3 py-1">
           EXPANDABLE MILESTONES // CLICK TO INSPECT
         </div>
       </div>
@@ -102,7 +102,7 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
       <div className="relative pl-6 sm:pl-10 space-y-6">
         
         {/* Continuous Spine Line */}
-        <div className="absolute left-2.5 sm:left-4 top-4 bottom-4 w-[2px] bg-gradient-to-b from-[#111111] via-[#FF1E27] to-[#111111]" />
+        <div className="absolute left-2.5 sm:left-4 top-4 bottom-4 w-[1px] bg-[#E2E0D8]" />
 
         {milestones.map((m, index) => {
           const isExpanded = expandedIndex === index;
@@ -114,23 +114,23 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
               <button
                 type="button"
                 onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                className={`absolute -left-6 sm:-left-10 top-3.5 -translate-x-1/2 w-6 h-6 border-2 transition-all flex items-center justify-center cursor-pointer ${
+                className={`absolute -left-6 sm:-left-10 top-3.5 -translate-x-1/2 w-6 h-6 border transition-all flex items-center justify-center cursor-pointer ${
                   isExpanded
-                    ? 'bg-[#FF1E27] border-[#111111] text-white scale-110 shadow-sm'
-                    : 'bg-white border-[#111111] hover:border-[#FF1E27] text-[#111111]'
+                    ? 'bg-[#000000] border-[#000000] text-white scale-110'
+                    : 'bg-white border-[#E2E0D8] hover:border-[#FF0000] text-[#000000]'
                 }`}
                 title={`Toggle milestone ${m.era}`}
               >
-                <div className={`w-1.5 h-1.5 ${isExpanded ? 'bg-white' : 'bg-[#111111]'}`} />
+                <div className={`w-1.5 h-1.5 ${isExpanded ? 'bg-[#FF0000]' : 'bg-[#000000]'}`} />
               </button>
 
               {/* Milestone Card Container */}
               <div
                 onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                className={`border-2 transition-all duration-200 cursor-pointer ${
+                className={`border transition-all duration-200 cursor-pointer ${
                   isExpanded
-                    ? 'border-[#111111] bg-white shadow-[4px_4px_0px_#111111]'
-                    : 'border-[#C9C7C0] bg-[#FAF9F5] hover:border-[#111111] hover:bg-white'
+                    ? 'border-[#000000] bg-white'
+                    : 'border-[#E2E0D8] bg-[#FAF9F5] hover:border-[#000000] hover:bg-white'
                 }`}
               >
                 {/* Clickable Header Row */}
@@ -138,17 +138,17 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
                   <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
                     <span className={`text-xs sm:text-sm font-extrabold px-2.5 py-0.5 border ${
                       isExpanded
-                        ? 'bg-[#111111] text-white border-[#111111]'
-                        : 'bg-[#EDECE6] text-[#FF1E27] border-[#C9C7C0]'
+                        ? 'bg-[#000000] text-white border-[#000000]'
+                        : 'bg-[#F1F0EA] text-[#FF0000] border-[#E2E0D8]'
                     }`}>
                       {m.era}
                     </span>
-                    <span className="font-bold text-xs sm:text-sm text-[#111111] uppercase tracking-wide">
+                    <span className="font-bold text-xs sm:text-sm text-[#000000] uppercase tracking-wide">
                       {m.title}
                     </span>
                   </div>
 
-                  <div className="shrink-0 text-[#888884] group-hover:text-[#111111] transition-colors">
+                  <div className="shrink-0 text-[#555555] group-hover:text-[#000000] transition-colors">
                     {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </div>
                 </div>
@@ -160,45 +160,45 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="overflow-hidden border-t border-[#E4E2DC] bg-[#FAF9F5]"
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden border-t border-[#E2E0D8] bg-[#FAF9F5]"
                     >
                       <div className="p-4 sm:p-6 space-y-4 text-xs font-mono">
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div className="bg-white p-3.5 border border-[#C9C7C0] space-y-1">
-                            <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
+                          <div className="bg-white p-3.5 border border-[#E2E0D8] space-y-1">
+                            <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider block">
                               01 // WHAT HAPPENED
                             </span>
-                            <p className="font-sans text-[12px] text-[#333333] leading-relaxed">
+                            <p className="font-sans text-[12px] text-[#555555] leading-relaxed">
                               {m.whatHappened}
                             </p>
                           </div>
 
-                          <div className="bg-white p-3.5 border border-[#C9C7C0] space-y-1">
-                            <span className="text-[10px] text-[#111111] font-bold uppercase tracking-wider block">
+                          <div className="bg-white p-3.5 border border-[#E2E0D8] space-y-1">
+                            <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
                               02 // WHY IT MATTERED
                             </span>
-                            <p className="font-sans text-[12px] text-[#333333] leading-relaxed">
+                            <p className="font-sans text-[12px] text-[#555555] leading-relaxed">
                               {m.whyItMattered}
                             </p>
                           </div>
 
-                          <div className="bg-white p-3.5 border border-[#C9C7C0] space-y-1">
-                            <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">
+                          <div className="bg-white p-3.5 border border-[#E2E0D8] space-y-1">
+                            <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
                               03 // WHAT CHANGED
                             </span>
-                            <p className="font-sans text-[12px] text-[#333333] leading-relaxed">
+                            <p className="font-sans text-[12px] text-[#555555] leading-relaxed">
                               {m.whatChanged}
                             </p>
                           </div>
                         </div>
 
                         {/* Verified Paper / Primary Source */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#C9C7C0] text-[11px]">
-                          <div className="flex items-center gap-2 text-stone-600">
-                            <BookOpen size={13} className="text-[#FF1E27] shrink-0" />
-                            <span className="font-bold text-[#111111]">KEY PAPER / PRIMARY CITATION:</span>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#E2E0D8] text-[11px]">
+                          <div className="flex items-center gap-2 text-[#555555]">
+                            <BookOpen size={13} className="text-[#FF0000] shrink-0" />
+                            <span className="font-bold text-[#000000]">KEY PAPER / PRIMARY CITATION:</span>
                             <span className="italic truncate max-w-sm sm:max-w-md">{m.keyPaper}</span>
                           </div>
 
@@ -207,7 +207,7 @@ export default function VisualTimeline({ timelineData = [], defaultMilestones = 
                               href={m.sourceUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[#FF1E27] font-bold hover:underline inline-flex items-center gap-1 shrink-0"
+                              className="text-[#FF0000] font-bold hover:underline inline-flex items-center gap-1 shrink-0"
                             >
                               <span>ARXIV / DOI</span>
                               <ExternalLink size={12} />

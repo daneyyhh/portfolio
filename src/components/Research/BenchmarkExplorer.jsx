@@ -50,15 +50,15 @@ export default function BenchmarkExplorer() {
   const currentDataset = BENCHMARK_DATASETS[activeDatasetKey];
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6 shadow-xs">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             SOURCED EMPIRICAL BENCHMARK EXPLORER
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-sans font-black text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Benchmark & Model Comparison System
           </h3>
         </div>
@@ -71,8 +71,8 @@ export default function BenchmarkExplorer() {
               onClick={() => setActiveDatasetKey(key)}
               className={`px-2.5 py-1.5 uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
                 activeDatasetKey === key
-                  ? 'bg-[#111111] text-white border-[#111111]'
-                  : 'bg-white text-stone-600 border-[#C9C7C0] hover:border-[#111111]'
+                  ? 'bg-[#000000] text-[#FFFFFF] border-[#000000]'
+                  : 'bg-[#FFFFFF] text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               {key.replace('_', ' ')}
@@ -82,42 +82,42 @@ export default function BenchmarkExplorer() {
       </div>
 
       {/* Dataset Context Bar */}
-      <div className="p-3.5 bg-white border border-[#C9C7C0] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+      <div className="p-3.5 bg-[#FFFFFF] border border-[#E2E0D8] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
         <div>
-          <span className="font-bold text-[#111111]">{currentDataset.name}</span>
+          <span className="font-bold text-[#000000]">{currentDataset.name}</span>
           <div className="text-[11px] text-[#555555] font-sans">
             METRIC: {currentDataset.metric}
           </div>
         </div>
 
-        <div className="text-[10px] text-stone-500 font-mono space-y-0.5 sm:text-right shrink-0">
+        <div className="text-[10px] text-[#555555] font-mono space-y-0.5 sm:text-right shrink-0">
           <div>SOURCE: {currentDataset.source}</div>
           <div>DATE: {currentDataset.date} · {currentDataset.benchmarkVersion}</div>
         </div>
       </div>
 
       {/* Interactive Sourced Comparison Table */}
-      <div className="border border-[#C9C7C0] bg-white overflow-x-auto text-xs font-mono">
+      <div className="border border-[#E2E0D8] bg-[#FFFFFF] overflow-x-auto text-xs font-mono">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-[#FAF9F5] border-b border-[#C9C7C0] text-left">
-              <th className="p-3.5 font-bold text-[#111111] uppercase tracking-wider">SYSTEM / ALGORITHM</th>
-              <th className="p-3.5 font-bold text-[#FF1E27] uppercase tracking-wider">SEQ 1K / EVAL 1</th>
-              <th className="p-3.5 font-bold text-[#111111] uppercase tracking-wider">SEQ 4K / EVAL 2</th>
-              <th className="p-3.5 font-bold text-[#111111] uppercase tracking-wider">SEQ 16K / EVAL 3</th>
-              <th className="p-3.5 font-bold text-[#111111] uppercase tracking-wider">SEQ 64K / LIMIT</th>
+            <tr className="bg-[#FAF9F5] border-b border-[#E2E0D8] text-left">
+              <th className="p-3.5 font-bold text-[#000000] uppercase tracking-wider">SYSTEM / ALGORITHM</th>
+              <th className="p-3.5 font-bold text-[#FF0000] uppercase tracking-wider">SEQ 1K / EVAL 1</th>
+              <th className="p-3.5 font-bold text-[#000000] uppercase tracking-wider">SEQ 4K / EVAL 2</th>
+              <th className="p-3.5 font-bold text-[#000000] uppercase tracking-wider">SEQ 16K / EVAL 3</th>
+              <th className="p-3.5 font-bold text-[#000000] uppercase tracking-wider">SEQ 64K / LIMIT</th>
               <th className="p-3.5 font-bold text-[#555555] uppercase tracking-wider">MEMORY</th>
               <th className="p-3.5 font-bold text-[#555555] uppercase tracking-wider">EST. COST / 1M</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#E4E2DC]">
+          <tbody className="divide-y divide-[#E2E0D8]">
             {currentDataset.models.map((model, idx) => (
               <tr key={idx} className="hover:bg-black/[0.02]">
-                <td className="p-3.5 font-bold text-[#111111] whitespace-nowrap">{model.name}</td>
-                <td className="p-3.5 text-[#FF1E27] font-bold whitespace-nowrap">{model.seq1k}</td>
-                <td className="p-3.5 text-[#111111] font-semibold whitespace-nowrap">{model.seq4k}</td>
-                <td className="p-3.5 text-[#111111] whitespace-nowrap">{model.seq16k}</td>
-                <td className="p-3.5 text-stone-600 whitespace-nowrap">{model.seq64k}</td>
+                <td className="p-3.5 font-bold text-[#000000] whitespace-nowrap">{model.name}</td>
+                <td className="p-3.5 text-[#FF0000] font-bold whitespace-nowrap">{model.seq1k}</td>
+                <td className="p-3.5 text-[#000000] font-semibold whitespace-nowrap">{model.seq4k}</td>
+                <td className="p-3.5 text-[#000000] whitespace-nowrap">{model.seq16k}</td>
+                <td className="p-3.5 text-[#555555] whitespace-nowrap">{model.seq64k}</td>
                 <td className="p-3.5 text-[#555555] whitespace-nowrap">{model.memoryUsage}</td>
                 <td className="p-3.5 text-emerald-700 font-bold whitespace-nowrap">{model.costPer1M}</td>
               </tr>
@@ -126,9 +126,9 @@ export default function BenchmarkExplorer() {
         </table>
       </div>
 
-      <div className="flex items-center justify-between text-[10px] text-stone-500 pt-1">
+      <div className="flex items-center justify-between text-[10px] text-[#555555] pt-1">
         <span>ALL DATA SOURCED DIRECTLY FROM PEER-REVIEWED SCIENTIFIC PUBLICATIONS</span>
-        <span className="text-[#FF1E27] font-bold">ZERO FABRICATED METRICS</span>
+        <span className="text-[#FF0000] font-bold">ZERO FABRICATED METRICS</span>
       </div>
 
     </div>

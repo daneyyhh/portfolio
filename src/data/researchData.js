@@ -8,22 +8,97 @@
  * EXPERIMENTS → RESULTS → LIMITATIONS → CURRENT STATE → ACTIVE RESEARCH → FUTURE → REFERENCES
  */
 
+export const PRIMARY_RESEARCH_CATEGORIES = [
+  {
+    id: "ai",
+    num: "01",
+    title: "ARTIFICIAL INTELLIGENCE",
+    shortDesc: "Foundational machine learning, large language models, transformer architecture, neural attention mechanisms, agentic systems, and empirical evaluations.",
+    topics: [
+      "Machine Learning",
+      "Large Language Models",
+      "Transformer Architecture",
+      "Retrieval-Augmented Generation",
+      "AI Agents",
+      "Model Evaluation",
+      "AI Safety and Alignment",
+      "Local AI and Quantization"
+    ]
+  },
+  {
+    id: "cognition",
+    num: "02",
+    title: "HUMAN COGNITION",
+    shortDesc: "Biological and artificial memory hierarchies, neuroplasticity, working context windows, attention heuristics, and human-computer cognitive interaction.",
+    topics: [
+      "Neuroplasticity",
+      "Memory and Learning",
+      "Cognitive Biases",
+      "Attention and Perception",
+      "Decision-Making",
+      "Human–Computer Interaction"
+    ]
+  },
+  {
+    id: "systems",
+    num: "03",
+    title: "SYSTEMS & PATTERNS",
+    shortDesc: "Complex systems, emergent behavior, algorithmic scaling laws, information entropy, and predictive mathematical modeling.",
+    topics: [
+      "Complex Systems",
+      "Behavioral Patterns",
+      "Predictive Models",
+      "Data Analysis",
+      "Mathematical Models",
+      "Information Theory"
+    ]
+  },
+  {
+    id: "applications",
+    num: "04",
+    title: "REAL-WORLD APPLICATIONS",
+    shortDesc: "Translating theoretical AI research into high-leverage developer workflows, interactive game systems, robotics, and creative tools.",
+    topics: [
+      "AI in Everyday Tools",
+      "Creative Workflows",
+      "Developer Productivity",
+      "AI in Game Development",
+      "Emerging Technologies",
+      "Experimental Prototypes"
+    ]
+  }
+];
+
+export function getParentCategory(topic) {
+  if (topic.parentCategory) return topic.parentCategory;
+  const cat = (topic.category || '').toUpperCase();
+  const slug = (topic.slug || '').toLowerCase();
+
+  if (cat.includes('MEMORY') || slug.includes('memory') || slug.includes('cognition')) {
+    return 'HUMAN COGNITION';
+  }
+  if (cat.includes('GAME') || slug.includes('game') || slug.includes('agents-vs') || slug.includes('tools')) {
+    return 'REAL-WORLD APPLICATIONS';
+  }
+  if (cat.includes('INFRASTRUCTURE') || cat.includes('SYSTEMS') || cat.includes('SCIENCE') || slug.includes('benchmarks') || slug.includes('scaling')) {
+    return 'SYSTEMS & PATTERNS';
+  }
+  return 'ARTIFICIAL INTELLIGENCE';
+}
+
 export const RESEARCH_CATEGORIES = [
   "ALL",
-  "AI FUNDAMENTALS",
-  "MACHINE LEARNING",
-  "DEEP LEARNING",
-  "GENERATIVE AI",
+  "ARTIFICIAL INTELLIGENCE",
+  "HUMAN COGNITION",
+  "SYSTEMS & PATTERNS",
+  "REAL-WORLD APPLICATIONS",
   "LLMs",
   "AI AGENTS",
   "AI SYSTEMS",
   "AI MEMORY",
   "AI INFRASTRUCTURE",
   "AI SAFETY",
-  "COMPUTER VISION",
-  "REINFORCEMENT LEARNING",
-  "AI × SCIENCE",
-  "AI × GAME DEVELOPMENT"
+  "GENERATIVE AI"
 ];
 
 export const RESEARCH_STATUSES = [

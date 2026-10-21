@@ -68,18 +68,18 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
   }
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-7 shadow-[6px_6px_0px_#111111] font-mono relative overflow-hidden">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-7 font-mono relative overflow-hidden">
       
       {/* Top Controller Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#C9C7C0] pb-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E0D8] pb-4 mb-6">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Network size={16} className="text-[#FF1E27]" />
-            <span className="text-xs font-bold text-[#111111] uppercase tracking-wider">
+            <Network size={16} className="text-[#FF0000]" />
+            <span className="text-xs font-bold text-[#000000] uppercase tracking-wider">
               AI RESEARCH KNOWLEDGE GRAPH // CONNECTED TOPIC TOPOLOGY
             </span>
           </div>
-          <p className="text-[11px] font-sans text-slate-600">
+          <p className="text-[11px] font-sans text-[#555555]">
             Interactive knowledge map documenting theoretical and architectural dependencies across 20 research directions.
           </p>
         </div>
@@ -92,8 +92,8 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
               onClick={() => setSelectedCluster(cluster)}
               className={`px-2 py-1 uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
                 selectedCluster === cluster
-                  ? 'bg-[#111111] text-white border-[#111111]'
-                  : 'bg-white text-[#555555] border-[#C9C7C0] hover:border-[#111111]'
+                  ? 'bg-[#000000] text-white border-[#000000]'
+                  : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               {cluster}
@@ -103,16 +103,16 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
       </div>
 
       {/* SVG Canvas Container */}
-      <div className="relative w-full h-[400px] sm:h-[480px] bg-white border border-[#C9C7C0] overflow-hidden select-none">
+      <div className="relative w-full h-[400px] sm:h-[480px] bg-white border border-[#E2E0D8] overflow-hidden select-none">
         
         {/* Subtle Background Coordinate Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#EFEFEA_1px,transparent_1px),linear-gradient(to_bottom,#EFEFEA_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-80" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#F1F0EA_1px,transparent_1px),linear-gradient(to_bottom,#F1F0EA_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-80" />
 
         <svg className="w-full h-full relative z-10">
           <defs>
             <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#111111" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#FF1E27" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#FF0000" stopOpacity="0.8" />
             </linearGradient>
           </defs>
 
@@ -136,8 +136,8 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
                 y1={`${fromNode.y}%`}
                 x2={`${toNode.x}%`}
                 y2={`${toNode.y}%`}
-                stroke={isHighlighted ? '#FF1E27' : '#C9C7C0'}
-                strokeWidth={isHighlighted ? 2.5 : 1}
+                stroke={isHighlighted ? '#FF0000' : '#E2E0D8'}
+                strokeWidth={isHighlighted ? 2 : 1}
                 strokeDasharray={isHighlighted ? 'none' : '3,3'}
                 opacity={isDimmed ? 0.2 : isHighlighted ? 1 : 0.6}
                 className="transition-all duration-300"
@@ -168,7 +168,7 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
                     cy={`${node.y}%`}
                     r={isHovered ? 20 : 16}
                     fill="none"
-                    stroke="#FF1E27"
+                    stroke="#FF0000"
                     strokeWidth={1.5}
                     opacity={0.4}
                     className="animate-ping"
@@ -180,9 +180,9 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
                   cx={`${node.x}%`}
                   cy={`${node.y}%`}
                   r={isHovered ? 12 : 8}
-                  fill={isHovered ? '#FF1E27' : node.cluster === 'core' ? '#111111' : '#FAF9F5'}
-                  stroke={isHovered ? '#111111' : '#111111'}
-                  strokeWidth={2}
+                  fill={isHovered ? '#FF0000' : node.cluster === 'core' ? '#000000' : '#FAF9F5'}
+                  stroke={isHovered ? '#000000' : '#000000'}
+                  strokeWidth={1.5}
                   className="transition-all duration-200"
                 />
 
@@ -191,7 +191,7 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
                   cx={`${node.x}%`}
                   cy={`${node.y}%`}
                   r={3}
-                  fill={isHovered ? '#FFFFFF' : node.cluster === 'core' ? '#FF1E27' : '#111111'}
+                  fill={isHovered ? '#FFFFFF' : node.cluster === 'core' ? '#FF0000' : '#000000'}
                 />
 
                 {/* Node Label (shown on hover or for core nodes) */}
@@ -201,8 +201,8 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
                   textAnchor="middle"
                   className={`text-[9px] font-mono tracking-wider transition-all select-none ${
                     isHovered
-                      ? 'fill-[#FF1E27] font-bold scale-105'
-                      : 'fill-[#111111] font-semibold'
+                      ? 'fill-[#FF0000] font-bold scale-105'
+                      : 'fill-[#000000] font-semibold'
                   }`}
                 >
                   {node.label.length > 20 ? node.label.slice(0, 18) + '...' : node.label}
@@ -219,35 +219,35 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md bg-[#111111] text-white p-4 border-2 border-[#FF1E27] shadow-xl z-20 font-mono text-xs space-y-2 pointer-events-auto"
+              className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-md bg-[#FAF9F5] text-[#000000] p-4 border border-[#000000] shadow-md z-20 font-mono text-xs space-y-2 pointer-events-auto"
             >
-              <div className="flex items-center justify-between border-b border-white/20 pb-2">
-                <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest">
+              <div className="flex items-center justify-between border-b border-[#E2E0D8] pb-2">
+                <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest">
                   TOPOLOGY NODE TELEMETRY
                 </span>
-                <span className="text-[10px] bg-white/10 px-2 py-0.5 uppercase tracking-wider text-stone-300">
+                <span className="text-[10px] bg-[#F1F0EA] border border-[#E2E0D8] px-2 py-0.5 uppercase tracking-wider text-[#555555]">
                   {activeNode.status} // {activeNode.progress}%
                 </span>
               </div>
 
               <div>
-                <h4 className="font-bold text-white text-sm uppercase tracking-wide">
+                <h4 className="font-bold text-[#000000] text-sm uppercase tracking-wide">
                   {activeNode.label}
                 </h4>
-                <div className="flex items-center gap-2 text-[10px] text-stone-400 mt-0.5">
+                <div className="flex items-center gap-2 text-[10px] text-[#555555] mt-0.5">
                   <span>CATEGORY: {activeNode.category}</span>
                   <span>•</span>
                   <span>LEVEL: {activeNode.difficulty}</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1 border-t border-white/10 text-[10px]">
-                <span className="text-stone-400">
+              <div className="flex items-center justify-between pt-1 border-t border-[#E2E0D8] text-[10px]">
+                <span className="text-[#555555]">
                   {connectedNodeIds.size - 1} Direct Graph Connections
                 </span>
                 <Link
                   to={`/research/${activeNode.id}`}
-                  className="text-[#FF1E27] font-bold hover:underline flex items-center gap-1"
+                  className="text-[#FF0000] font-bold hover:underline flex items-center gap-1"
                 >
                   <span>OPEN TOPIC DOSSIER</span>
                   <ArrowUpRight size={12} />
@@ -263,20 +263,20 @@ export default function KnowledgeGraph({ onSelectTopic, activeTopicId = null }) 
       <div className="flex flex-wrap items-center justify-between gap-3 pt-4 text-[10px] text-[#555555] font-mono">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#111111] border border-[#111111]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#000000] border border-[#000000]" />
             <span>CORE ARCHITECTURES</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-white border border-[#111111]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-white border border-[#000000]" />
             <span>SYSTEMS & SUBSYSTEMS</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-0.5 bg-[#FF1E27]" />
+            <span className="w-2 h-0.5 bg-[#FF0000]" />
             <span>DEPENDENCY AXIS</span>
           </div>
         </div>
 
-        <span className="text-stone-400">
+        <span className="text-[#555555]">
           CLICK ANY NODE TO INSPECT RESEARCH
         </span>
       </div>

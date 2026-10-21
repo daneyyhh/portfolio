@@ -122,15 +122,15 @@ export default function ActiveResearchBoard() {
     : BOARD_COLUMNS.filter(c => c.id === selectedColumn);
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             LIVE RESEARCH RADAR // CURRENT WORKBENCH
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Active Research Board
           </h3>
         </div>
@@ -140,7 +140,7 @@ export default function ActiveResearchBoard() {
           <button
             onClick={() => setSelectedColumn('ALL')}
             className={`px-2 py-1 uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
-              selectedColumn === 'ALL' ? 'bg-[#111111] text-white border-[#111111]' : 'bg-white text-stone-600 border-[#C9C7C0]'
+              selectedColumn === 'ALL' ? 'bg-[#000000] text-white border-[#000000]' : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
             }`}
           >
             ALL (5 COLS)
@@ -150,7 +150,7 @@ export default function ActiveResearchBoard() {
               key={col.id}
               onClick={() => setSelectedColumn(col.id)}
               className={`px-2 py-1 uppercase tracking-wider font-bold border transition-colors cursor-pointer ${
-                selectedColumn === col.id ? 'bg-[#111111] text-white border-[#111111]' : 'bg-white text-stone-600 border-[#C9C7C0]'
+                selectedColumn === col.id ? 'bg-[#000000] text-white border-[#000000]' : 'bg-white text-[#555555] border-[#E2E0D8] hover:border-[#000000]'
               }`}
             >
               {col.title}
@@ -167,17 +167,17 @@ export default function ActiveResearchBoard() {
           return (
             <div
               key={col.id}
-              className="bg-white border-2 border-[#111111] p-4 shadow-[3px_3px_0px_#111111] space-y-3"
+              className="bg-white border border-[#E2E0D8] p-4 space-y-3"
             >
               {/* Column Header */}
-              <div className="flex items-center justify-between border-b border-[#E4E2DC] pb-2">
+              <div className="flex items-center justify-between border-b border-[#E2E0D8] pb-2">
                 <div className="flex items-center gap-1.5">
-                  <Icon size={13} className="text-[#FF1E27]" />
-                  <span className="text-xs font-bold text-[#111111] uppercase tracking-wider">
+                  <Icon size={13} className="text-[#FF0000]" />
+                  <span className="text-xs font-bold text-[#000000] uppercase tracking-wider">
                     {col.title}
                   </span>
                 </div>
-                <span className="text-[10px] text-stone-400 font-bold">
+                <span className="text-[10px] text-[#555555] font-bold">
                   [{col.items.length}]
                 </span>
               </div>
@@ -187,24 +187,24 @@ export default function ActiveResearchBoard() {
                 {col.items.map(item => (
                   <div
                     key={item.id}
-                    className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] hover:border-[#FF1E27] transition-all space-y-1.5 group"
+                    className="p-3 bg-[#FAF9F5] border border-[#E2E0D8] hover:border-[#000000] transition-all space-y-1.5 group"
                   >
-                    <div className="flex items-center justify-between text-[9px] text-[#888884]">
-                      <span className="font-bold text-[#FF1E27]">{item.id}</span>
+                    <div className="flex items-center justify-between text-[9px] text-[#555555]">
+                      <span className="font-bold text-[#FF0000]">{item.id}</span>
                       <span>{item.date}</span>
                     </div>
 
-                    <h5 className="font-bold text-xs text-[#111111] uppercase tracking-wide group-hover:text-[#FF1E27] transition-colors leading-snug">
+                    <h5 className="font-bold text-xs text-[#000000] uppercase tracking-wide group-hover:text-[#FF0000] transition-colors leading-snug">
                       {item.title}
                     </h5>
 
-                    <p className="font-sans text-[11px] text-[#444444] leading-relaxed">
+                    <p className="font-sans text-[11px] text-[#555555] leading-relaxed">
                       {item.question}
                     </p>
 
-                    <div className="pt-1.5 border-t border-[#E4E2DC] flex items-center justify-between text-[9px] text-stone-500">
+                    <div className="pt-1.5 border-t border-[#E2E0D8] flex items-center justify-between text-[9px] text-[#555555]">
                       <span className="truncate max-w-[130px] font-mono">{item.target}</span>
-                      <ArrowUpRight size={11} className="text-stone-400 group-hover:text-[#FF1E27] transition-colors" />
+                      <ArrowUpRight size={11} className="text-[#555555] group-hover:text-[#FF0000] transition-colors" />
                     </div>
                   </div>
                 ))}

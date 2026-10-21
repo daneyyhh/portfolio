@@ -84,19 +84,19 @@ export default function FoundationsDependencyGraph({ foundations = null }) {
   const activeNode = nodes.find(n => n.id === selectedId) || nodes[0];
 
   return (
-    <div className="bg-[#FAF9F5] border-2 border-[#111111] p-5 sm:p-8 shadow-[6px_6px_0px_#111111] font-mono text-[#111111] space-y-6">
+    <div className="bg-[#FAF9F5] border border-[#E2E0D8] p-5 sm:p-8 font-mono text-[#000000] space-y-6">
       
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C9C7C0] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2E0D8] pb-4">
         <div>
-          <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-widest block">
+          <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-widest block">
             THEORETICAL PREREQUISITE LADDER
           </span>
-          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#111111]">
+          <h3 className="font-syne font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#000000]">
             Foundations Dependency Graph
           </h3>
         </div>
-        <div className="text-[10px] text-stone-500 bg-white border border-[#C9C7C0] px-3 py-1">
+        <div className="text-[10px] text-[#555555] bg-white border border-[#E2E0D8] px-3 py-1">
           CLICK ANY NODE TO EXPAND MATHEMATICS & INTUITION
         </div>
       </div>
@@ -114,15 +114,15 @@ export default function FoundationsDependencyGraph({ foundations = null }) {
                 <button
                   type="button"
                   onClick={() => setSelectedId(node.id)}
-                  className={`w-full p-3.5 border-2 text-left transition-all duration-200 flex items-center justify-between cursor-pointer ${
+                  className={`w-full p-3.5 border text-left transition-all duration-200 flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-[#111111] border-[#FF1E27] text-white shadow-[4px_4px_0px_#FF1E27] translate-x-1'
-                      : 'bg-white border-[#C9C7C0] hover:border-[#111111] text-[#111111]'
+                      ? 'bg-[#000000] border-[#000000] text-white translate-x-1'
+                      : 'bg-white border-[#E2E0D8] hover:border-[#000000] text-[#000000]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 border ${
-                      isSelected ? 'bg-[#FF1E27] text-white border-[#FF1E27]' : 'bg-[#EDECE6] text-[#555555] border-[#C9C7C0]'
+                      isSelected ? 'bg-[#FF0000] text-white border-[#FF0000]' : 'bg-[#F1F0EA] text-[#555555] border-[#E2E0D8]'
                     }`}>
                       L{node.level}
                     </span>
@@ -131,13 +131,13 @@ export default function FoundationsDependencyGraph({ foundations = null }) {
                     </span>
                   </div>
 
-                  <ChevronRight size={14} className={isSelected ? 'text-[#FF1E27]' : 'text-stone-400'} />
+                  <ChevronRight size={14} className={isSelected ? 'text-[#FF0000]' : 'text-[#555555]'} />
                 </button>
 
                 {/* Arrow Connector to next node */}
                 {index < nodes.length - 1 && (
                   <div className="flex justify-center py-0.5">
-                    <span className="text-[#C9C7C0] text-[10px] font-mono leading-none">↓</span>
+                    <span className="text-[#E2E0D8] text-[10px] font-mono leading-none">↓</span>
                   </div>
                 )}
               </div>
@@ -154,33 +154,33 @@ export default function FoundationsDependencyGraph({ foundations = null }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.2 }}
-              className="bg-white border-2 border-[#111111] p-6 shadow-[5px_5px_0px_#111111] space-y-5"
+              className="bg-white border border-[#E2E0D8] p-6 space-y-5"
             >
-              <div className="flex items-center justify-between border-b border-[#E4E2DC] pb-3">
+              <div className="flex items-center justify-between border-b border-[#E2E0D8] pb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] bg-[#FF1E27] text-white font-bold px-2 py-0.5 uppercase tracking-wider">
+                  <span className="text-[10px] bg-[#FF0000] text-white font-bold px-2 py-0.5 uppercase tracking-wider">
                     LEVEL {activeNode.level} PREREQUISITE
                   </span>
-                  <span className="text-[10px] text-stone-500">
+                  <span className="text-[10px] text-[#555555]">
                     REQUIRES: {activeNode.prereq}
                   </span>
                 </div>
-                <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[#FF0000] animate-pulse" />
               </div>
 
               <div>
-                <h4 className="font-syne font-extrabold text-xl text-[#111111] uppercase tracking-tight">
+                <h4 className="font-syne font-extrabold text-xl text-[#000000] uppercase tracking-tight">
                   {activeNode.title}
                 </h4>
               </div>
 
               {/* Mathematical Equation Box */}
               {activeNode.formula && (
-                <div className="p-3.5 bg-[#FAF9F5] border border-[#C9C7C0] space-y-1">
-                  <span className="text-[9px] text-[#888884] uppercase tracking-wider block">
+                <div className="p-3.5 bg-[#FAF9F5] border border-[#E2E0D8] space-y-1">
+                  <span className="text-[9px] text-[#555555] uppercase tracking-wider block">
                     MATHEMATICAL FORMULATION:
                   </span>
-                  <div className="font-mono text-xs sm:text-sm font-bold text-[#111111] overflow-x-auto py-1">
+                  <div className="font-mono text-xs sm:text-sm font-bold text-[#000000] overflow-x-auto py-1">
                     {activeNode.formula}
                   </div>
                 </div>
@@ -188,20 +188,20 @@ export default function FoundationsDependencyGraph({ foundations = null }) {
 
               {/* Detailed Conceptual Explanation */}
               <div className="space-y-2">
-                <span className="text-[10px] text-[#FF1E27] font-bold uppercase tracking-wider block">
+                <span className="text-[10px] text-[#FF0000] font-bold uppercase tracking-wider block">
                   CONCEPTUAL INTUITION:
                 </span>
-                <p className="font-sans text-xs sm:text-sm text-[#333333] leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-[#555555] leading-relaxed">
                   {activeNode.explanation}
                 </p>
               </div>
 
               {/* Role in Parent Architecture */}
-              <div className="p-3 bg-[#EDECE6]/70 border border-[#C9C7C0] space-y-1">
-                <span className="text-[10px] text-[#111111] font-bold uppercase tracking-wider block">
+              <div className="p-3 bg-[#F1F0EA] border border-[#E2E0D8] space-y-1">
+                <span className="text-[10px] text-[#000000] font-bold uppercase tracking-wider block">
                   ROLE IN FINAL ARCHITECTURE:
                 </span>
-                <p className="font-sans text-xs text-stone-700 leading-relaxed">
+                <p className="font-sans text-xs text-[#555555] leading-relaxed">
                   {activeNode.roleInTopic}
                 </p>
               </div>
