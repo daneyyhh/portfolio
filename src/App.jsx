@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Preloader from './components/UI/Preloader';
 import Navbar from './components/UI/Navbar';
-import CaseStudyModal from './components/UI/CaseStudyModal';
 import EasterEggs from './components/UI/EasterEggs';
 import SmoothScrollProvider from './components/UI/SmoothScrollProvider';
 import { projectsData } from './data/portfolioData';
@@ -19,10 +18,20 @@ import Experience from './components/Sections/Experience';
 import ResearchPreview from './components/Sections/ResearchPreview';
 import Contact from './components/Sections/Contact';
 
-// Dedicated AI Research Laboratory Pages
-import ResearchIndexPage from './pages/ResearchIndexPage';
-import ResearchDetailPage from './pages/ResearchDetailPage';
-import LinkBioPage from './pages/LinkBioPage';
+// Code-Split Dynamic Imports for Secondary Routes & Modal
+const ResearchIndexPage = lazy(() => import('./pages/ResearchIndexPage'));
+const ResearchDetailPage = lazy(() => import('./pages/ResearchDetailPage'));
+const LinkBioPage = lazy(() => import('./pages/LinkBioPage'));
+const CaseStudyModal = lazy(() => import('./components/UI/CaseStudyModal'));
+
+function RouteFallback() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[#09090b] text-slate-100">
+      <div className="w-10 h-10 border-2 border-white/10 border-t-[#ccff00] rounded-full animate-spin mb-4" />
+      <span className="font-mono text-xs tracking-widest uppercase text-slate-400">Loading Module...</span>
+    </div>
+  );
+}
 
 /**
  * ScrollToTop helper: scrolls to top on route change unless a hash anchor is specified
@@ -124,39 +133,43 @@ export default function App() {
         {/* Site-wide Adaptive Header */}
         {!isLinkBio && <Navbar />}
 
-        {/* Page Routes */}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                setSelectedProject={setSelectedProject}
-              />
-            }
-          />
+        {/* Page Routes with Code-Split Suspense Boundary */}
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  setSelectedProject={setSelectedProject}
+                />
+              }
+            />
 
-          {/* Dedicated AI Research Laboratory Routes */}
-          <Route
-            path="/research"
-            element={<ResearchIndexPage />}
-          />
-          <Route path="/research/:slug" element={<ResearchDetailPage />} />
+            {/* Dedicated AI Research Laboratory Routes */}
+            <Route
+              path="/research"
+              element={<ResearchIndexPage />}
+            />
+            <Route path="/research/:slug" element={<ResearchDetailPage />} />
 
-          {/* Dedicated Link In Bio Page */}
-          <Route path="/link" element={<LinkBioPage />} />
+            {/* Dedicated Link In Bio Page */}
+            <Route path="/link" element={<LinkBioPage />} />
 
-          {/* Fallback to Home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            {/* Fallback to Home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
 
         {/* Interactive Case Study Modal */}
         {selectedProject && (
-          <CaseStudyModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-            onSelectProject={(proj) => setSelectedProject(proj)}
-            allProjects={projectsData}
-          />
+          <Suspense fallback={null}>
+            <CaseStudyModal
+              project={selectedProject}
+              onClose={() => setSelectedProject(null)}
+              onSelectProject={(proj) => setSelectedProject(proj)}
+              allProjects={projectsData}
+            />
+          </Suspense>
         )}
 
       </div>
