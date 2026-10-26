@@ -10,7 +10,6 @@ import PersistentCanvas from './components/Three/PersistentCanvas';
 import Hero from './components/Sections/Hero';
 import Introduction from './components/Sections/Introduction';
 import AboutSection from './components/Sections/AboutSection';
-import FeaturedProject from './components/Sections/FeaturedProject';
 import Projects from './components/Sections/Projects';
 import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
@@ -96,8 +95,6 @@ function HomePage({ setSelectedProject }) {
         <Introduction />
         
         <AboutSection />
-        
-        <FeaturedProject />
         
         <Projects onSelectProject={(proj) => setSelectedProject(proj)} />
         

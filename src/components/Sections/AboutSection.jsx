@@ -97,7 +97,7 @@ export default function AboutSection() {
           {/* Action CTAs: Direct connection to Projects & Research */}
           <FadeInUp delay={0.8} className="flex flex-wrap gap-3 sm:gap-4 pt-2">
             <a
-              href="#featured-project"
+              href="#projects"
               className="btn-editorial-red flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
             >
               <span>SELECTED WORKS</span>

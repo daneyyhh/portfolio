@@ -85,7 +85,7 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-3 sm:gap-4 pt-3"
             >
               <a
-                href="#featured-project"
+                href="#projects"
                 className="btn-editorial flex items-center gap-3 text-xs sm:text-sm"
               >
                 <span>VIEW MY WORK</span>

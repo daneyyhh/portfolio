@@ -21,7 +21,7 @@ export default function Navbar() {
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
     { num: '02', name: 'ABOUT', href: '#about', id: 'about' },
-    { num: '03', name: 'WORK', href: '#featured-project', id: 'work' },
+    { num: '03', name: 'WORK', href: '#projects', id: 'work' },
     { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
     { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
     { num: '06', name: 'RESEARCH', href: '/research', id: 'research', isRoute: true },
@@ -137,7 +137,7 @@ export default function Navbar() {
       const navSectionMap = [
         { navId: 'home', elementIds: ['hero'] },
         { navId: 'about', elementIds: ['about', 'introduction'] },
-        { navId: 'work', elementIds: ['featured-project', 'projects', 'architecture'] },
+        { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive'] },
         { navId: 'experience', elementIds: ['experience'] },
         { navId: 'research', elementIds: ['research-preview'] },
