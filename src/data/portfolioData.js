@@ -1,4 +1,4 @@
-export { featuredProjectData } from './featuredProjectData';
+export { featuredProjectData } from './featuredProjectData.js';
 
 export const personalData = {
   name: "Reuben Binu George",
@@ -835,6 +835,36 @@ export const projectsData = [
       // 09 — LIVE PROJECT / GITHUB
       liveUrl: "https://play.unity.com/en/games/aa0605eb-0e94-4d82-a4c3-6e1a8089744b/haunted-house",
       githubUrl: "https://github.com/daneyyhh"
+    }
+  },
+  {
+    id: "pinnacle-movers",
+    number: "04",
+    status: "live",
+    title: "PINNACLE MOVERS",
+    category: "Website Development",
+    role: "Website Development",
+    technologies: ["Website Development", "Client Project"],
+    shortDesc: "A business website developed for Pinnacle Movers to establish its online presence and present its moving services.",
+    desc: "A business website developed for Pinnacle Movers to establish its online presence and present its moving services.",
+    year: "2026",
+    img: "/images/pinnacle-movers-cover.png",
+    link: "https://pinnaclemoveww.com",
+    demoLink: "https://pinnaclemoveww.com",
+    liveUrl: "https://pinnaclemoveww.com",
+    caseStudy: {
+      // 01 — OVERVIEW
+      overview: "A business website developed for Pinnacle Movers to establish its online presence and present its moving services.",
+      // 02 — PROBLEM
+      problem: "Pinnacle Movers required a modern, responsive digital gateway to communicate its air cargo, ocean freight, and international relocation services with clarity and trust.",
+      // 03 — APPROACH
+      approach: "Engineered a clean, mobile-responsive web platform featuring an interactive preloader, modern typography, comprehensive service showcases, and structured presentation.",
+      client: "Pinnacle Movers",
+      service: "Website Development",
+      year: "2026",
+      status: "Live",
+      // 09 — LIVE PROJECT
+      liveUrl: "https://pinnaclemoveww.com"
     }
   }
 ];

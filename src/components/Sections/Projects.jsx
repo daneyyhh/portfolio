@@ -11,11 +11,12 @@ export default function Projects({ onSelectProject }) {
   const [activeTab, setActiveTab] = useState('ALL');
   const prefersReduced = useReducedMotion();
 
-  const allTabs = ['ALL', 'FULL-STACK', 'AI / ML', 'GAME DEV', 'UI / UX'];
+  const allTabs = ['ALL', 'FULL-STACK', 'WEB DEV', 'AI / ML', 'GAME DEV', 'UI / UX'];
 
   const projectMatchesTab = (p, tab) => {
     if (tab === 'ALL') return true;
     if (tab === 'FULL-STACK') return p.category.includes('Full-Stack');
+    if (tab === 'WEB DEV') return p.category.includes('Web');
     if (tab === 'AI / ML') return p.category.includes('AI') || p.category.includes('ML');
     if (tab === 'GAME DEV') return p.category.includes('Game');
     if (tab === 'UI / UX') return p.category.includes('UI/UX');
@@ -193,7 +194,7 @@ export default function Projects({ onSelectProject }) {
                 </div>
 
                 {/* Card Actions Footer */}
-                <div className="p-4 sm:p-6 pt-0 border-t border-[#E4E2DC] mt-4 flex items-center justify-between">
+                <div className="p-4 sm:p-6 pt-0 border-t border-[#E4E2DC] mt-4 flex items-center justify-between gap-3">
                   <button
                     onClick={() => onSelectProject(project)}
                     aria-label={`VIEW PROJECT: ${project.title}`}
@@ -205,26 +206,28 @@ export default function Projects({ onSelectProject }) {
                   </button>
 
                   <div className="flex items-center gap-3">
-                    {(project.github || project.githubLink) && (
-                      <a
-                        href={project.github || project.githubLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-600 hover:text-[#FF1E27] transition-colors"
-                        title="GitHub Source"
-                      >
-                        <Github size={16} />
-                      </a>
-                    )}
                     {(project.link || project.demoLink) && (
                       <a
                         href={project.link || project.demoLink}
                         target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-600 hover:text-[#FF1E27] transition-colors"
-                        title="Live Preview"
+                        rel="noopener noreferrer"
+                        className="text-[10px] sm:text-xs font-mono font-bold text-slate-700 hover:text-[#FF1E27] flex items-center gap-1 transition-colors py-1 px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF1E27]"
+                        title="View Live Website"
+                        aria-label={`View live website for ${project.title} (opens in a new tab)`}
                       >
-                        <ExternalLink size={16} />
+                        <span className="tracking-wider uppercase">VIEW LIVE WEBSITE</span>
+                        <ExternalLink size={13} className="shrink-0" />
+                      </a>
+                    )}
+                    {(project.github || project.githubLink) && (
+                      <a
+                        href={project.github || project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-600 hover:text-[#FF1E27] transition-colors p-1"
+                        title="GitHub Source"
+                      >
+                        <Github size={16} />
                       </a>
                     )}
                   </div>

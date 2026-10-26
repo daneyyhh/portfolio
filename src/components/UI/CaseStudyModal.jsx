@@ -267,8 +267,22 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
               )}
             </div>
 
-            {/* Right Action: [ESC] + Close Button */}
+            {/* Right Action: Live Link + [ESC] + Close Button */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {liveUrl && (
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 bg-[#FF1E27] hover:bg-[#E00208] text-white px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
+                  aria-label={`View live website for ${project.title} (opens in a new tab)`}
+                >
+                  <span className="hidden sm:inline">VIEW LIVE WEBSITE</span>
+                  <span className="sm:hidden">LIVE</span>
+                  <ExternalLink size={13} />
+                </a>
+              )}
+
               <span className="hidden sm:inline-block text-[10px] text-slate-400 font-mono tracking-widest border border-white/10 px-2 py-1">
                 ESC KEY
               </span>
@@ -1045,7 +1059,7 @@ export default function CaseStudyModal({ project, onClose, onSelectProject, allP
 
                       <div className="space-y-1">
                         <h3 className="font-syne text-2xl sm:text-3xl font-black uppercase tracking-tight">
-                          LAUNCH LIVE PROJECT
+                          VIEW LIVE WEBSITE
                         </h3>
                         <p className="text-xs font-mono text-white/80 truncate">
                           {liveUrl}
