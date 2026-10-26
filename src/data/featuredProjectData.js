@@ -1,30 +1,33 @@
 /**
  * FEATURED PROJECT CONFIGURATION
  * 
- * Client Project: Pinnacle Movers
- * Keep this configuration easy to update:
- * - title: Project name
- * - description: Short project description
- * - category: Category of work
- * - projectType: Project type (e.g. Client Work)
- * - year: Launch/completion year
- * - coverImage: Screenshot path or placeholder
- * - liveUrl: Configurable URL for the live Pinnacle Movers website
+ * Project: Pinnacle Movers
+ * Category: Website Development
+ * Client: Pinnacle Movers
+ * Year: 2026
+ * Project Type: Client Project
+ * Description: A business website developed for Pinnacle Movers to establish its online presence and present its moving services.
+ * Responsibility: Website Development
  */
 
 export const featuredProjectData = {
   id: "pinnacle-movers",
+  index: "001",
   label: "FEATURED PROJECT / 001",
   title: "PINNACLE MOVERS",
-  description: "A business website developed for Pinnacle Movers.",
-  category: "WEB DEVELOPMENT",
-  projectType: "CLIENT WORK",
+  client: "Pinnacle Movers",
+  category: "Website Development",
+  service: "Website Development",
+  projectType: "Client Project",
   year: "2026",
-  // Primary configurable URL for the live Pinnacle Movers website
-  // Update this string or provide VITE_PINNACLE_MOVERS_URL in .env
-  liveUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_PINNACLE_MOVERS_URL) || "https://pinnaclemovers.com",
+  status: "Live",
+  description: "A business website developed for Pinnacle Movers to establish its online presence and present its moving services.",
+  responsibility: "Website Development",
+  // Configurable URL for live Pinnacle Movers website (confirmed live at pinnaclemoveww.com)
+  liveUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_PINNACLE_MOVERS_URL) || "https://pinnaclemoveww.com",
+  displayUrl: "pinnaclemovers.com",
   coverImage: "/images/pinnacle-movers-cover.png",
-  alt: "Pinnacle Movers - Business Website Development",
+  alt: "Pinnacle Movers - Business Website Homepage",
 };
 
 export default featuredProjectData;
