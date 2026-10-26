@@ -16,15 +16,13 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isResearch = location.pathname.startsWith('/research');
-
   const navLinks = [
     { num: '01', name: 'HOME', href: '#hero', id: 'home' },
     { num: '02', name: 'ABOUT', href: '#about', id: 'about' },
     { num: '03', name: 'WORK', href: '#projects', id: 'work' },
     { num: '04', name: 'SKILLS', href: '#techstack', id: 'skills' },
     { num: '05', name: 'EXPERIENCE', href: '#experience', id: 'experience' },
-    { num: '06', name: 'RESEARCH', href: '/research', id: 'research', isRoute: true },
+    { num: '06', name: 'ROADMAP', href: '#roadmap', id: 'roadmap' },
     { num: '07', name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
@@ -73,7 +71,7 @@ export default function Navbar() {
 
   /**
    * Smooth navigation handler
-   * - Handles dedicated route transitions (/research) vs homepage hash scrolling
+   * - Handles dedicated route transitions (/projects/:id) vs homepage hash scrolling
    * - Locks active state on clicked item to prevent intermediate scroll-spy flickering
    * - Closes mobile drawer seamlessly
    * - Preserves clean URL state via replaceState without reloads
@@ -81,14 +79,13 @@ export default function Navbar() {
   const handleNavClick = (e, href, isRoute = false) => {
     if (e && e.preventDefault) e.preventDefault();
 
-    if (isRoute || href.startsWith('/')) {
-      setActiveSection('research');
+    if (isRoute || (href.startsWith('/') && !href.startsWith('/#'))) {
       navigate(href);
       return;
     }
 
-    const targetId = href.replace('#', '');
-    const matchedLink = navLinks.find((l) => l.href === href);
+    const targetId = href.replace('/#', '').replace('#', '');
+    const matchedLink = navLinks.find((l) => l.href === href || l.href === `#${targetId}`);
     const linkId = matchedLink ? matchedLink.id : 'home';
 
     // Immediately reflect active link and lock scroll-spy during animation
@@ -99,9 +96,9 @@ export default function Navbar() {
       isProgrammaticScrollRef.current = false;
     }, 920);
 
-    // Cross-route navigation back to main page if on /research
+    // Cross-route navigation back to main page if not on /
     if (location.pathname !== '/') {
-      navigate('/' + href);
+      navigate('/#' + targetId);
       setTimeout(() => {
         const el = document.getElementById(targetId);
         if (el) {
@@ -123,11 +120,6 @@ export default function Navbar() {
 
   // Scroll spy to update active section when user manually scrolls on homepage
   useEffect(() => {
-    if (isResearch) {
-      setActiveSection('research');
-      return;
-    }
-
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
@@ -140,7 +132,7 @@ export default function Navbar() {
         { navId: 'work', elementIds: ['projects', 'architecture'] },
         { navId: 'skills', elementIds: ['techstack', 'visual-archive'] },
         { navId: 'experience', elementIds: ['experience'] },
-        { navId: 'research', elementIds: ['research-preview'] },
+        { navId: 'roadmap', elementIds: ['roadmap'] },
         { navId: 'contact', elementIds: ['contact'] }
       ];
 
@@ -167,7 +159,7 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isResearch]);
+  }, []);
 
   return (
     <header
@@ -217,7 +209,7 @@ export default function Navbar() {
                   {link.num}.
                 </span>
                 <span>{link.name}</span>
-                {link.id === 'research' && (
+                {link.id === 'roadmap' && (
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
                 )}
                 {isActive && (
@@ -288,9 +280,9 @@ export default function Navbar() {
                     </div>
                     {isActive ? (
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF1E27] animate-pulse" />
-                    ) : link.id === 'research' ? (
+                    ) : link.id === 'roadmap' ? (
                       <span className="text-[10px] px-1.5 py-0.5 bg-[#FF1E27] text-white font-bold">
-                        AI LAB
+                        8 PHASES
                       </span>
                     ) : null}
                   </a>

@@ -92,13 +92,13 @@ export default function Hero() {
                 <ArrowRight size={16} />
               </a>
 
-              <Link
-                to="/research"
+              <a
+                href="#roadmap"
                 className="btn-editorial-outline flex items-center gap-2 text-xs sm:text-sm group"
               >
-                <span>RESEARCH LAB</span>
+                <span>DEV ROADMAP</span>
                 <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              </a>
             </motion.div>
           </div>
         </div>

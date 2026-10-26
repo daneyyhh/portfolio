@@ -94,7 +94,7 @@ export default function AboutSection() {
             ))}
           </div>
 
-          {/* Action CTAs: Direct connection to Projects & Research */}
+          {/* Action CTAs: Direct connection to Projects & Roadmap */}
           <FadeInUp delay={0.8} className="flex flex-wrap gap-3 sm:gap-4 pt-2">
             <a
               href="#projects"
@@ -104,13 +104,13 @@ export default function AboutSection() {
               <ArrowRight size={16} />
             </a>
 
-            <Link
-              to="/research"
+            <a
+              href="#roadmap"
               className="btn-editorial-outline text-white border-white hover:border-[#FF1E27] flex items-center gap-2 text-xs sm:text-sm cursor-pointer group"
             >
-              <span>RESEARCH LAB</span>
+              <span>DEV ROADMAP</span>
               <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            </a>
           </FadeInUp>
         </div>
 

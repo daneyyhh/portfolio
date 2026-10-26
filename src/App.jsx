@@ -15,14 +15,10 @@ import Architecture from './components/Sections/Architecture';
 import TechStack from './components/Sections/TechStack';
 import VisualArchive from './components/Sections/VisualArchive';
 import Experience from './components/Sections/Experience';
-import ResearchPreview from './components/Sections/ResearchPreview';
+import RoadmapSection from './components/Sections/RoadmapSection';
 import Contact from './components/Sections/Contact';
 
-import ResearchErrorBoundary from './components/Research/ResearchErrorBoundary';
-
 // Code-Split Dynamic Imports for Secondary Routes & Modal
-const ResearchIndexPage = lazy(() => import('./pages/ResearchIndexPage'));
-const ResearchDetailPage = lazy(() => import('./pages/ResearchDetailPage'));
 const LinkBioPage = lazy(() => import('./pages/LinkBioPage'));
 const CaseStudyModal = lazy(() => import('./components/UI/CaseStudyModal'));
 
@@ -106,7 +102,7 @@ function HomePage({ setSelectedProject }) {
         
         <Experience />
         
-        <ResearchPreview />
+        <RoadmapSection />
         
         <Contact />
       </main>
@@ -117,7 +113,7 @@ function HomePage({ setSelectedProject }) {
 export default function App() {
   const location = useLocation();
   const isLinkBio = location.pathname.startsWith('/link');
-  const isResearch = location.pathname.startsWith('/research');
+  const isNoLoader = location.search.includes('no-loader');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -128,13 +124,13 @@ export default function App() {
       <div className="min-h-screen bg-[#F1F0EB] text-[#111111] font-sans relative">
         
         {/* Fixed Fullscreen Studio Intro Loader (z-999999) */}
-        {!isLinkBio && isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+        {!isLinkBio && !isNoLoader && isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
 
         {/* Easter Egg Event Listener */}
         {!isLinkBio && <EasterEggs />}
 
-        {/* Site-wide Adaptive Header (Hidden on dedicated Research and Link views) */}
-        {!isLinkBio && !isResearch && <Navbar />}
+        {/* Site-wide Adaptive Header (Hidden on dedicated Link views) */}
+        {!isLinkBio && <Navbar />}
 
         {/* Page Routes with Code-Split Suspense Boundary */}
         <Suspense fallback={<RouteFallback />}>
@@ -148,23 +144,9 @@ export default function App() {
               }
             />
 
-            {/* Dedicated AI Research Laboratory Routes */}
-            <Route
-              path="/research"
-              element={
-                <ResearchErrorBoundary>
-                  <ResearchIndexPage />
-                </ResearchErrorBoundary>
-              }
-            />
-            <Route
-              path="/research/:slug"
-              element={
-                <ResearchErrorBoundary>
-                  <ResearchDetailPage />
-                </ResearchErrorBoundary>
-              }
-            />
+            {/* Graceful redirect for legacy /research bookmarks */}
+            <Route path="/research/*" element={<Navigate to="/#roadmap" replace />} />
+            <Route path="/research" element={<Navigate to="/#roadmap" replace />} />
 
             {/* Dedicated Link In Bio Page */}
             <Route path="/link" element={<LinkBioPage />} />
