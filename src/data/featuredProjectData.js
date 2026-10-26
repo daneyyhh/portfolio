@@ -25,7 +25,7 @@ export const featuredProjectData = {
   responsibility: "Website Development",
   // Configurable URL for live Pinnacle Movers website (confirmed live at pinnaclemoveww.com)
   liveUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_PINNACLE_MOVERS_URL) || "https://pinnaclemoveww.com",
-  displayUrl: "pinnaclemovers.com",
+  displayUrl: "pinnaclemoveww.com",
   coverImage: "/images/pinnacle-movers-cover.png",
   alt: "Pinnacle Movers - Business Website Homepage",
 };

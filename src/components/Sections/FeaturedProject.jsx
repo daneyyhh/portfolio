@@ -10,7 +10,7 @@ export default function FeaturedProject({ project = featuredProjectData }) {
   const [imgError, setImgError] = useState(false);
 
   const liveUrl = project?.liveUrl || "https://pinnaclemoveww.com";
-  const displayUrl = project?.displayUrl || "pinnaclemovers.com";
+  const displayUrl = project?.displayUrl || "pinnaclemoveww.com";
 
   return (
     <section
