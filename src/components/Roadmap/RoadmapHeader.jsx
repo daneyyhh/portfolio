@@ -73,7 +73,7 @@ export default function RoadmapHeader({ activePhase, onSelectPhase, phases = [] 
 
           <div className="p-3 bg-[#FAF9F5] border border-[#C9C7C0] flex flex-col justify-between h-20">
             <span className="text-[10px] font-bold text-[#FF1E27] uppercase tracking-wider">DEPTH</span>
-            <span className="text-xs font-bold text-[#111111] uppercase">FOUNDATIONS TO ADVANCED</span>
+            <span className="text-[11px] font-bold text-[#111111] uppercase leading-tight">FUNDAMENTALS TO ADVANCED ENGINEERING</span>
           </div>
         </div>
       </div>
