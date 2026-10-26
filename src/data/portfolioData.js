@@ -1,3 +1,5 @@
+export { featuredProjectData } from './featuredProjectData';
+
 export const personalData = {
   name: "Reuben Binu George",
   brand: "reubg",
